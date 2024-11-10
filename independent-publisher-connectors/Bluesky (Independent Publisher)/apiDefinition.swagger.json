@@ -1,0 +1,240 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Bluesky API Connector",
+    "description": "This custom connector allows Power Platform apps to interact with Bluesky for user timelines, posting, and retrieving profiles.",
+    "version": "1.0"
+  },
+  "host": "bsky.app",
+  "basePath": "/xrpc",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/app.bsky.feed.getTimeline": {
+      "get": {
+        "summary": "Get User Timeline",
+        "description": "Retrieve a list of posts from a specified user's timeline.",
+        "operationId": "GetTimeline",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The username or user ID for the timeline."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of posts to retrieve, up to a maximum limit."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved timeline posts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Username of the post's author."
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the post was created."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.post": {
+      "post": {
+        "summary": "Create a New Post",
+        "description": "Publish a new status update to the user's feed.",
+        "operationId": "CreatePost",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "The text content of the post (max 280 characters)."
+                },
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Array of URLs for any media attachments."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post created successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique identifier of the created post."
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the created post."
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the post was created."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - post content is too long or missing required parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.actor.getProfile": {
+      "get": {
+        "summary": "Get User Profile",
+        "description": "Retrieve profile information for a specified user.",
+        "operationId": "GetUserProfile",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The username or user ID of the profile to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the user's profile.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "Username of the profile."
+                },
+                "bio": {
+                  "type": "string",
+                  "description": "The user's biography."
+                },
+                "follower_count": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Count of the user's followers."
+                },
+                "following_count": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Count of accounts the user is following."
+                },
+                "profile_image": {
+                  "type": "string",
+                  "description": "URL to the user's profile image."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your Bluesky API token here."
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "definitions": {
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Error code representing the issue."
+        },
+        "message": {
+          "type": "string",
+          "description": "A descriptive message explaining the error."
+        }
+      }
+    }
+  }
+}
+
