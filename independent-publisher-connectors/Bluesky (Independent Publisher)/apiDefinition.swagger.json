@@ -634,35 +634,708 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Enter your Bluesky API token here."
-    }
-  },
-  "security": [
-    {
-      "api_key": []
-    }
-  ],
-  "definitions": {
-    "ErrorResponse": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "description": "Error code representing the issue."
-        },
-        "message": {
-          "type": "string",
-          "description": "A descriptive message explaining the error."
+    },
+    "/app.bsky.graph.getStarterPack": {
+      "get": {
+        "summary": "Get Starter Pack",
+        "description": "Retrieve a list of recommended users to follow for new users.",
+        "operationId": "GetStarterPack",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of recommended users to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved recommended users.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recommendedUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the recommended user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the recommended user."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "Biography of the recommended user."
+                      },
+                      "followerCount": {
+                        "type": "integer",
+                        "description": "Number of followers the recommended user has."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getStarterPacks": {
+      "get": {
+        "summary": "Get Starter Packs",
+        "description": "Retrieve a list of starter packs, which are collections of recommended users to follow.",
+        "operationId": "GetStarterPacks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of starter packs to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved starter packs.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "starterPacks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "packId": {
+                        "type": "string",
+                        "description": "Unique identifier for the starter pack."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Title of the starter pack."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the starter pack."
+                      },
+                      "users": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "handle": {
+                              "type": "string",
+                              "description": "Handle of the recommended user."
+                            },
+                            "displayName": {
+                              "type": "string",
+                              "description": "Display name of the recommended user."
+                            },
+                            "bio": {
+                              "type": "string",
+                              "description": "Biography of the recommended user."
+                            },
+                            "followerCount": {
+                              "type": "integer",
+                              "description": "Number of followers the recommended user has."
+                            }
+                          }
+                        },
+                        "description": "List of recommended users in the starter pack."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getListBlocks": {
+      "get": {
+        "summary": "Get Blocked Users",
+        "description": "Retrieve a list of users that the specified user has blocked.",
+        "operationId": "GetListBlocks",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The handle or user ID for which to retrieve the blocked users."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of blocked users to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for pagination to fetch additional results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of blocked users.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blockedUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the blocked user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the blocked user."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the blocked user's avatar image."
+                      }
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getBlocks": {
+      "get": {
+        "summary": "Get Blocks",
+        "description": "Retrieve a list of users blocked by the authenticated user.",
+        "operationId": "GetBlocks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of blocked users to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for pagination to fetch additional results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of blocked users.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blockedUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the blocked user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the blocked user."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the blocked user's avatar image."
+                      }
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getLikes": {
+      "get": {
+        "summary": "Get Likes",
+        "description": "Retrieve a list of users who liked a specified post.",
+        "operationId": "GetLikes",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the post to retrieve likes for."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of likes to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for pagination to fetch additional results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users who liked the post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "likes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the user who liked the post."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the user who liked the post."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the user's avatar image who liked the post."
+                      },
+                      "likedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user liked the post."
+                      }
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getPosts": {
+      "get": {
+        "summary": "Get Posts",
+        "description": "Retrieve a list of specific posts by their IDs.",
+        "operationId": "GetPosts",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "Array of post IDs to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the specified posts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "Unique identifier of the post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Handle of the post's author."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the post."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the post was created."
+                      },
+                      "likesCount": {
+                        "type": "integer",
+                        "description": "Number of likes the post has received."
+                      },
+                      "commentsCount": {
+                        "type": "integer",
+                        "description": "Number of comments on the post."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.searchPosts": {
+      "get": {
+        "summary": "Search Posts",
+        "description": "Search for posts that match a specific query.",
+        "operationId": "SearchPosts",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The search query to match posts."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of posts to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for pagination to fetch additional results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved search results for posts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "Unique identifier of the post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Handle of the post's author."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the post."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the post was created."
+                      },
+                      "likesCount": {
+                        "type": "integer",
+                        "description": "Number of likes the post has received."
+                      },
+                      "commentsCount": {
+                        "type": "integer",
+                        "description": "Number of comments on the post."
+                      }
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "/app.bsky.feed.getFeed": {
+        "get": {
+          "summary": "Get Feed",
+          "description": "Retrieve the feed of posts for a specified user or tag.",
+          "operationId": "GetFeed",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "description": "The handle or user ID to retrieve the feed for. If not specified, retrieves the global feed."
+            },
+            {
+              "name": "tag",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "description": "A tag to filter the feed by. Only posts containing this tag will be returned."
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "required": false,
+              "type": "integer",
+              "format": "int32",
+              "description": "Maximum number of posts to retrieve."
+            },
+            {
+              "name": "before",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "format": "date-time",
+              "description": "Retrieve posts before this timestamp."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved feed posts.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "posts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "postId": {
+                          "type": "string",
+                          "description": "Unique identifier for the post."
+                        },
+                        "author": {
+                          "type": "string",
+                          "description": "Handle of the post's author."
+                        },
+                        "content": {
+                          "type": "string",
+                          "description": "Content of the post."
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the post was created."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request - missing or invalid parameters.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            },
+            "401": {
+              "description": "Unauthorized - Invalid or missing API key.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            },
+            "default": {
+              "description": "An unspecified error occurred.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter your Bluesky API token here."
+      }
+    },
+    "security": [
+      {
+        "api_key": []
+      }
+    ],
+    "definitions": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error code representing the issue."
+          },
+          "message": {
+            "type": "string",
+            "description": "A descriptive message explaining the error."
+          }
         }
       }
     }
   }
-}
-
