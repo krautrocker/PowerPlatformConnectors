@@ -1597,15 +1597,14 @@
   },
   "responses": {},
   "securityDefinitions": {
-    "API Key": {
-      "type": "apiKey",
-      "in": "query",
-      "name": "key"
+    "basic-auth": {
+      "type": "basic",
+      "description": "Use Bluesky handle as the username and the app password as the password."
     }
   },
   "security": [
     {
-      "API Key": []
+      "basic-auth": []
     }
   ],
   "tags": [],
