@@ -78,12 +78,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+            "default": {
+              "description": "An unspecified error occurred.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
             }
-          }
           }
         }
       }
@@ -206,6 +206,324 @@
           },
           "404": {
             "description": "User not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getKnownFollowers": {
+      "get": {
+        "summary": "Get Known Followers",
+        "description": "Retrieve a list of followers that are known to follow a specific user.",
+        "operationId": "GetKnownFollowers",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The handle or user ID of the user to retrieve known followers for."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of followers to return."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for pagination to fetch additional results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved known followers.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the follower."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the follower."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the follower's avatar image."
+                      }
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.sendMessage": {
+      "post": {
+        "summary": "Send Message",
+        "description": "Send a message to a conversation.",
+        "operationId": "SendMessage",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "conversationId": {
+                  "type": "string",
+                  "description": "ID of the conversation to send the message to."
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the message."
+                },
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Array of URLs for any media attachments."
+                }
+              },
+              "required": [ "conversationId", "content" ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message sent successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string",
+                  "description": "Unique identifier of the sent message."
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the message was sent."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getRelationships": {
+      "get": {
+        "summary": "Get Relationships",
+        "description": "Retrieve the relationship status between the specified user and other users.",
+        "operationId": "GetRelationships",
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The handle or user ID of the subject whose relationships are being queried."
+          },
+          {
+            "name": "objects",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "List of handles or user IDs to check relationships with the subject."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved relationship statuses.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the other user."
+                      },
+                      "isFollowing": {
+                        "type": "boolean",
+                        "description": "Whether the subject is following this user."
+                      },
+                      "isFollowedBy": {
+                        "type": "boolean",
+                        "description": "Whether this user is following the subject."
+                      },
+                      "isMuted": {
+                        "type": "boolean",
+                        "description": "Whether the subject has muted this user."
+                      },
+                      "isBlocking": {
+                        "type": "boolean",
+                        "description": "Whether the subject is blocking this user."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.video.uploadVideo": {
+      "post": {
+        "summary": "Upload Video",
+        "description": "Upload a video file to Bluesky.",
+        "operationId": "UploadVideo",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The video file to upload."
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "Title of the video."
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "Description of the video."
+          },
+          {
+            "name": "tags",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "Tags associated with the video."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Video uploaded successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "videoId": {
+                  "type": "string",
+                  "description": "Unique identifier of the uploaded video."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Status of the upload (e.g., processing, completed)."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
