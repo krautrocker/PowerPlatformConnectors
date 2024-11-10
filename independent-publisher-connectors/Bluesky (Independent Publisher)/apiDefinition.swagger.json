@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bluesky API Connector",
-    "description": "This custom connector allows Power Platform apps to interact with Bluesky for user timelines, posting, and retrieving profiles.",
+    "title": "Bluesky (Independent Publisher)",
+    "description": "The HTTP API Bluesky API enables programmatic interaction with user timelines, posting, and profiles.",
     "version": "1.0"
   },
   "host": "bsky.app",
