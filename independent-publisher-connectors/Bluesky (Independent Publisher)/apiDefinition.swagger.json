@@ -542,6 +542,98 @@
           }
         }
       }
+    },
+    "/app.bsky.feed.getFeed": {
+      "get": {
+        "summary": "Get Feed",
+        "description": "Retrieve the feed of posts for a specified user or tag.",
+        "operationId": "GetFeed",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "The handle or user ID to retrieve the feed for. If not specified, retrieves the global feed."
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A tag to filter the feed by. Only posts containing this tag will be returned."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of posts to retrieve."
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "description": "Retrieve posts before this timestamp."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved feed posts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "Unique identifier for the post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Handle of the post's author."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the post."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the post was created."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "An unspecified error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
