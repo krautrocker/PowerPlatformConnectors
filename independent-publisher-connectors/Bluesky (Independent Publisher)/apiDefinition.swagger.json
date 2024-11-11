@@ -1,3329 +1,2729 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bluesky (Independent Publisher)",
-    "description": "The HTTP API Bluesky API enables programmatic interaction with user timelines, posting, profiles, feeds and admin functions.",
+    "title": "Bluesky API",
+    "description": "Unofficial OpenAPI specification for the Bluesky API endpoints.",
+    "contact": {
+      "email": "torin@imp.sh"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/license/mit/"
+    },
     "version": "1.0"
   },
-  "host": "bsky.app",
+  "host": "bsky.social",
   "basePath": "/xrpc",
   "schemes": [
     "https"
   ],
+  "consumes": [],
+  "produces": [],
   "paths": {
-    "/app.bsky.feed.getTimeline": {
+    "/app.bsky.actor.getPreferences": {
       "get": {
-        "summary": "Get User Timeline",
-        "description": "Retrieve a list of posts from a specified user's timeline.",
-        "operationId": "GetTimeline",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The username or user ID for the timeline."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Number of posts to retrieve, up to a maximum limit."
-          }
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Get private preferences attached to the account.",
+        "operationId": "GetPreferences",
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved timeline posts.",
+            "description": "successful operation",
             "schema": {
+              "required": [
+                "preferences"
+              ],
               "type": "object",
               "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Username of the post's author."
-                      },
-                      "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the post was created."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.post": {
-      "post": {
-        "summary": "Create a New Post",
-        "description": "Publish a new status update to the user's feed.",
-        "operationId": "CreatePost",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "content": {
-                  "type": "string",
-                  "description": "The text content of the post (max 280 characters)."
-                },
-                "attachments": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "Array of URLs for any media attachments."
+                "preferences": {
+                  "$ref": "#/definitions/Preferences"
                 }
               }
             }
           }
-        ],
-        "responses": {
-          "201": {
-            "description": "Post created successfully.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "Unique identifier of the created post."
-                },
-                "content": {
-                  "type": "string",
-                  "description": "The content of the created post."
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Timestamp when the post was created."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - post content is too long or missing required parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
+        },
+        "parameters": [],
+        "description": "Get private preferences attached to the account."
       }
     },
     "/app.bsky.actor.getProfile": {
       "get": {
-        "summary": "Get User Profile",
-        "description": "Retrieve profile information for a specified user.",
-        "operationId": "GetUserProfile",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The username or user ID of the profile to retrieve."
-          }
+        "tags": [
+          "app.bsky.actor"
         ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the user's profile.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "description": "Username of the profile."
-                },
-                "bio": {
-                  "type": "string",
-                  "description": "The user's biography."
-                },
-                "follower_count": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "Count of the user's followers."
-                },
-                "following_count": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "Count of accounts the user is following."
-                },
-                "profile_image": {
-                  "type": "string",
-                  "description": "URL to the user's profile image."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "User not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getKnownFollowers": {
-      "get": {
-        "summary": "Get Known Followers",
-        "description": "Retrieve a list of followers that are known to follow a specific user.",
-        "operationId": "GetKnownFollowers",
+        "summary": "Get a detailed profile view of an actor.",
+        "operationId": "getProfile",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
+            "in": "query",
             "name": "actor",
-            "in": "query",
+            "description": "Identifier of the actor to get the profile for.",
             "required": true,
             "type": "string",
-            "description": "The handle or user ID of the user to retrieve known followers for."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of followers to return."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Cursor for pagination to fetch additional results."
+            "format": "at-identifier"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved known followers.",
+            "description": "successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the follower."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the follower."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the follower's avatar image."
-                      }
-                    }
-                  }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/ProfileViewDetailed"
             }
           }
         }
       }
     },
-    "/chat.bsky.convo.sendMessage": {
-      "post": {
-        "summary": "Send Message",
-        "description": "Send a message to a conversation.",
-        "operationId": "SendMessage",
+    "/app.bsky.actor.getProfiles": {
+      "get": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Get detailed profile views of multiple actors.",
+        "operationId": "getProfiles",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "in": "query",
+            "name": "actors",
+            "description": "Identifiers of the actors to get the profiles for.",
             "required": true,
+            "type": "array",
+            "items": {
+              "format": "at-identifier",
+              "type": "string"
+            },
+            "maxItems": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
             "schema": {
-              "type": "object",
-              "properties": {
-                "conversationId": {
-                  "type": "string",
-                  "description": "ID of the conversation to send the message to."
-                },
-                "content": {
-                  "type": "string",
-                  "description": "The content of the message."
-                },
-                "attachments": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "Array of URLs for any media attachments."
-                }
-              },
               "required": [
-                "conversationId",
-                "content"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Message sent successfully.",
-            "schema": {
+                "profiles"
+              ],
               "type": "object",
               "properties": {
-                "messageId": {
-                  "type": "string",
-                  "description": "Unique identifier of the sent message."
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp when the message was sent."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getRelationships": {
-      "get": {
-        "summary": "Get Relationships",
-        "description": "Retrieve the relationship status between the specified user and other users.",
-        "operationId": "GetRelationships",
-        "parameters": [
-          {
-            "name": "subject",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The handle or user ID of the subject whose relationships are being queried."
-          },
-          {
-            "name": "objects",
-            "in": "query",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "List of handles or user IDs to check relationships with the subject."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved relationship statuses.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
+                "profiles": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the other user."
-                      },
-                      "isFollowing": {
-                        "type": "boolean",
-                        "description": "Whether the subject is following this user."
-                      },
-                      "isFollowedBy": {
-                        "type": "boolean",
-                        "description": "Whether this user is following the subject."
-                      },
-                      "isMuted": {
-                        "type": "boolean",
-                        "description": "Whether the subject has muted this user."
-                      },
-                      "isBlocking": {
-                        "type": "boolean",
-                        "description": "Whether the subject is blocking this user."
-                      }
-                    }
+                    "$ref": "#/definitions/ProfileViewDetailed"
                   }
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/app.bsky.actor.getSuggestions": {
+      "get": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Get a list of actors suggested for following.",
+        "description": "Used in discovery UIs.",
+        "operationId": "getSuggestions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "The maximum number of suggested actors to return.",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
           },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
+          {
+            "in": "query",
+            "name": "cursor",
+            "description": "A cursor for pagination.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "required": [
+                "actors"
+              ],
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
+                }
+              }
             }
           }
         }
       }
     },
-    "/app.bsky.video.uploadVideo": {
+    "/app.bsky.actor.putPreferences": {
       "post": {
-        "summary": "Upload Video",
-        "description": "Upload a video file to Bluesky.",
-        "operationId": "UploadVideo",
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Sets the private preferences attached to the account.",
+        "operationId": "PutPreferences",
         "consumes": [
-          "multipart/form-data"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "file",
-            "in": "formData",
+            "in": "body",
+            "name": "body",
             "required": true,
-            "type": "file",
-            "description": "The video file to upload."
-          },
-          {
-            "name": "title",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "description": "Title of the video."
-          },
-          {
-            "name": "description",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "description": "Description of the video."
-          },
-          {
-            "name": "tags",
-            "in": "formData",
-            "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Tags associated with the video."
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Video uploaded successfully.",
             "schema": {
+              "required": [
+                "preferences"
+              ],
               "type": "object",
               "properties": {
-                "videoId": {
-                  "type": "string",
-                  "description": "Unique identifier of the uploaded video."
-                },
-                "status": {
-                  "type": "string",
-                  "description": "Status of the upload (e.g., processing, completed)."
+                "preferences": {
+                  "$ref": "#/definitions/Preferences"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getFeed": {
-      "get": {
-        "summary": "Get Feed",
-        "description": "Retrieve the feed of posts for a specified user or tag.",
-        "operationId": "GetFeed",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "The handle or user ID to retrieve the feed for. If not specified, retrieves the global feed."
-          },
-          {
-            "name": "tag",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A tag to filter the feed by. Only posts containing this tag will be returned."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of posts to retrieve."
-          },
-          {
-            "name": "before",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "date-time",
-            "description": "Retrieve posts before this timestamp."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved feed posts.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "Unique identifier for the post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Handle of the post's author."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the post was created."
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Successful operation"
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getStarterPack": {
-      "get": {
-        "summary": "Get Starter Pack",
-        "description": "Retrieve a list of recommended users to follow for new users.",
-        "operationId": "GetStarterPack",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of recommended users to retrieve."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved recommended users.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "recommendedUsers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the recommended user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the recommended user."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "Biography of the recommended user."
-                      },
-                      "followerCount": {
-                        "type": "integer",
-                        "description": "Number of followers the recommended user has."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getStarterPacks": {
-      "get": {
-        "summary": "Get Starter Packs",
-        "description": "Retrieve a list of starter packs, which are collections of recommended users to follow.",
-        "operationId": "GetStarterPacks",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of starter packs to retrieve."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved starter packs.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "starterPacks": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "packId": {
-                        "type": "string",
-                        "description": "Unique identifier for the starter pack."
-                      },
-                      "title": {
-                        "type": "string",
-                        "description": "Title of the starter pack."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description of the starter pack."
-                      },
-                      "users": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "handle": {
-                              "type": "string",
-                              "description": "Handle of the recommended user."
-                            },
-                            "displayName": {
-                              "type": "string",
-                              "description": "Display name of the recommended user."
-                            },
-                            "bio": {
-                              "type": "string",
-                              "description": "Biography of the recommended user."
-                            },
-                            "followerCount": {
-                              "type": "integer",
-                              "description": "Number of followers the recommended user has."
-                            }
-                          }
-                        },
-                        "description": "List of recommended users in the starter pack."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getListBlocks": {
-      "get": {
-        "summary": "Get Blocked Users",
-        "description": "Retrieve a list of users that the specified user has blocked.",
-        "operationId": "GetListBlocks",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The handle or user ID for which to retrieve the blocked users."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of blocked users to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Cursor for pagination to fetch additional results."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved list of blocked users.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "blockedUsers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the blocked user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the blocked user."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the blocked user's avatar image."
-                      }
-                    }
-                  }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getBlocks": {
-      "get": {
-        "summary": "Get Blocks",
-        "description": "Retrieve a list of users blocked by the authenticated user.",
-        "operationId": "GetBlocks",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of blocked users to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Cursor for pagination to fetch additional results."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved list of blocked users.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "blockedUsers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the blocked user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the blocked user."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the blocked user's avatar image."
-                      }
-                    }
-                  }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getLikes": {
-      "get": {
-        "summary": "Get Likes",
-        "description": "Retrieve a list of users who liked a specified post.",
-        "operationId": "GetLikes",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the post to retrieve likes for."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of likes to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Cursor for pagination to fetch additional results."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved list of users who liked the post.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "likes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the user who liked the post."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the user who liked the post."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the user's avatar image who liked the post."
-                      },
-                      "likedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user liked the post."
-                      }
-                    }
-                  }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getPosts": {
-      "get": {
-        "summary": "Get Posts",
-        "description": "Retrieve a list of specific posts by their IDs.",
-        "operationId": "GetPosts",
-        "parameters": [
-          {
-            "name": "ids",
-            "in": "query",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Array of post IDs to retrieve."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the specified posts.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "Unique identifier of the post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Handle of the post's author."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the post was created."
-                      },
-                      "likesCount": {
-                        "type": "integer",
-                        "description": "Number of likes the post has received."
-                      },
-                      "commentsCount": {
-                        "type": "integer",
-                        "description": "Number of comments on the post."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.searchPosts": {
-      "get": {
-        "summary": "Search Posts",
-        "description": "Search for posts that match a specific query.",
-        "operationId": "SearchPosts",
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The search query to match posts."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of posts to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Cursor for pagination to fetch additional results."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved search results for posts.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "Unique identifier of the post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Handle of the post's author."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the post was created."
-                      },
-                      "likesCount": {
-                        "type": "integer",
-                        "description": "Number of likes the post has received."
-                      },
-                      "commentsCount": {
-                        "type": "integer",
-                        "description": "Number of comments on the post."
-                      }
-                    }
-                  }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           }
         }
       }
     },
     "/app.bsky.actor.searchActors": {
       "get": {
-        "summary": "Search for Actors",
-        "description": "Search for user accounts based on a query string.",
-        "operationId": "SearchActors",
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Find actors matching search criteria.",
+        "operationId": "searchActors",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "query",
             "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The search query to find user accounts."
+            "name": "term",
+            "type": "string"
           },
           {
-            "name": "limit",
             "in": "query",
-            "required": false,
+            "name": "limit",
             "type": "integer",
-            "format": "int32",
-            "description": "Number of results to retrieve, up to a maximum limit."
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved search results.",
+            "description": "Successful operation",
             "schema": {
+              "required": [
+                "actors"
+              ],
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.actor.searchActorsTypeahead": {
+      "get": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Find actor suggestions for a search term.",
+        "operationId": "searchActorsTypeahead",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "term",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "required": [
+                "actors"
+              ],
               "type": "object",
               "properties": {
                 "actors": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the actor."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the actor."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "Bio or description of the actor."
-                      }
-                    }
+                    "$ref": "#/definitions/ProfileViewBasic"
                   }
                 }
               }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
       }
     },
-    "/app.bsky.feed.getActorFeeds": {
+    "/app.bsky.feed.getAuthorFeed": {
       "get": {
-        "summary": "Get Actor Feeds",
-        "description": "Retrieve a list of feed posts from a specified actor.",
-        "operationId": "GetActorFeeds",
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actorId",
             "in": "query",
+            "name": "actor",
             "required": true,
             "type": "string",
-            "description": "The unique identifier of the actor whose feeds are to be retrieved."
+            "format": "at-identifier"
           },
           {
+            "in": "query",
             "name": "limit",
-            "in": "query",
-            "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of posts to retrieve."
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
           },
           {
-            "name": "cursor",
             "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of posts."
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved actor's feed posts.",
+            "description": "A view of an actor's feed",
             "schema": {
-              "type": "object",
-              "properties": {
-                "feeds": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Author of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the post was created."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of posts, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getFeedGenerator": {
-      "get": {
-        "summary": "Get Feed Generator",
-        "description": "Retrieve a generated feed based on user preferences.",
-        "operationId": "GetFeedGenerator",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the user for whom the feed is generated."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of items to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of feed items."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the generated feed.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "feedItems": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the feed item."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the feed item."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Author of the feed item."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the feed item was created."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of feed items, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getFeedSkeleton": {
-      "get": {
-        "summary": "Get Feed Skeleton",
-        "description": "Retrieve a skeletal version of a feed for faster loading and minimal content structure.",
-        "operationId": "GetFeedSkeleton",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the user for whom the feed skeleton is retrieved."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of items to retrieve in the feed skeleton."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of feed skeleton items."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the feed skeleton.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "skeletonItems": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the skeleton item."
-                      },
-                      "placeholderText": {
-                        "type": "string",
-                        "description": "Placeholder text or minimal content to display quickly."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the skeleton item was created."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of feed skeleton items, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/chat.bsky.convo.muteConvo": {
-      "post": {
-        "summary": "Mute Conversation",
-        "description": "Mute a conversation for a specific user.",
-        "operationId": "MuteConversation",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "convoId": {
-                  "type": "string",
-                  "description": "The unique identifier of the conversation to mute."
-                },
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user muting the conversation."
-                }
-              },
               "required": [
-                "convoId",
-                "userId"
+                "feed"
+              ],
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "feed": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FeedViewPost"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Errors",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/BlockedActor"
+                }
               ]
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully muted the conversation.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'muted'."
-                },
-                "convoId": {
-                  "type": "string",
-                  "description": "The ID of the muted conversation."
-                },
-                "userId": {
-                  "type": "string",
-                  "description": "The ID of the user who muted the conversation."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
+        },
+        "operationId": "GetAuthorFeed"
       }
     },
-    "/chat.bsky.convo.listConvos": {
+    "/app.bsky.feed.getLikes": {
       "get": {
-        "summary": "List Conversations",
-        "description": "Retrieve a list of conversations for the authenticated user.",
-        "operationId": "ListConversations",
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "limit",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of conversations to retrieve."
+            "name": "uri",
+            "required": true,
+            "type": "string",
+            "format": "at-uri"
           },
           {
-            "name": "cursor",
             "in": "query",
-            "required": false,
+            "name": "cid",
             "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of conversations."
+            "format": "cid"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list of conversations.",
+            "description": "A list of likes for a specific post",
             "schema": {
-              "type": "object",
-              "properties": {
-                "conversations": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "convoId": {
-                        "type": "string",
-                        "description": "Unique identifier for the conversation."
-                      },
-                      "lastMessage": {
-                        "type": "string",
-                        "description": "The content of the last message in the conversation."
-                      },
-                      "participants": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "description": "List of participants' user IDs in the conversation."
-                      },
-                      "lastUpdated": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the last message in the conversation."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of conversations, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/chat.bsky.convo.leaveConvo": {
-      "post": {
-        "summary": "Leave Conversation",
-        "description": "Leave a specific conversation.",
-        "operationId": "LeaveConversation",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "convoId": {
-                  "type": "string",
-                  "description": "The unique identifier of the conversation to leave."
-                },
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user leaving the conversation."
-                }
-              },
               "required": [
-                "convoId",
-                "userId"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully left the conversation.",
-            "schema": {
+                "uri",
+                "likes"
+              ],
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'left'."
+                "uri": {
+                  "format": "at-uri",
+                  "type": "string"
                 },
-                "convoId": {
-                  "type": "string",
-                  "description": "The ID of the conversation left."
+                "cid": {
+                  "format": "cid",
+                  "type": "string"
                 },
-                "userId": {
-                  "type": "string",
-                  "description": "The ID of the user who left the conversation."
+                "cursor": {
+                  "type": "string"
+                },
+                "likes": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Like"
+                  }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
           }
-        }
+        },
+        "operationId": "getLikes"
       }
     },
-    "/chat.bsky.convo.getConvo": {
+    "/app.bsky.feed.getPostThread": {
       "get": {
-        "summary": "Get Conversation Details",
-        "description": "Retrieve details about a specific conversation.",
-        "operationId": "GetConversationDetails",
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "convoId",
             "in": "query",
+            "name": "uri",
             "required": true,
             "type": "string",
-            "description": "The unique identifier of the conversation to retrieve."
+            "format": "at-uri"
+          },
+          {
+            "in": "query",
+            "name": "depth",
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved conversation details.",
+            "description": "The post thread for a specific post",
             "schema": {
+              "required": [
+                "thread"
+              ],
               "type": "object",
               "properties": {
-                "convoId": {
-                  "type": "string",
-                  "description": "Unique identifier for the conversation."
-                },
-                "participants": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of participant user IDs in the conversation."
-                },
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "messageId": {
-                        "type": "string",
-                        "description": "Unique identifier for the message."
-                      },
-                      "sender": {
-                        "type": "string",
-                        "description": "User ID of the message sender."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the message."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of when the message was sent."
-                      }
+                "thread": {
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/ThreadViewPost"
                     }
-                  },
-                  "description": "List of messages in the conversation."
-                },
-                "lastUpdated": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Timestamp of the last message in the conversation."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/chat.bsky.actor.exportAccountData": {
-      "get": {
-        "summary": "Export Account Data",
-        "description": "Export the account data for the authenticated user.",
-        "operationId": "ExportAccountData",
-        "responses": {
-          "200": {
-            "description": "Successfully exported account data.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accountData": {
-                  "type": "object",
-                  "description": "Exported account data in JSON format.",
-                  "properties": {
-                    "username": {
-                      "type": "string",
-                      "description": "Username of the account."
-                    },
-                    "email": {
-                      "type": "string",
-                      "description": "Email address associated with the account."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Account creation date."
-                    },
-                    "conversations": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "convoId": {
-                            "type": "string",
-                            "description": "Unique identifier of a conversation."
-                          },
-                          "lastMessage": {
-                            "type": "string",
-                            "description": "Content of the last message in the conversation."
-                          },
-                          "lastUpdated": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp of the last update in the conversation."
-                          }
-                        }
-                      },
-                      "description": "List of conversations associated with the account."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.video.getUploadLimits": {
-      "get": {
-        "summary": "Get Video Upload Limits",
-        "description": "Retrieve the upload limits for videos, such as maximum file size and duration.",
-        "operationId": "GetVideoUploadLimits",
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved video upload limits.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "maxFileSize": {
-                  "type": "integer",
-                  "description": "Maximum file size allowed for video uploads, in bytes."
-                },
-                "maxDuration": {
-                  "type": "integer",
-                  "description": "Maximum duration allowed for video uploads, in seconds."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.graph.getActorStarterPacks": {
-      "get": {
-        "summary": "Get Actor Starter Packs",
-        "description": "Retrieve recommended starter packs of actors for new users to follow.",
-        "operationId": "GetActorStarterPacks",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of starter packs to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of starter packs."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved actor starter packs.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "starterPacks": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "packId": {
-                        "type": "string",
-                        "description": "Unique identifier for the starter pack."
-                      },
-                      "actors": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "description": "Unique identifier for the actor."
-                            },
-                            "username": {
-                              "type": "string",
-                              "description": "Username of the actor."
-                            },
-                            "displayName": {
-                              "type": "string",
-                              "description": "Display name of the actor."
-                            },
-                            "bio": {
-                              "type": "string",
-                              "description": "Bio or description of the actor."
-                            }
-                          }
-                        },
-                        "description": "List of actors included in the starter pack."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of starter packs, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.describeFeedGenerator": {
-      "get": {
-        "summary": "Describe Feed Generator",
-        "description": "Retrieve metadata about the feed generator, such as supported types and limits.",
-        "operationId": "DescribeFeedGenerator",
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved feed generator metadata.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "supportedTypes": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of supported feed types."
-                },
-                "maxFeedItems": {
-                  "type": "integer",
-                  "description": "Maximum number of items allowed in a feed."
-                },
-                "maxItemSize": {
-                  "type": "integer",
-                  "description": "Maximum size allowed for each item in the feed."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getQuotes": {
-      "get": {
-        "summary": "Get Quotes for a Post",
-        "description": "Retrieve a list of posts that quote a specific post.",
-        "operationId": "GetQuotes",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the post for which to retrieve quotes."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of quotes to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of quotes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved quotes for the post.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quotes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "quoteId": {
-                        "type": "string",
-                        "description": "Unique identifier for the quote post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the quote post."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Username of the author of the quote post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the quote was created."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of quotes, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getSuggestedFeeds": {
-      "get": {
-        "summary": "Get Suggested Feeds",
-        "description": "Retrieve a list of suggested feeds for the authenticated user.",
-        "operationId": "GetSuggestedFeeds",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of suggested feeds to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of suggested feeds."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved suggested feeds.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "feeds": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "feedId": {
-                        "type": "string",
-                        "description": "Unique identifier for the suggested feed."
-                      },
-                      "title": {
-                        "type": "string",
-                        "description": "Title of the suggested feed."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description of the suggested feed."
-                      },
-                      "author": {
-                        "type": "string",
-                        "description": "Username of the author of the suggested feed."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the feed was created."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of suggested feeds, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.getRepostedBy": {
-      "get": {
-        "summary": "Get Users Who Reposted a Post",
-        "description": "Retrieve a list of users who reposted a specific post.",
-        "operationId": "GetRepostedBy",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the post for which to retrieve reposts."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of reposts to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of reposts."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved list of users who reposted the post.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reposters": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "Unique identifier of the user who reposted."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username of the user who reposted."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the user who reposted."
-                      },
-                      "repostedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the post was reposted."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of reposts, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/app.bsky.feed.sendInteractions": {
-      "post": {
-        "summary": "Send Interaction",
-        "description": "Send an interaction (like, repost) for a specified post.",
-        "operationId": "SendInteraction",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "postId": {
-                  "type": "string",
-                  "description": "The unique identifier of the post to interact with."
-                },
-                "interactionType": {
-                  "type": "string",
-                  "description": "Type of interaction to send (e.g., 'like', 'repost').",
-                  "enum": [
-                    "like",
-                    "repost"
                   ]
-                },
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user sending the interaction."
                 }
-              },
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "NotFound",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "GetPostThread"
+      }
+    },
+    "/app.bsky.feed.getPosts": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uris",
+            "required": true,
+            "type": "array",
+            "items": {
+              "format": "at-uri",
+              "type": "string"
+            },
+            "maxLength": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A batch of specific posts",
+            "schema": {
               "required": [
-                "postId",
-                "interactionType",
-                "userId"
-              ]
+                "posts"
+              ],
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/PostView"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getPosts"
+      }
+    },
+    "/app.bsky.feed.repostedBy": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uri",
+            "required": true,
+            "type": "string",
+            "format": "at-uri"
+          },
+          {
+            "in": "query",
+            "name": "cid",
+            "type": "string",
+            "format": "cid"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of actors who have reposted a specific post",
+            "schema": {
+              "required": [
+                "uri",
+                "repostedBy"
+              ],
+              "type": "object",
+              "properties": {
+                "uri": {
+                  "format": "at-uri",
+                  "type": "string"
+                },
+                "cid": {
+                  "format": "cid",
+                  "type": "string"
+                },
+                "cursor": {
+                  "type": "string"
+                },
+                "repostedBy": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "repostedBy"
+      }
+    },
+    "/app.bsky.feed.getTimeline": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "description": "A view of the user's home timeline.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "algorithm",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's home timeline",
+            "schema": {
+              "required": [
+                "feed"
+              ],
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "feed": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FeedViewPost"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getTimeline"
+      }
+    },
+    "/app.bsky.feed.follow": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "A social follow.",
+        "operationId": "follow",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Follow"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully sent the interaction.",
+            "description": "Successful operation",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status of the interaction, e.g., 'success'."
+                "tid": {
+                  "description": "The record key",
+                  "type": "string"
                 },
-                "interactionId": {
-                  "type": "string",
-                  "description": "Unique identifier for the sent interaction."
-                },
-                "postId": {
-                  "type": "string",
-                  "description": "The ID of the post that was interacted with."
-                },
-                "interactionType": {
-                  "type": "string",
-                  "description": "The type of interaction (e.g., 'like', 'repost')."
+                "record": {
+                  "$ref": "#/definitions/Follow"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
     },
-    "/app.bsky.graph.follow": {
-      "post": {
-        "summary": "Follow a User",
-        "description": "Follow a specified user.",
-        "operationId": "FollowUser",
+    "/app.bsky.graph.getBlocks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Who is the requester's account blocking?",
+        "operationId": "getBlocks",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user to follow."
-                }
-              },
-              "required": [
-                "userId"
-              ]
-            }
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully followed the user.",
+            "description": "Successful operation",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'following'."
+                "cursor": {
+                  "type": "string"
+                },
+                "blocks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
     },
-    "/app.bsky.graph.unfollow": {
-      "post": {
-        "summary": "Unfollow a User",
-        "description": "Unfollow a specified user.",
-        "operationId": "UnfollowUser",
+    "/app.bsky.graph.getFollowers": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Who is following an actor?",
+        "operationId": "getFollowers",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "in": "query",
+            "name": "actor",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user to unfollow."
-                }
-              },
-              "required": [
-                "userId"
-              ]
-            }
+            "type": "string",
+            "format": "at-identifier"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully unfollowed the user.",
+            "description": "Successful operation",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'unfollowed'."
+                "subject": {
+                  "$ref": "#/definitions/ProfileView"
+                },
+                "cursor": {
+                  "type": "string"
+                },
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
     },
-    "/app.bsky.graph.muteActor": {
-      "post": {
-        "summary": "Mute a User",
-        "description": "Mute a specified user.",
-        "operationId": "MuteUser",
+    "/app.bsky.graph.getFollows": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Who is an actor following?",
+        "operationId": "getFollows",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "in": "query",
+            "name": "actor",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user to mute."
-                }
-              },
-              "required": [
-                "userId"
-              ]
-            }
+            "type": "string",
+            "format": "at-identifier"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully muted the user.",
+            "description": "Successful operation",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'muted'."
+                "subject": {
+                  "$ref": "#/definitions/ProfileView"
+                },
+                "cursor": {
+                  "type": "string"
+                },
+                "follows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ProfileView"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
     },
-    "/app.bsky.graph.unmuteActor": {
-      "post": {
-        "summary": "Unmute a User",
-        "description": "Unmute a specified user.",
-        "operationId": "UnmuteUser",
+    "/app.bsky.graph.getList": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Fetch a list of actors",
+        "operationId": "getList",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "in": "query",
+            "name": "list",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "description": "The unique identifier of the user to unmute."
-                }
-              },
-              "required": [
-                "userId"
-              ]
-            }
+            "type": "string",
+            "format": "at-uri"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully unmuted the user.",
+            "description": "Successful operation",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'unmuted'."
+                "cursor": {
+                  "type": "string"
+                },
+                "list": {
+                  "$ref": "#/definitions/ListView"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ListItemView"
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getListMutes": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Which lists is the requester's account muting?",
+        "operationId": "getListMutes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "lists": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ListView"
+                  }
+                }
+              }
             }
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getLists": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Fetch a list of lists that belong to an actor",
+        "operationId": "getLists",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "actor",
+            "required": true,
+            "type": "string",
+            "format": "at-identifier"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "lists": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ListView"
+                  }
+                }
+              }
             }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
     },
     "/app.bsky.graph.getMutes": {
       "get": {
-        "summary": "Get Muted Users",
-        "description": "Retrieve a list of users muted by the authenticated user.",
-        "operationId": "GetMutedUsers",
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Who does the viewer mute?",
+        "operationId": "getMutes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list of muted users.",
+            "description": "Successful operation",
             "schema": {
+              "required": [
+                "mutes"
+              ],
               "type": "object",
               "properties": {
-                "mutedUsers": {
+                "cursor": {
+                  "type": "string"
+                },
+                "mutes": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "Unique identifier of the muted user."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username of the muted user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the muted user."
-                      }
-                    }
+                    "$ref": "#/definitions/ProfileView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid input"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Unexpected error"
           }
         }
+      }
+    },
+    "/app.bsky.graph.muteActor": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Mute an actor by did or handle.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "actor"
+              ],
+              "type": "object",
+              "properties": {
+                "actor": {
+                  "format": "uri",
+                  "description": "Actor identifier",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actor muted successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "muteActor"
+      }
+    },
+    "/app.bsky.graph.muteActorList": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Mute a list of actors.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "list"
+              ],
+              "type": "object",
+              "properties": {
+                "list": {
+                  "format": "uri",
+                  "description": "List identifier",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actor list muted successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "muteActorList"
+      }
+    },
+    "/app.bsky.graph.unmuteActor": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Unmute an actor by did or handle.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "actor"
+              ],
+              "type": "object",
+              "properties": {
+                "actor": {
+                  "format": "at-identifier",
+                  "description": "Actor identifier",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actor unmuted successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "unmuteActor"
+      }
+    },
+    "/app.bsky.graph.unmuteActorList": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Unmute a list of actors.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "list"
+              ],
+              "type": "object",
+              "properties": {
+                "list": {
+                  "format": "at-uri",
+                  "description": "List URI",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actors in the list unmuted successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "unmuteActorList"
+      }
+    },
+    "/app.bsky.notification.getUnreadCount": {
+      "get": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Get count of unread notifications.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "seenAt",
+            "description": "Datetime at which notifications were last seen",
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "required": [
+                "count"
+              ],
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "Count of unread notifications",
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "getUnreadCount"
+      }
+    },
+    "/app.bsky.notification.listNotifications": {
+      "get": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "List notifications.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit the number of notifications to fetch",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "description": "Cursor for paginating through notifications",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "seenAt",
+            "description": "Datetime at which notifications were last seen",
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "required": [
+                "notifications"
+              ],
+              "type": "object",
+              "properties": {
+                "cursor": {
+                  "description": "Cursor for the next page of notifications",
+                  "type": "string"
+                },
+                "notifications": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Notification"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "operationId": "listNotifications"
       }
     },
     "/app.bsky.notification.updateSeen": {
       "post": {
-        "summary": "Update Notifications as Seen",
-        "description": "Mark notifications as seen up to a specified timestamp.",
-        "operationId": "UpdateNotificationsSeen",
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Notify server that the user has seen notifications.",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "required": true,
             "schema": {
+              "required": [
+                "seenAt"
+              ],
               "type": "object",
               "properties": {
                 "seenAt": {
-                  "type": "string",
                   "format": "date-time",
-                  "description": "Timestamp to mark notifications as seen up to this point."
+                  "type": "string"
                 }
-              },
-              "required": [
-                "seenAt"
-              ]
+              }
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated notifications as seen.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status, e.g., 'updated'."
-                }
-              }
-            }
+            "description": "Successful operation"
           },
           "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Invalid request"
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Internal server error"
           }
-        }
+        },
+        "operationId": "updateSeen"
       }
     },
-    "/com.atproto.admin.searchAccounts": {
+    "/app.bsky.unspecced.popular": {
       "get": {
-        "summary": "Search Accounts",
-        "description": "Search for accounts based on criteria such as username, email, or other attributes.",
-        "operationId": "SearchAccounts",
-        "parameters": [
-          {
-            "name": "query",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "Search query for finding accounts (e.g., username or email)."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of accounts to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of results."
-          }
+        "tags": [
+          "app.bsky.unspecced"
         ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved accounts matching the search criteria.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accounts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the account."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username of the account."
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "Email address associated with the account."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the account."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Account creation timestamp."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of accounts, if available."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/com.atproto.admin.getInviteCodes": {
-      "get": {
-        "summary": "Get Invite Codes",
-        "description": "Retrieve a list of invite codes along with metadata such as expiration and usage counts.",
-        "operationId": "GetInviteCodes",
+        "summary": "An unspecced view of globally popular items",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "limit",
             "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The maximum number of invite codes to retrieve."
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "A cursor for pagination to retrieve the next set of invite codes."
-          },
-          {
-            "name": "available",
-            "in": "query",
-            "required": false,
+            "name": "includeNsfw",
+            "description": "Whether to include not safe for work items",
             "type": "boolean",
-            "description": "Filter to show only available (unused) invite codes."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved invite codes.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "inviteCodes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "code": {
-                        "type": "string",
-                        "description": "The invite code string."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the invite code was created."
-                      },
-                      "expiresAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Expiration date of the invite code, if applicable."
-                      },
-                      "usageCount": {
-                        "type": "integer",
-                        "description": "Number of times the invite code has been used."
-                      },
-                      "maxUsage": {
-                        "type": "integer",
-                        "description": "Maximum number of uses allowed for this invite code."
-                      },
-                      "available": {
-                        "type": "boolean",
-                        "description": "Indicates if the invite code is still available for use."
-                      }
-                    }
-                  }
-                },
-                "nextCursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of invite codes, if available."
-                }
-              }
-            }
+            "default": false
           },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/com.atproto.admin.getAccountInfo": {
-      "get": {
-        "summary": "Get Account Information",
-        "description": "Retrieve detailed account information for a specified user account, including administrative metadata.",
-        "operationId": "GetAccountInfo",
-        "parameters": [
           {
-            "name": "accountId",
             "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the account to retrieve information for."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved account information.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accountId": {
-                  "type": "string",
-                  "description": "Unique identifier of the account."
-                },
-                "username": {
-                  "type": "string",
-                  "description": "Username of the account."
-                },
-                "email": {
-                  "type": "string",
-                  "description": "Email address associated with the account."
-                },
-                "displayName": {
-                  "type": "string",
-                  "description": "Display name of the account."
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Account creation timestamp."
-                },
-                "status": {
-                  "type": "string",
-                  "description": "Current status of the account (e.g., 'active', 'suspended')."
-                },
-                "roles": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of roles assigned to the account."
-                },
-                "lastLogin": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Timestamp of the last login."
-                },
-                "metadata": {
-                  "type": "object",
-                  "description": "Additional administrative metadata related to the account.",
-                  "properties": {
-                    "suspensionReason": {
-                      "type": "string",
-                      "description": "Reason for account suspension, if applicable."
-                    },
-                    "notes": {
-                      "type": "string",
-                      "description": "Administrative notes about the account."
-                    }
-                  }
-                }
-              }
-            }
+            "name": "limit",
+            "description": "The number of items to return",
+            "type": "integer",
+            "default": 50,
+            "maximum": 100,
+            "minimum": 1
           },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Account not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/com.atproto.admin.getAccountInfos": {
-      "get": {
-        "summary": "Get Multiple Account Information",
-        "description": "Retrieve detailed account information for multiple specified user accounts.",
-        "operationId": "GetAccountInfos",
-        "parameters": [
           {
-            "name": "accountIds",
             "in": "query",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "A list of account IDs to retrieve information for. Multiple IDs can be passed as separate parameters."
+            "name": "cursor",
+            "description": "Cursor for pagination",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account information for specified accounts.",
+            "description": "Successful operation",
             "schema": {
+              "required": [
+                "feed"
+              ],
               "type": "object",
               "properties": {
-                "accounts": {
+                "cursor": {
+                  "type": "string"
+                },
+                "feed": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the account."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username of the account."
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "Email address associated with the account."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the account."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Account creation timestamp."
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "Current status of the account (e.g., active, suspended)."
-                      },
-                      "roles": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "description": "List of roles assigned to the account."
-                      },
-                      "lastLogin": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the last login."
-                      },
-                      "metadata": {
-                        "type": "object",
-                        "description": "Additional administrative metadata related to the account.",
-                        "properties": {
-                          "suspensionReason": {
-                            "type": "string",
-                            "description": "Reason for account suspension, if applicable."
-                          },
-                          "notes": {
-                            "type": "string",
-                            "description": "Administrative notes about the account."
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/FeedViewPost"
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "One or more accounts not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
           }
-        }
+        },
+        "operationId": "popular"
       }
     },
-    "/chat.bsky.moderation.updateActorAccess": {
+    "/com.atproto.server.createSession": {
       "post": {
-        "summary": "Update Actor Access",
-        "description": "Update access settings for a specified user account, allowing moderators to restrict or restore access.",
-        "operationId": "UpdateActorAccess",
+        "responses": {
+          "default": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessJwt": {
+                  "type": "string",
+                  "description": "accessJwt"
+                },
+                "refreshJwt": {
+                  "type": "string",
+                  "description": "refreshJwt"
+                }
+              }
+            }
+          }
+        },
+        "summary": "CreateSession",
+        "description": "Authenticates to Bluesky and retrieves session tokens.",
+        "operationId": "CreateSession",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
+                "identifier": {
                   "type": "string",
-                  "description": "The unique identifier of the user whose access is being updated."
+                  "description": "identifier"
                 },
-                "accessLevel": {
+                "password": {
                   "type": "string",
-                  "description": "The access level to set for the user (e.g., restricted, active).",
-                  "enum": [
-                    "restricted",
-                    "active"
-                  ]
-                },
-                "reason": {
-                  "type": "string",
-                  "description": "Reason for updating the user's access level."
+                  "description": "password"
                 }
               },
-              "required": [
-                "actorId",
-                "accessLevel"
-              ]
-            }
+              "x-ms-visibility": "internal"
+            },
+            "x-ms-visibility": "internal"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated access level for the user.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "Confirmation status of the update, e.g., 'success'."
-                },
-                "actorId": {
-                  "type": "string",
-                  "description": "The ID of the user whose access level was updated."
-                },
-                "newAccessLevel": {
-                  "type": "string",
-                  "description": "The new access level assigned to the user."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "User not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+        "x-ms-visibility": "important"
+      }
+    }
+  },
+  "definitions": {
+    "ProfileViewBasic": {
+      "required": [
+        "did",
+        "handle"
+      ],
+      "type": "object",
+      "properties": {
+        "did": {
+          "format": "did",
+          "type": "string"
+        },
+        "handle": {
+          "format": "handle",
+          "type": "string"
+        },
+        "displayName": {
+          "maxLength": 640,
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "viewer": {
+          "$ref": "#/definitions/ViewerState"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
           }
         }
       }
     },
-    "/chat.bsky.moderation.getMessageContext": {
-      "get": {
-        "summary": "Get Message Context",
-        "description": "Retrieve the context around a specific message, including surrounding messages, to assist with moderation.",
-        "operationId": "GetMessageContext",
-        "parameters": [
-          {
-            "name": "messageId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the message for which to retrieve context."
-          },
-          {
-            "name": "beforeLimit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The number of messages to retrieve before the specified message."
-          },
-          {
-            "name": "afterLimit",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "description": "The number of messages to retrieve after the specified message."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved message context.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "context": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "messageId": {
-                        "type": "string",
-                        "description": "Unique identifier of the message."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the message."
-                      },
-                      "authorId": {
-                        "type": "string",
-                        "description": "Identifier of the message's author."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the message was created."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Message not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+    "ProfileView": {
+      "required": [
+        "did",
+        "handle"
+      ],
+      "type": "object",
+      "properties": {
+        "did": {
+          "format": "did",
+          "type": "string"
+        },
+        "handle": {
+          "format": "handle",
+          "type": "string"
+        },
+        "displayName": {
+          "maxLength": 640,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2560,
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "indexedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "viewer": {
+          "$ref": "#/definitions/ViewerState"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
           }
         }
       }
     },
-    "/chat.bsky.moderation.getActorMetadata": {
-      "get": {
-        "summary": "Get Actor Metadata",
-        "description": "Retrieve moderation-related metadata for a specified user account.",
-        "operationId": "GetActorMetadata",
-        "parameters": [
-          {
-            "name": "actorId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the user account to retrieve metadata for."
+    "ProfileViewDetailed": {
+      "required": [
+        "did",
+        "handle"
+      ],
+      "type": "object",
+      "properties": {
+        "did": {
+          "format": "did",
+          "type": "string"
+        },
+        "handle": {
+          "format": "handle",
+          "type": "string"
+        },
+        "displayName": {
+          "maxLength": 640,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 2560,
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "banner": {
+          "type": "string"
+        },
+        "followersCount": {
+          "type": "integer"
+        },
+        "followsCount": {
+          "type": "integer"
+        },
+        "postsCount": {
+          "type": "integer"
+        },
+        "indexedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "viewer": {
+          "$ref": "#/definitions/ViewerState"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved moderation metadata for the user account.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "actorId": {
-                  "type": "string",
-                  "description": "Unique identifier of the user."
-                },
-                "status": {
-                  "type": "string",
-                  "description": "Current moderation status of the user (e.g., 'active', 'restricted', 'suspended')."
-                },
-                "reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "reportId": {
-                        "type": "string",
-                        "description": "Unique identifier for the report."
-                      },
-                      "reportType": {
-                        "type": "string",
-                        "description": "Type of report (e.g., 'spam', 'harassment')."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the report was created."
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "Current status of the report (e.g., 'resolved', 'pending')."
-                      }
-                    }
-                  }
-                },
-                "lastUpdated": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "Timestamp of the last update to the user's moderation metadata."
-                },
-                "notes": {
-                  "type": "string",
-                  "description": "Any additional notes related to the user's moderation history."
-                }
+        }
+      }
+    },
+    "ViewerState": {
+      "type": "object",
+      "properties": {
+        "muted": {
+          "type": "boolean"
+        },
+        "mutedByList": {
+          "$ref": "#/definitions/ListViewBasic"
+        },
+        "blockedBy": {
+          "type": "boolean"
+        },
+        "blocking": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "following": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "followedBy": {
+          "format": "at-uri",
+          "type": "string"
+        }
+      }
+    },
+    "Preferences": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/definitions/AdultContentPref"
+          }
+        ]
+      }
+    },
+    "AdultContentPref": {
+      "required": [
+        "enabled"
+      ],
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "ContentLabelPref": {
+      "required": [
+        "label",
+        "visibility"
+      ],
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "show",
+            "warn",
+            "hide"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "Label": {
+      "description": "Metadata tag on an atproto resource (eg, repo or record)",
+      "required": [
+        "src",
+        "uri",
+        "val",
+        "cts"
+      ],
+      "type": "object",
+      "properties": {
+        "src": {
+          "format": "did",
+          "description": "DID of the actor who created this label",
+          "type": "string"
+        },
+        "uri": {
+          "format": "uri",
+          "description": "AT URI of the record, repository (account), or other resource which this label applies to",
+          "type": "string"
+        },
+        "cid": {
+          "format": "cid",
+          "description": "optionally, CID specifying the specific version of 'uri' resource this label applies to",
+          "type": "string"
+        },
+        "val": {
+          "description": "the short string name of the value or type of this label",
+          "maxLength": 128,
+          "type": "string"
+        },
+        "neg": {
+          "description": "if true, this is a negation label, overwriting a previous label",
+          "type": "boolean"
+        },
+        "cts": {
+          "format": "datetime",
+          "description": "timestamp when this label was created",
+          "type": "string"
+        }
+      }
+    },
+    "ListViewBasic": {
+      "type": "object"
+    },
+    "ExternalEmbed": {
+      "required": [
+        "external"
+      ],
+      "type": "object",
+      "properties": {
+        "external": {
+          "$ref": "#/definitions/External"
+        }
+      }
+    },
+    "External": {
+      "required": [
+        "uri",
+        "title",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "thumb": {
+          "format": "binary",
+          "maxLength": 1000000,
+          "type": "string"
+        }
+      }
+    },
+    "ExternalEmbedView": {
+      "required": [
+        "external"
+      ],
+      "type": "object",
+      "properties": {
+        "external": {
+          "$ref": "#/definitions/ExternalView"
+        }
+      }
+    },
+    "ExternalView": {
+      "required": [
+        "uri",
+        "title",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "thumb": {
+          "type": "string"
+        }
+      }
+    },
+    "ImagesEmbed": {
+      "required": [
+        "images"
+      ],
+      "type": "object",
+      "properties": {
+        "images": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Image"
+          }
+        }
+      }
+    },
+    "Image": {
+      "required": [
+        "image",
+        "alt"
+      ],
+      "type": "object",
+      "properties": {
+        "image": {
+          "format": "binary",
+          "maxLength": 1000000,
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        }
+      }
+    },
+    "ImagesEmbedView": {
+      "required": [
+        "images"
+      ],
+      "type": "object",
+      "properties": {
+        "images": {
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageView"
+          }
+        }
+      }
+    },
+    "ImageView": {
+      "required": [
+        "thumb",
+        "fullsize",
+        "alt"
+      ],
+      "type": "object",
+      "properties": {
+        "thumb": {
+          "type": "string"
+        },
+        "fullsize": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        }
+      }
+    },
+    "RecordEmbed": {
+      "required": [
+        "record"
+      ],
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/StrongRef"
+        }
+      }
+    },
+    "RecordEmbedView": {
+      "required": [
+        "record"
+      ],
+      "type": "object",
+      "properties": {
+        "record": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ViewRecord"
+            }
+          ]
+        }
+      }
+    },
+    "ViewRecord": {
+      "required": [
+        "uri",
+        "cid",
+        "author",
+        "value",
+        "indexedAt"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "cid": {
+          "format": "cid",
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/ProfileViewBasic"
+        },
+        "value": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "embeds": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/ImagesEmbedView"
               }
+            ]
+          }
+        },
+        "indexedAt": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ViewNotFound": {
+      "required": [
+        "uri"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        }
+      }
+    },
+    "ViewBlocked": {
+      "required": [
+        "uri"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        }
+      }
+    },
+    "RecordWithMediaEmbed": {
+      "required": [
+        "record",
+        "media"
+      ],
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/RecordEmbed"
+        },
+        "media": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ImagesEmbed"
             }
-          },
-          "400": {
-            "description": "Invalid request - missing or invalid parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+          ]
+        }
+      }
+    },
+    "RecordWithMediaEmbedView": {
+      "required": [
+        "record",
+        "media"
+      ],
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/RecordEmbedView"
+        },
+        "media": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ImagesEmbedView"
             }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid or missing credentials.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+          ]
+        }
+      }
+    },
+    "PostView": {
+      "required": [
+        "uri",
+        "cid",
+        "author",
+        "record",
+        "indexedAt"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "cid": {
+          "format": "cid",
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/ProfileViewBasic"
+        },
+        "record": {
+          "type": "object"
+        },
+        "embed": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ImagesEmbedView"
             }
-          },
-          "404": {
-            "description": "User not found.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+          ]
+        },
+        "replyCount": {
+          "type": "integer"
+        },
+        "repostCount": {
+          "type": "integer"
+        },
+        "likeCount": {
+          "type": "integer"
+        },
+        "indexedAt": {
+          "format": "datetime",
+          "type": "string"
+        },
+        "viewer": {
+          "$ref": "#/definitions/ViewerState"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        }
+      }
+    },
+    "BlockedActor": {
+      "type": "object"
+    },
+    "BlockedByActor": {
+      "type": "object"
+    },
+    "Like": {
+      "required": [
+        "indexedAt",
+        "createdAt",
+        "actor"
+      ],
+      "type": "object",
+      "properties": {
+        "indexedAt": {
+          "format": "datetime",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        },
+        "actor": {
+          "$ref": "#/definitions/ProfileView"
+        }
+      }
+    },
+    "FeedLike": {
+      "required": [
+        "subject",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/StrongRef"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "Post": {
+      "required": [
+        "text",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "text": {
+          "description": "text",
+          "maxLength": 3000,
+          "type": "string"
+        },
+        "entities": {
+          "description": "deprecated - replaced by app.bsky.richtext.facet.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Entity"
+          }
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Facet"
+          }
+        },
+        "reply": {
+          "$ref": "#/definitions/ReplyRef"
+        },
+        "embed": {
+          "$ref": "#/definitions/Embed"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "Embed": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ImagesEmbedView"
+        }
+      ]
+    },
+    "ReplyRef": {
+      "required": [
+        "root",
+        "parent"
+      ],
+      "type": "object",
+      "properties": {
+        "root": {
+          "$ref": "#/definitions/StrongRef"
+        },
+        "parent": {
+          "$ref": "#/definitions/StrongRef"
+        }
+      }
+    },
+    "Entity": {
+      "description": "Deprecated - use facets instead.",
+      "required": [
+        "index",
+        "type",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "index": {
+          "$ref": "#/definitions/TextSlice"
+        },
+        "type": {
+          "description": "Expected values are 'mention' and 'link'.",
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "TextSlice": {
+      "description": "Deprecated. Use app.bsky.richtext instead -- A text segment. Start is inclusive, end is exclusive. Indices are for utf16-encoded strings.",
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object",
+      "properties": {
+        "start": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    },
+    "Repost": {
+      "required": [
+        "subject",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/StrongRef"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "Block": {
+      "required": [
+        "subject",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "format": "did",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "Follow": {
+      "required": [
+        "subject",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "format": "did",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "ListRecord": {
+      "required": [
+        "name",
+        "purpose",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "purpose": {
+          "$ref": "#/definitions/ListPurpose"
+        },
+        "name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 3000,
+          "type": "string"
+        },
+        "descriptionFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RichTextFacet"
+          }
+        },
+        "avatar": {
+          "format": "binary",
+          "description": "A binary file with a maximum size of 1,000,000 bytes. Accepts image/png or image/jpeg file types.",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ListItemRecord": {
+      "required": [
+        "subject",
+        "list",
+        "createdAt"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "format": "uri",
+          "description": "Decentralized identifier (DID)",
+          "type": "string"
+        },
+        "list": {
+          "format": "uri",
+          "description": "Unique identifier of the list",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "description": "Creation date of the list item",
+          "type": "string"
+        }
+      }
+    },
+    "Notification": {
+      "required": [
+        "uri",
+        "cid",
+        "author",
+        "reason",
+        "record",
+        "isRead",
+        "indexedAt"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/ProfileView"
+        },
+        "reason": {
+          "enum": [
+            "like",
+            "repost",
+            "follow",
+            "mention",
+            "reply",
+            "quote"
+          ],
+          "type": "string"
+        },
+        "reasonSubject": {
+          "format": "uri",
+          "type": "string"
+        },
+        "record": {
+          "type": "object"
+        },
+        "isRead": {
+          "type": "boolean"
+        },
+        "indexedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        }
+      }
+    },
+    "Facet": {
+      "required": [
+        "index",
+        "features"
+      ],
+      "type": "object",
+      "properties": {
+        "index": {
+          "$ref": "#/definitions/ByteSlice"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/Mention"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "Mention": {
+      "description": "A facet feature for actor mentions.",
+      "required": [
+        "did"
+      ],
+      "type": "object",
+      "properties": {
+        "did": {
+          "format": "did",
+          "type": "string"
+        }
+      }
+    },
+    "Link": {
+      "description": "A facet feature for links.",
+      "required": [
+        "uri"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "uri",
+          "type": "string"
+        }
+      }
+    },
+    "ByteSlice": {
+      "description": "A text segment. Start is inclusive, end is exclusive. Indices are for utf8-encoded strings.",
+      "required": [
+        "byteStart",
+        "byteEnd"
+      ],
+      "type": "object",
+      "properties": {
+        "byteStart": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "byteEnd": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    },
+    "FeedViewPost": {
+      "required": [
+        "post"
+      ],
+      "type": "object",
+      "properties": {
+        "post": {
+          "$ref": "#/definitions/PostView"
+        },
+        "reply": {
+          "$ref": "#/definitions/ReplyRef"
+        },
+        "reason": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ReasonRepost"
             }
+          ]
+        }
+      }
+    },
+    "ReasonRepost": {
+      "required": [
+        "by",
+        "indexedAt"
+      ],
+      "type": "object",
+      "properties": {
+        "by": {
+          "$ref": "#/definitions/ProfileViewBasic"
+        },
+        "indexedAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "ThreadViewPost": {
+      "required": [
+        "post"
+      ],
+      "type": "object",
+      "properties": {
+        "post": {
+          "$ref": "#/definitions/PostView"
+        },
+        "parent": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ThreadViewPost"
+            }
+          ]
+        },
+        "replies": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/ThreadViewPost"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "NotFoundPost": {
+      "required": [
+        "uri",
+        "notFound"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "notFound": {
+          "default": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "BlockedPost": {
+      "required": [
+        "uri",
+        "blocked"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "blocked": {
+          "default": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "ListView": {
+      "required": [
+        "uri",
+        "creator",
+        "name",
+        "purpose",
+        "indexedAt"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "creator": {
+          "$ref": "#/definitions/ProfileView"
+        },
+        "name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "purpose": {
+          "$ref": "#/definitions/ListPurpose"
+        },
+        "description": {
+          "description": "Max graphemes 300, maxLength 3000",
+          "type": "string"
+        },
+        "descriptionFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RichTextFacet"
+          }
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "viewer": {
+          "$ref": "#/definitions/ListViewerState"
+        },
+        "indexedAt": {
+          "format": "datetime",
+          "type": "string"
+        }
+      }
+    },
+    "ListItemView": {
+      "required": [
+        "subject"
+      ],
+      "type": "object",
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/ProfileView"
+        }
+      }
+    },
+    "ListPurpose": {
+      "enum": [
+        "modlist"
+      ],
+      "type": "string"
+    },
+    "Modlist": {
+      "description": "A list of actors to apply an aggregate moderation action (mute/block) on",
+      "type": "string"
+    },
+    "ListViewerState": {
+      "type": "object",
+      "properties": {
+        "muted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "StrongRef": {
+      "description": "A URI with a content-hash fingerprint.",
+      "required": [
+        "uri",
+        "cid"
+      ],
+      "type": "object",
+      "properties": {
+        "uri": {
+          "format": "at-uri",
+          "type": "string"
+        },
+        "cid": {
+          "format": "cid",
+          "type": "string"
+        }
+      }
+    },
+    "RichTextFacet": {
+      "required": [
+        "index",
+        "features"
+      ],
+      "type": "object",
+      "properties": {
+        "index": {
+          "$ref": "#/definitions/ByteSlice"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/Mention"
+              }
+            ]
           }
         }
       }
     }
   },
+  "parameters": {},
+  "responses": {},
   "securityDefinitions": {
-    "BearerAuth": {
+    "Access Token": {
       "type": "apiKey",
-      "name": "Authorization",
       "in": "header",
-      "description": "Bearer token required for authentication. Format: 'Bearer {token}'."
+      "name": "Authorization"
     }
   },
   "security": [
     {
-      "BearerAuth": []
+      "Access Token": []
     }
   ],
-  "definitions": {
-    "ErrorResponse": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "description": "Error code representing the issue."
-        },
-        "message": {
-          "type": "string",
-          "description": "A descriptive message explaining the error."
-        }
-      }
-    }
-  }
+  "tags": []
 }
