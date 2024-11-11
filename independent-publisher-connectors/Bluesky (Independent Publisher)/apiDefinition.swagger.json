@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bluesky (Independent Publisher)",
-    "description": "The HTTP API Bluesky API enables programmatic interaction with user timelines, posting, and profiles.",
+    "description": "The HTTP API Bluesky API enables programmatic interaction with user timelines, posting, profiles, feeds and admin functions.",
     "version": "1.0"
   },
   "host": "bsky.app",
@@ -77,12 +77,6 @@
             "description": "Unauthorized - Invalid or missing API key.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
-            },
-            "default": {
-              "description": "An unspecified error occurred.",
-              "schema": {
-                "$ref": "#/definitions/ErrorResponse"
-              }
             }
           }
         }
@@ -204,14 +198,14 @@
               }
             }
           },
-          "404": {
-            "description": "User not found.",
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized - Invalid or missing API key.",
+          "404": {
+            "description": "User not found.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -337,7 +331,10 @@
                   "description": "Array of URLs for any media attachments."
                 }
               },
-              "required": [ "conversationId", "content" ]
+              "required": [
+                "conversationId",
+                "content"
+              ]
             }
           }
         ],
@@ -401,7 +398,6 @@
             "items": {
               "type": "string"
             },
-            "collectionFormat": "multi",
             "description": "List of handles or user IDs to check relationships with the subject."
           }
         ],
@@ -501,7 +497,6 @@
             "items": {
               "type": "string"
             },
-            "collectionFormat": "multi",
             "description": "Tags associated with the video."
           }
         ],
@@ -1031,12 +1026,6 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
           }
         }
       }
@@ -1055,7 +1044,6 @@
             "items": {
               "type": "string"
             },
-            "collectionFormat": "multi",
             "description": "Array of post IDs to retrieve."
           }
         ],
@@ -1109,12 +1097,6 @@
           },
           "401": {
             "description": "Unauthorized - Invalid or missing API key.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "default": {
-            "description": "An unspecified error occurred.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1216,998 +1198,711 @@
             }
           }
         }
-      },
-      "/app.bsky.feed.getFeed": {
-        "get": {
-          "summary": "Get Feed",
-          "description": "Retrieve the feed of posts for a specified user or tag.",
-          "operationId": "GetFeed",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "description": "The handle or user ID to retrieve the feed for. If not specified, retrieves the global feed."
-            },
-            {
-              "name": "tag",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "description": "A tag to filter the feed by. Only posts containing this tag will be returned."
-            },
-            {
-              "name": "limit",
-              "in": "query",
-              "required": false,
-              "type": "integer",
-              "format": "int32",
-              "description": "Maximum number of posts to retrieve."
-            },
-            {
-              "name": "before",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "format": "date-time",
-              "description": "Retrieve posts before this timestamp."
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved feed posts.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "posts": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "postId": {
-                          "type": "string",
-                          "description": "Unique identifier for the post."
-                        },
-                        "author": {
-                          "type": "string",
-                          "description": "Handle of the post's author."
-                        },
-                        "content": {
-                          "type": "string",
-                          "description": "Content of the post."
-                        },
-                        "timestamp": {
-                          "type": "string",
-                          "format": "date-time",
-                          "description": "Timestamp when the post was created."
-                        }
+      }
+    },
+    "/app.bsky.actor.searchActors": {
+      "get": {
+        "summary": "Search for Actors",
+        "description": "Search for user accounts based on a query string.",
+        "operationId": "SearchActors",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The search query to find user accounts."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of results to retrieve, up to a maximum limit."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved search results.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the actor."
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "Username of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "Bio or description of the actor."
                       }
                     }
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Invalid request - missing or invalid parameters.",
-              "schema": {
-                "$ref": "#/definitions/ErrorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Invalid or missing API key.",
-              "schema": {
-                "$ref": "#/definitions/ErrorResponse"
-              }
-            },
-            "default": {
-              "description": "An unspecified error occurred.",
-              "schema": {
-                "$ref": "#/definitions/ErrorResponse"
-              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
       }
-    }
-  },
-  "/app.bsky.actor.getPreferences": {
-    "get": {
-      "summary": "Get User Preferences",
-      "description": "Retrieve the preferences for a specified user.",
-      "operationId": "GetUserPreferences",
-      "parameters": [
-        {
-          "name": "user",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The username or user ID for whom to retrieve preferences."
+    },
+    "/app.bsky.feed.getActorFeeds": {
+      "get": {
+        "summary": "Get Actor Feeds",
+        "description": "Retrieve a list of feed posts from a specified actor.",
+        "operationId": "GetActorFeeds",
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the actor whose feeds are to be retrieved."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of posts to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of posts."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved actor's feed posts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Author of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the post was created."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of posts, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
         }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved user preferences.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "preferences": {
-                "type": "object",
-                "description": "Object containing user preferences.",
-                "properties": {
-                  "theme": {
-                    "type": "string",
-                    "description": "User's preferred theme."
+      }
+    },
+    "/app.bsky.feed.getFeedGenerator": {
+      "get": {
+        "summary": "Get Feed Generator",
+        "description": "Retrieve a generated feed based on user preferences.",
+        "operationId": "GetFeedGenerator",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the user for whom the feed is generated."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of items to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of feed items."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the generated feed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feedItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the feed item."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the feed item."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Author of the feed item."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the feed item was created."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of feed items, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getFeedSkeleton": {
+      "get": {
+        "summary": "Get Feed Skeleton",
+        "description": "Retrieve a skeletal version of a feed for faster loading and minimal content structure.",
+        "operationId": "GetFeedSkeleton",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the user for whom the feed skeleton is retrieved."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of items to retrieve in the feed skeleton."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of feed skeleton items."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the feed skeleton.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "skeletonItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the skeleton item."
+                      },
+                      "placeholderText": {
+                        "type": "string",
+                        "description": "Placeholder text or minimal content to display quickly."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the skeleton item was created."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of feed skeleton items, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.muteConvo": {
+      "post": {
+        "summary": "Mute Conversation",
+        "description": "Mute a conversation for a specific user.",
+        "operationId": "MuteConversation",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to mute."
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user muting the conversation."
+                }
+              },
+              "required": [
+                "convoId",
+                "userId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully muted the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'muted'."
+                },
+                "convoId": {
+                  "type": "string",
+                  "description": "The ID of the muted conversation."
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "The ID of the user who muted the conversation."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.listConvos": {
+      "get": {
+        "summary": "List Conversations",
+        "description": "Retrieve a list of conversations for the authenticated user.",
+        "operationId": "ListConversations",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of conversations to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of conversations."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of conversations.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "conversations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "convoId": {
+                        "type": "string",
+                        "description": "Unique identifier for the conversation."
+                      },
+                      "lastMessage": {
+                        "type": "string",
+                        "description": "The content of the last message in the conversation."
+                      },
+                      "participants": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of participants' user IDs in the conversation."
+                      },
+                      "lastUpdated": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the last message in the conversation."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of conversations, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.leaveConvo": {
+      "post": {
+        "summary": "Leave Conversation",
+        "description": "Leave a specific conversation.",
+        "operationId": "LeaveConversation",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to leave."
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user leaving the conversation."
+                }
+              },
+              "required": [
+                "convoId",
+                "userId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully left the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'left'."
+                },
+                "convoId": {
+                  "type": "string",
+                  "description": "The ID of the conversation left."
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "The ID of the user who left the conversation."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.getConvo": {
+      "get": {
+        "summary": "Get Conversation Details",
+        "description": "Retrieve details about a specific conversation.",
+        "operationId": "GetConversationDetails",
+        "parameters": [
+          {
+            "name": "convoId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the conversation to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved conversation details.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "Unique identifier for the conversation."
+                },
+                "participants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
                   },
-                  "notificationsEnabled": {
-                    "type": "boolean",
-                    "description": "Whether notifications are enabled for the user."
-                  }
+                  "description": "List of participant user IDs in the conversation."
+                },
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "messageId": {
+                        "type": "string",
+                        "description": "Unique identifier for the message."
+                      },
+                      "sender": {
+                        "type": "string",
+                        "description": "User ID of the message sender."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the message."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of when the message was sent."
+                      }
+                    }
+                  },
+                  "description": "List of messages in the conversation."
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp of the last message in the conversation."
                 }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
-    }
-  },
-  "/app.bsky.actor.getSuggestions": {
-    "get": {
-      "summary": "Get Suggested Accounts",
-      "description": "Retrieve a list of suggested accounts for a specified user based on preferences or activity.",
-      "operationId": "GetSuggestions",
-      "parameters": [
-        {
-          "name": "user",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The username or user ID for whom to retrieve suggestions."
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The number of suggestions to retrieve, up to a maximum limit."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved suggested accounts.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "suggestions": {
-                "type": "array",
-                "items": {
+    },
+    "/chat.bsky.actor.exportAccountData": {
+      "get": {
+        "summary": "Export Account Data",
+        "description": "Export the account data for the authenticated user.",
+        "operationId": "ExportAccountData",
+        "responses": {
+          "200": {
+            "description": "Successfully exported account data.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountData": {
                   "type": "object",
+                  "description": "Exported account data in JSON format.",
                   "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the suggested account."
-                    },
                     "username": {
                       "type": "string",
-                      "description": "Username of the suggested account."
+                      "description": "Username of the account."
                     },
-                    "displayName": {
+                    "email": {
                       "type": "string",
-                      "description": "Display name of the suggested account."
-                    },
-                    "bio": {
-                      "type": "string",
-                      "description": "Bio or description of the suggested account."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.actor.searchActors": {
-    "get": {
-      "summary": "Search for Actors",
-      "description": "Search for user accounts based on a query string.",
-      "operationId": "SearchActors",
-      "parameters": [
-        {
-          "name": "query",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The search query to find user accounts."
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "Number of results to retrieve, up to a maximum limit."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved search results.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "actors": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the actor."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username of the actor."
-                    },
-                    "displayName": {
-                      "type": "string",
-                      "description": "Display name of the actor."
-                    },
-                    "bio": {
-                      "type": "string",
-                      "description": "Bio or description of the actor."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.feed.getActorFeeds": {
-    "get": {
-      "summary": "Get Actor Feeds",
-      "description": "Retrieve a list of feed posts from a specified actor.",
-      "operationId": "GetActorFeeds",
-      "parameters": [
-        {
-          "name": "actorId",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The unique identifier of the actor whose feeds are to be retrieved."
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum number of posts to retrieve."
-        },
-        {
-          "name": "cursor",
-          "in": "query",
-          "required": false,
-          "type": "string",
-          "description": "A cursor for pagination to retrieve the next set of posts."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved actor's feed posts.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "feeds": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the post."
-                    },
-                    "content": {
-                      "type": "string",
-                      "description": "Content of the post."
-                    },
-                    "author": {
-                      "type": "string",
-                      "description": "Author of the post."
+                      "description": "Email address associated with the account."
                     },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time",
-                      "description": "Timestamp of when the post was created."
-                    }
-                  }
-                }
-              },
-              "nextCursor": {
-                "type": "string",
-                "description": "Cursor for the next set of posts, if available."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.feed.getFeedGenerator": {
-    "get": {
-      "summary": "Get Feed Generator",
-      "description": "Retrieve a generated feed based on user preferences.",
-      "operationId": "GetFeedGenerator",
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The unique identifier of the user for whom the feed is generated."
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum number of items to retrieve."
-        },
-        {
-          "name": "cursor",
-          "in": "query",
-          "required": false,
-          "type": "string",
-          "description": "A cursor for pagination to retrieve the next set of feed items."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved the generated feed.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "feedItems": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the feed item."
+                      "description": "Account creation date."
                     },
-                    "content": {
-                      "type": "string",
-                      "description": "Content of the feed item."
-                    },
-                    "author": {
-                      "type": "string",
-                      "description": "Author of the feed item."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp of when the feed item was created."
-                    }
-                  }
-                }
-              },
-              "nextCursor": {
-                "type": "string",
-                "description": "Cursor for the next set of feed items, if available."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.feed.getFeedSkeleton": {
-    "get": {
-      "summary": "Get Feed Skeleton",
-      "description": "Retrieve a skeletal version of a feed for faster loading and minimal content structure.",
-      "operationId": "GetFeedSkeleton",
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The unique identifier of the user for whom the feed skeleton is retrieved."
-        },
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum number of items to retrieve in the feed skeleton."
-        },
-        {
-          "name": "cursor",
-          "in": "query",
-          "required": false,
-          "type": "string",
-          "description": "A cursor for pagination to retrieve the next set of feed skeleton items."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved the feed skeleton.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "skeletonItems": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the skeleton item."
-                    },
-                    "placeholderText": {
-                      "type": "string",
-                      "description": "Placeholder text or minimal content to display quickly."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp of when the skeleton item was created."
-                    }
-                  }
-                }
-              },
-              "nextCursor": {
-                "type": "string",
-                "description": "Cursor for the next set of feed skeleton items, if available."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/chat.bsky.convo.muteConvo": {
-    "post": {
-      "summary": "Mute Conversation",
-      "description": "Mute a conversation for a specific user.",
-      "operationId": "MuteConversation",
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "convoId": {
-                "type": "string",
-                "description": "The unique identifier of the conversation to mute."
-              },
-              "userId": {
-                "type": "string",
-                "description": "The unique identifier of the user muting the conversation."
-              }
-            },
-            "required": [ "convoId", "userId" ]
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully muted the conversation.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "status": {
-                "type": "string",
-                "description": "Confirmation status, e.g., 'muted'."
-              },
-              "convoId": {
-                "type": "string",
-                "description": "The ID of the muted conversation."
-              },
-              "userId": {
-                "type": "string",
-                "description": "The ID of the user who muted the conversation."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/chat.bsky.convo.listConvos": {
-    "get": {
-      "summary": "List Conversations",
-      "description": "Retrieve a list of conversations for the authenticated user.",
-      "operationId": "ListConversations",
-      "parameters": [
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum number of conversations to retrieve."
-        },
-        {
-          "name": "cursor",
-          "in": "query",
-          "required": false,
-          "type": "string",
-          "description": "A cursor for pagination to retrieve the next set of conversations."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved the list of conversations.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "conversations": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "convoId": {
-                      "type": "string",
-                      "description": "Unique identifier for the conversation."
-                    },
-                    "lastMessage": {
-                      "type": "string",
-                      "description": "The content of the last message in the conversation."
-                    },
-                    "participants": {
+                    "conversations": {
                       "type": "array",
                       "items": {
-                        "type": "string"
-                      },
-                      "description": "List of participants' user IDs in the conversation."
-                    },
-                    "lastUpdated": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp of the last message in the conversation."
-                    }
-                  }
-                }
-              },
-              "nextCursor": {
-                "type": "string",
-                "description": "Cursor for the next set of conversations, if available."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/chat.bsky.convo.leaveConvo": {
-    "post": {
-      "summary": "Leave Conversation",
-      "description": "Leave a specific conversation.",
-      "operationId": "LeaveConversation",
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "convoId": {
-                "type": "string",
-                "description": "The unique identifier of the conversation to leave."
-              },
-              "userId": {
-                "type": "string",
-                "description": "The unique identifier of the user leaving the conversation."
-              }
-            },
-            "required": [ "convoId", "userId" ]
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully left the conversation.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "status": {
-                "type": "string",
-                "description": "Confirmation status, e.g., 'left'."
-              },
-              "convoId": {
-                "type": "string",
-                "description": "The ID of the conversation left."
-              },
-              "userId": {
-                "type": "string",
-                "description": "The ID of the user who left the conversation."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/chat.bsky.convo.getConvo": {
-    "get": {
-      "summary": "Get Conversation Details",
-      "description": "Retrieve details about a specific conversation.",
-      "operationId": "GetConversationDetails",
-      "parameters": [
-        {
-          "name": "convoId",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "description": "The unique identifier of the conversation to retrieve."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved conversation details.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "convoId": {
-                "type": "string",
-                "description": "Unique identifier for the conversation."
-              },
-              "participants": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "List of participant user IDs in the conversation."
-              },
-              "messages": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "messageId": {
-                      "type": "string",
-                      "description": "Unique identifier for the message."
-                    },
-                    "sender": {
-                      "type": "string",
-                      "description": "User ID of the message sender."
-                    },
-                    "content": {
-                      "type": "string",
-                      "description": "Content of the message."
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp of when the message was sent."
-                    }
-                  }
-                },
-                "description": "List of messages in the conversation."
-              },
-              "lastUpdated": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Timestamp of the last message in the conversation."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/chat.bsky.actor.exportAccountData": {
-    "get": {
-      "summary": "Export Account Data",
-      "description": "Export the account data for the authenticated user.",
-      "operationId": "ExportAccountData",
-      "responses": {
-        "200": {
-          "description": "Successfully exported account data.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "accountData": {
-                "type": "object",
-                "description": "Exported account data in JSON format.",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "description": "Username of the account."
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "Email address associated with the account."
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Account creation date."
-                  },
-                  "conversations": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "convoId": {
-                          "type": "string",
-                          "description": "Unique identifier of a conversation."
-                        },
-                        "lastMessage": {
-                          "type": "string",
-                          "description": "Content of the last message in the conversation."
-                        },
-                        "lastUpdated": {
-                          "type": "string",
-                          "format": "date-time",
-                          "description": "Timestamp of the last update in the conversation."
+                        "type": "object",
+                        "properties": {
+                          "convoId": {
+                            "type": "string",
+                            "description": "Unique identifier of a conversation."
+                          },
+                          "lastMessage": {
+                            "type": "string",
+                            "description": "Content of the last message in the conversation."
+                          },
+                          "lastUpdated": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp of the last update in the conversation."
+                          }
                         }
-                      }
-                    },
-                    "description": "List of conversations associated with the account."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.video.getUploadLimits": {
-    "get": {
-      "summary": "Get Video Upload Limits",
-      "description": "Retrieve the upload limits for videos, such as maximum file size and duration.",
-      "operationId": "GetVideoUploadLimits",
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved video upload limits.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "maxFileSize": {
-                "type": "integer",
-                "description": "Maximum file size allowed for video uploads, in bytes."
-              },
-              "maxDuration": {
-                "type": "integer",
-                "description": "Maximum duration allowed for video uploads, in seconds."
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        }
-      }
-    }
-  },
-  "/app.bsky.notification.listNotifications": {
-    "get": {
-      "summary": "List Notifications",
-      "description": "Retrieve a list of notifications for the authenticated user.",
-      "operationId": "ListNotifications",
-      "parameters": [
-        {
-          "name": "limit",
-          "in": "query",
-          "required": false,
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum number of notifications to retrieve."
-        },
-        {
-          "name": "cursor",
-          "in": "query",
-          "required": false,
-          "type": "string",
-          "description": "A cursor for pagination to retrieve the next set of notifications."
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successfully retrieved the list of notifications.",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "notifications": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "notificationId": {
-                      "type": "string",
-                      "description": "Unique identifier for the notification."
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "Type of the notification (e.g., 'like', 'comment', 'follow')."
-                    },
-                    "content": {
-                      "type": "string",
-                      "description": "Content or message of the notification."
-                    },
-                    "sender": {
-                      "type": "string",
-                      "description": "User ID of the sender of the notification."
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Timestamp when the notification was created."
+                      },
+                      "description": "List of conversations associated with the account."
                     }
                   }
                 }
-              },
-              "nextCursor": {
-                "type": "string",
-                "description": "Cursor for the next set of notifications, if available."
               }
             }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "400": {
-          "description": "Invalid request - missing or invalid parameters.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
-          }
-        },
-        "401": {
-          "description": "Unauthorized - Invalid or missing credentials.",
-          "schema": {
-            "$ref": "#/definitions/ErrorResponse"
+        }
+      }
+    },
+    "/app.bsky.video.getUploadLimits": {
+      "get": {
+        "summary": "Get Video Upload Limits",
+        "description": "Retrieve the upload limits for videos, such as maximum file size and duration.",
+        "operationId": "GetVideoUploadLimits",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved video upload limits.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "maxFileSize": {
+                  "type": "integer",
+                  "description": "Maximum file size allowed for video uploads, in bytes."
+                },
+                "maxDuration": {
+                  "type": "integer",
+                  "description": "Maximum duration allowed for video uploads, in seconds."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2606,14 +2301,21 @@
                 "interactionType": {
                   "type": "string",
                   "description": "Type of interaction to send (e.g., 'like', 'repost').",
-                  "enum": [ "like", "repost" ]
+                  "enum": [
+                    "like",
+                    "repost"
+                  ]
                 },
                 "userId": {
                   "type": "string",
                   "description": "The unique identifier of the user sending the interaction."
                 }
               },
-              "required": [ "postId", "interactionType", "userId" ]
+              "required": [
+                "postId",
+                "interactionType",
+                "userId"
+              ]
             }
           }
         ],
@@ -2675,7 +2377,9 @@
                   "description": "The unique identifier of the user to follow."
                 }
               },
-              "required": [ "userId" ]
+              "required": [
+                "userId"
+              ]
             }
           }
         ],
@@ -2725,7 +2429,9 @@
                   "description": "The unique identifier of the user to unfollow."
                 }
               },
-              "required": [ "userId" ]
+              "required": [
+                "userId"
+              ]
             }
           }
         ],
@@ -2775,7 +2481,9 @@
                   "description": "The unique identifier of the user to mute."
                 }
               },
-              "required": [ "userId" ]
+              "required": [
+                "userId"
+              ]
             }
           }
         ],
@@ -2825,7 +2533,9 @@
                   "description": "The unique identifier of the user to unmute."
                 }
               },
-              "required": [ "userId" ]
+              "required": [
+                "userId"
+              ]
             }
           }
         ],
@@ -2925,7 +2635,9 @@
                   "description": "Timestamp to mark notifications as seen up to this point."
                 }
               },
-              "required": [ "seenAt" ]
+              "required": [
+                "seenAt"
+              ]
             }
           }
         ],
@@ -3243,7 +2955,6 @@
             "items": {
               "type": "string"
             },
-            "collectionFormat": "multi",
             "description": "A list of account IDs to retrieve information for. Multiple IDs can be passed as separate parameters."
           }
         ],
@@ -3281,7 +2992,7 @@
                       },
                       "status": {
                         "type": "string",
-                        "description": "Current status of the account (e.g., 'active', 'suspended')."
+                        "description": "Current status of the account (e.g., active, suspended)."
                       },
                       "roles": {
                         "type": "array",
@@ -3355,15 +3066,21 @@
                 },
                 "accessLevel": {
                   "type": "string",
-                  "description": "The access level to set for the user (e.g., 'restricted', 'active').",
-                  "enum": [ "restricted", "active" ]
+                  "description": "The access level to set for the user (e.g., restricted, active).",
+                  "enum": [
+                    "restricted",
+                    "active"
+                  ]
                 },
                 "reason": {
                   "type": "string",
                   "description": "Reason for updating the user's access level."
                 }
               },
-              "required": [ "actorId", "accessLevel" ]
+              "required": [
+                "actorId",
+                "accessLevel"
+              ]
             }
           }
         ],
@@ -3582,14 +3299,15 @@
     }
   },
   "securityDefinitions": {
-    "basic_auth": {
-      "type": "basic",
-      "description": "Basic authentication with username and app password."
+    "basic-auth": {
+      "type": "basic"
     }
   },
   "security": [
     {
-      "basic_auth": []
+      "basic-auth": [
+
+      ]
     }
   ],
   "definitions": {
