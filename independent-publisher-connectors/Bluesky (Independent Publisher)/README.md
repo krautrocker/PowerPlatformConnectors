@@ -40,6 +40,20 @@ This connector includes the following operations:
 - **`GET /app.bsky.actor.searchActors`** - Search for user accounts by query.
 - **`GET /app.bsky.actor.exportAccountData`** - Export account data for the authenticated user.
 
+### Graph Endpoints
+
+- **`GET /app.bsky.graph.getKnownFollowers`** - Retrieve a list of known followers for a user.
+- **`GET /app.bsky.graph.getRelationships`** - Retrieve relationships for a specified user.
+- **`GET /app.bsky.graph.getStarterPack`** - Retrieve a recommended list of users for new users.
+- **`GET /app.bsky.graph.getStarterPacks`** - Retrieve multiple starter packs containing recommended users.
+- **`GET /app.bsky.graph.getListBlocks`** - Retrieve a list of users blocked by a specified user.
+- **`GET /app.bsky.graph.getBlocks`** - Retrieve a list of users blocked by the authenticated user.
+- **`POST /app.bsky.graph.follow`** - Follow a specified user.
+- **`POST /app.bsky.graph.unfollow`** - Unfollow a specified user.
+- **`POST /app.bsky.graph.muteActor`** - Mute a specified user.
+- **`POST /app.bsky.graph.unmuteActor`** - Unmute a specified user.
+- **`GET /app.bsky.graph.getMutes`** - Retrieve a list of users muted by the authenticated user.
+
 ### Video Endpoints
 
 - **`GET /app.bsky.video.getUploadLimits`** - Retrieve video upload limits, including file size and duration.
@@ -55,15 +69,13 @@ This connector includes the following operations:
 ### Notification Endpoints
 
 - **`GET /app.bsky.notification.listNotifications`** - Retrieve notifications for the authenticated user.
+- **`POST /app.bsky.notification.updateSeen`** - Mark notifications as seen up to a certain timestamp.
 
-### Graph Endpoints
+### Moderation Endpoints
 
-- **`GET /app.bsky.graph.getKnownFollowers`** - Retrieve a list of known followers for a user.
-- **`GET /app.bsky.graph.getRelationships`** - Retrieve relationships for a specified user.
-- **`GET /app.bsky.graph.getStarterPack`** - Retrieve a recommended list of users for new users.
-- **`GET /app.bsky.graph.getStarterPacks`** - Retrieve multiple starter packs containing recommended users.
-- **`GET /app.bsky.graph.getListBlocks`** - Retrieve a list of users blocked by a specified user.
-- **`GET /app.bsky.graph.getBlocks`** - Retrieve a list of users blocked by the authenticated user.
+- **`POST /chat.bsky.moderation.updateActorAccess`** - Update access level of a specific actor.
+- **`GET /chat.bsky.moderation.getMessageContext`** - Get context for a specific moderation message.
+- **`GET /chat.bsky.moderation.getActorMetadata`** - Retrieve metadata for an actor related to moderation actions.
 
 ## Authentication
 

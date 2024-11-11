@@ -2656,8 +2656,930 @@
           }
         }
       }
+    },
+    "/app.bsky.graph.follow": {
+      "post": {
+        "summary": "Follow a User",
+        "description": "Follow a specified user.",
+        "operationId": "FollowUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user to follow."
+                }
+              },
+              "required": [ "userId" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully followed the user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'following'."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.unfollow": {
+      "post": {
+        "summary": "Unfollow a User",
+        "description": "Unfollow a specified user.",
+        "operationId": "UnfollowUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user to unfollow."
+                }
+              },
+              "required": [ "userId" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unfollowed the user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'unfollowed'."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.muteActor": {
+      "post": {
+        "summary": "Mute a User",
+        "description": "Mute a specified user.",
+        "operationId": "MuteUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user to mute."
+                }
+              },
+              "required": [ "userId" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully muted the user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'muted'."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.unmuteActor": {
+      "post": {
+        "summary": "Unmute a User",
+        "description": "Unmute a specified user.",
+        "operationId": "UnmuteUser",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user to unmute."
+                }
+              },
+              "required": [ "userId" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unmuted the user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'unmuted'."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getMutes": {
+      "get": {
+        "summary": "Get Muted Users",
+        "description": "Retrieve a list of users muted by the authenticated user.",
+        "operationId": "GetMutedUsers",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of muted users.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mutedUsers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "Unique identifier of the muted user."
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "Username of the muted user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the muted user."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.updateSeen": {
+      "post": {
+        "summary": "Update Notifications as Seen",
+        "description": "Mark notifications as seen up to a specified timestamp.",
+        "operationId": "UpdateNotificationsSeen",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "seenAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp to mark notifications as seen up to this point."
+                }
+              },
+              "required": [ "seenAt" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated notifications as seen.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status, e.g., 'updated'."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.searchAccounts": {
+      "get": {
+        "summary": "Search Accounts",
+        "description": "Search for accounts based on criteria such as username, email, or other attributes.",
+        "operationId": "SearchAccounts",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Search query for finding accounts (e.g., username or email)."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of accounts to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved accounts matching the search criteria.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "Unique identifier of the account."
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "Username of the account."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email address associated with the account."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the account."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Account creation timestamp."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of accounts, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.getInviteCodes": {
+      "get": {
+        "summary": "Get Invite Codes",
+        "description": "Retrieve a list of invite codes along with metadata such as expiration and usage counts.",
+        "operationId": "GetInviteCodes",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of invite codes to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of invite codes."
+          },
+          {
+            "name": "available",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "description": "Filter to show only available (unused) invite codes."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved invite codes.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "The invite code string."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the invite code was created."
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Expiration date of the invite code, if applicable."
+                      },
+                      "usageCount": {
+                        "type": "integer",
+                        "description": "Number of times the invite code has been used."
+                      },
+                      "maxUsage": {
+                        "type": "integer",
+                        "description": "Maximum number of uses allowed for this invite code."
+                      },
+                      "available": {
+                        "type": "boolean",
+                        "description": "Indicates if the invite code is still available for use."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of invite codes, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.getAccountInfo": {
+      "get": {
+        "summary": "Get Account Information",
+        "description": "Retrieve detailed account information for a specified user account, including administrative metadata.",
+        "operationId": "GetAccountInfo",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the account to retrieve information for."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "Unique identifier of the account."
+                },
+                "username": {
+                  "type": "string",
+                  "description": "Username of the account."
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Email address associated with the account."
+                },
+                "displayName": {
+                  "type": "string",
+                  "description": "Display name of the account."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Account creation timestamp."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Current status of the account (e.g., 'active', 'suspended')."
+                },
+                "roles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of roles assigned to the account."
+                },
+                "lastLogin": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp of the last login."
+                },
+                "metadata": {
+                  "type": "object",
+                  "description": "Additional administrative metadata related to the account.",
+                  "properties": {
+                    "suspensionReason": {
+                      "type": "string",
+                      "description": "Reason for account suspension, if applicable."
+                    },
+                    "notes": {
+                      "type": "string",
+                      "description": "Administrative notes about the account."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Account not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/com.atproto.admin.getAccountInfos": {
+      "get": {
+        "summary": "Get Multiple Account Information",
+        "description": "Retrieve detailed account information for multiple specified user accounts.",
+        "operationId": "GetAccountInfos",
+        "parameters": [
+          {
+            "name": "accountIds",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "A list of account IDs to retrieve information for. Multiple IDs can be passed as separate parameters."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account information for specified accounts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "Unique identifier of the account."
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "Username of the account."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Email address associated with the account."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the account."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Account creation timestamp."
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "Current status of the account (e.g., 'active', 'suspended')."
+                      },
+                      "roles": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of roles assigned to the account."
+                      },
+                      "lastLogin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the last login."
+                      },
+                      "metadata": {
+                        "type": "object",
+                        "description": "Additional administrative metadata related to the account.",
+                        "properties": {
+                          "suspensionReason": {
+                            "type": "string",
+                            "description": "Reason for account suspension, if applicable."
+                          },
+                          "notes": {
+                            "type": "string",
+                            "description": "Administrative notes about the account."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "One or more accounts not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.updateActorAccess": {
+      "post": {
+        "summary": "Update Actor Access",
+        "description": "Update access settings for a specified user account, allowing moderators to restrict or restore access.",
+        "operationId": "UpdateActorAccess",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user whose access is being updated."
+                },
+                "accessLevel": {
+                  "type": "string",
+                  "description": "The access level to set for the user (e.g., 'restricted', 'active').",
+                  "enum": [ "restricted", "active" ]
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Reason for updating the user's access level."
+                }
+              },
+              "required": [ "actorId", "accessLevel" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated access level for the user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status of the update, e.g., 'success'."
+                },
+                "actorId": {
+                  "type": "string",
+                  "description": "The ID of the user whose access level was updated."
+                },
+                "newAccessLevel": {
+                  "type": "string",
+                  "description": "The new access level assigned to the user."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.getMessageContext": {
+      "get": {
+        "summary": "Get Message Context",
+        "description": "Retrieve the context around a specific message, including surrounding messages, to assist with moderation.",
+        "operationId": "GetMessageContext",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the message for which to retrieve context."
+          },
+          {
+            "name": "beforeLimit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The number of messages to retrieve before the specified message."
+          },
+          {
+            "name": "afterLimit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The number of messages to retrieve after the specified message."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved message context.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "context": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "messageId": {
+                        "type": "string",
+                        "description": "Unique identifier of the message."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the message."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "Identifier of the message's author."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the message was created."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Message not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.getActorMetadata": {
+      "get": {
+        "summary": "Get Actor Metadata",
+        "description": "Retrieve moderation-related metadata for a specified user account.",
+        "operationId": "GetActorMetadata",
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the user account to retrieve metadata for."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation metadata for the user account.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actorId": {
+                  "type": "string",
+                  "description": "Unique identifier of the user."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Current moderation status of the user (e.g., 'active', 'restricted', 'suspended')."
+                },
+                "reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "reportId": {
+                        "type": "string",
+                        "description": "Unique identifier for the report."
+                      },
+                      "reportType": {
+                        "type": "string",
+                        "description": "Type of report (e.g., 'spam', 'harassment')."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the report was created."
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "Current status of the report (e.g., 'resolved', 'pending')."
+                      }
+                    }
+                  }
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp of the last update to the user's moderation metadata."
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Any additional notes related to the user's moderation history."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
-
   },
   "securityDefinitions": {
     "basic_auth": {
