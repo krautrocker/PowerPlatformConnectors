@@ -14,6 +14,11 @@ This custom connector allows Power Platform apps to interact with Bluesky's API,
 - **`GET /app.bsky.feed.getFeedSkeleton`** - Retrieve a skeletal version of a feed with minimal content.
 - **`GET /app.bsky.feed.getPosts`** - Retrieve a list of specific posts by their IDs.
 - **`GET /app.bsky.feed.getLikes`** - Retrieve a list of users who liked a specified post.
+- **`GET /app.bsky.feed.getQuotes`** - Retrieve a list of posts that quote a specific post.
+- **`GET /app.bsky.feed.getSuggestedFeeds`** - Retrieve a list of suggested feeds for the authenticated user.
+- **`GET /app.bsky.feed.getRepostedBy`** - Retrieve a list of users who reposted a specific post.
+- **`GET /app.bsky.feed.describeFeedGenerator`** - Retrieve metadata about the feed generator, including supported types and limits.
+- **`POST /app.bsky.feed.sendInteractions`** - Send an interaction (like or repost) for a specified post.
 
 ### Actor Endpoints
 
@@ -67,5 +72,6 @@ Each endpoint has specific parameters (such as user IDs, query strings, or limit
 - **Export Account Data**: Retrieve all account data for backup or reporting.
 - **List Notifications**: Display recent notifications to keep users informed.
 - **Manage Conversations**: List, mute, leave, or retrieve details about user conversations.
+- **Send Interactions**: Allow users to like or repost content directly from your app.
 
 This connector enables a wide range of integrations between Bluesky and Power Platform apps, providing rich functionality for enhanced user experiences.

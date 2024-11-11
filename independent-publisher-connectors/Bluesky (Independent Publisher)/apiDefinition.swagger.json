@@ -2211,7 +2211,453 @@
           }
         }
       }
+    },
+    "/app.bsky.graph.getActorStarterPacks": {
+      "get": {
+        "summary": "Get Actor Starter Packs",
+        "description": "Retrieve recommended starter packs of actors for new users to follow.",
+        "operationId": "GetActorStarterPacks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of starter packs to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of starter packs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved actor starter packs.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "starterPacks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "packId": {
+                        "type": "string",
+                        "description": "Unique identifier for the starter pack."
+                      },
+                      "actors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the actor."
+                            },
+                            "username": {
+                              "type": "string",
+                              "description": "Username of the actor."
+                            },
+                            "displayName": {
+                              "type": "string",
+                              "description": "Display name of the actor."
+                            },
+                            "bio": {
+                              "type": "string",
+                              "description": "Bio or description of the actor."
+                            }
+                          }
+                        },
+                        "description": "List of actors included in the starter pack."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of starter packs, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.describeFeedGenerator": {
+      "get": {
+        "summary": "Describe Feed Generator",
+        "description": "Retrieve metadata about the feed generator, such as supported types and limits.",
+        "operationId": "DescribeFeedGenerator",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved feed generator metadata.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "supportedTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of supported feed types."
+                },
+                "maxFeedItems": {
+                  "type": "integer",
+                  "description": "Maximum number of items allowed in a feed."
+                },
+                "maxItemSize": {
+                  "type": "integer",
+                  "description": "Maximum size allowed for each item in the feed."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getQuotes": {
+      "get": {
+        "summary": "Get Quotes for a Post",
+        "description": "Retrieve a list of posts that quote a specific post.",
+        "operationId": "GetQuotes",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the post for which to retrieve quotes."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of quotes to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of quotes."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved quotes for the post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quoteId": {
+                        "type": "string",
+                        "description": "Unique identifier for the quote post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Content of the quote post."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Username of the author of the quote post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the quote was created."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of quotes, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getSuggestedFeeds": {
+      "get": {
+        "summary": "Get Suggested Feeds",
+        "description": "Retrieve a list of suggested feeds for the authenticated user.",
+        "operationId": "GetSuggestedFeeds",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of suggested feeds to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of suggested feeds."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved suggested feeds.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "feedId": {
+                        "type": "string",
+                        "description": "Unique identifier for the suggested feed."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Title of the suggested feed."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the suggested feed."
+                      },
+                      "author": {
+                        "type": "string",
+                        "description": "Username of the author of the suggested feed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the feed was created."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of suggested feeds, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getRepostedBy": {
+      "get": {
+        "summary": "Get Users Who Reposted a Post",
+        "description": "Retrieve a list of users who reposted a specific post.",
+        "operationId": "GetRepostedBy",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the post for which to retrieve reposts."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "The maximum number of reposts to retrieve."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "A cursor for pagination to retrieve the next set of reposts."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users who reposted the post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reposters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "Unique identifier of the user who reposted."
+                      },
+                      "username": {
+                        "type": "string",
+                        "description": "Username of the user who reposted."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the user who reposted."
+                      },
+                      "repostedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the post was reposted."
+                      }
+                    }
+                  }
+                },
+                "nextCursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of reposts, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.sendInteractions": {
+      "post": {
+        "summary": "Send Interaction",
+        "description": "Send an interaction (like, repost) for a specified post.",
+        "operationId": "SendInteraction",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "string",
+                  "description": "The unique identifier of the post to interact with."
+                },
+                "interactionType": {
+                  "type": "string",
+                  "description": "Type of interaction to send (e.g., 'like', 'repost').",
+                  "enum": [ "like", "repost" ]
+                },
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the user sending the interaction."
+                }
+              },
+              "required": [ "postId", "interactionType", "userId" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully sent the interaction.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Confirmation status of the interaction, e.g., 'success'."
+                },
+                "interactionId": {
+                  "type": "string",
+                  "description": "Unique identifier for the sent interaction."
+                },
+                "postId": {
+                  "type": "string",
+                  "description": "The ID of the post that was interacted with."
+                },
+                "interactionType": {
+                  "type": "string",
+                  "description": "The type of interaction (e.g., 'like', 'repost')."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing or invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
+
   },
   "securityDefinitions": {
     "basic_auth": {
