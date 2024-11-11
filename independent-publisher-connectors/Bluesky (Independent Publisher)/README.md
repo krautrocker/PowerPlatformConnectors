@@ -17,65 +17,42 @@ To use this connector, you will need:
 
 This connector includes the following operations:
 
-### Feed Endpoints
+#### Feed Endpoints
+- **GET /app.bsky.feed.getTimeline** — Retrieve a user's timeline posts.
+- **GET /app.bsky.feed.getFeed** — Retrieve posts from a specific user's or tag's feed.
+- **GET /app.bsky.feed.searchPosts** — Search for posts that match a query.
+- **GET /app.bsky.feed.getActorFeeds** — Retrieve feed posts for a specific actor.
+- **GET /app.bsky.feed.getFeedGenerator** — Retrieve a generated feed for a user based on preferences.
+- **GET /app.bsky.feed.getFeedSkeleton** — Retrieve a skeletal version of a feed with minimal content.
+- **GET /app.bsky.feed.getPosts** — Retrieve a list of specific posts by their IDs.
+- **GET /app.bsky.feed.getLikes** — Retrieve a list of users who liked a specified post.
+- **GET /app.bsky.feed.getQuotes** — Retrieve a list of posts that quote a specific post.
+- **GET /app.bsky.feed.getSuggestedFeeds** — Retrieve a list of suggested feeds for the authenticated user.
+- **GET /app.bsky.feed.getRepostedBy** — Retrieve a list of users who reposted a specific post.
+- **GET /app.bsky.feed.describeFeedGenerator** — Retrieve metadata about the feed generator, including supported types and limits.
+- **POST /app.bsky.feed.sendInteractions** — Send an interaction (like or repost) for a specified post.
 
-- **`GET /app.bsky.feed.getTimeline`** - Retrieve a user's timeline posts.
-- **`GET /app.bsky.feed.getFeed`** - Retrieve posts from a specific user's or tag's feed.
-- **`GET /app.bsky.feed.searchPosts`** - Search for posts that match a query.
-- **`GET /app.bsky.feed.getActorFeeds`** - Retrieve feed posts for a specific actor.
-- **`GET /app.bsky.feed.getFeedGenerator`** - Retrieve a generated feed for a user based on preferences.
-- **`GET /app.bsky.feed.getFeedSkeleton`** - Retrieve a skeletal version of a feed with minimal content.
-- **`GET /app.bsky.feed.getPosts`** - Retrieve a list of specific posts by their IDs.
-- **`GET /app.bsky.feed.getLikes`** - Retrieve a list of users who liked a specified post.
-- **`GET /app.bsky.feed.getQuotes`** - Retrieve a list of posts that quote a specific post.
-- **`GET /app.bsky.feed.getSuggestedFeeds`** - Retrieve a list of suggested feeds for the authenticated user.
-- **`GET /app.bsky.feed.getRepostedBy`** - Retrieve a list of users who reposted a specific post.
-- **`GET /app.bsky.feed.describeFeedGenerator`** - Retrieve metadata about the feed generator, including supported types and limits.
-- **`POST /app.bsky.feed.sendInteractions`** - Send an interaction (like or repost) for a specified post.
+#### Actor Endpoints
+- **GET /app.bsky.actor.getPreferences** — Retrieve a user's preferences.
+- **GET /app.bsky.actor.getSuggestions** — Retrieve a list of account suggestions for a user.
+- **GET /app.bsky.actor.searchActors** — Search for user accounts by query.
+- **GET /app.bsky.actor.exportAccountData** — Export account data for the authenticated user.
 
-### Actor Endpoints
+#### Graph Endpoints
+- **GET /app.bsky.graph.getKnownFollowers** — Retrieve a list of known followers for a user.
+- **GET /app.bsky.graph.getFollowers** — Retrieve a list of followers for a user.
+- **GET /app.bsky.graph.getFollows** — Retrieve a list of users followed by a specific user.
+- **GET /app.bsky.graph.getBlocks** — Retrieve a list of users blocked by the authenticated user.
+- **POST /app.bsky.graph.follow** — Follow a user.
+- **POST /app.bsky.graph.unfollow** — Unfollow a user.
 
-- **`GET /app.bsky.actor.getPreferences`** - Retrieve a user's preferences.
-- **`GET /app.bsky.actor.getSuggestions`** - Retrieve a list of account suggestions for a user.
-- **`GET /app.bsky.actor.searchActors`** - Search for user accounts by query.
-- **`GET /app.bsky.actor.exportAccountData`** - Export account data for the authenticated user.
+#### Notification Endpoints
+- **GET /app.bsky.notification.getNotifications** — Retrieve a list of notifications for the authenticated user.
+- **POST /app.bsky.notification.updateSeen** — Mark notifications as seen for the authenticated user.
 
-### Graph Endpoints
-
-- **`GET /app.bsky.graph.getKnownFollowers`** - Retrieve a list of known followers for a user.
-- **`GET /app.bsky.graph.getRelationships`** - Retrieve relationships for a specified user.
-- **`GET /app.bsky.graph.getStarterPack`** - Retrieve a recommended list of users for new users.
-- **`GET /app.bsky.graph.getStarterPacks`** - Retrieve multiple starter packs containing recommended users.
-- **`GET /app.bsky.graph.getListBlocks`** - Retrieve a list of users blocked by a specified user.
-- **`GET /app.bsky.graph.getBlocks`** - Retrieve a list of users blocked by the authenticated user.
-- **`POST /app.bsky.graph.follow`** - Follow a specified user.
-- **`POST /app.bsky.graph.unfollow`** - Unfollow a specified user.
-- **`POST /app.bsky.graph.muteActor`** - Mute a specified user.
-- **`POST /app.bsky.graph.unmuteActor`** - Unmute a specified user.
-- **`GET /app.bsky.graph.getMutes`** - Retrieve a list of users muted by the authenticated user.
-
-### Video Endpoints
-
-- **`GET /app.bsky.video.getUploadLimits`** - Retrieve video upload limits, including file size and duration.
-
-### Conversation Endpoints
-
-- **`GET /chat.bsky.convo.listConvos`** - List conversations for the authenticated user.
-- **`GET /chat.bsky.convo.getConvo`** - Retrieve details about a specific conversation.
-- **`POST /chat.bsky.convo.muteConvo`** - Mute a conversation for a specific user.
-- **`POST /chat.bsky.convo.leaveConvo`** - Leave a specific conversation.
-- **`POST /chat.bsky.convo.sendMessage`** - Send a message within a conversation.
-
-### Notification Endpoints
-
-- **`GET /app.bsky.notification.listNotifications`** - Retrieve notifications for the authenticated user.
-- **`POST /app.bsky.notification.updateSeen`** - Mark notifications as seen up to a certain timestamp.
-
-### Moderation Endpoints
-
-- **`POST /chat.bsky.moderation.updateActorAccess`** - Update access level of a specific actor.
-- **`GET /chat.bsky.moderation.getMessageContext`** - Get context for a specific moderation message.
-- **`GET /chat.bsky.moderation.getActorMetadata`** - Retrieve metadata for an actor related to moderation actions.
+#### Unspecced Endpoints
+- **POST /app.bsky.unspecced.uploadBlob** — Upload a binary object (blob) to the user's account.
+- **GET /app.bsky.unspecced.getBlob** — Retrieve a binary object (blob) from the user's account.
 
 ## Authentication
 
@@ -100,3 +77,5 @@ Each endpoint has specific parameters (such as user IDs, query strings, or limit
 - **Send Interactions**: Allow users to like or repost content directly from your app.
 
 This connector enables a wide range of integrations between Bluesky and Power Platform apps, providing rich functionality for enhanced user experiences.
+
+Contact: dan.romano@swolcat.com or torin@imp.sh (original owner)
