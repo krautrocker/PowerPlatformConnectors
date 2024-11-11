@@ -3299,15 +3299,16 @@
     }
   },
   "securityDefinitions": {
-    "basic-auth": {
-      "type": "basic"
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Bearer token required for authentication. Format: 'Bearer {token}'."
     }
   },
   "security": [
     {
-      "basic-auth": [
-
-      ]
+      "BearerAuth": []
     }
   ],
   "definitions": {
