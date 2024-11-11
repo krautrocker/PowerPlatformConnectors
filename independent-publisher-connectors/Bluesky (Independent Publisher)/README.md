@@ -4,6 +4,19 @@ This custom connector allows Power Platform apps to interact with Bluesky's API,
 
 ## Supported Endpoints
 
+To use this connector, you will need:
+1. A Bluesky account.
+2. API access to Bluesky with App Password.
+
+## Obtaining Credentials
+
+1. Go to the [Bluesky Developer Portal](https://docs.bsky.app).
+2. Register your App Password in Settings.
+
+## Supported Operations
+
+This connector includes the following operations:
+
 ### Feed Endpoints
 
 - **`GET /app.bsky.feed.getTimeline`** - Retrieve a user's timeline posts.
