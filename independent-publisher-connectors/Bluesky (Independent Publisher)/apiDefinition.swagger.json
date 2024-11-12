@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bluesky API",
-    "description": "Unofficial OpenAPI specification for the Bluesky API endpoints.",
+    "description": "Unofficial specification for the Bluesky Social endpoints",
     "contact": {
       "email": "dan.romano@swolcat.com"
     },
@@ -25,7 +25,7 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get private preferences attached to the account.",
+        "summary": "Get private preferences attached to the account",
         "operationId": "GetPreferences",
         "produces": [
           "application/json"
@@ -47,7 +47,7 @@
           }
         },
         "parameters": [],
-        "description": "Get private preferences attached to the account."
+        "description": "Get private preferences attached to the account"
       }
     },
     "/app.bsky.actor.getProfile": {
@@ -55,26 +55,73 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get a detailed profile view of an actor.",
-        "operationId": "getProfile",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve a profile for a specific actor",
+        "description": "Fetches detailed profile information for a specified actor from Bluesky.",
         "parameters": [
           {
-            "in": "query",
             "name": "actor",
-            "description": "Identifier of the actor to get the profile for.",
+            "in": "query",
             "required": true,
             "type": "string",
-            "format": "at-identifier"
+            "format": "at-identifier",
+            "x-ms-summary": "Actor identifier",
+            "description": "The unique identifier of the actor whose profile is being retrieved."
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/ProfileViewDetailed"
+            "description": "A profile object containing details about the actor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actorId": {
+                      "type": "string",
+                      "description": "The unique identifier of the actor."
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "The display name of the actor."
+                    },
+                    "bio": {
+                      "type": "string",
+                      "description": "The biography or description of the actor."
+                    },
+                    "profileImage": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "The URL of the actor's profile image."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp of when the profile was created."
+                    }
+                  },
+                  "required": [ "actorId", "displayName" ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -85,38 +132,76 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get detailed profile views of multiple actors.",
-        "operationId": "getProfiles",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve profiles for multiple actors",
+        "description": "Fetches detailed profile information for a list of specified actors from Bluesky.",
         "parameters": [
           {
+            "name": "actorIds",
             "in": "query",
-            "name": "actors",
-            "description": "Identifiers of the actors to get the profiles for.",
             "required": true,
             "type": "array",
             "items": {
-              "format": "at-identifier",
-              "type": "string"
+              "type": "string",
+              "format": "at-identifier"
             },
-            "maxItems": 25
+            "x-ms-summary": "List of actor identifiers",
+            "description": "An array of unique identifiers for each actor whose profile information is being retrieved."
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "required": [
-                "profiles"
-              ],
-              "type": "object",
-              "properties": {
-                "profiles": {
+            "description": "A list of profile objects containing details about each actor.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileViewDetailed"
+                    "type": "object",
+                    "properties": {
+                      "actorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "The biography or description of the actor."
+                      },
+                      "profileImage": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "The URL of the actor's profile image."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp of when the profile was created."
+                      }
+                    },
+                    "required": [ "actorId", "displayName" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
@@ -130,45 +215,82 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get a list of actors suggested for following.",
-        "description": "Used in discovery UIs.",
-        "operationId": "getSuggestions",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve suggested actors",
+        "description": "Fetches a list of suggested actors for the authenticated user, based on various criteria.",
         "parameters": [
           {
-            "in": "query",
             "name": "limit",
-            "description": "The maximum number of suggested actors to return.",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Limit the number of suggestions",
+            "description": "Specifies the maximum number of actor suggestions to return."
           },
           {
+            "name": "offset",
             "in": "query",
-            "name": "cursor",
-            "description": "A cursor for pagination.",
-            "type": "string"
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Offset for pagination",
+            "description": "Specifies the offset for pagination, allowing you to skip a certain number of suggestions."
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "required": [
-                "actors"
-              ],
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "actors": {
+            "description": "A list of suggested actors for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "actorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the suggested actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the suggested actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "The biography or description of the suggested actor."
+                      },
+                      "profileImage": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "The URL of the suggested actor's profile image."
+                      },
+                      "suggestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the actor was suggested."
+                      }
+                    },
+                    "required": [ "actorId", "displayName" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
@@ -178,39 +300,80 @@
       }
     },
     "/app.bsky.actor.putPreferences": {
-      "post": {
+      "put": {
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Sets the private preferences attached to the account.",
-        "operationId": "PutPreferences",
-        "consumes": [
-          "application/json"
-        ],
+        "summary": "Update actor preferences",
+        "description": "Updates the preferences for the authenticated user, allowing customization of settings.",
         "parameters": [
           {
+            "name": "preferences",
             "in": "body",
-            "name": "body",
             "required": true,
             "schema": {
-              "required": [
-                "preferences"
-              ],
               "type": "object",
               "properties": {
-                "preferences": {
-                  "$ref": "#/definitions/Preferences"
+                "theme": {
+                  "type": "string",
+                  "enum": [ "light", "dark" ],
+                  "description": "The preferred theme for the user interface, either 'light' or 'dark'."
+                },
+                "notificationsEnabled": {
+                  "type": "boolean",
+                  "description": "Whether notifications are enabled for the user."
+                },
+                "language": {
+                  "type": "string",
+                  "description": "The preferred language for the user interface."
                 }
               }
-            }
+            },
+            "x-ms-summary": "User preferences object",
+            "description": "An object containing the updated preferences for the authenticated user."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Confirmation that preferences were updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the preferences update was successful."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message confirming the update of preferences."
+                    }
+                  },
+                  "required": [ "success", "message" ]
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Invalid input"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -220,47 +383,90 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actors matching search criteria.",
-        "operationId": "searchActors",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Search for actors",
+        "description": "Allows searching for actors based on a query, with options for limiting and offsetting results.",
         "parameters": [
           {
+            "name": "query",
             "in": "query",
-            "name": "term",
-            "type": "string"
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Search query",
+            "description": "The search term to find matching actors."
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of results to return."
           },
           {
+            "name": "offset",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Result offset",
+            "description": "The number of results to skip for pagination."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "required": [
-                "actors"
-              ],
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "actors": {
+            "description": "A list of actors matching the search query.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "actorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "The biography or description of the actor."
+                      },
+                      "profileImage": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "The URL of the actor's profile image."
+                      },
+                      "joinedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the actor joined."
+                      }
+                    },
+                    "required": [ "actorId", "displayName" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
@@ -274,39 +480,81 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Find actor suggestions for a search term.",
-        "operationId": "searchActorsTypeahead",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Typeahead search for actors",
+        "description": "Provides a typeahead search feature for finding actors based on partial input.",
         "parameters": [
           {
+            "name": "query",
             "in": "query",
-            "name": "term",
-            "type": "string"
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Partial search query",
+            "description": "The partial input to search for matching actors."
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of results to return for the typeahead search."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "required": [
-                "actors"
-              ],
-              "type": "object",
-              "properties": {
-                "actors": {
+            "description": "A list of actors matching the partial search query.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileViewBasic"
+                    "type": "object",
+                    "properties": {
+                      "actorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "The biography or description of the actor."
+                      },
+                      "profileImage": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "The URL of the actor's profile image."
+                      },
+                      "suggestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the actor was suggested."
+                      }
+                    },
+                    "required": [ "actorId", "displayName" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
@@ -320,64 +568,99 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve an author's feed",
+        "description": "Fetches the feed posts of a specified author.",
         "parameters": [
           {
+            "name": "author",
             "in": "query",
-            "name": "actor",
             "required": true,
             "type": "string",
-            "format": "at-identifier"
+            "x-ms-summary": "Author identifier",
+            "description": "The unique identifier of the author whose feed is being retrieved."
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of posts to retrieve from the author's feed."
           },
           {
+            "name": "before",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Pagination cursor",
+            "description": "A timestamp to paginate results, retrieving posts published before this time."
           }
         ],
         "responses": {
           "200": {
-            "description": "A view of an actor's feed",
-            "schema": {
-              "required": [
-                "feed"
-              ],
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "feed": {
+            "description": "A list of posts from the specified author's feed.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/FeedViewPost"
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "likesCount": {
+                        "type": "integer",
+                        "description": "The number of likes the post has received."
+                      },
+                      "commentsCount": {
+                        "type": "integer",
+                        "description": "The number of comments on the post."
+                      }
+                    },
+                    "required": [ "postId", "authorId", "content", "createdAt" ]
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Errors",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/BlockedActor"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
                 }
-              ]
+              }
             }
           }
-        },
-        "operationId": "GetAuthorFeed"
+        }
       }
     },
     "/app.bsky.feed.getLikes": {
@@ -385,69 +668,95 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve likes for a post",
+        "description": "Fetches a list of users who have liked a specified post.",
         "parameters": [
           {
+            "name": "postId",
             "in": "query",
-            "name": "uri",
             "required": true,
             "type": "string",
-            "format": "at-uri"
+            "x-ms-summary": "Post identifier",
+            "description": "The unique identifier of the post for which likes are being retrieved."
           },
           {
-            "in": "query",
-            "name": "cid",
-            "type": "string",
-            "format": "cid"
-          },
-          {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of likes to retrieve."
           },
           {
+            "name": "before",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Pagination cursor",
+            "description": "A timestamp to paginate results, retrieving likes before this time."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Sort order",
+            "description": "The order in which to sort the likes, e.g., by time."
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of likes for a specific post",
-            "schema": {
-              "required": [
-                "uri",
-                "likes"
-              ],
-              "type": "object",
-              "properties": {
-                "uri": {
-                  "format": "at-uri",
-                  "type": "string"
-                },
-                "cid": {
-                  "format": "cid",
-                  "type": "string"
-                },
-                "cursor": {
-                  "type": "string"
-                },
-                "likes": {
+            "description": "A list of users who liked the specified post.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Like"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user who liked the post."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the user who liked the post."
+                      },
+                      "likedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user liked the post."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "likedAt" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "operationId": "getLikes"
+        }
       }
     },
     "/app.bsky.feed.getPostThread": {
@@ -455,56 +764,106 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve a post thread",
+        "description": "Fetches the thread of replies and interactions associated with a specified post.",
         "parameters": [
           {
+            "name": "postId",
             "in": "query",
-            "name": "uri",
             "required": true,
             "type": "string",
-            "format": "at-uri"
+            "x-ms-summary": "Post identifier",
+            "description": "The unique identifier of the post for which the thread is being retrieved."
           },
           {
-            "in": "query",
             "name": "depth",
-            "type": "integer"
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Thread depth",
+            "description": "The depth level of replies to retrieve in the thread."
           }
         ],
         "responses": {
           "200": {
-            "description": "The post thread for a specific post",
-            "schema": {
-              "required": [
-                "thread"
-              ],
-              "type": "object",
-              "properties": {
-                "thread": {
-                  "allOf": [
-                    {
-                      "$ref": "#/definitions/ThreadViewPost"
+            "description": "The thread of replies and interactions for the specified post.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "postId": {
+                      "type": "string",
+                      "description": "The unique identifier of the root post."
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "description": "The identifier of the author of the root post."
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the root post."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp when the root post was created."
+                    },
+                    "replies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "replyId": {
+                            "type": "string",
+                            "description": "The unique identifier of the reply."
+                          },
+                          "authorId": {
+                            "type": "string",
+                            "description": "The identifier of the author of the reply."
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "The content of the reply."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp when the reply was created."
+                          }
+                        },
+                        "required": [ "replyId", "authorId", "content", "createdAt" ]
+                      },
+                      "description": "An array of replies associated with the post thread."
                     }
-                  ]
+                  },
+                  "required": [ "postId", "authorId", "content", "createdAt" ]
                 }
               }
             }
           },
-          "404": {
-            "description": "Post not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "description": "NotFound",
-                  "type": "string"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
                 }
               }
             }
           }
-        },
-        "operationId": "GetPostThread"
+        }
       }
     },
     "/app.bsky.feed.getPosts": {
@@ -512,42 +871,84 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve multiple posts",
+        "description": "Fetches details for multiple specified posts based on their unique identifiers.",
         "parameters": [
           {
+            "name": "postIds",
             "in": "query",
-            "name": "uris",
             "required": true,
             "type": "array",
             "items": {
-              "format": "at-uri",
               "type": "string"
             },
-            "maxLength": 25
+            "x-ms-summary": "List of post identifiers",
+            "description": "An array of unique identifiers for each post to retrieve."
           }
         ],
         "responses": {
           "200": {
-            "description": "A batch of specific posts",
-            "schema": {
-              "required": [
-                "posts"
-              ],
-              "type": "object",
-              "properties": {
-                "posts": {
+            "description": "A list of posts with details for each specified post identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/PostView"
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "likesCount": {
+                        "type": "integer",
+                        "description": "The number of likes the post has received."
+                      },
+                      "commentsCount": {
+                        "type": "integer",
+                        "description": "The number of comments on the post."
+                      }
+                    },
+                    "required": [ "postId", "authorId", "content", "createdAt" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "operationId": "getPosts"
+        }
       }
     },
     "/app.bsky.feed.repostedBy": {
@@ -555,69 +956,95 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve users who reposted a post",
+        "description": "Fetches a list of users who have reposted a specified post.",
         "parameters": [
           {
+            "name": "postId",
             "in": "query",
-            "name": "uri",
             "required": true,
             "type": "string",
-            "format": "at-uri"
+            "x-ms-summary": "Post identifier",
+            "description": "The unique identifier of the post for which repost information is being retrieved."
           },
           {
-            "in": "query",
-            "name": "cid",
-            "type": "string",
-            "format": "cid"
-          },
-          {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of reposts to retrieve."
           },
           {
+            "name": "before",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Pagination cursor",
+            "description": "A timestamp to paginate results, retrieving reposts before this time."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Sort order",
+            "description": "The order in which to sort the reposts, e.g., by time."
           }
         ],
         "responses": {
           "200": {
-            "description": "The list of actors who have reposted a specific post",
-            "schema": {
-              "required": [
-                "uri",
-                "repostedBy"
-              ],
-              "type": "object",
-              "properties": {
-                "uri": {
-                  "format": "at-uri",
-                  "type": "string"
-                },
-                "cid": {
-                  "format": "cid",
-                  "type": "string"
-                },
-                "cursor": {
-                  "type": "string"
-                },
-                "repostedBy": {
+            "description": "A list of users who reposted the specified post.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user who reposted the post."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the user who reposted the post."
+                      },
+                      "repostedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user reposted the post."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "repostedAt" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "operationId": "repostedBy"
+        }
       }
     },
     "/app.bsky.feed.getTimeline": {
@@ -625,99 +1052,161 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "description": "A view of the user's home timeline.",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve the user’s timeline",
+        "description": "Fetches posts from the authenticated user's timeline, including posts from followed users.",
         "parameters": [
           {
-            "in": "query",
-            "name": "algorithm",
-            "type": "string"
-          },
-          {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of posts to retrieve for the timeline."
           },
           {
+            "name": "before",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Pagination cursor",
+            "description": "A timestamp to paginate results, retrieving posts before this time."
+          },
+          {
+            "name": "includeReplies",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Include replies",
+            "description": "Specifies whether to include replies in the timeline results."
           }
         ],
         "responses": {
           "200": {
-            "description": "The user's home timeline",
-            "schema": {
-              "required": [
-                "feed"
-              ],
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "feed": {
+            "description": "A list of posts from the user’s timeline.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/FeedViewPost"
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the post."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "likesCount": {
+                        "type": "integer",
+                        "description": "The number of likes the post has received."
+                      },
+                      "commentsCount": {
+                        "type": "integer",
+                        "description": "The number of comments on the post."
+                      }
+                    },
+                    "required": [ "postId", "authorId", "content", "createdAt" ]
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "operationId": "getTimeline"
+        }
       }
     },
     "/app.bsky.feed.follow": {
       "post": {
         "tags": [
-          "app.bsky.graph"
+          "app.bsky.feed"
         ],
-        "summary": "A social follow.",
-        "operationId": "follow",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Follow a user",
+        "description": "Allows the authenticated user to follow a specified user on the platform.",
         "parameters": [
           {
+            "name": "userId",
             "in": "body",
-            "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Follow"
-            }
+              "type": "string"
+            },
+            "x-ms-summary": "User identifier",
+            "description": "The unique identifier of the user to follow."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "tid": {
-                  "description": "The record key",
-                  "type": "string"
-                },
-                "record": {
-                  "$ref": "#/definitions/Follow"
+            "description": "Confirmation that the user was successfully followed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the follow action was successful."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message confirming that the user was followed."
+                    }
+                  },
+                  "required": [ "success", "message" ]
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -727,49 +1216,77 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is the requester's account blocking?",
-        "operationId": "getBlocks",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve blocked users",
+        "description": "Fetches a list of users that the authenticated user has blocked.",
         "parameters": [
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of blocked users to retrieve."
           },
           {
+            "name": "offset",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Result offset",
+            "description": "The number of blocked users to skip for pagination."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "blocks": {
+            "description": "A list of users that have been blocked by the authenticated user.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the blocked user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the blocked user."
+                      },
+                      "blockedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was blocked."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "blockedAt" ]
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -779,59 +1296,85 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is following an actor?",
-        "operationId": "getFollowers",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve a user's followers",
+        "description": "Fetches a list of users who follow a specified user.",
         "parameters": [
           {
+            "name": "userId",
             "in": "query",
-            "name": "actor",
             "required": true,
             "type": "string",
-            "format": "at-identifier"
+            "x-ms-summary": "User identifier",
+            "description": "The unique identifier of the user whose followers are being retrieved."
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of followers to retrieve."
           },
           {
+            "name": "offset",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Result offset",
+            "description": "The number of followers to skip for pagination."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "subject": {
-                  "$ref": "#/definitions/ProfileView"
-                },
-                "cursor": {
-                  "type": "string"
-                },
-                "followers": {
+            "description": "A list of users who follow the specified user.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the follower."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the follower."
+                      },
+                      "followedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user started following."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "followedAt" ]
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -841,59 +1384,85 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who is an actor following?",
-        "operationId": "getFollows",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve users followed by a user",
+        "description": "Fetches a list of users that the specified user is following.",
         "parameters": [
           {
+            "name": "userId",
             "in": "query",
-            "name": "actor",
             "required": true,
             "type": "string",
-            "format": "at-identifier"
+            "x-ms-summary": "User identifier",
+            "description": "The unique identifier of the user whose followed users are being retrieved."
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "format": "int32",
+            "x-ms-summary": "Result limit",
+            "description": "The maximum number of users to retrieve."
           },
           {
+            "name": "offset",
             "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Result offset",
+            "description": "The number of users to skip for pagination."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "subject": {
-                  "$ref": "#/definitions/ProfileView"
-                },
-                "cursor": {
-                  "type": "string"
-                },
-                "follows": {
+            "description": "A list of users that the specified user is following.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the followed user."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the followed user."
+                      },
+                      "followedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user started following."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "followedAt" ]
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -903,59 +1472,67 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Fetch a list of actors",
-        "operationId": "getList",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Retrieve a user list",
+        "description": "Fetches a list of users associated with a specified list, such as a group or category.",
         "parameters": [
           {
+            "name": "listId",
             "in": "query",
-            "name": "list",
             "required": true,
             "type": "string",
-            "format": "at-uri"
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
-          },
-          {
-            "in": "query",
-            "name": "cursor",
-            "type": "string"
+            "x-ms-summary": "List identifier",
+            "description": "The unique identifier of the list to retrieve."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "list": {
-                  "$ref": "#/definitions/ListView"
-                },
-                "items": {
+            "description": "A list of users associated with the specified list.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ListItemView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user in the list."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the user in the list."
+                      },
+                      "addedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was added to the list."
+                      }
+                    },
+                    "required": [ "userId", "displayName", "addedAt" ]
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1131,7 +1708,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an actor by did or handle.",
+        "summary": "Mute an actor by did or handle",
         "consumes": [
           "application/json"
         ],
@@ -1174,7 +1751,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute a list of actors.",
+        "summary": "Mute a list of actors",
         "consumes": [
           "application/json"
         ],
@@ -1217,7 +1794,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an actor by did or handle.",
+        "summary": "Unmute an actor by did or handle",
         "consumes": [
           "application/json"
         ],
@@ -1260,7 +1837,7 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute a list of actors.",
+        "summary": "Unmute a list of actors",
         "consumes": [
           "application/json"
         ],
@@ -1303,7 +1880,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Get count of unread notifications.",
+        "summary": "Get count of unread notifications",
         "produces": [
           "application/json"
         ],
@@ -1347,7 +1924,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "List notifications.",
+        "summary": "List notifications",
         "produces": [
           "application/json"
         ],
@@ -1412,7 +1989,7 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Notify server that the user has seen notifications.",
+        "summary": "Notify server that the user has seen notifications",
         "consumes": [
           "application/json"
         ],
@@ -1528,7 +2105,7 @@
           }
         },
         "summary": "CreateSession",
-        "description": "Authenticates to Bluesky and retrieves session tokens.",
+        "description": "Authenticates to Bluesky and retrieves session tokens",
         "operationId": "CreateSession",
         "parameters": [
           {
@@ -2177,7 +2754,7 @@
           "type": "string"
         },
         "entities": {
-          "description": "deprecated - replaced by app.bsky.richtext.facet.",
+          "description": "deprecated - replaced by app.bsky.richtext.facet",
           "type": "array",
           "items": {
             "$ref": "#/definitions/Entity"
@@ -2224,7 +2801,7 @@
       }
     },
     "Entity": {
-      "description": "Deprecated - use facets instead.",
+      "description": "Deprecated - use facets instead",
       "required": [
         "index",
         "type",
@@ -2236,7 +2813,7 @@
           "$ref": "#/definitions/TextSlice"
         },
         "type": {
-          "description": "Expected values are 'mention' and 'link'.",
+          "description": "Expected values are 'mention' and 'link'",
           "type": "string"
         },
         "value": {
@@ -2245,7 +2822,7 @@
       }
     },
     "TextSlice": {
-      "description": "Deprecated. Use app.bsky.richtext instead -- A text segment. Start is inclusive, end is exclusive. Indices are for utf16-encoded strings.",
+      "description": "Deprecated. Use app.bsky.richtext instead -- A text segment. Start is inclusive, end is exclusive. Indices are for utf16-encoded strings",
       "required": [
         "start",
         "end"
@@ -2340,7 +2917,7 @@
         },
         "avatar": {
           "format": "binary",
-          "description": "A binary file with a maximum size of 1,000,000 bytes. Accepts image/png or image/jpeg file types.",
+          "description": "A binary file with a maximum size of 1,000,000 bytes. Accepts image/png or image/jpeg file types",
           "type": "string"
         },
         "createdAt": {
@@ -2452,7 +3029,7 @@
       }
     },
     "Mention": {
-      "description": "A facet feature for actor mentions.",
+      "description": "A facet feature for actor mentions",
       "required": [
         "did"
       ],
@@ -2465,7 +3042,7 @@
       }
     },
     "Link": {
-      "description": "A facet feature for links.",
+      "description": "A facet feature for links",
       "required": [
         "uri"
       ],
@@ -2478,7 +3055,7 @@
       }
     },
     "ByteSlice": {
-      "description": "A text segment. Start is inclusive, end is exclusive. Indices are for utf8-encoded strings.",
+      "description": "A text segment. Start is inclusive, end is exclusive. Indices are for utf8-encoded strings",
       "required": [
         "byteStart",
         "byteEnd"
@@ -2671,7 +3248,7 @@
       }
     },
     "StrongRef": {
-      "description": "A URI with a content-hash fingerprint.",
+      "description": "A URI with a content-hash fingerprint",
       "required": [
         "uri",
         "cid"
