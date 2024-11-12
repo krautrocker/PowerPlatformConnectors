@@ -55,6 +55,7 @@
         "tags": [
           "app.bsky.actor"
         ],
+        "operationId": "getActorProfile",
         "summary": "Retrieve a profile for a specific actor",
         "description": "Fetches detailed profile information for a specified actor from Bluesky.",
         "parameters": [
@@ -63,7 +64,6 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "format": "at-identifier",
             "x-ms-summary": "Actor identifier",
             "description": "The unique identifier of the actor whose profile is being retrieved."
           }
@@ -71,55 +71,47 @@
         "responses": {
           "200": {
             "description": "A profile object containing details about the actor.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "actorId": {
-                      "type": "string",
-                      "description": "The unique identifier of the actor."
-                    },
-                    "displayName": {
-                      "type": "string",
-                      "description": "The display name of the actor."
-                    },
-                    "bio": {
-                      "type": "string",
-                      "description": "The biography or description of the actor."
-                    },
-                    "profileImage": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "The URL of the actor's profile image."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "The timestamp of when the profile was created."
-                    }
-                  },
-                  "required": [ "actorId", "displayName" ]
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the actor."
+                },
+                "displayName": {
+                  "type": "string",
+                  "description": "The display name of the actor."
+                },
+                "bio": {
+                  "type": "string",
+                  "description": "The biography or description of the actor."
+                },
+                "profileImage": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The URL of the actor's profile image."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp of when the profile was created."
                 }
-              }
+              },
+              "required": [ "actorId", "displayName" ]
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -133,6 +125,7 @@
           "app.bsky.actor"
         ],
         "summary": "Retrieve profiles for multiple actors",
+        "operationId": "GetProfiles",
         "description": "Fetches detailed profile information for a list of specified actors from Bluesky.",
         "parameters": [
           {
@@ -141,8 +134,7 @@
             "required": true,
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "at-identifier"
+              "type": "string"
             },
             "x-ms-summary": "List of actor identifiers",
             "description": "An array of unique identifiers for each actor whose profile information is being retrieved."
@@ -151,58 +143,50 @@
         "responses": {
           "200": {
             "description": "A list of profile objects containing details about each actor.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "actorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the actor."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "The biography or description of the actor."
-                      },
-                      "profileImage": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL of the actor's profile image."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp of when the profile was created."
-                      }
-                    },
-                    "required": [ "actorId", "displayName" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the actor."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the actor."
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "The biography or description of the actor."
+                  },
+                  "profileImage": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the actor's profile image."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp of when the profile was created."
                   }
-                }
+                },
+                "required": [ "actorId", "displayName" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -217,6 +201,7 @@
         ],
         "summary": "Retrieve suggested actors",
         "description": "Fetches a list of suggested actors for the authenticated user, based on various criteria.",
+        "operationId":  "GetSuggestions",
         "parameters": [
           {
             "name": "limit",
@@ -240,58 +225,50 @@
         "responses": {
           "200": {
             "description": "A list of suggested actors for the user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "actorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the suggested actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the suggested actor."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "The biography or description of the suggested actor."
-                      },
-                      "profileImage": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL of the suggested actor's profile image."
-                      },
-                      "suggestedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the actor was suggested."
-                      }
-                    },
-                    "required": [ "actorId", "displayName" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the suggested actor."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the suggested actor."
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "The biography or description of the suggested actor."
+                  },
+                  "profileImage": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the suggested actor's profile image."
+                  },
+                  "suggestedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the actor was suggested."
                   }
-                }
+                },
+                "required": [ "actorId", "displayName" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -306,6 +283,7 @@
         ],
         "summary": "Update actor preferences",
         "description": "Updates the preferences for the authenticated user, allowing customization of settings.",
+        "operationId": "PutPreferences",
         "parameters": [
           {
             "name": "preferences",
@@ -336,41 +314,33 @@
         "responses": {
           "200": {
             "description": "Confirmation that preferences were updated successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates whether the preferences update was successful."
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message confirming the update of preferences."
-                    }
-                  },
-                  "required": [ "success", "message" ]
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the preferences update was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message confirming the update of preferences."
                 }
-              }
+              },
+              "required": [ "success", "message" ]
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -385,6 +355,7 @@
         ],
         "summary": "Search for actors",
         "description": "Allows searching for actors based on a query, with options for limiting and offsetting results.",
+        "operationId": "SearchActors",
         "parameters": [
           {
             "name": "query",
@@ -416,58 +387,50 @@
         "responses": {
           "200": {
             "description": "A list of actors matching the search query.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "actorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the actor."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "The biography or description of the actor."
-                      },
-                      "profileImage": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL of the actor's profile image."
-                      },
-                      "joinedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the actor joined."
-                      }
-                    },
-                    "required": [ "actorId", "displayName" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the actor."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the actor."
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "The biography or description of the actor."
+                  },
+                  "profileImage": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the actor's profile image."
+                  },
+                  "joinedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the actor joined."
                   }
-                }
+                },
+                "required": [ "actorId", "displayName" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -481,6 +444,7 @@
           "app.bsky.actor"
         ],
         "summary": "Typeahead search for actors",
+        "operationId": "SearchActorsTypeahead",
         "description": "Provides a typeahead search feature for finding actors based on partial input.",
         "parameters": [
           {
@@ -504,58 +468,50 @@
         "responses": {
           "200": {
             "description": "A list of actors matching the partial search query.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "actorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the actor."
-                      },
-                      "bio": {
-                        "type": "string",
-                        "description": "The biography or description of the actor."
-                      },
-                      "profileImage": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL of the actor's profile image."
-                      },
-                      "suggestedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the actor was suggested."
-                      }
-                    },
-                    "required": [ "actorId", "displayName" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "actorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the actor."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the actor."
+                  },
+                  "bio": {
+                    "type": "string",
+                    "description": "The biography or description of the actor."
+                  },
+                  "profileImage": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the actor's profile image."
+                  },
+                  "suggestedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the actor was suggested."
                   }
-                }
+                },
+                "required": [ "actorId", "displayName" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -569,6 +525,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve an author's feed",
+        "operationId": "GetAuthorFeed",
         "description": "Fetches the feed posts of a specified author.",
         "parameters": [
           {
@@ -601,61 +558,53 @@
         "responses": {
           "200": {
             "description": "A list of posts from the specified author's feed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "The unique identifier of the post."
-                      },
-                      "authorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the author of the post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "The content of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the post was created."
-                      },
-                      "likesCount": {
-                        "type": "integer",
-                        "description": "The number of likes the post has received."
-                      },
-                      "commentsCount": {
-                        "type": "integer",
-                        "description": "The number of comments on the post."
-                      }
-                    },
-                    "required": [ "postId", "authorId", "content", "createdAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post."
+                  },
+                  "authorId": {
+                    "type": "string",
+                    "description": "The identifier of the author of the post."
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The content of the post."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the post was created."
+                  },
+                  "likesCount": {
+                    "type": "integer",
+                    "description": "The number of likes the post has received."
+                  },
+                  "commentsCount": {
+                    "type": "integer",
+                    "description": "The number of comments on the post."
                   }
-                }
+                },
+                "required": [ "postId", "authorId", "content", "createdAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -669,6 +618,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve likes for a post",
+        "operationId": "GetLikes",
         "description": "Fetches a list of users who have liked a specified post.",
         "parameters": [
           {
@@ -709,49 +659,41 @@
         "responses": {
           "200": {
             "description": "A list of users who liked the specified post.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the user who liked the post."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the user who liked the post."
-                      },
-                      "likedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user liked the post."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "likedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the user who liked the post."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the user who liked the post."
+                  },
+                  "likedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user liked the post."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "likedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -765,6 +707,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve a post thread",
+        "operationId": "GetPostThread",
         "description": "Fetches the thread of replies and interactions associated with a specified post.",
         "parameters": [
           {
@@ -788,77 +731,69 @@
         "responses": {
           "200": {
             "description": "The thread of replies and interactions for the specified post.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "postId": {
-                      "type": "string",
-                      "description": "The unique identifier of the root post."
-                    },
-                    "authorId": {
-                      "type": "string",
-                      "description": "The identifier of the author of the root post."
-                    },
-                    "content": {
-                      "type": "string",
-                      "description": "The content of the root post."
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "The timestamp when the root post was created."
-                    },
-                    "replies": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "replyId": {
-                            "type": "string",
-                            "description": "The unique identifier of the reply."
-                          },
-                          "authorId": {
-                            "type": "string",
-                            "description": "The identifier of the author of the reply."
-                          },
-                          "content": {
-                            "type": "string",
-                            "description": "The content of the reply."
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "The timestamp when the reply was created."
-                          }
-                        },
-                        "required": [ "replyId", "authorId", "content", "createdAt" ]
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postId": {
+                  "type": "string",
+                  "description": "The unique identifier of the root post."
+                },
+                "authorId": {
+                  "type": "string",
+                  "description": "The identifier of the author of the root post."
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the root post."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the root post was created."
+                },
+                "replies": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "replyId": {
+                        "type": "string",
+                        "description": "The unique identifier of the reply."
                       },
-                      "description": "An array of replies associated with the post thread."
-                    }
+                      "authorId": {
+                        "type": "string",
+                        "description": "The identifier of the author of the reply."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the reply."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the reply was created."
+                      }
+                    },
+                    "required": [ "replyId", "authorId", "content", "createdAt" ]
                   },
-                  "required": [ "postId", "authorId", "content", "createdAt" ]
+                  "description": "An array of replies associated with the post thread."
                 }
-              }
+              },
+              "required": [ "postId", "authorId", "content", "createdAt" ]
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -872,6 +807,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve multiple posts",
+        "operationId": "GetPosts",
         "description": "Fetches details for multiple specified posts based on their unique identifiers.",
         "parameters": [
           {
@@ -889,61 +825,53 @@
         "responses": {
           "200": {
             "description": "A list of posts with details for each specified post identifier.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "The unique identifier of the post."
-                      },
-                      "authorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the author of the post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "The content of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the post was created."
-                      },
-                      "likesCount": {
-                        "type": "integer",
-                        "description": "The number of likes the post has received."
-                      },
-                      "commentsCount": {
-                        "type": "integer",
-                        "description": "The number of comments on the post."
-                      }
-                    },
-                    "required": [ "postId", "authorId", "content", "createdAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post."
+                  },
+                  "authorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the author of the post."
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The content of the post."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the post was created."
+                  },
+                  "likesCount": {
+                    "type": "integer",
+                    "description": "The number of likes the post has received."
+                  },
+                  "commentsCount": {
+                    "type": "integer",
+                    "description": "The number of comments on the post."
                   }
-                }
+                },
+                "required": [ "postId", "authorId", "content", "createdAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -957,6 +885,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve users who reposted a post",
+        "operationId": "RepostedBy",
         "description": "Fetches a list of users who have reposted a specified post.",
         "parameters": [
           {
@@ -997,49 +926,41 @@
         "responses": {
           "200": {
             "description": "A list of users who reposted the specified post.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the user who reposted the post."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the user who reposted the post."
-                      },
-                      "repostedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user reposted the post."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "repostedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the user who reposted the post."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the user who reposted the post."
+                  },
+                  "repostedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user reposted the post."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "repostedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1053,6 +974,7 @@
           "app.bsky.feed"
         ],
         "summary": "Retrieve the user’s timeline",
+        "operationId": "GetTimeline",
         "description": "Fetches posts from the authenticated user's timeline, including posts from followed users.",
         "parameters": [
           {
@@ -1085,61 +1007,53 @@
         "responses": {
           "200": {
             "description": "A list of posts from the user’s timeline.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "The unique identifier of the post."
-                      },
-                      "authorId": {
-                        "type": "string",
-                        "description": "The unique identifier of the author of the post."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "The content of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the post was created."
-                      },
-                      "likesCount": {
-                        "type": "integer",
-                        "description": "The number of likes the post has received."
-                      },
-                      "commentsCount": {
-                        "type": "integer",
-                        "description": "The number of comments on the post."
-                      }
-                    },
-                    "required": [ "postId", "authorId", "content", "createdAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post."
+                  },
+                  "authorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the author of the post."
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The content of the post."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the post was created."
+                  },
+                  "likesCount": {
+                    "type": "integer",
+                    "description": "The number of likes the post has received."
+                  },
+                  "commentsCount": {
+                    "type": "integer",
+                    "description": "The number of comments on the post."
                   }
-                }
+                },
+                "required": [ "postId", "authorId", "content", "createdAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1153,6 +1067,7 @@
           "app.bsky.feed"
         ],
         "summary": "Follow a user",
+        "operationId": "Follow",
         "description": "Allows the authenticated user to follow a specified user on the platform.",
         "parameters": [
           {
@@ -1169,41 +1084,33 @@
         "responses": {
           "200": {
             "description": "Confirmation that the user was successfully followed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "description": "Indicates whether the follow action was successful."
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "A message confirming that the user was followed."
-                    }
-                  },
-                  "required": [ "success", "message" ]
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the follow action was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message confirming that the user was followed."
                 }
-              }
+              },
+              "required": [ "success", "message" ]
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1217,6 +1124,7 @@
           "app.bsky.graph"
         ],
         "summary": "Retrieve blocked users",
+        "operationId": "GetBlocks",
         "description": "Fetches a list of users that the authenticated user has blocked.",
         "parameters": [
           {
@@ -1241,49 +1149,41 @@
         "responses": {
           "200": {
             "description": "A list of users that have been blocked by the authenticated user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the blocked user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the blocked user."
-                      },
-                      "blockedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user was blocked."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "blockedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the blocked user."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the blocked user."
+                  },
+                  "blockedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user was blocked."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "blockedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1297,6 +1197,7 @@
           "app.bsky.graph"
         ],
         "summary": "Retrieve a user's followers",
+        "operationId": "GetFollowers",
         "description": "Fetches a list of users who follow a specified user.",
         "parameters": [
           {
@@ -1329,49 +1230,41 @@
         "responses": {
           "200": {
             "description": "A list of users who follow the specified user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the follower."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the follower."
-                      },
-                      "followedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user started following."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "followedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the follower."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the follower."
+                  },
+                  "followedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user started following."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "followedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1385,6 +1278,7 @@
           "app.bsky.graph"
         ],
         "summary": "Retrieve users followed by a user",
+        "operationId": "GetFollows",
         "description": "Fetches a list of users that the specified user is following.",
         "parameters": [
           {
@@ -1417,49 +1311,41 @@
         "responses": {
           "200": {
             "description": "A list of users that the specified user is following.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the followed user."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the followed user."
-                      },
-                      "followedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user started following."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "followedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the followed user."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the followed user."
+                  },
+                  "followedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user started following."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "followedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1473,6 +1359,7 @@
           "app.bsky.graph"
         ],
         "summary": "Retrieve a user list",
+        "operationId": "GetList",
         "description": "Fetches a list of users associated with a specified list, such as a group or category.",
         "parameters": [
           {
@@ -1487,49 +1374,41 @@
         "responses": {
           "200": {
             "description": "A list of users associated with the specified list.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "userId": {
-                        "type": "string",
-                        "description": "The unique identifier of the user in the list."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the user in the list."
-                      },
-                      "addedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the user was added to the list."
-                      }
-                    },
-                    "required": [ "userId", "displayName", "addedAt" ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "The unique identifier of the user in the list."
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The display name of the user in the list."
+                  },
+                  "addedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the user was added to the list."
                   }
-                }
+                },
+                "required": [ "userId", "displayName", "addedAt" ]
               }
             }
           },
           "default": {
             "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message"
-                    },
-                    "details": {
-                      "type": "string",
-                      "description": "Additional details about the error"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the error"
                 }
               }
             }
@@ -1543,7 +1422,7 @@
           "app.bsky.graph"
         ],
         "summary": "Which lists is the requester's account muting?",
-        "operationId": "getListMutes",
+        "operationId": "GetListMutes",
         "produces": [
           "application/json"
         ],
@@ -1595,7 +1474,7 @@
           "app.bsky.graph"
         ],
         "summary": "Fetch a list of lists that belong to an actor",
-        "operationId": "getLists",
+        "operationId": "GetLists",
         "produces": [
           "application/json"
         ],
@@ -1654,7 +1533,7 @@
           "app.bsky.graph"
         ],
         "summary": "Who does the viewer mute?",
-        "operationId": "getMutes",
+        "operationId": "GetMutes",
         "produces": [
           "application/json"
         ],
@@ -1743,7 +1622,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "muteActor"
+        "operationId": "MuteActor"
       }
     },
     "/app.bsky.graph.muteActorList": {
@@ -1786,7 +1665,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "muteActorList"
+        "operationId": "MuteActorList"
       }
     },
     "/app.bsky.graph.unmuteActor": {
@@ -1829,7 +1708,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "unmuteActor"
+        "operationId": "UnmuteActor"
       }
     },
     "/app.bsky.graph.unmuteActorList": {
@@ -1872,7 +1751,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "unmuteActorList"
+        "operationId": "UnmuteActorList"
       }
     },
     "/app.bsky.notification.getUnreadCount": {
@@ -1916,7 +1795,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "getUnreadCount"
+        "operationId": "GetUnreadCount"
       }
     },
     "/app.bsky.notification.listNotifications": {
@@ -1981,7 +1860,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "listNotifications"
+        "operationId": "ListNotifications"
       }
     },
     "/app.bsky.notification.updateSeen": {
@@ -2023,7 +1902,7 @@
             "description": "Internal server error"
           }
         },
-        "operationId": "updateSeen"
+        "operationId": "UpdateSeen"
       }
     },
     "/app.bsky.unspecced.popular": {
@@ -2081,11 +1960,37 @@
             }
           }
         },
-        "operationId": "popular"
+        "operationId": "Popular"
       }
     },
     "/com.atproto.server.createSession": {
       "post": {
+        "summary": "CreateSession",
+        "description": "Authenticates to Bluesky and retrieves session tokens",
+        "operationId": "CreateSession",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "identifier": {
+                  "type": "string",
+                  "description": "User identifier (e.g., username or email)"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Password for authentication"
+                }
+              },
+              "required": [ "identifier", "password" ],
+              "x-ms-visibility": "internal"
+            },
+            "x-ms-visibility": "internal"
+          }
+        ],
         "responses": {
           "default": {
             "description": "default",
@@ -2094,41 +1999,16 @@
               "properties": {
                 "accessJwt": {
                   "type": "string",
-                  "description": "accessJwt"
+                  "description": "Access JWT token"
                 },
                 "refreshJwt": {
                   "type": "string",
-                  "description": "refreshJwt"
+                  "description": "Refresh JWT token"
                 }
               }
             }
           }
         },
-        "summary": "CreateSession",
-        "description": "Authenticates to Bluesky and retrieves session tokens",
-        "operationId": "CreateSession",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "identifier": {
-                  "type": "string",
-                  "description": "identifier"
-                },
-                "password": {
-                  "type": "string",
-                  "description": "password"
-                }
-              },
-              "x-ms-visibility": "internal"
-            },
-            "x-ms-visibility": "internal"
-          }
-        ],
         "x-ms-visibility": "important"
       }
     }
