@@ -74,17 +74,27 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "operationId": "getActorProfile",
+        "operationId": "GetActorProfile",
         "summary": "Retrieve a profile for a specific actor",
         "description": "Fetches detailed profile information for a specified actor from Bluesky.",
         "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "default": "application/json",
+            "description": "The MIME type of the request content",
+            "x-ms-summary": "Content-Type header"
+
+          },
           {
             "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Actor identifier",
-            "description": "The unique identifier of the actor whose profile is being retrieved."
+            "description": "The actor identifier, e.g., 'developments.bsky.social'",
+            "x-ms-summary": "The actor identifier, e.g., 'developments.bsky.social"
           }
         ],
         "responses": {
@@ -115,8 +125,7 @@
                   "format": "date-time",
                   "description": "The timestamp of when the profile was created."
                 }
-              },
-              "required": [ "actorId", "displayName" ]
+              }
             }
           },
           "default": {
@@ -177,11 +186,13 @@
                     "description": "The timestamp of when the profile was created."
                   }
                 },
-                "required": [ "actorId", "displayName" ]
+                "required": [
+                  "actorId",
+                  "displayName"
+                ]
               }
             }
           },
-
           "default": {
             "description": "Unexpected error"
           }
@@ -247,11 +258,13 @@
                     "description": "The timestamp when the actor was suggested."
                   }
                 },
-                "required": [ "actorId", "displayName" ]
+                "required": [
+                  "actorId",
+                  "displayName"
+                ]
               }
             }
           },
-
           "default": {
             "description": "Unexpected error"
           }
@@ -276,7 +289,10 @@
               "properties": {
                 "theme": {
                   "type": "string",
-                  "enum": [ "light", "dark" ],
+                  "enum": [
+                    "light",
+                    "dark"
+                  ],
                   "description": "The preferred theme for the user interface, either 'light' or 'dark'."
                 },
                 "notificationsEnabled": {
@@ -308,7 +324,10 @@
                   "description": "A message confirming the update of preferences."
                 }
               },
-              "required": [ "success", "message" ]
+              "required": [
+                "success",
+                "message"
+              ]
             }
           },
           "default": {
@@ -384,7 +403,10 @@
                     "description": "The timestamp when the actor joined."
                   }
                 },
-                "required": [ "actorId", "displayName" ]
+                "required": [
+                  "actorId",
+                  "displayName"
+                ]
               }
             }
           },
@@ -452,7 +474,10 @@
                     "description": "The timestamp when the actor was suggested."
                   }
                 },
-                "required": [ "actorId", "displayName" ]
+                "required": [
+                  "actorId",
+                  "displayName"
+                ]
               }
             }
           },
@@ -532,7 +557,12 @@
                     "description": "The number of comments on the post."
                   }
                 },
-                "required": [ "postId", "authorId", "content", "createdAt" ]
+                "required": [
+                  "postId",
+                  "authorId",
+                  "content",
+                  "createdAt"
+                ]
               }
             }
           },
@@ -608,7 +638,11 @@
                     "description": "The timestamp when the user liked the post."
                   }
                 },
-                "required": [ "userId", "displayName", "likedAt" ]
+                "required": [
+                  "userId",
+                  "displayName",
+                  "likedAt"
+                ]
               }
             }
           },
@@ -691,12 +725,22 @@
                         "description": "The timestamp when the reply was created."
                       }
                     },
-                    "required": [ "replyId", "authorId", "content", "createdAt" ]
+                    "required": [
+                      "replyId",
+                      "authorId",
+                      "content",
+                      "createdAt"
+                    ]
                   },
                   "description": "An array of replies associated with the post thread."
                 }
               },
-              "required": [ "postId", "authorId", "content", "createdAt" ]
+              "required": [
+                "postId",
+                "authorId",
+                "content",
+                "createdAt"
+              ]
             }
           },
           "default": {
@@ -760,7 +804,12 @@
                     "description": "The number of comments on the post."
                   }
                 },
-                "required": [ "postId", "authorId", "content", "createdAt" ]
+                "required": [
+                  "postId",
+                  "authorId",
+                  "content",
+                  "createdAt"
+                ]
               }
             }
           },
@@ -836,7 +885,11 @@
                     "description": "The timestamp when the user reposted the post."
                   }
                 },
-                "required": [ "userId", "displayName", "repostedAt" ]
+                "required": [
+                  "userId",
+                  "displayName",
+                  "repostedAt"
+                ]
               }
             }
           },
@@ -916,7 +969,12 @@
                     "description": "The number of comments on the post."
                   }
                 },
-                "required": [ "postId", "authorId", "content", "createdAt" ]
+                "required": [
+                  "postId",
+                  "authorId",
+                  "content",
+                  "createdAt"
+                ]
               }
             }
           },
@@ -961,7 +1019,10 @@
                   "description": "A message confirming that the user was followed."
                 }
               },
-              "required": [ "success", "message" ]
+              "required": [
+                "success",
+                "message"
+              ]
             }
           },
           "default": {
@@ -1020,7 +1081,11 @@
                     "description": "The timestamp when the user was blocked."
                   }
                 },
-                "required": [ "userId", "displayName", "blockedAt" ]
+                "required": [
+                  "userId",
+                  "displayName",
+                  "blockedAt"
+                ]
               }
             }
           },
@@ -1040,12 +1105,12 @@
         "description": "Fetches a list of users who follow a specified user.",
         "parameters": [
           {
-            "name": "userId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "User identifier",
-            "description": "The unique identifier of the user whose followers are being retrieved."
+            "x-ms-summary": "Actor identifier",
+            "description": "The unique identifier of the actor whose followers are being retrieved."
           },
           {
             "name": "limit",
@@ -1070,25 +1135,29 @@
           "200": {
             "description": "A list of users who follow the specified user.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string",
-                    "description": "The unique identifier of the follower."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the follower."
-                  },
-                  "followedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the user started following."
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the follower."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the follower."
+                      },
+                      "followedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user started following."
+                      }
+                    }
                   }
-                },
-                "required": [ "userId", "displayName", "followedAt" ]
+                }
               }
             }
           },
@@ -1108,12 +1177,12 @@
         "description": "Fetches a list of users that the specified user is following.",
         "parameters": [
           {
-            "name": "userId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "User identifier",
-            "description": "The unique identifier of the user whose followed users are being retrieved."
+            "x-ms-summary": "Actor identifier",
+            "description": "The unique identifier of the actor whose followers are being retrieved."
           },
           {
             "name": "limit",
@@ -1122,41 +1191,52 @@
             "type": "integer",
             "format": "int32",
             "x-ms-summary": "Result limit",
-            "description": "The maximum number of users to retrieve."
+            "description": "The maximum number of followers to retrieve."
           },
           {
-            "name": "offset",
+            "name": "cursor",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result offset",
-            "description": "The number of users to skip for pagination."
+            "type": "string",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Used for paginated results."
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users that the specified user is following.",
+            "description": "A list of users who follow the specified actor.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string",
-                    "description": "The unique identifier of the followed user."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the followed user."
-                  },
-                  "followedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the user started following."
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier for the follower."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "The follower's handle."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the follower."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the follower relationship was created."
+                      }
+                    }
                   }
                 },
-                "required": [ "userId", "displayName", "followedAt" ]
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for retrieving the next set of results."
+                }
               }
             }
           },
@@ -1206,7 +1286,11 @@
                     "description": "The timestamp when the user was added to the list."
                   }
                 },
-                "required": [ "userId", "displayName", "addedAt" ]
+                "required": [
+                  "userId",
+                  "displayName",
+                  "addedAt"
+                ]
               }
             }
           },
@@ -1714,7 +1798,9 @@
                   "description": "The timestamp up to which notifications are marked as seen."
                 }
               },
-              "required": [ "seenAt" ]
+              "required": [
+                "seenAt"
+              ]
             }
           }
         ],
@@ -1802,34 +1888,31 @@
         "operationId": "CreateSession",
         "parameters": [
           {
+            "name": "Content-Type",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "default": "application/json",
+            "x-ms-summary": "Content-Type header value",
+            "description": "Content-Type header value"
+          },
+          {
             "name": "body",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "object",
               "properties": {
                 "identifier": {
                   "type": "string",
-                  "description": "User identifier (e.g., username or email)",
-                  "title": "Username",
-                  "x-ms-visibility": "internal",
-                  "default": "developments.bsky.social"
+                  "description": "identifier"
                 },
                 "password": {
                   "type": "string",
-                  "description": "Password for authentication",
-                  "title": "Password",
-                  "x-ms-visibility": "internal",
-                  "default": "kf4b-t3zh-sbk3-rzyn"
+                  "description": "password"
                 }
-              },
-              "required": [
-                "identifier",
-                "password"
-              ],
-              "x-ms-visibility": "internal"
-            },
-            "x-ms-visibility": "internal"
+              }
+            }
           }
         ],
         "responses": {
@@ -3017,7 +3100,7 @@
   "parameters": {},
   "responses": {},
   "securityDefinitions": {
-    "Access Token": {
+    "accessToken": {
       "type": "apiKey",
       "in": "header",
       "name": "Authorization"
@@ -3025,7 +3108,7 @@
   },
   "security": [
     {
-      "Access Token": []
+      "accessToken": []
     }
   ],
   "tags": []
