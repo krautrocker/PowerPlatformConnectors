@@ -1,9 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bluesky (Independent Publisher)",
+    "title": "Bluesky Social",
     "description": "Specification for the Bluesky Social endpoints",
     "contact": {
+      "name": "Dan Romano",
       "email": "dan.romano@swolcat.com"
     },
     "license": {
@@ -12,13 +13,31 @@
     },
     "version": "1.0"
   },
+  "x-ms-connector-metadata": [
+    {
+      "propertyName": "Website",
+      "propertyValue": "https://docs.bsky.app/"
+    },
+    {
+      "propertyName": "Privacy policy",
+      "propertyValue": "https://example.com/privacy-policy"
+    },
+    {
+      "propertyName": "Categories",
+      "propertyValue": "Social Media"
+    }
+  ],
   "host": "bsky.social",
   "basePath": "/xrpc",
   "schemes": [
     "https"
   ],
-  "consumes": [],
-  "produces": [],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/app.bsky.actor.getPreferences": {
       "get": {
@@ -101,20 +120,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -175,21 +181,9 @@
               }
             }
           },
+
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -201,7 +195,7 @@
         ],
         "summary": "Retrieve suggested actors",
         "description": "Fetches a list of suggested actors for the authenticated user, based on various criteria.",
-        "operationId":  "GetSuggestions",
+        "operationId": "GetSuggestions",
         "parameters": [
           {
             "name": "limit",
@@ -257,21 +251,9 @@
               }
             }
           },
+
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -330,20 +312,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -420,20 +389,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -501,20 +457,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -594,20 +537,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -683,20 +613,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -783,20 +700,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -861,20 +765,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -950,20 +841,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1043,20 +921,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1100,20 +965,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1173,20 +1025,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1254,20 +1093,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1335,20 +1161,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1398,20 +1211,7 @@
             }
           },
           "default": {
-            "description": "Unexpected error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error message"
-                },
-                "details": {
-                  "type": "string",
-                  "description": "Additional details about the error"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         }
       }
@@ -1421,7 +1221,8 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Which lists is the requester's account muting?",
+        "summary": "Which lists is the requester's account muting",
+        "description": "Which lists is the requester's account muting",
         "operationId": "GetListMutes",
         "produces": [
           "application/json"
@@ -1431,6 +1232,8 @@
             "in": "query",
             "name": "limit",
             "type": "integer",
+            "x-ms-summary": "Limit the number of results",
+            "description": "Specifies the maximum number of muted lists to return.",
             "default": 50,
             "maximum": 100,
             "minimum": 1
@@ -1438,7 +1241,9 @@
           {
             "in": "query",
             "name": "cursor",
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Cursor for pagination",
+            "description": "Used to fetch the next page of muted lists."
           }
         ],
         "responses": {
@@ -1474,6 +1279,7 @@
           "app.bsky.graph"
         ],
         "summary": "Fetch a list of lists that belong to an actor",
+        "description": "Retrieves lists associated with a specified actor.",
         "operationId": "GetLists",
         "produces": [
           "application/json"
@@ -1484,7 +1290,9 @@
             "name": "actor",
             "required": true,
             "type": "string",
-            "format": "at-identifier"
+            "format": "at-identifier",
+            "x-ms-summary": "Actor identifier",
+            "description": "The unique identifier of the actor whose lists are being retrieved."
           },
           {
             "in": "query",
@@ -1492,12 +1300,16 @@
             "type": "integer",
             "default": 50,
             "maximum": 100,
-            "minimum": 1
+            "minimum": 1,
+            "x-ms-summary": "Limit the number of results",
+            "description": "Specifies the maximum number of lists to return."
           },
           {
             "in": "query",
             "name": "cursor",
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Cursor for pagination",
+            "description": "Used to fetch the next page of lists."
           }
         ],
         "responses": {
@@ -1532,7 +1344,8 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who does the viewer mute?",
+        "summary": "Who does the viewer mute",
+        "description": "Retrieves a list of accounts that the viewer has muted.",
         "operationId": "GetMutes",
         "produces": [
           "application/json"
@@ -1544,12 +1357,16 @@
             "type": "integer",
             "default": 50,
             "maximum": 100,
-            "minimum": 1
+            "minimum": 1,
+            "x-ms-summary": "Limit the number of results",
+            "description": "Specifies the maximum number of muted accounts to return."
           },
           {
             "in": "query",
             "name": "cursor",
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Cursor for pagination",
+            "description": "Used to fetch the next page of muted accounts."
           }
         ],
         "responses": {
@@ -1588,6 +1405,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute an actor by did or handle",
+        "description": "Mutes a specified actor using their DID or handle.",
         "consumes": [
           "application/json"
         ],
@@ -1631,6 +1449,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute a list of actors",
+        "description": "Mutes a list of specified actors using their identifiers.",
         "consumes": [
           "application/json"
         ],
@@ -1641,14 +1460,17 @@
             "required": true,
             "schema": {
               "required": [
-                "list"
+                "actors"
               ],
               "type": "object",
               "properties": {
-                "list": {
-                  "format": "uri",
-                  "description": "List identifier",
-                  "type": "string"
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Actor identifier"
+                  }
                 }
               }
             }
@@ -1656,7 +1478,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Actor list muted successfully"
+            "description": "Actors muted successfully"
           },
           "400": {
             "description": "Invalid request"
@@ -1674,6 +1496,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute an actor by did or handle",
+        "description": "Unmutes a specified actor using their DID or handle.",
         "consumes": [
           "application/json"
         ],
@@ -1689,7 +1512,7 @@
               "type": "object",
               "properties": {
                 "actor": {
-                  "format": "at-identifier",
+                  "format": "uri",
                   "description": "Actor identifier",
                   "type": "string"
                 }
@@ -1717,6 +1540,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute a list of actors",
+        "description": "Unmutes a list of specified actors using their identifiers.",
         "consumes": [
           "application/json"
         ],
@@ -1727,14 +1551,17 @@
             "required": true,
             "schema": {
               "required": [
-                "list"
+                "actors"
               ],
               "type": "object",
               "properties": {
-                "list": {
-                  "format": "at-uri",
-                  "description": "List URI",
-                  "type": "string"
+                "actors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Actor identifier"
+                  }
                 }
               }
             }
@@ -1742,7 +1569,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Actors in the list unmuted successfully"
+            "description": "Actors unmuted successfully"
           },
           "400": {
             "description": "Invalid request"
@@ -1759,7 +1586,9 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Get count of unread notifications",
+        "summary": "Retrieve unread notification count",
+        "description": "Fetches the count of unread notifications for the authenticated user.",
+        "operationId": "GetUnreadNotificationCount",
         "produces": [
           "application/json"
         ],
@@ -1767,35 +1596,32 @@
           {
             "in": "query",
             "name": "seenAt",
-            "description": "Datetime at which notifications were last seen",
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "x-ms-summary": "Last seen timestamp",
+            "description": "The timestamp of the last seen notification to calculate unread count since."
           }
         ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "required": [
-                "count"
-              ],
               "type": "object",
               "properties": {
-                "count": {
-                  "description": "Count of unread notifications",
-                  "type": "integer"
+                "unreadCount": {
+                  "type": "integer",
+                  "description": "The number of unread notifications."
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid input"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Unexpected error"
           }
-        },
-        "operationId": "GetUnreadCount"
+        }
       }
     },
     "/app.bsky.notification.listNotifications": {
@@ -1803,7 +1629,9 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "List notifications",
+        "summary": "Retrieve a list of notifications",
+        "description": "Fetches a list of notifications for the authenticated user.",
+        "operationId": "ListNotifications",
         "produces": [
           "application/json"
         ],
@@ -1811,56 +1639,54 @@
           {
             "in": "query",
             "name": "limit",
-            "description": "Limit the number of notifications to fetch",
             "type": "integer",
-            "default": 50,
+            "default": 20,
             "maximum": 100,
-            "minimum": 1
+            "x-ms-summary": "Limit the number of results",
+            "description": "Specifies the maximum number of notifications to return."
           },
           {
             "in": "query",
             "name": "cursor",
-            "description": "Cursor for paginating through notifications",
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Cursor for pagination",
+            "description": "Used to fetch the next page of notifications."
           },
           {
             "in": "query",
             "name": "seenAt",
-            "description": "Datetime at which notifications were last seen",
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "x-ms-summary": "Last seen timestamp",
+            "description": "Filters notifications to show those received since the last seen timestamp."
           }
         ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "required": [
-                "notifications"
-              ],
               "type": "object",
               "properties": {
-                "cursor": {
-                  "description": "Cursor for the next page of notifications",
-                  "type": "string"
-                },
                 "notifications": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Notification"
+                    "$ref": "#/definitions/NotificationView"
                   }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for pagination"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid input"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Unexpected error"
           }
-        },
-        "operationId": "ListNotifications"
+        }
       }
     },
     "/app.bsky.notification.updateSeen": {
@@ -1868,7 +1694,9 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Notify server that the user has seen notifications",
+        "summary": "Mark notifications as seen",
+        "description": "Marks notifications as seen up to the specified timestamp for the authenticated user.",
+        "operationId": "UpdateSeen",
         "consumes": [
           "application/json"
         ],
@@ -1878,22 +1706,21 @@
             "name": "body",
             "required": true,
             "schema": {
-              "required": [
-                "seenAt"
-              ],
               "type": "object",
               "properties": {
                 "seenAt": {
+                  "type": "string",
                   "format": "date-time",
-                  "type": "string"
+                  "description": "The timestamp up to which notifications are marked as seen."
                 }
-              }
+              },
+              "required": [ "seenAt" ]
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Notifications marked as seen successfully"
           },
           "400": {
             "description": "Invalid request"
@@ -1901,8 +1728,7 @@
           "500": {
             "description": "Internal server error"
           }
-        },
-        "operationId": "UpdateSeen"
+        }
       }
     },
     "/app.bsky.unspecced.popular": {
@@ -1910,57 +1736,63 @@
         "tags": [
           "app.bsky.unspecced"
         ],
-        "summary": "An unspecced view of globally popular items",
+        "summary": "Retrieve popular posts",
+        "description": "Fetches a list of popular posts.",
+        "operationId": "GetPopularPosts",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
             "in": "query",
-            "name": "includeNsfw",
-            "description": "Whether to include not safe for work items",
-            "type": "boolean",
-            "default": false
-          },
-          {
-            "in": "query",
             "name": "limit",
-            "description": "The number of items to return",
             "type": "integer",
-            "default": 50,
+            "default": 20,
             "maximum": 100,
-            "minimum": 1
+            "x-ms-summary": "Limit the number of results",
+            "description": "Specifies the maximum number of popular posts to return."
           },
           {
             "in": "query",
             "name": "cursor",
-            "description": "Cursor for pagination",
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Cursor for pagination",
+            "description": "Used to fetch the next page of popular posts."
+          },
+          {
+            "in": "query",
+            "name": "algorithm",
+            "type": "string",
+            "x-ms-summary": "Algorithm type",
+            "description": "Specifies the algorithm used to determine popularity."
           }
         ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "schema": {
-              "required": [
-                "feed"
-              ],
               "type": "object",
               "properties": {
                 "cursor": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Cursor for pagination"
                 },
-                "feed": {
+                "posts": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/FeedViewPost"
+                    "$ref": "#/definitions/PostView"
                   }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Unexpected error"
           }
-        },
-        "operationId": "Popular"
+        }
       }
     },
     "/com.atproto.server.createSession": {
@@ -1978,14 +1810,23 @@
               "properties": {
                 "identifier": {
                   "type": "string",
-                  "description": "User identifier (e.g., username or email)"
+                  "description": "User identifier (e.g., username or email)",
+                  "title": "Username",
+                  "x-ms-visibility": "internal",
+                  "default": "developments.bsky.social"
                 },
                 "password": {
                   "type": "string",
-                  "description": "Password for authentication"
+                  "description": "Password for authentication",
+                  "title": "Password",
+                  "x-ms-visibility": "internal",
+                  "default": "kf4b-t3zh-sbk3-rzyn"
                 }
               },
-              "required": [ "identifier", "password" ],
+              "required": [
+                "identifier",
+                "password"
+              ],
               "x-ms-visibility": "internal"
             },
             "x-ms-visibility": "internal"
@@ -1993,20 +1834,7 @@
         ],
         "responses": {
           "default": {
-            "description": "default",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accessJwt": {
-                  "type": "string",
-                  "description": "Access JWT token"
-                },
-                "refreshJwt": {
-                  "type": "string",
-                  "description": "Refresh JWT token"
-                }
-              }
-            }
+            "description": "Unexpected error"
           }
         },
         "x-ms-visibility": "important"
@@ -2014,6 +1842,24 @@
     }
   },
   "definitions": {
+    "NotificationView": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the notification."
+        },
+        "message": {
+          "type": "string",
+          "description": "Notification message content."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the notification was created."
+        }
+      }
+    },
     "ProfileViewBasic": {
       "required": [
         "did",
