@@ -1,10 +1,32 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bluesky Control Panel",
-    "description": "Companion connector to Bluesky (Independent Publisher) for admin, tools, and chat functions.",
+    "title": "Bluesky Social",
+    "description": "Specification for the Bluesky Social endpoints",
+    "contact": {
+      "name": "Dan Romano",
+      "email": "dan.romano@swolcat.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/license/mit/"
+    },
     "version": "1.0"
   },
+  "x-ms-connector-metadata": [
+    {
+      "propertyName": "Website",
+      "propertyValue": "https://docs.bsky.app/"
+    },
+    {
+      "propertyName": "Privacy policy",
+      "propertyValue": "https://example.com/privacy-policy"
+    },
+    {
+      "propertyName": "Categories",
+      "propertyValue": "Social Media"
+    }
+  ],
   "host": "bsky.social",
   "basePath": "/xrpc",
   "schemes": [
