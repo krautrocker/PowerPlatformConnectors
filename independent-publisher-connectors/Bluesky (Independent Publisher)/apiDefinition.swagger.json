@@ -69,6 +69,785 @@
         "description": "Get private preferences attached to the account"
       }
     },
+    "/app.bsky.video.uploadVideo": {
+      "post": {
+        "tags": [
+          "app.bsky.video"
+        ],
+        "summary": "Upload Video",
+        "description": "Uploads a video file for processing and sharing within the Bluesky platform. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and requires authentication. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "uploadVideo",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "The video file to be uploaded.",
+            "x-ms-summary": "Video file"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "Title of the video.",
+            "x-ms-summary": "Video title"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "Description of the video content.",
+            "x-ms-summary": "Video description"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully uploaded the video.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "videoId": {
+                  "type": "string",
+                  "description": "Unique identifier for the uploaded video."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The status of the video upload (e.g., pending, processing)."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.video.getUploadLimits": {
+      "get": {
+        "tags": [
+          "app.bsky.video"
+        ],
+        "summary": "Get Video Upload Limits",
+        "description": "Retrieves the video upload limits for the authenticated user, including maximum file size  and supported formats. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`)  and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getVideoUploadLimits",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved video upload limits.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "maxFileSize": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Maximum file size for video uploads in bytes."
+                },
+                "supportedFormats": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of supported video formats (e.g., mp4, mov)."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.video.getJobStatus": {
+      "get": {
+        "tags": [
+          "app.bsky.video"
+        ],
+        "summary": "Get Video Job Status",
+        "description": "Retrieves the status of a video processing job by job ID. This endpoint is part of the  Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getVideoJobStatus",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the video job whose status is being retrieved.",
+            "x-ms-summary": "Video job identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved video job status.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jobId": {
+                  "type": "string",
+                  "description": "The unique identifier of the video job."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The current status of the job (e.g., pending, processing, completed)."
+                },
+                "progress": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Progress percentage of the job."
+                },
+                "errorMessage": {
+                  "type": "string",
+                  "description": "Error message if the job has failed."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.getUnreadCount": {
+      "get": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Get Unread Notification Count",
+        "description": "Retrieves the count of unread notifications for the authenticated user. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getUnreadNotificationCount",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved unread notification count.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "The number of unread notifications."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.labeler.getServices": {
+      "get": {
+        "tags": [
+          "app.bsky.labeler"
+        ],
+        "summary": "Get Labeler Services",
+        "description": "Retrieves a list of labeler services available within the Bluesky application. Labeler services  provide content labeling features. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and may require authentication based on the specific setup. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getLabelerServices",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of labeler services.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "services": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/LabelerService"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.muteThread": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Mute Thread",
+        "description": "Mutes a specific thread for an actor, preventing notifications and visibility in feeds.  This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "muteThread",
+        "parameters": [
+          {
+            "name": "thread",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier (URI) of the thread to mute.",
+            "x-ms-summary": "Thread URI"
+          },
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor muting the thread.",
+            "x-ms-summary": "Actor identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully muted the specified thread.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the thread was successfully muted."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getStarterPacks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Starter Packs",
+        "description": "Retrieves a list of available starter packs, which are curated sets of users for the actor to consider following. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getStarterPacks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of starter packs to retrieve.",
+            "x-ms-summary": "Starter packs limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of starter packs.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "starterPacks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/StarterPack"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getStarterPack": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Starter Pack",
+        "description": "Retrieves details of a specific starter pack, which includes a curated set of users for the  actor to follow. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`)  and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getStarterPack",
+        "parameters": [
+          {
+            "name": "pack",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the starter pack to retrieve.",
+            "x-ms-summary": "Starter pack identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the starter pack.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "packId": {
+                  "type": "string",
+                  "description": "Unique identifier of the starter pack."
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title of the starter pack."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the starter pack."
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getKnownFollowers": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Known Followers",
+        "description": "Retrieves a list of known followers for a specific actor. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For  further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getKnownFollowers",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor whose known followers are being retrieved.",
+            "x-ms-summary": "Actor identifier"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of known followers to retrieve.",
+            "x-ms-summary": "Followers limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of known followers for the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.actor.getProfile": {
       "get": {
         "tags": [
@@ -134,6 +913,107 @@
         }
       }
     },
+    "/app.bsky.graph.getActorStarterPacks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Actor Starter Packs",
+        "description": "Retrieves a list of starter packs for a specific actor, which are curated sets of users that the actor may want to follow. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getActorStarterPacks",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor for whom starter packs are being retrieved.",
+            "x-ms-summary": "Actor identifier"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of starter packs to retrieve.",
+            "x-ms-summary": "Starter pack limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved starter packs for the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "starterPacks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/StarterPack"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.actor.getProfiles": {
       "get": {
         "tags": [
@@ -195,6 +1075,201 @@
           },
           "default": {
             "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.sendInteractions": {
+      "post": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Send Interactions",
+        "description": "Sends interactions such as likes or reposts for a specific post. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "sendInteractions",
+        "parameters": [
+          {
+            "name": "interactionType",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The type of interaction being sent (e.g., like, repost).",
+            "x-ms-summary": "Interaction type"
+          },
+          {
+            "name": "postUri",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The URI of the post that the interaction is being sent for.",
+            "x-ms-summary": "Post URI"
+          },
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor sending the interaction.",
+            "x-ms-summary": "Actor identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully sent the interaction.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the interaction was successfully sent."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getQuotes": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Quotes",
+        "description": "Retrieves a list of quotes for a specific post, including basic details about each quote. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getQuotes",
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The URI of the post for which quotes are being retrieved.",
+            "x-ms-summary": "Post URI"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of quotes to retrieve.",
+            "x-ms-summary": "Quotes limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved quotes for the specified post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/QuoteItem"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
           }
         }
       }
@@ -267,6 +1342,196 @@
           },
           "default": {
             "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.putPreferences": {
+      "put": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Put Notification Preferences",
+        "description": "Updates the notification preferences for the authenticated user, such as enabling or disabling  specific types of notifications. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "putNotificationPreferences",
+        "parameters": [
+          {
+            "name": "preferences",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "enableMentions": {
+                  "type": "boolean",
+                  "description": "Enable or disable notifications for mentions.",
+                  "x-ms-summary": "Mentions notifications preference"
+                },
+                "enableFollows": {
+                  "type": "boolean",
+                  "description": "Enable or disable notifications for follows.",
+                  "x-ms-summary": "Follows notifications preference"
+                },
+                "enableReplies": {
+                  "type": "boolean",
+                  "description": "Enable or disable notifications for replies.",
+                  "x-ms-summary": "Replies notifications preference"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated notification preferences.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the preferences were successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.notification.registerPush": {
+      "post": {
+        "tags": [
+          "app.bsky.notification"
+        ],
+        "summary": "Register Push Notification",
+        "description": "Registers a device for receiving push notifications for the authenticated user. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and requires authentication. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "registerPushNotification",
+        "parameters": [
+          {
+            "name": "deviceToken",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "The push notification token provided by the device.",
+                  "x-ms-summary": "Device token"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "The platform of the device (e.g., iOS, Android).",
+                  "x-ms-summary": "Device platform"
+                },
+                "enableNotifications": {
+                  "type": "boolean",
+                  "description": "Enable or disable push notifications for this device.",
+                  "x-ms-summary": "Push notifications preference"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully registered the device for push notifications.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the device was successfully registered for push notifications."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
           }
         }
       }
@@ -487,6 +1752,393 @@
         }
       }
     },
+    "/app.bsky.graph.getRelationships": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Relationships",
+        "description": "Retrieves the relationships between the specified actor and a list of other actors, such as follows  and blocks. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getRelationships",
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the primary actor whose relationships are being queried.",
+            "x-ms-summary": "Primary actor identifier"
+          },
+          {
+            "name": "actors",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "description": "A comma-separated list of DIDs or handles for other actors to query relationships with.",
+            "x-ms-summary": "Target actor identifiers"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved relationships for the specified actors.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Relationship"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.graph.getSuggestedFollowsByActor": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get Suggested Follows by Actor",
+        "description": "Retrieves a list of suggested accounts for the specified actor to follow based on shared connections or interests. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getSuggestedFollowsByActor",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor for whom suggested follows are being retrieved.",
+            "x-ms-summary": "Actor identifier"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of suggested follows to retrieve.",
+            "x-ms-summary": "Suggestions limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved suggested follows for the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "suggestions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getSuggestedFeeds": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Suggested Feeds",
+        "description": "Retrieves a list of suggested feeds for the authenticated user, based on relevance and user activity. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getSuggestedFeeds",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of suggested feeds to retrieve.",
+            "x-ms-summary": "Suggestions limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of suggested feeds.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SuggestedFeed"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getActorFeeds": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Actor Feeds",
+        "description": "Retrieves the feeds created by a specific actor, including details on each feed’s content,  title, and additional metadata. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and typically requires authentication. To call this endpoint, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "operationId": "getActorFeeds",
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor whose feeds are being retrieved.",
+            "x-ms-summary": "Actor identifier"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of feeds to retrieve.",
+            "x-ms-summary": "Result limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved actor feeds.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Feed"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.feed.getAuthorFeed": {
       "get": {
         "tags": [
@@ -568,6 +2220,294 @@
           },
           "default": {
             "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getFeedGenerator": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Feed Generator",
+        "description": "Retrieves information about a specific feed generator, including its metadata, policies, and associated feeds. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. To call this endpoint, see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "operationId": "getFeedGenerator",
+        "parameters": [
+          {
+            "name": "generator",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier (DID or URI) of the feed generator to retrieve.",
+            "x-ms-summary": "Feed generator identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved feed generator information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "did": {
+                  "type": "string",
+                  "description": "Decentralized identifier (DID) of the feed generator."
+                },
+                "displayName": {
+                  "type": "string",
+                  "description": "Display name of the feed generator."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Detailed description of the feed generator."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp of when the feed generator was created."
+                },
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Feed"
+                  }
+                },
+                "policies": {
+                  "type": "object",
+                  "description": "Policies associated with the feed generator.",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "Content policy for the feed generator."
+                    },
+                    "moderation": {
+                      "type": "string",
+                      "description": "Moderation policy for the feed generator."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getFeedGenerators": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Feed Generators",
+        "description": "Retrieves information about multiple feed generators based on their unique identifiers. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. To call this endpoint, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "operationId": "getFeedGenerators",
+        "parameters": [
+          {
+            "name": "generators",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "description": "A comma-separated list of unique identifiers (DIDs or URIs) for the feed generators to retrieve.",
+            "x-ms-summary": "List of feed generator identifiers"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved information for multiple feed generators.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "generators": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FeedGenerator"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.describeFeedGenerator": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Describe Feed Generator",
+        "description": "This endpoint retrieves information about a feed generator, including policies and offered feed URIs. It does not require authentication and is implemented by Feed Generator services, not the App View.\n*Note*: Public endpoints that don't require authentication can be accessed via the public Bluesky AppView API at https://public.api.bsky.app. Authenticated requests are typically made to the user's PDS with automatic service proxying. See the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "operationId": "describeFeedGenerator",
+        "responses": {
+          "200": {
+            "description": "Successful response with feed generator details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "did",
+                "feeds"
+              ],
+              "properties": {
+                "did": {
+                  "type": "string",
+                  "description": "Decentralized identifier (DID) of the feed generator"
+                },
+                "feeds": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ListView"
+                  }
+                },
+                "links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "URL for this feed generator's API"
+                    },
+                    "documentation": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Link to additional documentation for this feed generator"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code for missing authentication"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access"
+                }
+              }
+            }
           }
         }
       }
@@ -1031,6 +2971,107 @@
         }
       }
     },
+    "/app.bsky.graph.getListBlocks": {
+      "get": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Get List Blocks",
+        "description": "Retrieves a list of users who have been blocked by the specified actor within a given list. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getListBlocks",
+        "parameters": [
+          {
+            "name": "list",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the list for which blocked users are being retrieved.",
+            "x-ms-summary": "List identifier"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of blocked users to retrieve.",
+            "x-ms-summary": "Blocked users limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of blocked users.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blocks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.getBlocks": {
       "get": {
         "tags": [
@@ -1172,17 +3213,17 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Retrieve users followed by a user",
-        "operationId": "GetFollows",
-        "description": "Fetches a list of users that the specified user is following.",
+        "summary": "Get Follows",
+        "description": "Retrieves a list of users that a specified actor is following. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "getFollows",
         "parameters": [
           {
             "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Actor identifier",
-            "description": "The unique identifier of the actor whose followers are being retrieved."
+            "description": "The DID or handle of the actor whose follows are being retrieved.",
+            "x-ms-summary": "Actor identifier"
           },
           {
             "name": "limit",
@@ -1190,58 +3231,80 @@
             "required": false,
             "type": "integer",
             "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of followers to retrieve."
+            "description": "Maximum number of follows to retrieve.",
+            "x-ms-summary": "Follows limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination cursor",
-            "description": "Used for paginated results."
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users who follow the specified actor.",
+            "description": "Successfully retrieved list of follows for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
-                "followers": {
+                "follows": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized identifier for the follower."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "The follower's handle."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the follower."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the follower relationship was created."
-                      }
-                    }
+                    "$ref": "#/definitions/User"
                   }
                 },
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for retrieving the next set of results."
+                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
           }
         }
       }
@@ -1483,6 +3546,107 @@
         }
       }
     },
+    "/app.bsky.feed.searchPosts": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Search Posts",
+        "description": "Searches for posts containing specific keywords or phrases. This endpoint is part of  the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "searchPosts",
+        "parameters": [
+          {
+            "name": "term",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The search term or phrase used to find posts.",
+            "x-ms-summary": "Search term"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of posts to retrieve.",
+            "x-ms-summary": "Result limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results, provided by the previous response.",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved posts matching the search criteria.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Post"
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results, if available."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.muteActor": {
       "post": {
         "tags": [
@@ -1574,6 +3738,92 @@
         "operationId": "MuteActorList"
       }
     },
+    "/app.bsky.graph.unmuteThread": {
+      "post": {
+        "tags": [
+          "app.bsky.graph"
+        ],
+        "summary": "Unmute Thread",
+        "description": "Unmutes a specific thread for an actor, allowing notifications and visibility in feeds again.  This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "operationId": "unmuteThread",
+        "parameters": [
+          {
+            "name": "thread",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier (URI) of the thread to unmute.",
+            "x-ms-summary": "Thread URI"
+          },
+          {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The DID or handle of the actor unmuting the thread.",
+            "x-ms-summary": "Actor identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unmuted the specified thread.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the thread was successfully unmuted."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message for unauthorized access."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.graph.unmuteActor": {
       "post": {
         "tags": [
@@ -1663,49 +3913,6 @@
           }
         },
         "operationId": "UnmuteActorList"
-      }
-    },
-    "/app.bsky.notification.getUnreadCount": {
-      "get": {
-        "tags": [
-          "app.bsky.notification"
-        ],
-        "summary": "Retrieve unread notification count",
-        "description": "Fetches the count of unread notifications for the authenticated user.",
-        "operationId": "GetUnreadNotificationCount",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "seenAt",
-            "type": "string",
-            "format": "date-time",
-            "x-ms-summary": "Last seen timestamp",
-            "description": "The timestamp of the last seen notification to calculate unread count since."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "unreadCount": {
-                  "type": "integer",
-                  "description": "The number of unread notifications."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          },
-          "500": {
-            "description": "Unexpected error"
-          }
-        }
       }
     },
     "/app.bsky.notification.listNotifications": {
@@ -1810,6 +4017,9 @@
           },
           "400": {
             "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal server error"
@@ -1925,6 +4135,155 @@
     }
   },
   "definitions": {
+
+    "LabelerService": {
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "description": "Unique identifier for the labeler service."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the labeler service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the labeler service."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the service was created."
+        }
+      }
+    },
+    "Relationship": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": "string",
+          "description": "The DID or handle of the target actor."
+        },
+        "follows": {
+          "type": "boolean",
+          "description": "Whether the primary actor follows the target actor."
+        },
+        "blocks": {
+          "type": "boolean",
+          "description": "Whether the primary actor has blocked the target actor."
+        },
+        "muted": {
+          "type": "boolean",
+          "description": "Whether the primary actor has muted the target actor."
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique identifier of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the user."
+        },
+        "bio": {
+          "type": "string",
+          "description": "Short biography or description of the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the user joined the network."
+        }
+      }
+    },
+    "StarterPack": {
+      "type": "object",
+      "properties": {
+        "packId": {
+          "type": "string",
+          "description": "Unique identifier of the starter pack."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the starter pack."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the starter pack."
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The unique identifier of a user in the starter pack."
+              },
+              "displayName": {
+                "type": "string",
+                "description": "Display name of the user."
+              },
+              "bio": {
+                "type": "string",
+                "description": "Short biography or description of the user."
+              }
+            }
+          }
+        }
+      }
+    },
+    "SuggestedFeed": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URI for the suggested feed."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the suggested feed."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the suggested feed."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the feed was created."
+        }
+      }
+    },
+    "QuoteItem": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URI of the quote."
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the quote."
+        },
+        "content": {
+          "type": "string",
+          "description": "Content of the quote."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the quote was created."
+        }
+      }
+    },
     "NotificationView": {
       "type": "object",
       "properties": {
@@ -2551,39 +4910,25 @@
       }
     },
     "Post": {
-      "required": [
-        "text",
-        "createdAt"
-      ],
       "type": "object",
       "properties": {
-        "text": {
-          "description": "text",
-          "maxLength": 3000,
-          "type": "string"
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URI of the post."
         },
-        "entities": {
-          "description": "deprecated - replaced by app.bsky.richtext.facet",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Entity"
-          }
+        "author": {
+          "type": "string",
+          "description": "The author of the post."
         },
-        "facets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Facet"
-          }
-        },
-        "reply": {
-          "$ref": "#/definitions/ReplyRef"
-        },
-        "embed": {
-          "$ref": "#/definitions/Embed"
+        "content": {
+          "type": "string",
+          "description": "The content of the post."
         },
         "createdAt": {
-          "format": "datetime",
-          "type": "string"
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the post was created."
         }
       }
     },
@@ -2811,6 +5156,71 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Label"
+          }
+        }
+      }
+    },
+    "Feed": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URI for the feed."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the feed."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the feed."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp indicating when the feed was created."
+        }
+      }
+    },
+    "FeedGenerator": {
+      "type": "object",
+      "properties": {
+        "did": {
+          "type": "string",
+          "description": "Decentralized identifier (DID) of the feed generator."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the feed generator."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the feed generator."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the feed generator was created."
+        },
+        "feeds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Feed"
+          }
+        },
+        "policies": {
+          "type": "object",
+          "description": "Policies associated with the feed generator.",
+          "properties": {
+            "content": {
+              "type": "string",
+              "description": "Content policy for the feed generator."
+            },
+            "moderation": {
+              "type": "string",
+              "description": "Moderation policy for the feed generator."
+            }
           }
         }
       }
