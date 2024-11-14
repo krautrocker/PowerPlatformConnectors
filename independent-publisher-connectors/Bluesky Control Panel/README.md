@@ -16,74 +16,168 @@ To use this connector, you will need:
 
 This connector includes the following operations:
 
-#### Actor Endpoints
-- **POST /chat.bsky.actor.deleteAccount** – Permanently delete an actor's account and associated data.
-- **GET /chat.bsky.actor.exportAccountData** – Export account data for a specific actor.
+### `chat.bsky` Endpoints
 
-#### Moderation Endpoints
-- **POST /com.atproto.moderation.createReport** – Create a moderation report for actor behavior or content.
-- **GET /com.atproto.moderation.getActorMetadata** – Retrieve metadata associated with an actor's moderation status.
-- **PUT /com.atproto.moderation.updateActorAccess** – Update access permissions for a specified actor.
+- **chat.bsky.actor.deleteAccount** – Permanently delete an actor's account and associated data.
+- **chat.bsky.actor.exportAccountData** – Export account data for a specific actor.
+- **chat.bsky.convo.deleteMessageForSelf** – Delete a message from the user's view only.
+- **chat.bsky.convo.getConvo** – Retrieve a specific conversation.
+- **chat.bsky.convo.getConvoForMembers** – Get a conversation between specific members.
+- **chat.bsky.convo.getLog** – Retrieve the log of a conversation.
+- **chat.bsky.convo.getMessages** – Retrieve messages within a conversation.
+- **chat.bsky.convo.leaveConvo** – Leave a conversation.
+- **chat.bsky.convo.listConvos** – List all conversations for a user.
+- **chat.bsky.convo.muteConvo** – Mute notifications for a conversation.
+- **chat.bsky.convo.sendMessage** – Send a message in a conversation.
+- **chat.bsky.convo.sendMessageBatch** – Send multiple messages in a batch.
+- **chat.bsky.convo.unmuteConvo** – Unmute notifications for a conversation.
+- **chat.bsky.convo.updateRead** – Mark a conversation as read.
+- **chat.bsky.moderation.getActorMetadata** – Retrieve metadata associated with an actor's moderation status.
+- **chat.bsky.moderation.getMessageContext** – Retrieve context for a message's moderation.
+- **chat.bsky.moderation.updateActorAccess** – Update access permissions for a specified actor.
 
-#### Label Endpoints
-- **GET /com.atproto.label.queryLabels** – Query labels for content or actors.
+### `com.atproto.admin` Endpoints
 
-#### Identity Endpoints
-- **POST /com.atproto.identity.updateHandle** – Update the handle associated with an actor's account.
-- **GET /com.atproto.identity.getRecommendedDIDCredentials** – Retrieve recommended DID credentials for account verification.
+- **com.atproto.admin.deleteAccount** – Permanently delete an account.
+- **com.atproto.admin.disableAccountInvites** – Disable invites for an account.
+- **com.atproto.admin.disableInviteCodes** – Disable invite codes.
+- **com.atproto.admin.enableAccountInvites** – Enable invites for an account.
+- **com.atproto.admin.getAccountInfo** – Get information about a specific account.
+- **com.atproto.admin.getAccountInfos** – Retrieve information about multiple accounts.
+- **com.atproto.admin.getInviteCodes** – Retrieve invite codes for an account.
+- **com.atproto.admin.getSubjectStatus** – Retrieve status information for a subject.
+- **com.atproto.admin.searchAccounts** – Search for accounts.
+- **com.atproto.admin.sendEmail** – Send an email to an account.
+- **com.atproto.admin.updateAccountEmail** – Update the email address associated with an account.
+- **com.atproto.admin.updateAccountHandle** – Update the handle associated with an account.
+- **com.atproto.admin.updateAccountPassword** – Update the password for an account.
+- **com.atproto.admin.updateSubjectStatus** – Update status for a subject.
 
-#### Repository Endpoints
-- **POST /com.atproto.repo.uploadBlob** – Upload a binary blob to the repository.
-- **POST /com.atproto.repo.applyWrites** – Apply multiple writes to the repository.
-- **POST /com.atproto.repo.createRecord** – Create a new record in the repository.
-- **DELETE /com.atproto.repo.deleteRecord** – Delete a specified record from the repository.
-- **GET /com.atproto.repo.describeRepo** – Retrieve metadata about a repository.
-- **GET /com.atproto.repo.getRecord** – Retrieve a specific record by ID.
-- **POST /com.atproto.repo.importRepo** – Import data into the repository.
-- **GET /com.atproto.repo.listMissingBlobs** – List missing blobs in the repository.
-- **GET /com.atproto.repo.listRecords** – List all records in a repository.
-- **PUT /com.atproto.repo.putRecord** – Update a record in the repository.
+### `com.atproto.identity` Endpoints
 
-#### Synchronization Endpoints
-- **GET /com.atproto.sync.getBlob** – Retrieve a specific blob in binary format.
-- **GET /com.atproto.sync.getBlocks** – Retrieve binary data blocks by ID.
-- **GET /com.atproto.sync.getLatestCommit** – Retrieve the latest commit information for synchronization.
-- **GET /com.atproto.sync.getRecord** – Retrieve a specific record as part of sync operations.
-- **GET /com.atproto.sync.getRepoStatus** – Get the status of a repository for sync operations.
+- **com.atproto.identity.getRecommendedDidCredentials** – Retrieve recommended DID credentials.
+- **com.atproto.identity.requestPlcOperationSignature** – Request a signature for a PLC operation.
+- **com.atproto.identity.resolveHandle** – Resolve an account handle.
+- **com.atproto.identity.signPlcOperation** – Sign a PLC operation.
+- **com.atproto.identity.submitPlcOperation** – Submit a PLC operation.
+- **com.atproto.identity.updateHandle** – Update the handle for an identity.
 
-#### Server Endpoints
-- **POST /com.atproto.server.activateAccount** – Activate a new account.
-- **POST /com.atproto.server.createAccount** – Create a new account in the system.
-- **DELETE /com.atproto.server.deleteAccount** – Permanently delete an account.
-- **GET /com.atproto.server.getSession** – Retrieve the current session information.
-- **POST /com.atproto.server.updateEmail** – Update the email address for an account.
+### `com.atproto.label` Endpoints
 
-#### Tools-Ozone Communication Endpoints
-- **POST /tools.ozone.communication.createTemplate** – Create a communication template.
-- **DELETE /tools.ozone.communication.deleteTemplate** – Delete a communication template by ID.
-- **GET /tools.ozone.communication.listTemplates** – List all communication templates.
-- **PUT /tools.ozone.communication.updateTemplate** – Update an existing communication template.
+- **com.atproto.label.queryLabels** – Query labels for content or actors.
 
-#### Tools-Ozone Moderation Endpoints
-- **POST /tools.ozone.moderation.emitEvent** – Emit a moderation event.
-- **GET /tools.ozone.moderation.getRecord** – Retrieve a moderation record by ID.
-- **GET /tools.ozone.moderation.getRecords** – Retrieve multiple moderation records.
-- **GET /tools.ozone.moderation.searchRepos** – Search for repositories based on moderation criteria.
+### `com.atproto.moderation` Endpoints
 
-#### Tools-Ozone Team Endpoints
-- **POST /tools.ozone.team.addMember** – Add a member to a specified team.
-- **DELETE /tools.ozone.team.deleteMember** – Remove a member from a specified team.
-- **GET /tools.ozone.team.listMembers** – List all members of a specified team.
-- **PUT /tools.ozone.team.updateMember** – Update information for a team member.
+- **com.atproto.moderation.createReport** – Create a report for moderation.
+- **com.atproto.moderation.getActorMetadata** – Retrieve metadata for moderation purposes.
+
+### `com.atproto.repo` Endpoints
+
+- **com.atproto.repo.applyWrites** – Apply writes to a repository.
+- **com.atproto.repo.createRecord** – Create a record in a repository.
+- **com.atproto.repo.deleteRecord** – Delete a record from a repository.
+- **com.atproto.repo.describeRepo** – Describe a repository.
+- **com.atproto.repo.getRecord** – Retrieve a record by ID.
+- **com.atproto.repo.importRepo** – Import data into a repository.
+- **com.atproto.repo.listMissingBlobs** – List missing blobs.
+- **com.atproto.repo.listRecords** – List all records in a repository.
+- **com.atproto.repo.putRecord** – Update a record in the repository.
+- **com.atproto.repo.uploadBlob** – Upload a binary blob to a repository.
+
+### `com.atproto.server` Endpoints
+
+- **com.atproto.server.activateAccount** – Activate an account.
+- **com.atproto.server.checkAccountStatus** – Check account status.
+- **com.atproto.server.confirmEmail** – Confirm an email address.
+- **com.atproto.server.createAccount** – Create a new account.
+- **com.atproto.server.createAppPassword** – Create an app-specific password.
+- **com.atproto.server.createInviteCode** – Create a single invite code.
+- **com.atproto.server.createInviteCodes** – Create multiple invite codes.
+- **com.atproto.server.createSession** – Create a session.
+- **com.atproto.server.deactivateAccount** – Deactivate an account.
+- **com.atproto.server.deleteAccount** – Permanently delete an account.
+- **com.atproto.server.deleteSession** – Delete a session.
+- **com.atproto.server.describeServer** – Describe server information.
+- **com.atproto.server.getAccountInviteCodes** – Retrieve invite codes for an account.
+- **com.atproto.server.getServiceAuth** – Retrieve service authentication info.
+- **com.atproto.server.getSession** – Retrieve session information.
+- **com.atproto.server.listAppPasswords** – List app-specific passwords.
+- **com.atproto.server.refreshSession** – Refresh a session.
+- **com.atproto.server.requestAccountDelete** – Request deletion of an account.
+- **com.atproto.server.requestEmailConfirmation** – Request email confirmation.
+- **com.atproto.server.requestEmailUpdate** – Request email update.
+- **com.atproto.server.requestPasswordReset** – Request password reset.
+- **com.atproto.server.reserveSigningKey** – Reserve a signing key.
+- **com.atproto.server.resetPassword** – Reset password.
+- **com.atproto.server.revokeAppPassword** – Revoke an app-specific password.
+- **com.atproto.server.updateEmail** – Update the email associated with an account.
+
+### `com.atproto.sync` Endpoints
+
+- **com.atproto.sync.getBlob** – Retrieve a blob by ID.
+- **com.atproto.sync.getBlocks** – Retrieve blocks by ID.
+- **com.atproto.sync.getLatestCommit** – Get the latest commit.
+- **com.atproto.sync.getRecord** – Retrieve a record for synchronization.
+- **com.atproto.sync.getRepo** – Retrieve repository data for sync.
+- **com.atproto.sync.getRepoStatus** – Retrieve repository status.
+- **com.atproto.sync.listBlobs** – List blobs in a repository.
+- **com.atproto.sync.listRepos** – List repositories for synchronization.
+- **com.atproto.sync.notifyOfUpdate** – Notify of an update in the system.
+- **com.atproto.sync.requestCrawl** – Request a crawl for synchronization.
+
+### `tools.ozone.communication` Endpoints
+
+- **tools.ozone.communication.createTemplate** – Create a communication template.
+- **tools.ozone.communication.deleteTemplate** – Delete a communication template.
+- **tools.ozone.communication.listTemplates** – List communication templates.
+- **tools.ozone.communication.updateTemplate** – Update a communication template.
+
+### `tools.ozone.moderation` Endpoints
+
+- **tools.ozone.moderation.emitEvent** – Emit a moderation event.
+- **tools.ozone.moderation.getEvent** – Retrieve a specific moderation event.
+- **tools.ozone.moderation.getRecord** – Retrieve a moderation record.
+- **tools.ozone.moderation.getRecords** – List moderation records.
+- **tools.ozone.moderation.getRepo** – Retrieve moderation information for a repository.
+- **tools.ozone.moderation.getRepos** – Retrieve moderation data for multiple repositories.
+- **tools.ozone.moderation.queryEvents** – Query moderation events.
+- **tools.ozone.moderation.queryStatuses** – Query moderation statuses.
+- **tools.ozone.moderation.searchRepos** – Search repositories for moderation.
+
+### `tools.ozone.server` Endpoints
+
+- **tools.ozone.server.getConfig** – Retrieve server configuration information.
+
+### `tools.ozone.set` Endpoints
+
+- **tools.ozone.set.addValues** – Add values to a set.
+- **tools.ozone.set.deleteSet** – Delete a specified set.
+- **tools.ozone.set.deleteValues** – Delete specific values from a set.
+- **tools.ozone.set.getValues** – Retrieve values from a set.
+- **tools.ozone.set.querySets** – Query sets based on filters.
+- **tools.ozone.set.upsertSet** – Create or update a set.
+
+### `tools.ozone.signature` Endpoints
+
+- **tools.ozone.signature.findCorrelation** – Find correlations related to a signature.
+- **tools.ozone.signature.findRelatedAccounts** – Find accounts related to a signature.
+- **tools.ozone.signature.searchAccounts** – Search for accounts by signature.
+
+### `tools.ozone.team` Endpoints
+
+- **tools.ozone.team.addMember** – Add a member to a team.
+- **tools.ozone.team.deleteMember** – Remove a member from a team.
+- **tools.ozone.team.listMembers** – List members in a team.
+- **tools.ozone.team.updateMember** – Update team member information.
 
 All other endpoints not listed can be found here (non-app.bsky): https://docs.bsky.app/docs/category/http-reference
 
-
 ### Authentication
+
 All endpoints require an `Authorization` header with a bearer token, except where explicitly noted.
 
 ### Example Authorization Header
 
 {
-  "Authorization": "Bearer <your_access_token>"
+	"Authorization": "Bearer <access_token_>"
 }
