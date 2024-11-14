@@ -1441,6 +1441,69 @@
         }
       }
     },
+    "/app.bsky.feed.getFeedSkeleton": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Feed Skeleton",
+        "description": "Retrieves the skeleton structure for a feed, which provides metadata about posts and their relationships.",
+        "operationId": "GetFeedSkeleton",
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the feed to retrieve.",
+            "x-ms-summary": "Feed ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the feed skeleton.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feedId": {
+                  "type": "string",
+                  "description": "Unique identifier of the feed."
+                },
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "Unique identifier of the post."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the post."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.notification.registerPush": {
       "post": {
         "tags": [
@@ -3416,6 +3479,70 @@
           },
           "500": {
             "description": "Unexpected error"
+          }
+        }
+      }
+    },
+
+    "/app.bsky.feed.getListFeed": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get List Feed",
+        "description": "Retrieves a list of posts in a feed.",
+        "operationId": "GetListFeed",
+        "parameters": [
+          {
+            "name": "listId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the list to retrieve.",
+            "x-ms-summary": "List ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list feed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "listId": {
+                  "type": "string",
+                  "description": "Unique identifier of the list."
+                },
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "Unique identifier of the post."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the post."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
