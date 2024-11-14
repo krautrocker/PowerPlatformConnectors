@@ -43,6 +43,9 @@
         "summary": "Delete Account",
         "description": "Permanently deletes an account and all associated data. This endpoint is part of the chat.bsky namespace and requires authentication.",
         "operationId": "DeleteAccount",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "actorId",
@@ -69,45 +72,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -148,45 +119,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -234,45 +173,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -329,45 +236,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -420,45 +295,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -470,7 +313,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Log",
-        "description": "Retrieves the log (message history) of a specific conversation by its unique identifier.  This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Retrieves the log (message history) of a specific conversation by its unique identifier. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "GetConvoLog",
         "parameters": [
           {
@@ -525,45 +368,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -575,7 +386,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Messages",
-        "description": "Retrieves a list of messages in a specific conversation by its unique identifier. This  endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Retrieves a list of messages in a specific conversation by its unique identifier. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "GetMessages",
         "parameters": [
           {
@@ -630,45 +441,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -680,7 +459,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Leave Convo",
-        "description": "Allows the authenticated user to leave a specific conversation, removing it from their active  conversations. This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Allows the authenticated user to leave a specific conversation, removing it from their active conversations. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "LeaveConvo",
         "parameters": [
           {
@@ -708,45 +487,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -758,7 +505,7 @@
           "chat.bsky.convo"
         ],
         "summary": "List Convos",
-        "description": "Retrieves a list of active conversations for the authenticated user. This endpoint is part  of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Retrieves a list of active conversations for the authenticated user. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "ListConvos",
         "parameters": [
           {
@@ -801,45 +548,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -851,7 +566,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Mute Convo",
-        "description": "Mutes a specific conversation for the authenticated user, disabling notifications for that  conversation. This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Mutes a specific conversation for the authenticated user, disabling notifications for that conversation. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "MuteConvo",
         "parameters": [
           {
@@ -879,45 +594,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -929,7 +612,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Send Message Batch",
-        "description": "Sends multiple messages to a specified conversation in a batch. This endpoint is part of the  `chat.bsky` namespace and requires authentication.\n",
+        "description": "Sends multiple messages to a specified conversation in a batch. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "SendMessageBatch",
         "parameters": [
           {
@@ -980,45 +663,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1030,8 +681,11 @@
           "chat.bsky.convo"
         ],
         "summary": "Send Message",
-        "description": "Sends a single message to a specified conversation. This endpoint is part of the `chat.bsky`  namespace and requires authentication.\n",
+        "description": "Sends a single message to a specified conversation. This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
         "operationId": "SendMessage",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "convoId",
@@ -1078,45 +732,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1128,7 +750,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Unmute Convo",
-        "description": "Unmutes a specific conversation for the authenticated user, re-enabling notifications for  that conversation. This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Unmutes a specific conversation for the authenticated user, re-enabling notifications for that conversation. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "UnmuteConvo",
         "parameters": [
           {
@@ -1156,45 +778,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1206,7 +796,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Update Read",
-        "description": "Marks the conversation as read up to a specified message, updating the read status for the  authenticated user. This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Marks the conversation as read up to a specified message, updating the read status for the authenticated user. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "UpdateRead",
         "parameters": [
           {
@@ -1242,45 +832,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1292,7 +850,7 @@
           "chat.bsky.moderation"
         ],
         "summary": "Get Actor Metadata",
-        "description": "Retrieves metadata for a specific actor, including any moderation details. This endpoint  is part of the `chat.bsky` namespace and typically requires authentication.\n",
+        "description": "Retrieves metadata for a specific actor, including any moderation details. This endpoint is part of the `chat.bsky` namespace and typically requires authentication.",
         "operationId": "GetActorMetadata",
         "parameters": [
           {
@@ -1324,45 +882,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1374,7 +900,7 @@
           "chat.bsky.moderation"
         ],
         "summary": "Get Message Context",
-        "description": "Retrieves the context of a specific message, including any moderation details. This endpoint  is part of the `chat.bsky` namespace and typically requires authentication.\n",
+        "description": "Retrieves the context of a specific message, including any moderation details. This endpoint is part of the `chat.bsky` namespace and typically requires authentication.",
         "operationId": "GetMessageContext",
         "parameters": [
           {
@@ -1406,45 +932,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1456,8 +950,11 @@
           "chat.bsky.moderation"
         ],
         "summary": "Update Actor Access",
-        "description": "Updates the access level for a specific actor, allowing moderation actions to be applied.  This endpoint is part of the `chat.bsky` namespace and requires authentication.\n",
+        "description": "Updates the access level for a specific actor, allowing moderation actions to be applied. This endpoint is part of the `chat.bsky` namespace and requires authentication.",
         "operationId": "UpdateActorAccess",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "actorId",
@@ -1499,45 +996,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1549,7 +1014,7 @@
           "com.atproto.admin"
         ],
         "summary": "Delete Account",
-        "description": "Permanently deletes an account along with all associated data. This endpoint is part of the  `atproto.admin` namespace and requires authentication.\n",
+        "description": "Permanently deletes an account along with all associated data. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "AdminDeleteAccount",
         "parameters": [
           {
@@ -1577,45 +1042,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1655,45 +1088,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1705,8 +1106,11 @@
           "com.atproto.admin"
         ],
         "summary": "Disable Invite Codes",
-        "description": "Disables specified invite codes, rendering them unusable. This endpoint is part of the  `atproto.admin` namespace and requires authentication.\n",
+        "description": "Disables specified invite codes, rendering them unusable. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "DisableInviteCodes",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "inviteCodes",
@@ -1738,45 +1142,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1788,7 +1160,7 @@
           "com.atproto.admin"
         ],
         "summary": "Enable Account Invites",
-        "description": "Enables invite codes for a specified account, allowing new invite codes to be generated. This  endpoint is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Enables invite codes for a specified account, allowing new invite codes to be generated. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "EnableAccountInvites",
         "parameters": [
           {
@@ -1816,45 +1188,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1866,7 +1206,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Info",
-        "description": "Retrieves information for a specific account based on its unique identifier. This endpoint  is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Retrieves information for a specific account based on its unique identifier. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "GetAccountInfo",
         "parameters": [
           {
@@ -1903,45 +1243,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1953,7 +1261,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Infos",
-        "description": "Retrieves information for multiple accounts. This endpoint is part of the `atproto.admin`  namespace and requires authentication.\n",
+        "description": "Retrieves information for multiple accounts. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "GetAccountInfos",
         "parameters": [
           {
@@ -1997,45 +1305,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2047,7 +1323,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Invite Codes",
-        "description": "Retrieves a list of invite codes, including their status and usage details. This endpoint  is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Retrieves a list of invite codes, including their status and usage details. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "GetInviteCodes",
         "parameters": [
           {
@@ -2098,45 +1374,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2148,7 +1392,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Subject Status",
-        "description": "Retrieves the moderation status for a specific subject (e.g., an account or content). This  endpoint is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Retrieves the moderation status for a specific subject (e.g., an account or content). This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "GetSubjectStatus",
         "parameters": [
           {
@@ -2185,45 +1429,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2235,7 +1447,7 @@
           "com.atproto.admin"
         ],
         "summary": "Search Accounts",
-        "description": "Searches for accounts based on specified criteria, such as email or username. This endpoint  is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Searches for accounts based on specified criteria, such as email or username. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "SearchAccounts",
         "parameters": [
           {
@@ -2292,45 +1504,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2342,8 +1522,11 @@
           "com.atproto.admin"
         ],
         "summary": "Send Email",
-        "description": "Sends an email to a specified account, allowing administrators to communicate directly with users. This endpoint is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Sends an email to a specified account, allowing administrators to communicate directly with users. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "SendEmail",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "accountId",
@@ -2389,45 +1572,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2439,7 +1590,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Email",
-        "description": "Updates the email associated with a specified account. This endpoint is part of the  `atproto.admin` namespace and requires authentication.\n",
+        "description": "Updates the email associated with a specified account. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "UpdateAccountEmail",
         "parameters": [
           {
@@ -2476,45 +1627,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2526,7 +1645,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Handle",
-        "description": "Updates the handle associated with a specified account. This endpoint is part of the  `atproto.admin` namespace and requires authentication.\n",
+        "description": "Updates the handle associated with a specified account. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "UpdateAccountHandle",
         "parameters": [
           {
@@ -2562,45 +1681,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2612,7 +1699,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Password",
-        "description": "Updates the password for a specified account. This endpoint is part of the `atproto.admin`  namespace and requires authentication.\n",
+        "description": "Updates the password for a specified account. This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "UpdateAccountPassword",
         "parameters": [
           {
@@ -2648,45 +1735,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2698,7 +1753,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Subject Status",
-        "description": "Updates the moderation status for a specified subject (e.g., an account or content). This endpoint  is part of the `atproto.admin` namespace and requires authentication.\n",
+        "description": "Updates the moderation status for a specified subject (e.g., an account or content). This endpoint is part of the `atproto.admin` namespace and requires authentication.",
         "operationId": "UpdateSubjectStatus",
         "parameters": [
           {
@@ -2734,45 +1789,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2784,7 +1807,7 @@
           "com.atproto.identity"
         ],
         "summary": "Get Recommended DID Credentials",
-        "description": "Retrieves a list of recommended DID (Decentralized Identifier) credentials for the authenticated user. This endpoint is part of the `atproto.identity` namespace and requires authentication.\n",
+        "description": "Retrieves a list of recommended DID (Decentralized Identifier) credentials for the authenticated user. This endpoint is part of the `atproto.identity` namespace and requires authentication.",
         "operationId": "GetRecommendedDIDCredentials",
         "parameters": [],
         "responses": {
@@ -2815,45 +1838,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2865,8 +1856,11 @@
           "com.atproto.identity"
         ],
         "summary": "Request PLC Operation Signature",
-        "description": "Requests a signature for a PLC (Portable Lightweight Credentials) operation, enabling actions  requiring signed verification. This endpoint is part of the `atproto.identity` namespace and requires authentication.\n",
+        "description": "Requests a signature for a PLC (Portable Lightweight Credentials) operation, enabling actions requiring signed verification. This endpoint is part of the `atproto.identity` namespace and requires authentication.",
         "operationId": "RequestPLCOperationSignature",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "operationPayload",
@@ -2900,45 +1894,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2950,7 +1912,7 @@
           "com.atproto.identity"
         ],
         "summary": "Resolve Handle",
-        "description": "Resolves a user handle to its associated decentralized identifier (DID), facilitating actions  that require the DID. This endpoint is part of the `atproto.identity` namespace.\n",
+        "description": "Resolves a user handle to its associated decentralized identifier (DID), facilitating actions that require the DID. This endpoint is part of the `atproto.identity` namespace.",
         "operationId": "ResolveHandle",
         "parameters": [
           {
@@ -2978,45 +1940,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3028,8 +1958,11 @@
           "com.atproto.identity"
         ],
         "summary": "Sign PLC Operation",
-        "description": "Signs a PLC (Portable Lightweight Credentials) operation, returning a signed version of the operation payload. This endpoint is part of the `atproto.identity` namespace and requires authentication.\n",
+        "description": "Signs a PLC (Portable Lightweight Credentials) operation, returning a signed version of the operation payload. This endpoint is part of the `atproto.identity` namespace and requires authentication.",
         "operationId": "SignPLCOperation",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "operationPayload",
@@ -3063,45 +1996,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3113,7 +2014,7 @@
           "com.atproto.identity"
         ],
         "summary": "Update Handle",
-        "description": "Updates the handle associated with the authenticated user. This endpoint is part of the  `atproto.identity` namespace and requires authentication.\n",
+        "description": "Updates the handle associated with the authenticated user. This endpoint is part of the `atproto.identity` namespace and requires authentication.",
         "operationId": "UpdateHandle",
         "parameters": [
           {
@@ -3141,45 +2042,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3191,7 +2060,7 @@
           "com.atproto.label"
         ],
         "summary": "Query Labels",
-        "description": "Retrieves labels associated with content, allowing administrators to view and manage content labels. This endpoint is part of the `atproto.label` namespace and requires authentication.\n",
+        "description": "Retrieves labels associated with content, allowing administrators to view and manage content labels. This endpoint is part of the `atproto.label` namespace and requires authentication.",
         "operationId": "QueryLabels",
         "parameters": [
           {
@@ -3241,45 +2110,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3291,8 +2128,11 @@
           "com.atproto.moderation"
         ],
         "summary": "Create Report",
-        "description": "Submits a report regarding content or user behavior, initiating a moderation review. This endpoint  is part of the `atproto.moderation` namespace and requires authentication.\n",
+        "description": "Submits a report regarding content or user behavior, initiating a moderation review. This endpoint is part of the `atproto.moderation` namespace and requires authentication.",
         "operationId": "CreateReport",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "reportDetails",
@@ -3338,45 +2178,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3388,8 +2196,11 @@
           "com.atproto.repo"
         ],
         "summary": "Apply Writes",
-        "description": "Applies a batch of write operations to the repository, including creating, updating, and deleting records.  This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Applies a batch of write operations to the repository, including creating, updating, and deleting records. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "ApplyWrites",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "writes",
@@ -3430,45 +2241,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3480,8 +2259,11 @@
           "com.atproto.repo"
         ],
         "summary": "Create Record",
-        "description": "Creates a new record within the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Creates a new record within the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "CreateRecord",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "recordDetails",
@@ -3519,45 +2301,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3569,7 +2319,7 @@
           "com.atproto.repo"
         ],
         "summary": "Delete Record",
-        "description": "Deletes a record from the repository based on its unique identifier. This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Deletes a record from the repository based on its unique identifier. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "DeleteRecord",
         "parameters": [
           {
@@ -3597,45 +2347,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3647,7 +2365,7 @@
           "com.atproto.repo"
         ],
         "summary": "Describe Repo",
-        "description": "Retrieves metadata about the repository, providing an overview of its structure and configuration. This endpoint is part of the `atproto.repo` namespace.\n",
+        "description": "Retrieves metadata about the repository, providing an overview of its structure and configuration. This endpoint is part of the `atproto.repo` namespace.",
         "operationId": "DescribeRepo",
         "parameters": [
           {
@@ -3683,45 +2401,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3733,7 +2419,7 @@
           "com.atproto.repo"
         ],
         "summary": "Get Record",
-        "description": "Retrieves a specific record from the repository based on its unique identifier.  This endpoint is part of the `atproto.repo` namespace.\n",
+        "description": "Retrieves a specific record from the repository based on its unique identifier. This endpoint is part of the `atproto.repo` namespace.",
         "operationId": "GetRecord",
         "parameters": [
           {
@@ -3765,45 +2451,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3815,8 +2469,11 @@
           "com.atproto.repo"
         ],
         "summary": "Import Repo",
-        "description": "Imports an external repository into the current repository structure, enabling integration of  existing data. This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Imports an external repository into the current repository structure, enabling integration of existing data. This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
         "operationId": "ImportRepo",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "importData",
@@ -3862,45 +2519,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3912,7 +2537,7 @@
           "com.atproto.repo"
         ],
         "summary": "List Missing Blobs",
-        "description": "Retrieves a list of missing blobs (data units) in the repository. This endpoint  is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Retrieves a list of missing blobs (data units) in the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "ListMissingBlobs",
         "parameters": [
           {
@@ -3938,45 +2563,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3988,7 +2581,7 @@
           "com.atproto.repo"
         ],
         "summary": "List Records",
-        "description": "Retrieves a list of records within the repository. This endpoint is part of the  `atproto.repo` namespace and requires authentication.\n",
+        "description": "Retrieves a list of records within the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "ListRecords",
         "parameters": [
           {
@@ -4031,45 +2624,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4081,8 +2642,11 @@
           "com.atproto.repo"
         ],
         "summary": "Put Record",
-        "description": "Updates or creates a record within the repository. This endpoint is part of the  `atproto.repo` namespace and requires authentication.\n",
+        "description": "Updates or creates a record within the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "PutRecord",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "recordDetails",
@@ -4124,45 +2688,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4174,8 +2706,11 @@
           "com.atproto.repo"
         ],
         "summary": "Upload Blob",
-        "description": "Uploads a binary blob (data unit) to the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.\n",
+        "description": "Uploads a binary blob (data unit) to the repository. This endpoint is part of the `atproto.repo` namespace and requires authentication.",
         "operationId": "UploadBlob",
+        "consumes": [
+          "application/octet-stream"
+        ],
         "parameters": [
           {
             "name": "blobData",
@@ -4209,46 +2744,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Type of error encountered during the request."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4274,59 +2776,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully activated the account.",
+            "description": "Successfully disabled invites for the specified account.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the account was successfully activated."
+                  "description": "Indicates if the account's invites were successfully disabled."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid activation code or parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4338,7 +2808,7 @@
           "com.atproto.server"
         ],
         "summary": "Check Account Status",
-        "description": "Retrieves the status of a specific account, providing details on activation and accessibility. This endpoint is part of the `atproto.server` namespace.\n",
+        "description": "Retrieves the status of a specific account, providing details on activation and accessibility. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "CheckAccountStatus",
         "parameters": [
           {
@@ -4352,21 +2822,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account status.",
+            "description": "Successfully disabled invites for the specified account.",
             "schema": {
               "type": "object",
               "properties": {
-                "accountId": {
-                  "type": "string",
-                  "description": "Unique identifier of the account."
-                },
-                "status": {
-                  "type": "string",
-                  "description": "Status of the account (e.g., active, pending)."
-                },
-                "isActive": {
+                "success": {
                   "type": "boolean",
-                  "description": "Indicates if the account is currently active."
+                  "description": "Indicates if the account's invites were successfully disabled."
                 }
               }
             }
@@ -4374,45 +2836,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4424,7 +2854,7 @@
           "com.atproto.server"
         ],
         "summary": "Confirm Email",
-        "description": "Confirms a user's email address during account setup. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Confirms a user's email address during account setup. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "ConfirmEmail",
         "parameters": [
           {
@@ -4452,45 +2882,13 @@
           "400": {
             "description": "Bad Request - Invalid confirmation code or parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4502,8 +2900,11 @@
           "com.atproto.server"
         ],
         "summary": "Create Account",
-        "description": "Creates a new user account on the platform. This endpoint is part of the `atproto.server` namespace.\n",
+        "description": "Creates a new user account on the platform. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "CreateAccount",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "accountDetails",
@@ -4550,45 +2951,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4600,7 +2969,7 @@
           "com.atproto.server"
         ],
         "summary": "Create App Password",
-        "description": "Generates a new app-specific password for the user, allowing limited access to applications. This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Generates a new app-specific password for the user, allowing limited access to applications. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "CreateAppPassword",
         "parameters": [
           {
@@ -4632,45 +3001,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4682,7 +3019,7 @@
           "com.atproto.server"
         ],
         "summary": "Create Invite Code",
-        "description": "Creates a single invite code, allowing the invited user to create an account. This endpoint  is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Creates a single invite code, allowing the invited user to create an account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "CreateInviteCode",
         "parameters": [
           {
@@ -4715,45 +3052,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4765,42 +3070,44 @@
           "com.atproto.server"
         ],
         "summary": "Create Invite Codes",
-        "description": "Creates multiple invite codes for account creation. This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Creates multiple invite codes, allowing multiple users to create accounts. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "CreateInviteCodes",
         "parameters": [
           {
-            "name": "quantity",
+            "name": "numberOfCodes",
             "in": "query",
             "required": true,
             "type": "integer",
             "description": "The number of invite codes to generate.",
-            "x-ms-summary": "Quantity"
+            "x-ms-summary": "Number of codes"
           },
           {
-            "name": "emailDomains",
-            "in": "query",
+            "name": "targetEmails",
+            "in": "body",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "email"
+              }
             },
-            "collectionFormat": "csv",
-            "description": "Optional list of allowed email domains for the invite codes.",
-            "x-ms-summary": "Email domains"
+            "description": "An optional list of email addresses to associate with the invite codes.",
+            "x-ms-summary": "Target emails"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully created invite codes.",
+            "description": "Successfully created the invite codes.",
             "schema": {
               "type": "object",
               "properties": {
                 "inviteCodes": {
                   "type": "array",
                   "items": {
-                    "type": "string"
-                  },
-                  "description": "List of generated invite codes."
+                    "type": "string",
+                    "description": "Each generated invite code."
+                  }
                 },
                 "success": {
                   "type": "boolean",
@@ -4812,45 +3119,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4862,8 +3137,11 @@
           "com.atproto.server"
         ],
         "summary": "Create Session",
-        "description": "Initiates a new user session, providing an authentication token. This endpoint is part of  the `atproto.server` namespace and requires authentication.\n",
+        "description": "Initiates a new user session, providing an authentication token. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "CreateSession",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "sessionDetails",
@@ -4905,57 +3183,26 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
       }
     },
+
     "/com.atproto.server.deactivateAccount": {
       "post": {
         "tags": [
           "com.atproto.server"
         ],
         "summary": "Deactivate Account",
-        "description": "Deactivates the user's account, suspending access to the platform. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Deactivates the user's account, suspending access to the platform. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "DeactivateAccount",
         "parameters": [],
         "responses": {
@@ -4974,123 +3221,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/com.atproto.server.deleteAccount": {
-      "delete": {
-        "tags": [
-          "com.atproto.server"
-        ],
-        "summary": "Delete Account",
-        "description": "Permanently deletes the user's account and all associated data from the platform.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
-        "operationId": "ServerDeleteAccount",
-        "parameters": [
-          {
-            "name": "confirmationCode",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "A code to confirm the account deletion action.",
-            "x-ms-summary": "Confirmation code"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted the account.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates if the account was successfully deleted."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid confirmation code or parameters.",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5102,7 +3239,7 @@
           "com.atproto.server"
         ],
         "summary": "Delete Session",
-        "description": "Ends the user's current session, effectively logging them out. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Ends the user's current session, effectively logging them out. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "DeleteSession",
         "parameters": [],
         "responses": {
@@ -5121,45 +3258,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5171,7 +3276,7 @@
           "com.atproto.server"
         ],
         "summary": "Describe Server",
-        "description": "Retrieves metadata and configuration details about the server. This endpoint is part of the  `atproto.server` namespace.\n",
+        "description": "Retrieves metadata and configuration details about the server. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "DescribeServer",
         "parameters": [],
         "responses": {
@@ -5201,45 +3306,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5251,7 +3324,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Account Invite Codes",
-        "description": "Retrieves a list of invite codes associated with the user's account. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Retrieves a list of invite codes associated with the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "GetAccountInviteCodes",
         "parameters": [],
         "responses": {
@@ -5283,45 +3356,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5333,7 +3374,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Service Auth",
-        "description": "Retrieves authentication information for the current service, such as token details or login requirements.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Retrieves authentication information for the current service, such as token details or login requirements. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "GetServiceAuth",
         "parameters": [],
         "responses": {
@@ -5360,45 +3401,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5410,7 +3419,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Session",
-        "description": "Retrieves details about the current session, including user information and session status.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Retrieves details about the current session, including user information and session status. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "getSession",
         "parameters": [],
         "responses": {
@@ -5437,45 +3446,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5487,7 +3464,7 @@
           "com.atproto.server"
         ],
         "summary": "List App Passwords",
-        "description": "Retrieves a list of app-specific passwords generated for the user's account.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Retrieves a list of app-specific passwords generated for the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "ListAppPasswords",
         "parameters": [],
         "responses": {
@@ -5518,45 +3495,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5568,7 +3513,7 @@
           "com.atproto.server"
         ],
         "summary": "Refresh Session",
-        "description": "Refreshes the current session, extending the authentication validity period. This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Refreshes the current session, extending the authentication validity period. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RefreshSession",
         "parameters": [],
         "responses": {
@@ -5591,45 +3536,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5641,7 +3554,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Account Delete",
-        "description": "Initiates a request to delete the user's account. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Initiates a request to delete the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RequestAccountDelete",
         "parameters": [],
         "responses": {
@@ -5660,45 +3573,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5710,7 +3591,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Email Confirmation",
-        "description": "Sends a confirmation email to verify the user’s email address. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Sends a confirmation email to verify the user’s email address. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RequestEmailConfirmation",
         "parameters": [],
         "responses": {
@@ -5729,45 +3610,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5779,7 +3628,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Email Update",
-        "description": "Initiates a request to update the user’s email address. This endpoint is part of the  `atproto.server` namespace and requires authentication.\n",
+        "description": "Initiates a request to update the user’s email address. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RequestEmailUpdate",
         "parameters": [
           {
@@ -5808,45 +3657,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5858,7 +3675,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Password Reset",
-        "description": "Sends a password reset request to the user’s email, initiating the password reset process. This endpoint is part of the `atproto.server` namespace.\n",
+        "description": "Sends a password reset request to the user’s email, initiating the password reset process. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "RequestPasswordReset",
         "parameters": [
           {
@@ -5887,45 +3704,13 @@
           "400": {
             "description": "Bad Request - Invalid email or parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -5937,8 +3722,11 @@
           "com.atproto.server"
         ],
         "summary": "Reserve Signing Key",
-        "description": "Reserves a signing key for the user, enabling specific cryptographic operations.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Reserves a signing key for the user, enabling specific cryptographic operations. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "ReserveSigningKey",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "signingKeyDetails",
@@ -5972,45 +3760,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6022,7 +3778,7 @@
           "com.atproto.server"
         ],
         "summary": "Reset Password",
-        "description": "Resets the user’s password after verifying a reset token, enabling them to regain account access. This endpoint is part of the `atproto.server` namespace.\n",
+        "description": "Resets the user’s password after verifying a reset token, enabling them to regain account access. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "ResetPassword",
         "parameters": [
           {
@@ -6058,45 +3814,13 @@
           "400": {
             "description": "Bad Request - Invalid reset token or parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6108,7 +3832,7 @@
           "com.atproto.server"
         ],
         "summary": "Revoke App Password",
-        "description": "Revokes an app-specific password, removing its access to the user’s account.  This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Revokes an app-specific password, removing its access to the user’s account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RevokeAppPassword",
         "parameters": [
           {
@@ -6136,45 +3860,13 @@
           "400": {
             "description": "Bad Request - Invalid app password ID.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6186,7 +3878,7 @@
           "com.atproto.server"
         ],
         "summary": "Update Email",
-        "description": "Updates the user’s email address after verification. This endpoint is part of the `atproto.server` namespace and requires authentication.\n",
+        "description": "Updates the user’s email address after verification. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "UpdateEmail",
         "parameters": [
           {
@@ -6223,45 +3915,13 @@
           "400": {
             "description": "Bad Request - Invalid token or parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6273,7 +3933,7 @@
           "com.atproto.sync"
         ],
         "summary": "Retrieve Blob",
-        "description": "Retrieves a single binary blob by ID. This endpoint is part of the `com.atproto.sync` namespace and requires authentication.\n",
+        "description": "Retrieves a single binary blob by ID. This endpoint is part of the `com.atproto.sync` namespace and requires authentication.",
         "operationId": "GetBlob",
         "produces": [
           "application/octet-stream"
@@ -6299,46 +3959,13 @@
           "400": {
             "description": "Bad Request - Invalid blob ID or input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Type of error encountered during the request."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6353,7 +3980,7 @@
         "description": "Retrieves binary data blocks from the repository. This endpoint is part of the `com.atproto.sync` namespace and requires authentication.\n",
         "operationId": "GetBlocks",
         "produces": [
-          "application/octet-stream"
+          "application/json"
         ],
         "parameters": [
           {
@@ -6379,46 +4006,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Type of error encountered during the request."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6470,45 +4064,13 @@
           "400": {
             "description": "Bad Request - Invalid parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -6681,6 +4243,9 @@
         "summary": "Create Template",
         "description": "Creates a new communication template in the system, which can be used for messaging or notifications. This endpoint is part of the `tools.ozone.communication` namespace and requires authentication.\n",
         "operationId": "CreateTemplate",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "templateDetails",
@@ -6932,6 +4497,9 @@
         "summary": "Update Template",
         "description": "Updates the content or details of an existing communication template in the system. This endpoint is part of the `tools.ozone.communication` namespace and requires authentication.\n",
         "operationId": "UpdateTemplate",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "templateId",
@@ -7027,8 +4595,11 @@
           "tools.ozone.moderation"
         ],
         "summary": "Emit Event",
-        "description": "Emits a moderation event for handling user-generated content or interactions.  This endpoint is part of the `tools.ozone.moderation` namespace and requires authentication.\n",
+        "description": "Emits a moderation event for handling user-generated content or interactions. This endpoint is part of the `tools.ozone.moderation` namespace and requires authentication.\n",
         "operationId": "EmitEvent",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "eventDetails",
@@ -7070,45 +4641,13 @@
           "400": {
             "description": "Bad Request - Invalid event details.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -7791,6 +5330,9 @@
         "summary": "Add Values",
         "description": "Adds values to a specific set in the system, useful for managing lists or collections. This endpoint is part of the `tools.ozone.set` namespace and requires authentication.\n",
         "operationId": "AddValues",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "setId",
@@ -7829,45 +5371,13 @@
           "400": {
             "description": "Bad Request - Invalid set ID or values.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -8139,6 +5649,9 @@
         "summary": "Add Member",
         "description": "Adds a new member to a team, assigning them a specified role. This endpoint is part of the `tools.ozone.team` namespace and requires authentication.\n",
         "operationId": "AddMember",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "memberDetails",
@@ -8176,45 +5689,13 @@
           "400": {
             "description": "Bad Request - Invalid member details.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -8359,8 +5840,31 @@
           "description": "Timestamp when the message was sent."
         }
       }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "required": [
+        "error",
+        "message"
+      ],
+      "properties": {
+        "error": {
+          "type": "string",
+          "enum": [
+            "InvalidRequest",
+            "ExpiredToken",
+            "InvalidToken"
+          ],
+          "description": "Type of error encountered during the request."
+        },
+        "message": {
+          "type": "string",
+          "description": "Detailed error message."
+        }
+      }
     }
   },
+
   "parameters": {},
   "responses": {},
   "securityDefinitions": {
