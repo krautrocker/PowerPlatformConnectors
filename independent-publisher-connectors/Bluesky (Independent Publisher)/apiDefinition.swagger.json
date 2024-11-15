@@ -39,34 +39,187 @@
     "application/json"
   ],
   "paths": {
+    "/app.bsky.feed.getActorLikes": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Actor Likes",
+        "description": "Retrieves a list of posts liked by a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getActorLikes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the actor whose likes are being retrieved.",
+            "x-ms-summary": "Actor ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of liked posts to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of posts liked by the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "likes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the liked post."
+                      },
+                      "likedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was liked."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the liked post.",
+                        "properties": {
+                          "text": {
+                            "type": "string",
+                            "description": "The text content of the post."
+                          },
+                          "media": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of media (e.g., image, video)."
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL of the media."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified actor does not exist or has no liked posts.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/app.bsky.actor.getPreferences": {
       "get": {
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get private preferences attached to the account",
-        "operationId": "GetPreferences",
+        "summary": "Get Actor Preferences",
+        "description": "Retrieves the preferences for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "getPreferences",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the actor whose preferences are being retrieved.",
+            "x-ms-summary": "Actor ID"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Successfully retrieved the preferences for the specified actor.",
             "schema": {
-              "required": [
-                "preferences"
-              ],
               "type": "object",
               "properties": {
                 "preferences": {
-                  "$ref": "#/definitions/Preferences"
+                  "type": "object",
+                  "description": "An object containing various preferences for the actor."
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified actor does not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "parameters": [],
-        "description": "Get private preferences attached to the account"
+        }
       }
     },
     "/app.bsky.video.uploadVideo": {
@@ -853,62 +1006,83 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "operationId": "GetActorProfile",
-        "summary": "Retrieve a profile for a specific actor",
-        "description": "Fetches detailed profile information for a specified actor from Bluesky.",
+        "summary": "Get Actor Profile",
+        "description": "Retrieves the profile information for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "getProfile",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "Content-Type",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "default": "application/json",
-            "description": "The MIME type of the request content",
-            "x-ms-summary": "Content-Type header"
-
-          },
-          {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The actor identifier, e.g., 'developments.bsky.social'",
-            "x-ms-summary": "The actor identifier, e.g., 'developments.bsky.social"
+            "description": "The unique identifier of the actor whose profile is being retrieved.",
+            "x-ms-summary": "Actor ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "A profile object containing details about the actor.",
+            "description": "Successfully retrieved the profile information for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
-                  "type": "string",
-                  "description": "The unique identifier of the actor."
-                },
-                "displayName": {
-                  "type": "string",
-                  "description": "The display name of the actor."
-                },
-                "bio": {
-                  "type": "string",
-                  "description": "The biography or description of the actor."
-                },
-                "profileImage": {
-                  "type": "string",
-                  "format": "uri",
-                  "description": "The URL of the actor's profile image."
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp of when the profile was created."
+                "profile": {
+                  "type": "object",
+                  "description": "An object containing profile details for the actor.",
+                  "properties": {
+                    "displayName": {
+                      "type": "string",
+                      "description": "The display name of the actor."
+                    },
+                    "bio": {
+                      "type": "string",
+                      "description": "The bio or description of the actor."
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "The location of the actor."
+                    },
+                    "website": {
+                      "type": "string",
+                      "description": "The website URL associated with the actor."
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "description": "URL of the actor's avatar image."
+                    }
+                  }
                 }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified actor does not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1019,9 +1193,15 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Retrieve profiles for multiple actors",
-        "operationId": "GetProfiles",
-        "description": "Fetches detailed profile information for a list of specified actors from Bluesky.",
+        "summary": "Get Multiple Actor Profiles",
+        "description": "Retrieves profile information for multiple actors within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "getProfiles",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "actorIds",
@@ -1031,50 +1211,75 @@
             "items": {
               "type": "string"
             },
-            "x-ms-summary": "List of actor identifiers",
-            "description": "An array of unique identifiers for each actor whose profile information is being retrieved."
+            "description": "A list of unique identifiers for the actors whose profiles are being retrieved.",
+            "x-ms-summary": "Actor IDs"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of profile objects containing details about each actor.",
+            "description": "Successfully retrieved profile information for the specified actors.",
             "schema": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "actorId": {
-                    "type": "string",
-                    "description": "The unique identifier of the actor."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the actor."
-                  },
-                  "bio": {
-                    "type": "string",
-                    "description": "The biography or description of the actor."
-                  },
-                  "profileImage": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "The URL of the actor's profile image."
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp of when the profile was created."
+                  "profile": {
+                    "type": "object",
+                    "description": "An object containing profile details for each actor.",
+                    "properties": {
+                      "actorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "The display name of the actor."
+                      },
+                      "bio": {
+                        "type": "string",
+                        "description": "The bio or description of the actor."
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "The location of the actor."
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "The website URL associated with the actor."
+                      },
+                      "avatarUrl": {
+                        "type": "string",
+                        "description": "URL of the actor's avatar image."
+                      }
+                    }
                   }
-                },
-                "required": [
-                  "actorId",
-                  "displayName"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - One or more of the specified actors do not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1085,43 +1290,58 @@
           "app.bsky.feed"
         ],
         "summary": "Send Interactions",
-        "description": "Sends interactions such as likes or reposts for a specific post. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Sends user interactions, such as likes or reposts, for a specified post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "sendInteractions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "interactionType",
-            "in": "query",
+            "name": "interactions",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "description": "The type of interaction being sent (e.g., like, repost).",
-            "x-ms-summary": "Interaction type"
-          },
-          {
-            "name": "postUri",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The URI of the post that the interaction is being sent for.",
-            "x-ms-summary": "Post URI"
-          },
-          {
-            "name": "actor",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The DID or handle of the actor sending the interaction.",
-            "x-ms-summary": "Actor identifier"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post being interacted with."
+                  },
+                  "interactionType": {
+                    "type": "string",
+                    "enum": [
+                      "like",
+                      "repost",
+                      "comment"
+                    ],
+                    "description": "The type of interaction being performed."
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp of the interaction."
+                  }
+                }
+              }
+            },
+            "description": "An array of interactions to be sent.",
+            "x-ms-summary": "Interactions Data"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully sent the interaction.",
+            "description": "Successfully recorded the interactions.",
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates if the interaction was successfully sent."
+                "message": {
+                  "type": "string",
+                  "description": "Confirmation message for the successful operation."
                 }
               }
             }
@@ -1129,45 +1349,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1179,50 +1373,65 @@
           "app.bsky.feed"
         ],
         "summary": "Get Quotes",
-        "description": "Retrieves a list of quotes for a specific post, including basic details about each quote. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of posts quoting a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "getQuotes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "uri",
+            "name": "postId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The URI of the post for which quotes are being retrieved.",
-            "x-ms-summary": "Post URI"
+            "description": "The unique identifier of the post being quoted.",
+            "x-ms-summary": "Post ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of quotes to retrieve.",
-            "x-ms-summary": "Quotes limit"
+            "description": "The maximum number of quotes to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved quotes for the specified post.",
+            "description": "Successfully retrieved the list of quotes for the specified post.",
             "schema": {
               "type": "object",
               "properties": {
                 "quotes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/QuoteItem"
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the quoting post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the quoting post."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the quoting post."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -1230,45 +1439,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1279,32 +1462,28 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Retrieve suggested actors",
-        "description": "Fetches a list of suggested actors for the authenticated user, based on various criteria.",
-        "operationId": "GetSuggestions",
+        "summary": "Get Actor Suggestions",
+        "description": "Retrieves a list of suggested actors (users) within the Bluesky network based on the current user's profile and interests. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "getSuggestions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit the number of suggestions",
-            "description": "Specifies the maximum number of actor suggestions to return."
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Offset for pagination",
-            "description": "Specifies the offset for pagination, allowing you to skip a certain number of suggestions."
+            "description": "The maximum number of suggested actors to retrieve.",
+            "x-ms-summary": "Limit"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of suggested actors for the user.",
+            "description": "Successfully retrieved a list of suggested actors.",
             "schema": {
               "type": "array",
               "items": {
@@ -1320,76 +1499,20 @@
                   },
                   "bio": {
                     "type": "string",
-                    "description": "The biography or description of the suggested actor."
+                    "description": "The bio or description of the suggested actor."
                   },
-                  "profileImage": {
+                  "location": {
                     "type": "string",
-                    "format": "uri",
-                    "description": "The URL of the suggested actor's profile image."
+                    "description": "The location of the suggested actor."
                   },
-                  "suggestedAt": {
+                  "website": {
                     "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the actor was suggested."
+                    "description": "The website URL associated with the suggested actor."
+                  },
+                  "avatarUrl": {
+                    "type": "string",
+                    "description": "URL of the suggested actor's avatar image."
                   }
-                },
-                "required": [
-                  "actorId",
-                  "displayName"
-                ]
-              }
-            }
-          },
-          "default": {
-            "description": "Unexpected error"
-          }
-        }
-      }
-    },
-    "/app.bsky.notification.putPreferences": {
-      "put": {
-        "tags": [
-          "app.bsky.notification"
-        ],
-        "summary": "Put Notification Preferences",
-        "description": "Updates the notification preferences for the authenticated user, such as enabling or disabling  specific types of notifications. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
-        "operationId": "putNotificationPreferences",
-        "parameters": [
-          {
-            "name": "preferences",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "enableMentions": {
-                  "type": "boolean",
-                  "description": "Enable or disable notifications for mentions.",
-                  "x-ms-summary": "Mentions notifications preference"
-                },
-                "enableFollows": {
-                  "type": "boolean",
-                  "description": "Enable or disable notifications for follows.",
-                  "x-ms-summary": "Follows notifications preference"
-                },
-                "enableReplies": {
-                  "type": "boolean",
-                  "description": "Enable or disable notifications for replies.",
-                  "x-ms-summary": "Replies notifications preference"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated notification preferences.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates if the preferences were successfully updated."
                 }
               }
             }
@@ -1397,45 +1520,107 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.actor.putPreferences": {
+      "put": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Update Actor Preferences",
+        "description": "Updates the preferences for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "putPreferences",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the actor whose preferences are being updated.",
+            "x-ms-summary": "Actor ID"
+          },
+          {
+            "name": "preferences",
+            "in": "body",
+            "required": true,
+            "schema": {
               "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
               "properties": {
-                "error": {
+                "displayName": {
                   "type": "string",
-                  "description": "Error code indicating missing authentication."
+                  "description": "The display name of the actor."
                 },
-                "message": {
+                "bio": {
                   "type": "string",
-                  "description": "Detailed error message for unauthorized access."
+                  "description": "The bio or description of the actor."
+                },
+                "preferences": {
+                  "type": "object",
+                  "description": "An object containing updated preferences for the actor."
                 }
               }
+            },
+            "description": "An object containing the preferences to update for the actor.",
+            "x-ms-summary": "Preferences Data"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the preferences for the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Confirmation message for the successful update."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified actor does not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1447,56 +1632,70 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed Skeleton",
-        "description": "Retrieves the skeleton structure for a feed, which provides metadata about posts and their relationships.",
-        "operationId": "GetFeedSkeleton",
+        "description": "Retrieves the skeleton structure of a feed for a specific generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getFeedSkeleton",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "feedId",
+            "name": "generatorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "Unique identifier of the feed to retrieve.",
-            "x-ms-summary": "Feed ID"
+            "description": "The unique identifier of the feed generator.",
+            "x-ms-summary": "Feed Generator ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of items to retrieve in the skeleton feed.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the feed skeleton.",
+            "description": "Successfully retrieved the feed skeleton for the specified generator.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "feedId": {
-                  "type": "string",
-                  "description": "Unique identifier of the feed."
-                },
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "Unique identifier of the post."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the post."
-                      }
-                    }
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "The unique identifier of the item in the skeleton feed."
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1599,110 +1798,41 @@
         }
       }
     },
-    "/app.bsky.actor.putPreferences": {
-      "put": {
-        "tags": [
-          "app.bsky.actor"
-        ],
-        "summary": "Update actor preferences",
-        "description": "Updates the preferences for the authenticated user, allowing customization of settings.",
-        "operationId": "PutPreferences",
-        "parameters": [
-          {
-            "name": "preferences",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "theme": {
-                  "type": "string",
-                  "enum": [
-                    "light",
-                    "dark"
-                  ],
-                  "description": "The preferred theme for the user interface, either 'light' or 'dark'."
-                },
-                "notificationsEnabled": {
-                  "type": "boolean",
-                  "description": "Whether notifications are enabled for the user."
-                },
-                "language": {
-                  "type": "string",
-                  "description": "The preferred language for the user interface."
-                }
-              }
-            },
-            "x-ms-summary": "User preferences object",
-            "description": "An object containing the updated preferences for the authenticated user."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Confirmation that preferences were updated successfully.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates whether the preferences update was successful."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "A message confirming the update of preferences."
-                }
-              },
-              "required": [
-                "success",
-                "message"
-              ]
-            }
-          },
-          "default": {
-            "description": "Unexpected error"
-          }
-        }
-      }
-    },
     "/app.bsky.actor.searchActors": {
       "get": {
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Search for actors",
-        "description": "Allows searching for actors based on a query, with options for limiting and offsetting results.",
-        "operationId": "SearchActors",
+        "summary": "Search Actors",
+        "description": "Searches for actors (users) within the Bluesky network based on a search query. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "searchActors",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "query",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Search query",
-            "description": "The search term to find matching actors."
+            "description": "The search query to find actors.",
+            "x-ms-summary": "Search Query"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of results to return."
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result offset",
-            "description": "The number of results to skip for pagination."
+            "description": "The maximum number of search results to retrieve.",
+            "x-ms-summary": "Limit"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of actors matching the search query.",
+            "description": "Successfully retrieved search results for actors matching the query.",
             "schema": {
               "type": "array",
               "items": {
@@ -1718,28 +1848,41 @@
                   },
                   "bio": {
                     "type": "string",
-                    "description": "The biography or description of the actor."
+                    "description": "The bio or description of the actor."
                   },
-                  "profileImage": {
+                  "location": {
                     "type": "string",
-                    "format": "uri",
-                    "description": "The URL of the actor's profile image."
+                    "description": "The location of the actor."
                   },
-                  "joinedAt": {
+                  "website": {
                     "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the actor joined."
+                    "description": "The website URL associated with the actor."
+                  },
+                  "avatarUrl": {
+                    "type": "string",
+                    "description": "URL of the actor's avatar image."
                   }
-                },
-                "required": [
-                  "actorId",
-                  "displayName"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1749,31 +1892,36 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Typeahead search for actors",
-        "operationId": "SearchActorsTypeahead",
-        "description": "Provides a typeahead search feature for finding actors based on partial input.",
+        "summary": "Search Actors Typeahead",
+        "description": "Provides typeahead suggestions for actors (users) within the Bluesky network based on a partial search query. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
+        "operationId": "searchActorsTypeahead",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "query",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Partial search query",
-            "description": "The partial input to search for matching actors."
+            "description": "The partial search query to find actors.",
+            "x-ms-summary": "Search Query"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of results to return for the typeahead search."
+            "description": "The maximum number of typeahead suggestions to retrieve.",
+            "x-ms-summary": "Limit"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of actors matching the partial search query.",
+            "description": "Successfully retrieved typeahead suggestions for actors matching the query.",
             "schema": {
               "type": "array",
               "items": {
@@ -1781,36 +1929,124 @@
                 "properties": {
                   "actorId": {
                     "type": "string",
-                    "description": "The unique identifier of the actor."
+                    "description": "The unique identifier of the suggested actor."
                   },
                   "displayName": {
                     "type": "string",
-                    "description": "The display name of the actor."
+                    "description": "The display name of the suggested actor."
                   },
-                  "bio": {
+                  "avatarUrl": {
                     "type": "string",
-                    "description": "The biography or description of the actor."
-                  },
-                  "profileImage": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "The URL of the actor's profile image."
-                  },
-                  "suggestedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the actor was suggested."
+                    "description": "URL of the suggested actor's avatar image."
                   }
-                },
-                "required": [
-                  "actorId",
-                  "displayName"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getRepostedBy": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Reposted By",
+        "description": "Retrieves a list of users who reposted a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getRepostedBy",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the post being reposted.",
+            "x-ms-summary": "Post ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of reposts to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of users who reposted the specified post.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reposts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user who reposted."
+                      },
+                      "repostedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was reposted."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2014,42 +2250,57 @@
           "app.bsky.feed"
         ],
         "summary": "Get Suggested Feeds",
-        "description": "Retrieves a list of suggested feeds for the authenticated user, based on relevance and user activity. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of suggested feeds for the user based on their activity and interests within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "getSuggestedFeeds",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of suggested feeds to retrieve.",
-            "x-ms-summary": "Suggestions limit"
+            "description": "The maximum number of suggested feeds to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of suggested feeds.",
+            "description": "Successfully retrieved the list of suggested feeds for the user.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "feeds": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/SuggestedFeed"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "feedId": {
+                    "type": "string",
+                    "description": "The unique identifier of the suggested feed."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the suggested feed."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the suggested feed."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the feed was created."
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -2057,45 +2308,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2107,50 +2332,70 @@
           "app.bsky.feed"
         ],
         "summary": "Get Actor Feeds",
-        "description": "Retrieves the feeds created by a specific actor, including details on each feed’s content,  title, and additional metadata. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and typically requires authentication. To call this endpoint, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "description": "Retrieves a list of feeds created or associated with a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "getActorFeeds",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The DID or handle of the actor whose feeds are being retrieved.",
-            "x-ms-summary": "Actor identifier"
+            "description": "The unique identifier of the actor whose feeds are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of feeds to retrieve.",
-            "x-ms-summary": "Result limit"
+            "description": "The maximum number of feeds to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved actor feeds.",
+            "description": "Successfully retrieved the list of feeds associated with the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
                 "feeds": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Feed"
+                    "type": "object",
+                    "properties": {
+                      "feedId": {
+                        "type": "string",
+                        "description": "The unique identifier of the feed."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the feed."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A brief description of the feed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the feed was created."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -2158,45 +2403,25 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified actor does not exist or has no associated feeds.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2207,82 +2432,239 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve an author's feed",
-        "operationId": "GetAuthorFeed",
-        "description": "Fetches the feed posts of a specified author.",
+        "summary": "Get Author Feed",
+        "description": "Retrieves the feed of posts created by a specific author (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getAuthorFeed",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "author",
+            "name": "authorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Author identifier",
-            "description": "The unique identifier of the author whose feed is being retrieved."
+            "description": "The unique identifier of the author whose feed is being retrieved.",
+            "x-ms-summary": "Author ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of posts to retrieve from the author's feed."
+            "description": "The maximum number of posts to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "name": "before",
+            "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "format": "date-time",
-            "x-ms-summary": "Pagination cursor",
-            "description": "A timestamp to paginate results, retrieving posts published before this time."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of posts from the specified author's feed.",
+            "description": "Successfully retrieved the feed of the specified author.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "postId": {
-                    "type": "string",
-                    "description": "The unique identifier of the post."
-                  },
-                  "authorId": {
-                    "type": "string",
-                    "description": "The identifier of the author of the post."
-                  },
-                  "content": {
-                    "type": "string",
-                    "description": "The content of the post."
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the post was created."
-                  },
-                  "likesCount": {
-                    "type": "integer",
-                    "description": "The number of likes the post has received."
-                  },
-                  "commentsCount": {
-                    "type": "integer",
-                    "description": "The number of comments on the post."
+              "type": "object",
+              "properties": {
+                "feed": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the post.",
+                        "properties": {
+                          "text": {
+                            "type": "string",
+                            "description": "The text content of the post."
+                          },
+                          "media": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of media (e.g., image, video)."
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL of the media."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
-                },
-                "required": [
-                  "postId",
-                  "authorId",
-                  "content",
-                  "createdAt"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified author does not exist or has no posts.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/app.bsky.feed.getFeed": {
+      "get": {
+        "tags": [
+          "app.bsky.feed"
+        ],
+        "summary": "Get Feed",
+        "description": "Retrieves the main feed for a user, including posts from followed accounts and recommended content within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getFeed",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the user whose main feed is being retrieved.",
+            "x-ms-summary": "User ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of posts to retrieve in the feed.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the main feed for the specified user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "feed": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the post.",
+                        "properties": {
+                          "text": {
+                            "type": "string",
+                            "description": "The text content of the post."
+                          },
+                          "media": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of media (e.g., image, video)."
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL of the media."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified user does not exist or has no feed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2293,58 +2675,90 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed Generator",
-        "description": "Retrieves information about a specific feed generator, including its metadata, policies, and associated feeds. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. To call this endpoint, see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "description": "Retrieves posts and related content from a specified feed generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "getFeedGenerator",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "generator",
+            "name": "generatorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The unique identifier (DID or URI) of the feed generator to retrieve.",
-            "x-ms-summary": "Feed generator identifier"
+            "description": "The unique identifier of the feed generator.",
+            "x-ms-summary": "Feed Generator ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of posts to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved feed generator information.",
+            "description": "Successfully retrieved the posts from the specified feed generator.",
             "schema": {
               "type": "object",
               "properties": {
-                "did": {
-                  "type": "string",
-                  "description": "Decentralized identifier (DID) of the feed generator."
-                },
-                "displayName": {
-                  "type": "string",
-                  "description": "Display name of the feed generator."
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Detailed description of the feed generator."
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp of when the feed generator was created."
-                },
-                "feeds": {
+                "feed": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Feed"
-                  }
-                },
-                "policies": {
-                  "type": "object",
-                  "description": "Policies associated with the feed generator.",
-                  "properties": {
-                    "content": {
-                      "type": "string",
-                      "description": "Content policy for the feed generator."
-                    },
-                    "moderation": {
-                      "type": "string",
-                      "description": "Moderation policy for the feed generator."
+                    "type": "object",
+                    "properties": {
+                      "postId": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "description": "The unique identifier of the author of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was created."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the post.",
+                        "properties": {
+                          "text": {
+                            "type": "string",
+                            "description": "The text content of the post."
+                          },
+                          "media": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of media (e.g., image, video)."
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL of the media."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -2354,45 +2768,25 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified feed generator does not exist or has no posts.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2404,32 +2798,46 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed Generators",
-        "description": "Retrieves information about multiple feed generators based on their unique identifiers. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. To call this endpoint, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "description": "Retrieves metadata about multiple feed generators within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "getFeedGenerators",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "generators",
+            "name": "generatorIds",
             "in": "query",
             "required": true,
             "type": "array",
             "items": {
               "type": "string"
             },
-            "collectionFormat": "csv",
-            "description": "A comma-separated list of unique identifiers (DIDs or URIs) for the feed generators to retrieve.",
-            "x-ms-summary": "List of feed generator identifiers"
+            "description": "A list of unique identifiers for the feed generators to retrieve.",
+            "x-ms-summary": "Feed Generator IDs"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved information for multiple feed generators.",
+            "description": "Successfully retrieved metadata for the specified feed generators.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "generators": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/FeedGenerator"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "generatorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the feed generator."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the feed generator."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the feed generator."
                   }
                 }
               }
@@ -2438,45 +2846,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2488,88 +2870,76 @@
           "app.bsky.feed"
         ],
         "summary": "Describe Feed Generator",
-        "description": "This endpoint retrieves information about a feed generator, including policies and offered feed URIs. It does not require authentication and is implemented by Feed Generator services, not the App View.\n*Note*: Public endpoints that don't require authentication can be accessed via the public Bluesky AppView API at https://public.api.bsky.app. Authenticated requests are typically made to the user's PDS with automatic service proxying. See the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory) for more details.\n",
+        "description": "Retrieves metadata and configuration details about a feed generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "describeFeedGenerator",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "generatorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the feed generator.",
+            "x-ms-summary": "Feed Generator ID"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successful response with feed generator details",
+            "description": "Successfully retrieved metadata and configuration details for the feed generator.",
             "schema": {
               "type": "object",
-              "required": [
-                "did",
-                "feeds"
-              ],
               "properties": {
-                "did": {
+                "generatorId": {
                   "type": "string",
-                  "description": "Decentralized identifier (DID) of the feed generator"
+                  "description": "The unique identifier of the feed generator."
                 },
-                "feeds": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/ListView"
-                  }
+                "name": {
+                  "type": "string",
+                  "description": "The name of the feed generator."
                 },
-                "links": {
+                "description": {
+                  "type": "string",
+                  "description": "A description of the feed generator."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the feed generator was created."
+                },
+                "config": {
                   "type": "object",
-                  "properties": {
-                    "self": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "URL for this feed generator's API"
-                    },
-                    "documentation": {
-                      "type": "string",
-                      "format": "uri",
-                      "description": "Link to additional documentation for this feed generator"
-                    }
-                  }
+                  "description": "Configuration details for the feed generator."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message"
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token",
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code for missing authentication"
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access"
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - The specified feed generator does not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2580,77 +2950,84 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve likes for a post",
-        "operationId": "GetLikes",
-        "description": "Fetches a list of users who have liked a specified post.",
+        "summary": "Get Likes for a Post",
+        "description": "Retrieves a list of users who liked a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getLikes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "postId",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Post identifier",
-            "description": "The unique identifier of the post for which likes are being retrieved."
+            "description": "The unique identifier of the post whose likes are being retrieved.",
+            "x-ms-summary": "Post ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of likes to retrieve."
+            "description": "The maximum number of likes to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "name": "before",
+            "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "format": "date-time",
-            "x-ms-summary": "Pagination cursor",
-            "description": "A timestamp to paginate results, retrieving likes before this time."
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "x-ms-summary": "Sort order",
-            "description": "The order in which to sort the likes, e.g., by time."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users who liked the specified post.",
+            "description": "Successfully retrieved the list of users who liked the specified post.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string",
-                    "description": "The unique identifier of the user who liked the post."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the user who liked the post."
-                  },
-                  "likedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the user liked the post."
+              "type": "object",
+              "properties": {
+                "likes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user who liked the post."
+                      },
+                      "likedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the post was liked."
+                      }
+                    }
                   }
-                },
-                "required": [
-                  "userId",
-                  "displayName",
-                  "likedAt"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2660,94 +3037,84 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve a post thread",
-        "operationId": "GetPostThread",
-        "description": "Fetches the thread of replies and interactions associated with a specified post.",
+        "summary": "Get Post Thread",
+        "description": "Retrieves a thread of posts starting from a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getPostThread",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "postId",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Post identifier",
-            "description": "The unique identifier of the post for which the thread is being retrieved."
+            "description": "The unique identifier of the starting post in the thread.",
+            "x-ms-summary": "Post ID"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Thread depth",
-            "description": "The depth level of replies to retrieve in the thread."
+            "description": "The depth of the thread to retrieve.",
+            "x-ms-summary": "Depth"
           }
         ],
         "responses": {
           "200": {
-            "description": "The thread of replies and interactions for the specified post.",
+            "description": "Successfully retrieved the post thread starting from the specified post.",
             "schema": {
               "type": "object",
               "properties": {
-                "postId": {
-                  "type": "string",
-                  "description": "The unique identifier of the root post."
-                },
-                "authorId": {
-                  "type": "string",
-                  "description": "The identifier of the author of the root post."
-                },
-                "content": {
-                  "type": "string",
-                  "description": "The content of the root post."
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp when the root post was created."
-                },
-                "replies": {
+                "thread": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "replyId": {
+                      "postId": {
                         "type": "string",
-                        "description": "The unique identifier of the reply."
+                        "description": "The unique identifier of a post in the thread."
                       },
                       "authorId": {
                         "type": "string",
-                        "description": "The identifier of the author of the reply."
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "The content of the reply."
+                        "description": "The unique identifier of the post's author."
                       },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time",
-                        "description": "The timestamp when the reply was created."
+                        "description": "The timestamp when the post was created."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the post."
                       }
-                    },
-                    "required": [
-                      "replyId",
-                      "authorId",
-                      "content",
-                      "createdAt"
-                    ]
-                  },
-                  "description": "An array of replies associated with the post thread."
+                    }
+                  }
                 }
-              },
-              "required": [
-                "postId",
-                "authorId",
-                "content",
-                "createdAt"
-              ]
+              }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2757,9 +3124,15 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve multiple posts",
-        "operationId": "GetPosts",
-        "description": "Fetches details for multiple specified posts based on their unique identifiers.",
+        "summary": "Get Posts",
+        "description": "Retrieves multiple posts by their unique identifiers within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getPosts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "postIds",
@@ -2769,13 +3142,13 @@
             "items": {
               "type": "string"
             },
-            "x-ms-summary": "List of post identifiers",
-            "description": "An array of unique identifiers for each post to retrieve."
+            "description": "A list of unique identifiers for the posts to retrieve.",
+            "x-ms-summary": "Post IDs"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of posts with details for each specified post identifier.",
+            "description": "Successfully retrieved the specified posts.",
             "schema": {
               "type": "array",
               "items": {
@@ -2787,37 +3160,38 @@
                   },
                   "authorId": {
                     "type": "string",
-                    "description": "The unique identifier of the author of the post."
-                  },
-                  "content": {
-                    "type": "string",
-                    "description": "The content of the post."
+                    "description": "The unique identifier of the post's author."
                   },
                   "createdAt": {
                     "type": "string",
                     "format": "date-time",
                     "description": "The timestamp when the post was created."
                   },
-                  "likesCount": {
-                    "type": "integer",
-                    "description": "The number of likes the post has received."
-                  },
-                  "commentsCount": {
-                    "type": "integer",
-                    "description": "The number of comments on the post."
+                  "content": {
+                    "type": "object",
+                    "description": "The content of the post."
                   }
-                },
-                "required": [
-                  "postId",
-                  "authorId",
-                  "content",
-                  "createdAt"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2907,40 +3281,36 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Retrieve the user’s timeline",
-        "operationId": "GetTimeline",
-        "description": "Fetches posts from the authenticated user's timeline, including posts from followed users.",
+        "summary": "Get Timeline",
+        "description": "Retrieves the user's timeline, including posts from followed accounts and relevant content within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getTimeline",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of posts to retrieve for the timeline."
+            "description": "The maximum number of posts to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "name": "before",
+            "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "format": "date-time",
-            "x-ms-summary": "Pagination cursor",
-            "description": "A timestamp to paginate results, retrieving posts before this time."
-          },
-          {
-            "name": "includeReplies",
-            "in": "query",
-            "required": false,
-            "type": "boolean",
-            "x-ms-summary": "Include replies",
-            "description": "Specifies whether to include replies in the timeline results."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of posts from the user’s timeline.",
+            "description": "Successfully retrieved the user's timeline.",
             "schema": {
               "type": "array",
               "items": {
@@ -2952,37 +3322,38 @@
                   },
                   "authorId": {
                     "type": "string",
-                    "description": "The unique identifier of the author of the post."
-                  },
-                  "content": {
-                    "type": "string",
-                    "description": "The content of the post."
+                    "description": "The unique identifier of the post's author."
                   },
                   "createdAt": {
                     "type": "string",
                     "format": "date-time",
                     "description": "The timestamp when the post was created."
                   },
-                  "likesCount": {
-                    "type": "integer",
-                    "description": "The number of likes the post has received."
-                  },
-                  "commentsCount": {
-                    "type": "integer",
-                    "description": "The number of comments on the post."
+                  "content": {
+                    "type": "object",
+                    "description": "The content of the post."
                   }
-                },
-                "required": [
-                  "postId",
-                  "authorId",
-                  "content",
-                  "createdAt"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3483,63 +3854,89 @@
         }
       }
     },
-
     "/app.bsky.feed.getListFeed": {
       "get": {
         "tags": [
           "app.bsky.feed"
         ],
         "summary": "Get List Feed",
-        "description": "Retrieves a list of posts in a feed.",
-        "operationId": "GetListFeed",
+        "description": "Retrieves a feed for a specific list of users within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
+        "operationId": "getListFeed",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "listId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "Unique identifier of the list to retrieve.",
+            "description": "The unique identifier of the list whose feed is being retrieved.",
             "x-ms-summary": "List ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of posts to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list feed.",
+            "description": "Successfully retrieved the feed for the specified list.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "listId": {
-                  "type": "string",
-                  "description": "Unique identifier of the list."
-                },
-                "posts": {
-                  "type": "array",
-                  "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post."
+                  },
+                  "authorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post's author."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the post was created."
+                  },
+                  "content": {
                     "type": "object",
-                    "properties": {
-                      "postId": {
-                        "type": "string",
-                        "description": "Unique identifier of the post."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the post."
-                      }
-                    }
+                    "description": "The content of the post."
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3679,50 +4076,65 @@
           "app.bsky.feed"
         ],
         "summary": "Search Posts",
-        "description": "Searches for posts containing specific keywords or phrases. This endpoint is part of  the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Searches for posts across the Bluesky network based on a specified query. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
         "operationId": "searchPosts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "term",
+            "name": "query",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The search term or phrase used to find posts.",
-            "x-ms-summary": "Search term"
+            "description": "The search query to find posts.",
+            "x-ms-summary": "Search Query"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of posts to retrieve.",
-            "x-ms-summary": "Result limit"
+            "description": "The maximum number of search results to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved posts matching the search criteria.",
+            "description": "Successfully retrieved search results for posts matching the query.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Post"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "postId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post."
+                  },
+                  "authorId": {
+                    "type": "string",
+                    "description": "The unique identifier of the post's author."
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The timestamp when the post was created."
+                  },
+                  "content": {
+                    "type": "object",
+                    "description": "The content of the post."
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -3730,45 +4142,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
