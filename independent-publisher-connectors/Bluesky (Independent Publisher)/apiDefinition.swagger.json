@@ -1333,7 +1333,7 @@
             "x-ms-summary": "Interactions Data"
           }
         ],
-        "responses": {
+        "responses": {  
           "200": {
             "description": "Successfully recorded the interactions.",
             "schema": {
