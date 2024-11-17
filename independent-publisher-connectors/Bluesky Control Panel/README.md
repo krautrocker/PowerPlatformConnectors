@@ -1,20 +1,22 @@
 # Bluesky API Connector - Non-App.Bsky Endpoints
 
-This custom connector allows Power Platform apps to interact with Bluesky’s API, supporting operations for managing actors, moderation, labels, identity, synchronization, and administrative controls outside the `app.bsky` namespace.
+- **This custom connector allows Power Platform apps to interact with Bluesky’s API, supporting operations for managing actors, moderation, labels, identity, synchronization, and administrative controls outside the `app.bsky` namespace.
 
 ## Supported Endpoints
 
 To use this connector, you will need:
-1. A Bluesky account.
-2. API access to Bluesky with an App Password.
+
+- **A Bluesky account.
+- **API access to Bluesky with an App Password.
 
 ## Obtaining Credentials
-1. Go to the [Bluesky Developer Portal](https://docs.bsky.app).
-2. Register your App Password in Settings.
+
+- **Go to the [Bluesky Developer Portal](https://docs.bsky.app).
+- **Register your App Password in Settings.
 
 ## Supported Operations
 
-This connector includes the following operations:
+- **This connector includes the following operations:
 
 ### `chat.bsky` Endpoints
 
@@ -174,10 +176,4 @@ All other endpoints not listed can be found here (non-app.bsky): https://docs.bs
 
 ### Authentication
 
-All endpoints require an `Authorization` header with a bearer token, except where explicitly noted.
-
-### Example Authorization Header
-
-{
-	"Authorization": "Bearer <access_token_>"
-}
+- **TBD - In progress
