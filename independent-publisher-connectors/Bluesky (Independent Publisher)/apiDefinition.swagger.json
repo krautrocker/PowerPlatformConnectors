@@ -3481,70 +3481,6 @@
             }
           }
         }
-      },
-      "/app.bsky.graph.getFollows": {
-        "get": {
-          "tags": [
-            "app.bsky.graph"
-          ],
-          "summary": "Get Follows",
-          "description": "Retrieves a list of users followed by a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-          "operationId": "getFollows",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "actorId",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "description": "The unique identifier of the actor whose follows are being retrieved.",
-              "x-ms-summary": "Actor ID"
-            },
-            {
-              "name": "limit",
-              "in": "query",
-              "required": false,
-              "type": "integer",
-              "description": "The maximum number of followed users to retrieve.",
-              "x-ms-summary": "Limit"
-            },
-            {
-              "name": "cursor",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "description": "Cursor for paginated results.",
-              "x-ms-summary": "Cursor"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved the list of users followed by the specified actor.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "follows": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "userId": {
-                          "type": "string",
-                          "description": null
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/app.bsky.graph.getList": {
@@ -5878,6 +5814,39 @@
     }
   },
   "definitions": {
+    "ErrorResponse": {
+      "type": "object",
+      "required": [
+        "error",
+        "message"
+      ],
+      "properties": {
+        "error": {
+          "type": "string",
+          "enum": [
+            "InvalidRequest",
+            "ExpiredToken",
+            "InvalidToken",
+            "Unauthorized",
+            "NotFound",
+            "InternalServerError"
+          ],
+          "description": "Type of error encountered during the request."
+        },
+        "message": {
+          "type": "string",
+          "description": "Detailed error message."
+        },
+        "code": {
+          "type": "integer",
+          "description": "Optional error code, such as an HTTP status code."
+        },
+        "details": {
+          "type": "string",
+          "description": "Additional information about the error for debugging purposes."
+        }
+      }
+    },
     "LabelerService": {
       "type": "object",
       "properties": {
@@ -6045,35 +6014,25 @@
       }
     },
     "ProfileViewBasic": {
-      "required": [
-        "did",
-        "handle"
-      ],
       "type": "object",
+      "description": "Basic profile view for a record's author.",
       "properties": {
         "did": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the profile."
         },
         "handle": {
-          "format": "handle",
-          "type": "string"
+          "type": "string",
+          "description": "User handle or username for the profile."
         },
         "displayName": {
+          "type": "string",
           "maxLength": 640,
-          "type": "string"
+          "description": "The display name of the profile."
         },
         "avatar": {
-          "type": "string"
-        },
-        "viewer": {
-          "$ref": "#/definitions/ViewerState"
-        },
-        "labels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Label"
-          }
+          "type": "string",
+          "description": "URL of the avatar image for the profile."
         }
       }
     },
@@ -6085,27 +6044,31 @@
       "type": "object",
       "properties": {
         "did": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the profile."
         },
         "handle": {
-          "format": "handle",
-          "type": "string"
+          "type": "string",
+          "description": "User handle or username for the profile."
         },
         "displayName": {
+          "type": "string",
           "maxLength": 640,
-          "type": "string"
+          "description": "The display name of the profile."
         },
         "description": {
+          "type": "string",
           "maxLength": 2560,
-          "type": "string"
+          "description": "A detailed description of the profile."
         },
         "avatar": {
-          "type": "string"
+          "type": "string",
+          "description": "URL of the avatar image for the profile."
         },
         "indexedAt": {
+          "type": "string",
           "format": "date-time",
-          "type": "string"
+          "description": "The timestamp when the profile was last indexed."
         },
         "viewer": {
           "$ref": "#/definitions/ViewerState"
@@ -6114,7 +6077,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Label"
-          }
+          },
+          "description": "Labels associated with this profile."
         }
       }
     },
@@ -6126,39 +6090,47 @@
       "type": "object",
       "properties": {
         "did": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the profile."
         },
         "handle": {
-          "format": "handle",
-          "type": "string"
+          "type": "string",
+          "description": "User handle or username for the profile."
         },
         "displayName": {
+          "type": "string",
           "maxLength": 640,
-          "type": "string"
+          "description": "The display name of the profile."
         },
         "description": {
+          "type": "string",
           "maxLength": 2560,
-          "type": "string"
+          "description": "A detailed description of the profile."
         },
         "avatar": {
-          "type": "string"
+          "type": "string",
+          "description": "URL of the avatar image for the profile."
         },
         "banner": {
-          "type": "string"
+          "type": "string",
+          "description": "URL of the banner image for the profile."
         },
         "followersCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The number of followers for the profile."
         },
         "followsCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The number of profiles followed by this profile."
         },
         "postsCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The total number of posts made by this profile."
         },
         "indexedAt": {
+          "type": "string",
           "format": "date-time",
-          "type": "string"
+          "description": "The timestamp when the profile was last indexed."
         },
         "viewer": {
           "$ref": "#/definitions/ViewerState"
@@ -6167,55 +6139,71 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Label"
-          }
+          },
+          "description": "Labels associated with this profile."
         }
       }
     },
     "ViewerState": {
       "type": "object",
+      "description": "Represents the viewer's state in relation to the profile.",
       "properties": {
         "muted": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates whether the viewer has muted the profile."
         },
         "mutedByList": {
           "$ref": "#/definitions/ListViewBasic"
         },
         "blockedBy": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates whether the viewer is blocked by the profile."
         },
         "blocking": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the profile that the viewer is blocking."
         },
         "following": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the profile that the viewer is following."
         },
         "followedBy": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the profile that follows the viewer."
         }
       }
     },
     "Preferences": {
       "type": "array",
       "items": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/AdultContentPref"
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Indicates if adult content is enabled."
+          },
+          "level": {
+            "type": "string",
+            "enum": [ "low", "medium", "high" ],
+            "description": "The level of adult content preference."
           }
-        ]
+        }
       }
     },
     "AdultContentPref": {
-      "required": [
-        "enabled"
-      ],
       "type": "object",
       "properties": {
         "enabled": {
-          "default": false,
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates if adult content is enabled."
+        },
+        "level": {
+          "type": "string",
+          "enum": [ "low", "medium", "high" ],
+          "description": "The level of adult content preference."
         }
       }
     },
@@ -6240,7 +6228,7 @@
       }
     },
     "Label": {
-      "description": "Metadata tag on an atproto resource (eg, repo or record)",
+      "description": "Metadata tag on an atproto resource (e.g., repo or record).",
       "required": [
         "src",
         "uri",
@@ -6250,38 +6238,48 @@
       "type": "object",
       "properties": {
         "src": {
-          "format": "did",
-          "description": "DID of the actor who created this label",
-          "type": "string"
+          "type": "string",
+          "description": "DID of the actor who created this label."
         },
         "uri": {
+          "type": "string",
           "format": "uri",
-          "description": "AT URI of the record, repository (account), or other resource which this label applies to",
-          "type": "string"
+          "description": "AT URI of the record, repository (account), or other resource to which this label applies."
         },
         "cid": {
-          "format": "cid",
-          "description": "optionally, CID specifying the specific version of 'uri' resource this label applies to",
-          "type": "string"
+          "type": "string",
+          "description": "Optionally, CID specifying the specific version of the 'uri' resource to which this label applies."
         },
         "val": {
-          "description": "the short string name of the value or type of this label",
+          "type": "string",
           "maxLength": 128,
-          "type": "string"
+          "description": "The short string name of the value or type of this label."
         },
         "neg": {
-          "description": "if true, this is a negation label, overwriting a previous label",
-          "type": "boolean"
+          "type": "boolean",
+          "description": "If true, this is a negation label, overwriting a previous label."
         },
         "cts": {
-          "format": "datetime",
-          "description": "timestamp when this label was created",
-          "type": "string"
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this label was created."
         }
       }
     },
     "ListViewBasic": {
-      "type": "object"
+      "type": "object",
+      "description": "Represents a basic view of a list, used for muted profiles.",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the list."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the list."
+        }
+      }
     },
     "ExternalEmbed": {
       "required": [
@@ -6354,17 +6352,19 @@
       }
     },
     "ImagesEmbed": {
-      "required": [
-        "images"
-      ],
       "type": "object",
       "properties": {
         "images": {
-          "maxItems": 4,
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Image"
+            "type": "string",
+            "format": "uri",
+            "description": "URI of the image."
           }
+        },
+        "altText": {
+          "type": "string",
+          "description": "Alternative text for the image."
         }
       }
     },
@@ -6386,17 +6386,19 @@
       }
     },
     "ImagesEmbedView": {
-      "required": [
-        "images"
-      ],
       "type": "object",
       "properties": {
         "images": {
-          "maxItems": 4,
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ImageView"
+            "type": "string",
+            "format": "uri",
+            "description": "URI of the image."
           }
+        },
+        "altText": {
+          "type": "string",
+          "description": "Alternative text for the image."
         }
       }
     },
@@ -6437,11 +6439,45 @@
       "type": "object",
       "properties": {
         "record": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ViewRecord"
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri",
+              "description": "URI of the record."
+            },
+            "cid": {
+              "type": "string",
+              "description": "CID of the record."
+            },
+            "author": {
+              "$ref": "#/definitions/ProfileViewBasic"
+            },
+            "value": {
+              "type": "string",
+              "description": "The value of the record."
+            },
+            "labels": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Label"
+              },
+              "description": "Labels associated with the record."
+            },
+            "embeds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ImagesEmbedView"
+              },
+              "description": "Embedded views related to the record."
+            },
+            "indexedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Timestamp when the record was indexed."
             }
-          ]
+          },
+          "description": "Embedded view of the record, including metadata and labels."
         }
       }
     },
@@ -6456,38 +6492,39 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the record."
         },
         "cid": {
-          "format": "cid",
-          "type": "string"
+          "type": "string",
+          "description": "CID (Content Identifier) specifying the version of the record."
         },
         "author": {
           "$ref": "#/definitions/ProfileViewBasic"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "description": "The value of the record."
         },
         "labels": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Label"
-          }
+          },
+          "description": "Labels associated with the record."
         },
         "embeds": {
           "type": "array",
           "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/ImagesEmbedView"
-              }
-            ]
-          }
+            "$ref": "#/definitions/ImagesEmbedView"
+          },
+          "description": "Embedded views related to the record."
         },
         "indexedAt": {
+          "type": "string",
           "format": "date-time",
-          "type": "string"
+          "description": "Timestamp when the record was indexed."
         }
       }
     },
@@ -6498,7 +6535,7 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
+          "format": "uri",
           "type": "string"
         }
       }
@@ -6510,7 +6547,7 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
+          "format": "uri",
           "type": "string"
         }
       }
@@ -6526,11 +6563,22 @@
           "$ref": "#/definitions/RecordEmbed"
         },
         "media": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ImagesEmbed"
+          "type": "object",
+          "properties": {
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri",
+                "description": "URI of the image."
+              }
+            },
+            "altText": {
+              "type": "string",
+              "description": "Alternative text for the image."
             }
-          ]
+          },
+          "description": "Embedded media associated with the record."
         }
       }
     },
@@ -6545,11 +6593,22 @@
           "$ref": "#/definitions/RecordEmbedView"
         },
         "media": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ImagesEmbedView"
+          "type": "object",
+          "properties": {
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri",
+                "description": "URI of the image."
+              }
+            },
+            "altText": {
+              "type": "string",
+              "description": "Alternative text for the image."
             }
-          ]
+          },
+          "description": "Media content embedded within the record."
         }
       }
     },
@@ -6564,38 +6623,55 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "URI of the post."
         },
         "cid": {
-          "format": "cid",
-          "type": "string"
+          "type": "string",
+          "description": "CID (Content Identifier) of the post."
         },
         "author": {
           "$ref": "#/definitions/ProfileViewBasic"
         },
         "record": {
-          "type": "object"
+          "type": "object",
+          "description": "The record content of the post."
         },
         "embed": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ImagesEmbedView"
+          "type": "object",
+          "properties": {
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri",
+                "description": "URI of the image."
+              }
+            },
+            "altText": {
+              "type": "string",
+              "description": "Alternative text for the image."
             }
-          ]
+          },
+          "description": "Embedded media associated with the post."
         },
         "replyCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Number of replies to the post."
         },
         "repostCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Number of times the post was reposted."
         },
         "likeCount": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Number of likes the post received."
         },
         "indexedAt": {
-          "format": "datetime",
-          "type": "string"
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the post was indexed."
         },
         "viewer": {
           "$ref": "#/definitions/ViewerState"
@@ -6604,7 +6680,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Label"
-          }
+          },
+          "description": "Labels associated with the post."
         }
       }
     },
@@ -6623,11 +6700,11 @@
       "type": "object",
       "properties": {
         "indexedAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         },
         "createdAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         },
         "actor": {
@@ -6646,7 +6723,7 @@
           "$ref": "#/definitions/StrongRef"
         },
         "createdAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         }
       }
@@ -6675,11 +6752,21 @@
       }
     },
     "Embed": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ImagesEmbedView"
+      "type": "object",
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/StrongRef"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "description": "URI of the embedded image."
+          }
         }
-      ]
+      },
+      "description": "Embed object combining record and images."
     },
     "ReplyRef": {
       "required": [
@@ -6746,7 +6833,7 @@
           "$ref": "#/definitions/StrongRef"
         },
         "createdAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         }
       }
@@ -6759,12 +6846,13 @@
       "type": "object",
       "properties": {
         "subject": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the resource being blocked."
         },
         "createdAt": {
-          "format": "datetime",
-          "type": "string"
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the block action was created."
         }
       }
     },
@@ -6776,12 +6864,13 @@
       "type": "object",
       "properties": {
         "subject": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the resource being followed."
         },
         "createdAt": {
-          "format": "datetime",
-          "type": "string"
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the follow action was created."
         }
       }
     },
@@ -6980,25 +7069,32 @@
         "features": {
           "type": "array",
           "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/Mention"
+            "type": "object",
+            "properties": {
+              "did": {
+                "type": "string",
+                "description": "Decentralized Identifier (DID) of the mentioned actor."
               }
-            ]
-          }
+            },
+            "required": [
+              "did"
+            ],
+            "description": "A facet feature for actor mentions."
+          },
+          "description": "An array of mention features within the facet."
         }
       }
     },
     "Mention": {
-      "description": "A facet feature for actor mentions",
+      "type": "object",
+      "description": "A facet feature for actor mentions.",
       "required": [
         "did"
       ],
-      "type": "object",
       "properties": {
         "did": {
-          "format": "did",
-          "type": "string"
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the mentioned actor."
         }
       }
     },
@@ -7016,7 +7112,7 @@
       }
     },
     "ByteSlice": {
-      "description": "A text segment. Start is inclusive, end is exclusive. Indices are for utf8-encoded strings",
+      "description": "A text segment. Start is inclusive, end is exclusive. Indices are for UTF-8 encoded strings.",
       "required": [
         "byteStart",
         "byteEnd"
@@ -7024,12 +7120,14 @@
       "type": "object",
       "properties": {
         "byteStart": {
+          "type": "integer",
           "minimum": 0,
-          "type": "integer"
+          "description": "The starting index of the byte slice (inclusive)."
         },
         "byteEnd": {
+          "type": "integer",
           "minimum": 0,
-          "type": "integer"
+          "description": "The ending index of the byte slice (exclusive)."
         }
       }
     },
@@ -7046,11 +7144,22 @@
           "$ref": "#/definitions/ReplyRef"
         },
         "reason": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ReasonRepost"
+          "type": "object",
+          "properties": {
+            "by": {
+              "$ref": "#/definitions/ProfileViewBasic"
+            },
+            "indexedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Timestamp when the action was indexed."
             }
-          ]
+          },
+          "required": [
+            "by",
+            "indexedAt"
+          ],
+          "description": "The reason for the post appearing in the feed, such as a repost."
         }
       }
     },
@@ -7065,14 +7174,15 @@
           "$ref": "#/definitions/ProfileViewBasic"
         },
         "indexedAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         }
       }
     },
     "ThreadViewPost": {
       "required": [
-        "post"
+        "post",
+        "replies"
       ],
       "type": "object",
       "properties": {
@@ -7080,23 +7190,40 @@
           "$ref": "#/definitions/PostView"
         },
         "parent": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ThreadViewPost"
+          "type": "object",
+          "properties": {
+            "post": {
+              "$ref": "#/definitions/PostView"
+            },
+            "replies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PostView"
+              }
             }
-          ]
+          },
+          "description": "The parent post in the thread."
         },
         "replies": {
           "type": "array",
           "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/ThreadViewPost"
+            "type": "object",
+            "properties": {
+              "post": {
+                "$ref": "#/definitions/PostView"
+              },
+              "replies": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/PostView"
+                }
               }
-            ]
-          }
+            }
+          },
+          "description": "An array of replies to the current post in the thread."
         }
-      }
+      },
+      "description": "Represents a single post in a threaded conversation, including its parent and replies."
     },
     "NotFoundPost": {
       "required": [
@@ -7106,7 +7233,7 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
+          "format": "uri",
           "type": "string"
         },
         "notFound": {
@@ -7123,7 +7250,7 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
+          "format": "uri",
           "type": "string"
         },
         "blocked": {
@@ -7143,7 +7270,7 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
+          "format": "uri",
           "type": "string"
         },
         "creator": {
@@ -7174,7 +7301,7 @@
           "$ref": "#/definitions/ListViewerState"
         },
         "indexedAt": {
-          "format": "datetime",
+          "format": "date-time",
           "type": "string"
         }
       }
@@ -7209,7 +7336,7 @@
       }
     },
     "StrongRef": {
-      "description": "A URI with a content-hash fingerprint",
+      "description": "A URI with a content-hash fingerprint.",
       "required": [
         "uri",
         "cid"
@@ -7217,12 +7344,13 @@
       "type": "object",
       "properties": {
         "uri": {
-          "format": "at-uri",
-          "type": "string"
+          "type": "string",
+          "format": "uri",
+          "description": "The URI of the resource."
         },
         "cid": {
-          "format": "cid",
-          "type": "string"
+          "type": "string",
+          "description": "The Content Identifier (CID) hash of the resource."
         }
       }
     },
@@ -7239,12 +7367,19 @@
         "features": {
           "type": "array",
           "items": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/Mention"
+            "type": "object",
+            "description": "A facet feature for actor mentions.",
+            "required": [
+              "did"
+            ],
+            "properties": {
+              "did": {
+                "type": "string",
+                "description": "Decentralized Identifier (DID) of the mentioned actor."
               }
-            ]
-          }
+            }
+          },
+          "description": "An array of features within the rich text facet."
         }
       }
     }
