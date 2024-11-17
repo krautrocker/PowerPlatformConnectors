@@ -32,8 +32,10 @@
   "schemes": [
     "https"
   ],
-  "consumes": [],
-  "produces": [],
+  "consumes": [
+  ],
+  "produces": [
+  ],
   "paths": {
     "/com.atproto.repo.listMissingBlobs": {
       "get": {
@@ -797,7 +799,6 @@
         }
       }
     },
-
     "/com.atproto.server.deactivateAccount": {
       "post": {
         "tags": [
@@ -806,7 +807,8 @@
         "summary": "Deactivate Account",
         "description": "Deactivates the user's account, suspending access to the platform. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "DeactivateAccount",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully deactivated the account.",
@@ -992,7 +994,8 @@
         "summary": "Delete Session",
         "description": "Ends the user's current session, effectively logging them out. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "DeleteSession",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully deleted the session.",
@@ -1287,7 +1290,8 @@
         "summary": "Describe Server",
         "description": "Retrieves metadata and configuration details about the server. This endpoint is part of the `atproto.server` namespace.",
         "operationId": "DescribeServer",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved server description.",
@@ -1335,7 +1339,8 @@
         "summary": "Get Account Invite Codes",
         "description": "Retrieves a list of invite codes associated with the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "GetAccountInviteCodes",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved account invite codes.",
@@ -1385,7 +1390,8 @@
         "summary": "Get Service Auth",
         "description": "Retrieves authentication information for the current service, such as token details or login requirements. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "GetServiceAuth",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved service authentication details.",
@@ -1430,7 +1436,8 @@
         "summary": "Get Session",
         "description": "Retrieves details about the current session, including user information and session status. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "GetSession",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved session details.",
@@ -1475,7 +1482,8 @@
         "summary": "List App Passwords",
         "description": "Retrieves a list of app-specific passwords generated for the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "ListAppPasswords",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved list of app passwords.",
@@ -1524,7 +1532,8 @@
         "summary": "Refresh Session",
         "description": "Refreshes the current session, extending the authentication validity period. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RefreshSession",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully refreshed the session.",
@@ -1565,7 +1574,8 @@
         "summary": "Request Account Delete",
         "description": "Initiates a request to delete the user's account. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RequestAccountDelete",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully initiated account deletion request.",
@@ -1602,7 +1612,8 @@
         "summary": "Request Email Confirmation",
         "description": "Sends a confirmation email to verify the user’s email address. This endpoint is part of the `atproto.server` namespace and requires authentication.",
         "operationId": "RequestEmailConfirmation",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully requested email confirmation.",
@@ -2047,7 +2058,8 @@
         "summary": "Get Latest Commit",
         "description": "Retrieves details of the latest commit made to the repository. This endpoint is part of the  `atproto.sync` namespace and requires authentication.\n",
         "operationId": "GetLatestCommit",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved latest commit details.",
@@ -5377,6 +5389,76 @@
         }
       }
     },
+    "/com.atproto.server.deleteAccount": {
+      "delete": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Delete Account",
+        "description": "Permanently deletes an account and all associated data within the Bluesky network. This operation cannot be undone. This endpoint is part of the `com.atproto.server` namespace and requires authentication.",
+        "operationId": "ServerDeleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account to delete."
+                },
+                "confirmation": {
+                  "type": "string",
+                  "description": "Confirmation string to verify the delete operation."
+                }
+              }
+            },
+            "description": "Details of the account to delete and confirmation.",
+            "x-ms-summary": "Account Deletion Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the account.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the account was successfully deleted."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters or missing confirmation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/com.atproto.admin.deleteAccount": {
       "post": {
         "tags": [
@@ -6178,7 +6260,8 @@
         "summary": "Get Recommended DID Credentials",
         "description": "Retrieves a list of recommended DID (Decentralized Identifier) credentials for the authenticated user. This endpoint is part of the `atproto.identity` namespace and requires authentication.",
         "operationId": "GetRecommendedDIDCredentials",
-        "parameters": [],
+        "parameters": [
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved recommended DID credentials.",
@@ -7092,8 +7175,10 @@
       }
     }
   },
-  "parameters": {},
-  "responses": {},
+  "parameters": {
+  },
+  "responses": {
+  },
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
@@ -7101,10 +7186,12 @@
       "name": "Authorization"
     }
   },
-  "tags": [],
+  "tags": [
+  ],
   "security": [
     {
-      "api_key": []
+      "api_key": [
+      ]
     }
   ]
 }
