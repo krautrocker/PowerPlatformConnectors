@@ -228,10 +228,13 @@
           "app.bsky.video"
         ],
         "summary": "Upload Video",
-        "description": "Uploads a video file for processing and sharing within the Bluesky platform. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and requires authentication. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Uploads a video to the Bluesky network for processing and sharing. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
         "operationId": "uploadVideo",
         "consumes": [
           "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
         ],
         "parameters": [
           {
@@ -240,23 +243,7 @@
             "required": true,
             "type": "file",
             "description": "The video file to be uploaded.",
-            "x-ms-summary": "Video file"
-          },
-          {
-            "name": "title",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "description": "Title of the video.",
-            "x-ms-summary": "Video title"
-          },
-          {
-            "name": "description",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "description": "Description of the video content.",
-            "x-ms-summary": "Video description"
+            "x-ms-summary": "Video File"
           }
         ],
         "responses": {
@@ -265,13 +252,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "videoId": {
+                "jobId": {
                   "type": "string",
-                  "description": "Unique identifier for the uploaded video."
+                  "description": "The unique identifier of the video processing job."
                 },
-                "status": {
+                "message": {
                   "type": "string",
-                  "description": "The status of the video upload (e.g., pending, processing)."
+                  "description": "A confirmation message."
                 }
               }
             }
@@ -279,45 +266,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -329,49 +290,31 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Upload Limits",
-        "description": "Retrieves the video upload limits for the authenticated user, including maximum file size  and supported formats. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`)  and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves the upload limits for videos within the Bluesky network. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
         "operationId": "getVideoUploadLimits",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully retrieved video upload limits.",
+            "description": "Successfully retrieved the video upload limits.",
             "schema": {
               "type": "object",
               "properties": {
-                "maxFileSize": {
+                "maxSizeInBytes": {
                   "type": "integer",
-                  "format": "int64",
-                  "description": "Maximum file size for video uploads in bytes."
+                  "description": "The maximum file size allowed for video uploads, in bytes."
                 },
-                "supportedFormats": {
+                "allowedFormats": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   },
-                  "description": "List of supported video formats (e.g., mp4, mov)."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
+                  "description": "A list of allowed video formats (e.g., MP4, AVI)."
                 }
               }
             }
@@ -379,21 +322,13 @@
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -405,40 +340,47 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Job Status",
-        "description": "Retrieves the status of a video processing job by job ID. This endpoint is part of the  Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves the status of a specific video processing job within the Bluesky network. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
         "operationId": "getVideoJobStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "jobId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The unique identifier of the video job whose status is being retrieved.",
-            "x-ms-summary": "Video job identifier"
+            "description": "The unique identifier of the video processing job.",
+            "x-ms-summary": "Job ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved video job status.",
+            "description": "Successfully retrieved the status of the video processing job.",
             "schema": {
               "type": "object",
               "properties": {
                 "jobId": {
                   "type": "string",
-                  "description": "The unique identifier of the video job."
+                  "description": "The unique identifier of the job."
                 },
                 "status": {
                   "type": "string",
-                  "description": "The current status of the job (e.g., pending, processing, completed)."
-                },
-                "progress": {
-                  "type": "number",
-                  "format": "float",
-                  "description": "Progress percentage of the job."
+                  "enum": [
+                    "pending",
+                    "processing",
+                    "completed",
+                    "failed"
+                  ],
+                  "description": "The current status of the job."
                 },
                 "errorMessage": {
                   "type": "string",
-                  "description": "Error message if the job has failed."
+                  "description": "An error message if the job failed."
                 }
               }
             }
@@ -446,45 +388,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -496,42 +412,24 @@
           "app.bsky.notification"
         ],
         "summary": "Get Unread Notification Count",
-        "description": "Retrieves the count of unread notifications for the authenticated user. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For more details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves the count of unread notifications for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
         "operationId": "getUnreadNotificationCount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully retrieved unread notification count.",
+            "description": "Successfully retrieved the unread notification count.",
             "schema": {
               "type": "object",
               "properties": {
-                "count": {
+                "unreadCount": {
                   "type": "integer",
-                  "format": "int32",
-                  "description": "The number of unread notifications."
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
+                  "description": "The total number of unread notifications."
                 }
               }
             }
@@ -539,21 +437,13 @@
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -565,65 +455,43 @@
           "app.bsky.labeler"
         ],
         "summary": "Get Labeler Services",
-        "description": "Retrieves a list of labeler services available within the Bluesky application. Labeler services  provide content labeling features. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and may require authentication based on the specific setup. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of labeler services available within the Bluesky network. This endpoint is part of the `app.bsky.labeler` namespace and does not require authentication.",
         "operationId": "getLabelerServices",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of labeler services.",
+            "description": "Successfully retrieved the list of labeler services.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "services": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/LabelerService"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "serviceId": {
+                    "type": "string",
+                    "description": "The unique identifier of the labeler service."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the labeler service."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the labeler service."
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -635,24 +503,30 @@
           "app.bsky.graph"
         ],
         "summary": "Mute Thread",
-        "description": "Mutes a specific thread for an actor, preventing notifications and visibility in feeds.  This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Mutes a specific thread within the Bluesky network, preventing its content from appearing in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "muteThread",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "thread",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "description": "The unique identifier (URI) of the thread to mute.",
-            "x-ms-summary": "Thread URI"
-          },
-          {
-            "name": "actor",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The DID or handle of the actor muting the thread.",
-            "x-ms-summary": "Actor identifier"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "threadId": {
+                  "type": "string",
+                  "description": "The unique identifier of the thread to mute."
+                }
+              }
+            },
+            "description": "Details of the thread to mute.",
+            "x-ms-summary": "Thread ID"
           }
         ],
         "responses": {
@@ -671,45 +545,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -721,42 +569,57 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Packs",
-        "description": "Retrieves a list of available starter packs, which are curated sets of users for the actor to consider following. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of starter packs within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getStarterPacks",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of starter packs to retrieve.",
-            "x-ms-summary": "Starter packs limit"
+            "description": "The maximum number of starter packs to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of starter packs.",
+            "description": "Successfully retrieved the list of starter packs.",
             "schema": {
               "type": "object",
               "properties": {
                 "starterPacks": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/StarterPack"
+                    "type": "object",
+                    "properties": {
+                      "packId": {
+                        "type": "string",
+                        "description": "The unique identifier of the starter pack."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the starter pack."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A brief description of the starter pack."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -764,45 +627,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -814,40 +651,52 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Pack",
-        "description": "Retrieves details of a specific starter pack, which includes a curated set of users for the  actor to follow. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`)  and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves details of a specific starter pack within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getStarterPack",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "pack",
+            "name": "packId",
             "in": "query",
             "required": true,
             "type": "string",
             "description": "The unique identifier of the starter pack to retrieve.",
-            "x-ms-summary": "Starter pack identifier"
+            "x-ms-summary": "Starter Pack ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the starter pack.",
+            "description": "Successfully retrieved details of the specified starter pack.",
             "schema": {
               "type": "object",
               "properties": {
                 "packId": {
                   "type": "string",
-                  "description": "Unique identifier of the starter pack."
+                  "description": "The unique identifier of the starter pack."
                 },
-                "title": {
+                "name": {
                   "type": "string",
-                  "description": "Title of the starter pack."
+                  "description": "The name of the starter pack."
                 },
                 "description": {
                   "type": "string",
-                  "description": "Description of the starter pack."
+                  "description": "A brief description of the starter pack."
                 },
-                "users": {
+                "members": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/User"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a member in the starter pack."
+                      }
+                    }
                   }
                 }
               }
@@ -856,45 +705,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -906,50 +729,62 @@
           "app.bsky.graph"
         ],
         "summary": "Get Known Followers",
-        "description": "Retrieves a list of known followers for a specific actor. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For  further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of mutual followers or users following both the authenticated user and a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getKnownFollowers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The DID or handle of the actor whose known followers are being retrieved.",
-            "x-ms-summary": "Actor identifier"
+            "description": "The unique identifier of the actor whose known followers are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of known followers to retrieve.",
-            "x-ms-summary": "Followers limit"
+            "description": "The maximum number of mutual followers to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of known followers for the specified actor.",
+            "description": "Successfully retrieved the list of mutual followers for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
-                "followers": {
+                "knownFollowers": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/User"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the mutual follower."
+                      },
+                      "followedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the mutual following occurred."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -957,45 +792,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1093,50 +902,70 @@
           "app.bsky.graph"
         ],
         "summary": "Get Actor Starter Packs",
-        "description": "Retrieves a list of starter packs for a specific actor, which are curated sets of users that the actor may want to follow. This endpoint is part of the Bluesky application Lexicon APIs  (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of starter packs for a specific actor, which can include suggested connections or groups within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getActorStarterPacks",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The DID or handle of the actor for whom starter packs are being retrieved.",
-            "x-ms-summary": "Actor identifier"
+            "description": "The unique identifier of the actor for whom starter packs are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of starter packs to retrieve.",
-            "x-ms-summary": "Starter pack limit"
+            "description": "The maximum number of starter packs to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved starter packs for the specified actor.",
+            "description": "Successfully retrieved the list of starter packs for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
                 "starterPacks": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/StarterPack"
+                    "type": "object",
+                    "properties": {
+                      "packId": {
+                        "type": "string",
+                        "description": "The unique identifier of the starter pack."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the starter pack."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A brief description of the starter pack."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the starter pack was created."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -1144,45 +973,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -1333,7 +1136,7 @@
             "x-ms-summary": "Interactions Data"
           }
         ],
-        "responses": {  
+        "responses": {
           "200": {
             "description": "Successfully recorded the interactions.",
             "schema": {
@@ -1538,14 +1341,14 @@
         }
       }
     },
-    "/app.bsky.actor.putPreferences": {
+    "/app.bsky.notification.putPreferences": {
       "put": {
         "tags": [
-          "app.bsky.actor"
+          "app.bsky.notification"
         ],
-        "summary": "Update Actor Preferences",
-        "description": "Updates the preferences for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "putPreferences",
+        "summary": "Update Notification Preferences",
+        "description": "Updates the notification preferences for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
+        "operationId": "putNotificationPreferences",
         "consumes": [
           "application/json"
         ],
@@ -1554,47 +1357,31 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique identifier of the actor whose preferences are being updated.",
-            "x-ms-summary": "Actor ID"
-          },
-          {
-            "name": "preferences",
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "displayName": {
-                  "type": "string",
-                  "description": "The display name of the actor."
-                },
-                "bio": {
-                  "type": "string",
-                  "description": "The bio or description of the actor."
-                },
                 "preferences": {
                   "type": "object",
-                  "description": "An object containing updated preferences for the actor."
+                  "description": "An object containing the notification preferences to update."
                 }
               }
             },
-            "description": "An object containing the preferences to update for the actor.",
-            "x-ms-summary": "Preferences Data"
+            "description": "The updated notification preferences.",
+            "x-ms-summary": "Notification Preferences"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the preferences for the specified actor.",
+            "description": "Successfully updated the notification preferences.",
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Confirmation message for the successful update."
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the preferences were successfully updated."
                 }
               }
             }
@@ -1607,12 +1394,6 @@
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found - The specified actor does not exist.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1708,34 +1489,31 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Register Push Notification",
-        "description": "Registers a device for receiving push notifications for the authenticated user. This endpoint is part  of the Bluesky application Lexicon APIs (`app.bsky.*`) and requires authentication. For more details,  see the [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
-        "operationId": "registerPushNotification",
+        "summary": "Register Push Notification Device",
+        "description": "Registers a device for receiving push notifications within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
+        "operationId": "registerPushNotificationDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "deviceToken",
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "token": {
+                "deviceToken": {
                   "type": "string",
-                  "description": "The push notification token provided by the device.",
-                  "x-ms-summary": "Device token"
-                },
-                "platform": {
-                  "type": "string",
-                  "description": "The platform of the device (e.g., iOS, Android).",
-                  "x-ms-summary": "Device platform"
-                },
-                "enableNotifications": {
-                  "type": "boolean",
-                  "description": "Enable or disable push notifications for this device.",
-                  "x-ms-summary": "Push notifications preference"
+                  "description": "The token of the device being registered for push notifications."
                 }
               }
-            }
+            },
+            "description": "Details of the device being registered.",
+            "x-ms-summary": "Device Token"
           }
         ],
         "responses": {
@@ -1746,7 +1524,7 @@
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the device was successfully registered for push notifications."
+                  "description": "Indicates whether the device was successfully registered."
                 }
               }
             }
@@ -1754,45 +1532,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2057,40 +1809,53 @@
           "app.bsky.graph"
         ],
         "summary": "Get Relationships",
-        "description": "Retrieves the relationships between the specified actor and a list of other actors, such as follows  and blocks. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves the relationship status between the authenticated actor and specified users within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getRelationships",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "subject",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The DID or handle of the primary actor whose relationships are being queried.",
-            "x-ms-summary": "Primary actor identifier"
-          },
-          {
-            "name": "actors",
+            "name": "userIds",
             "in": "query",
             "required": true,
             "type": "array",
             "items": {
               "type": "string"
             },
-            "collectionFormat": "csv",
-            "description": "A comma-separated list of DIDs or handles for other actors to query relationships with.",
-            "x-ms-summary": "Target actor identifiers"
+            "description": "A list of user IDs to retrieve relationship status for.",
+            "x-ms-summary": "User IDs"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved relationships for the specified actors.",
+            "description": "Successfully retrieved relationship statuses for the specified users.",
             "schema": {
               "type": "object",
               "properties": {
                 "relationships": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Relationship"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the user."
+                      },
+                      "relationshipStatus": {
+                        "type": "string",
+                        "enum": [
+                          "following",
+                          "followed_by",
+                          "mutual",
+                          "none"
+                        ],
+                        "description": "The relationship status between the authenticated actor and the user."
+                      }
+                    }
                   }
                 }
               }
@@ -2099,45 +1864,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -2149,50 +1888,61 @@
           "app.bsky.graph"
         ],
         "summary": "Get Suggested Follows by Actor",
-        "description": "Retrieves a list of suggested accounts for the specified actor to follow based on shared connections or interests. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of suggested follows based on a specific actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getSuggestedFollowsByActor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The DID or handle of the actor for whom suggested follows are being retrieved.",
-            "x-ms-summary": "Actor identifier"
+            "description": "The unique identifier of the actor whose suggested follows are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of suggested follows to retrieve.",
-            "x-ms-summary": "Suggestions limit"
+            "description": "The maximum number of suggested follows to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved suggested follows for the specified actor.",
+            "description": "Successfully retrieved the list of suggested follows for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
-                "suggestions": {
+                "suggestedFollows": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/User"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the suggested user to follow."
+                      },
+                      "reason": {
+                        "type": "string",
+                        "description": "The reason why this user was suggested as a follow."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -2200,45 +1950,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3411,50 +3135,62 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Blocks",
-        "description": "Retrieves a list of users who have been blocked by the specified actor within a given list. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Retrieves a list of blocks associated with a specific list within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "getListBlocks",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "list",
+            "name": "listId",
             "in": "query",
             "required": true,
             "type": "string",
-            "description": "The unique identifier of the list for which blocked users are being retrieved.",
-            "x-ms-summary": "List identifier"
+            "description": "The unique identifier of the list whose blocks are being retrieved.",
+            "x-ms-summary": "List ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of blocked users to retrieve.",
-            "x-ms-summary": "Blocked users limit"
+            "description": "The maximum number of blocks to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Cursor for paginated results, provided by the previous response.",
-            "x-ms-summary": "Pagination cursor"
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list of blocked users.",
+            "description": "Successfully retrieved the blocks for the specified list.",
             "schema": {
               "type": "object",
               "properties": {
                 "blocks": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/User"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a blocked user."
+                      },
+                      "blockedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was blocked."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for the next set of results, if available."
                 }
               }
             }
@@ -3462,45 +3198,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -3511,61 +3221,76 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Retrieve blocked users",
-        "operationId": "GetBlocks",
-        "description": "Fetches a list of users that the authenticated user has blocked.",
+        "summary": "Get Blocks",
+        "description": "Retrieves a list of users blocked by the authenticated actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getBlocks",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of blocked users to retrieve."
+            "description": "The maximum number of blocked users to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "name": "offset",
+            "name": "cursor",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result offset",
-            "description": "The number of blocked users to skip for pagination."
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users that have been blocked by the authenticated user.",
+            "description": "Successfully retrieved the list of blocked users.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string",
-                    "description": "The unique identifier of the blocked user."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the blocked user."
-                  },
-                  "blockedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the user was blocked."
+              "type": "object",
+              "properties": {
+                "blocks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the blocked user."
+                      },
+                      "blockedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was blocked."
+                      }
+                    }
                   }
-                },
-                "required": [
-                  "userId",
-                  "displayName",
-                  "blockedAt"
-                ]
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3575,40 +3300,44 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Retrieve a user's followers",
-        "operationId": "GetFollowers",
-        "description": "Fetches a list of users who follow a specified user.",
+        "summary": "Get Followers",
+        "description": "Retrieves a list of users following a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getFollowers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "actor",
+            "name": "actorId",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Actor identifier",
-            "description": "The unique identifier of the actor whose followers are being retrieved."
+            "description": "The unique identifier of the actor whose followers are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result limit",
-            "description": "The maximum number of followers to retrieve."
+            "description": "The maximum number of followers to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "name": "offset",
+            "name": "cursor",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Result offset",
-            "description": "The number of followers to skip for pagination."
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users who follow the specified user.",
+            "description": "Successfully retrieved the list of followers for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
@@ -3621,14 +3350,10 @@
                         "type": "string",
                         "description": "The unique identifier of the follower."
                       },
-                      "displayName": {
-                        "type": "string",
-                        "description": "The display name of the follower."
-                      },
                       "followedAt": {
                         "type": "string",
                         "format": "date-time",
-                        "description": "The timestamp when the user started following."
+                        "description": "The timestamp when the actor was followed."
                       }
                     }
                   }
@@ -3636,8 +3361,23 @@
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3741,6 +3481,70 @@
             }
           }
         }
+      },
+      "/app.bsky.graph.getFollows": {
+        "get": {
+          "tags": [
+            "app.bsky.graph"
+          ],
+          "summary": "Get Follows",
+          "description": "Retrieves a list of users followed by a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+          "operationId": "getFollows",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "actorId",
+              "in": "query",
+              "required": true,
+              "type": "string",
+              "description": "The unique identifier of the actor whose follows are being retrieved.",
+              "x-ms-summary": "Actor ID"
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "required": false,
+              "type": "integer",
+              "description": "The maximum number of followed users to retrieve.",
+              "x-ms-summary": "Limit"
+            },
+            {
+              "name": "cursor",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "description": "Cursor for paginated results.",
+              "x-ms-summary": "Cursor"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved the list of users followed by the specified actor.",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "follows": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "description": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/app.bsky.graph.getList": {
@@ -3748,51 +3552,80 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Retrieve a user list",
-        "operationId": "GetList",
-        "description": "Fetches a list of users associated with a specified list, such as a group or category.",
+        "summary": "Get List",
+        "description": "Retrieves details about a specific list created by an actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "listId",
             "in": "query",
             "required": true,
             "type": "string",
-            "x-ms-summary": "List identifier",
-            "description": "The unique identifier of the list to retrieve."
+            "description": "The unique identifier of the list to retrieve.",
+            "x-ms-summary": "List ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "A list of users associated with the specified list.",
+            "description": "Successfully retrieved details for the specified list.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string",
-                    "description": "The unique identifier of the user in the list."
-                  },
-                  "displayName": {
-                    "type": "string",
-                    "description": "The display name of the user in the list."
-                  },
-                  "addedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "The timestamp when the user was added to the list."
-                  }
+              "type": "object",
+              "properties": {
+                "listId": {
+                  "type": "string",
+                  "description": "The unique identifier of the list."
                 },
-                "required": [
-                  "userId",
-                  "displayName",
-                  "addedAt"
-                ]
+                "name": {
+                  "type": "string",
+                  "description": "The name of the list."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A brief description of the list."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the list was created."
+                },
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a user in the list."
+                      }
+                    }
+                  }
+                }
               }
             }
           },
-          "default": {
-            "description": "Unexpected error"
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3802,54 +3635,84 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Which lists is the requester's account muting",
-        "description": "Which lists is the requester's account muting",
-        "operationId": "GetListMutes",
+        "summary": "Get List Mutes",
+        "description": "Retrieves a list of mutes associated with a specific list within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getListMutes",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
+            "name": "listId",
             "in": "query",
-            "name": "limit",
-            "type": "integer",
-            "x-ms-summary": "Limit the number of results",
-            "description": "Specifies the maximum number of muted lists to return.",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the list whose mutes are being retrieved.",
+            "x-ms-summary": "List ID"
           },
           {
+            "name": "limit",
             "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of mutes to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
             "name": "cursor",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "x-ms-summary": "Cursor for pagination",
-            "description": "Used to fetch the next page of muted lists."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successfully retrieved the mutes for the specified list.",
             "schema": {
               "type": "object",
               "properties": {
-                "cursor": {
-                  "type": "string"
-                },
-                "lists": {
+                "mutes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ListView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a muted user."
+                      },
+                      "mutedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was muted."
+                      }
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Unexpected error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3949,63 +3812,92 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Fetch a list of lists that belong to an actor",
-        "description": "Retrieves lists associated with a specified actor.",
-        "operationId": "GetLists",
+        "summary": "Get Lists",
+        "description": "Retrieves all lists created by a specific actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getLists",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
+            "name": "actorId",
             "in": "query",
-            "name": "actor",
             "required": true,
             "type": "string",
-            "format": "at-identifier",
-            "x-ms-summary": "Actor identifier",
-            "description": "The unique identifier of the actor whose lists are being retrieved."
+            "description": "The unique identifier of the actor whose lists are being retrieved.",
+            "x-ms-summary": "Actor ID"
           },
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1,
-            "x-ms-summary": "Limit the number of results",
-            "description": "Specifies the maximum number of lists to return."
+            "description": "The maximum number of lists to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "in": "query",
             "name": "cursor",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "x-ms-summary": "Cursor for pagination",
-            "description": "Used to fetch the next page of lists."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successfully retrieved the lists for the specified actor.",
             "schema": {
               "type": "object",
               "properties": {
-                "cursor": {
-                  "type": "string"
-                },
                 "lists": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ListView"
+                    "type": "object",
+                    "properties": {
+                      "listId": {
+                        "type": "string",
+                        "description": "The unique identifier of the list."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the list."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A brief description of the list."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the list was created."
+                      }
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Unexpected error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4015,57 +3907,76 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Who does the viewer mute",
-        "description": "Retrieves a list of accounts that the viewer has muted.",
-        "operationId": "GetMutes",
+        "summary": "Get Mutes",
+        "description": "Retrieves a list of users muted by the authenticated actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "getMutes",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 50,
-            "maximum": 100,
-            "minimum": 1,
-            "x-ms-summary": "Limit the number of results",
-            "description": "Specifies the maximum number of muted accounts to return."
+            "description": "The maximum number of muted users to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "in": "query",
             "name": "cursor",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "x-ms-summary": "Cursor for pagination",
-            "description": "Used to fetch the next page of muted accounts."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successfully retrieved the list of muted users.",
             "schema": {
-              "required": [
-                "mutes"
-              ],
               "type": "object",
               "properties": {
-                "cursor": {
-                  "type": "string"
-                },
                 "mutes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of the muted user."
+                      },
+                      "mutedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the user was muted."
+                      }
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Unexpected error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4165,43 +4076,65 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an actor by did or handle",
-        "description": "Mutes a specified actor using their DID or handle.",
+        "summary": "Mute Actor",
+        "description": "Mutes a specific actor (user) within the Bluesky network, preventing their content from appearing in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "muteActor",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
-              "required": [
-                "actor"
-              ],
               "type": "object",
               "properties": {
-                "actor": {
-                  "format": "uri",
-                  "description": "Actor identifier",
-                  "type": "string"
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the actor to mute."
                 }
               }
-            }
+            },
+            "description": "Details of the actor to mute.",
+            "x-ms-summary": "Actor ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Actor muted successfully"
+            "description": "Successfully muted the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the actor was successfully muted."
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "operationId": "MuteActor"
+        }
       }
     },
     "/app.bsky.graph.muteActorList": {
@@ -4209,46 +4142,65 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute a list of actors",
-        "description": "Mutes a list of specified actors using their identifiers.",
+        "summary": "Mute Actor List",
+        "description": "Mutes a specific list of actors (users) within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "muteActorList",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
-              "required": [
-                "actors"
-              ],
               "type": "object",
               "properties": {
-                "actors": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Actor identifier"
-                  }
+                "listId": {
+                  "type": "string",
+                  "description": "The unique identifier of the list to mute."
                 }
               }
-            }
+            },
+            "description": "Details of the list to mute.",
+            "x-ms-summary": "List ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Actors muted successfully"
+            "description": "Successfully muted the specified list of actors.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the list was successfully muted."
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "operationId": "MuteActorList"
+        }
       }
     },
     "/app.bsky.graph.unmuteThread": {
@@ -4257,24 +4209,30 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute Thread",
-        "description": "Unmutes a specific thread for an actor, allowing notifications and visibility in feeds again.  This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically  requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
+        "description": "Unmutes a specific thread within the Bluesky network, allowing its content to reappear in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
         "operationId": "unmuteThread",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "thread",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "description": "The unique identifier (URI) of the thread to unmute.",
-            "x-ms-summary": "Thread URI"
-          },
-          {
-            "name": "actor",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The DID or handle of the actor unmuting the thread.",
-            "x-ms-summary": "Actor identifier"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "threadId": {
+                  "type": "string",
+                  "description": "The unique identifier of the thread to unmute."
+                }
+              }
+            },
+            "description": "Details of the thread to unmute.",
+            "x-ms-summary": "Thread ID"
           }
         ],
         "responses": {
@@ -4293,45 +4251,19 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message for unauthorized access."
-                }
-              }
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           }
         }
@@ -4342,43 +4274,65 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an actor by did or handle",
-        "description": "Unmutes a specified actor using their DID or handle.",
+        "summary": "Unmute Actor",
+        "description": "Unmutes a specific actor (user) within the Bluesky network, allowing their content to reappear in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "unmuteActor",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
-              "required": [
-                "actor"
-              ],
               "type": "object",
               "properties": {
-                "actor": {
-                  "format": "uri",
-                  "description": "Actor identifier",
-                  "type": "string"
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the actor to unmute."
                 }
               }
-            }
+            },
+            "description": "Details of the actor to unmute.",
+            "x-ms-summary": "Actor ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Actor unmuted successfully"
+            "description": "Successfully unmuted the specified actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the actor was successfully unmuted."
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "operationId": "UnmuteActor"
+        }
       }
     },
     "/app.bsky.graph.unmuteActorList": {
@@ -4386,46 +4340,65 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute a list of actors",
-        "description": "Unmutes a list of specified actors using their identifiers.",
+        "summary": "Unmute Actor List",
+        "description": "Unmutes a specific list of actors (users) within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
+        "operationId": "unmuteActorList",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
-              "required": [
-                "actors"
-              ],
               "type": "object",
               "properties": {
-                "actors": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Actor identifier"
-                  }
+                "listId": {
+                  "type": "string",
+                  "description": "The unique identifier of the list to unmute."
                 }
               }
-            }
+            },
+            "description": "Details of the list to unmute.",
+            "x-ms-summary": "List ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Actors unmuted successfully"
+            "description": "Successfully unmuted the specified list of actors.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the list was successfully unmuted."
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
-        },
-        "operationId": "UnmuteActorList"
+        }
       }
     },
     "/app.bsky.notification.listNotifications": {
@@ -4433,62 +4406,78 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Retrieve a list of notifications",
-        "description": "Fetches a list of notifications for the authenticated user.",
-        "operationId": "ListNotifications",
+        "summary": "List Notifications",
+        "description": "Retrieves a list of notifications for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
+        "operationId": "listNotifications",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "query",
             "name": "limit",
+            "in": "query",
+            "required": false,
             "type": "integer",
-            "default": 20,
-            "maximum": 100,
-            "x-ms-summary": "Limit the number of results",
-            "description": "Specifies the maximum number of notifications to return."
+            "description": "The maximum number of notifications to retrieve.",
+            "x-ms-summary": "Limit"
           },
           {
-            "in": "query",
             "name": "cursor",
-            "type": "string",
-            "x-ms-summary": "Cursor for pagination",
-            "description": "Used to fetch the next page of notifications."
-          },
-          {
             "in": "query",
-            "name": "seenAt",
+            "required": false,
             "type": "string",
-            "format": "date-time",
-            "x-ms-summary": "Last seen timestamp",
-            "description": "Filters notifications to show those received since the last seen timestamp."
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successfully retrieved the list of notifications.",
             "schema": {
               "type": "object",
               "properties": {
                 "notifications": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/NotificationView"
+                    "type": "object",
+                    "properties": {
+                      "notificationId": {
+                        "type": "string",
+                        "description": "The unique identifier of the notification."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The type of notification (e.g., like, follow, comment)."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the notification was created."
+                      },
+                      "content": {
+                        "type": "object",
+                        "description": "The content of the notification."
+                      }
+                    }
                   }
-                },
-                "cursor": {
-                  "type": "string",
-                  "description": "Cursor for pagination"
                 }
               }
             }
           },
-          "400": {
-            "description": "Invalid input"
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Unexpected error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4498,44 +4487,1285 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Mark notifications as seen",
-        "description": "Marks notifications as seen up to the specified timestamp for the authenticated user.",
-        "operationId": "UpdateSeen",
+        "summary": "Update Notification Seen",
+        "description": "Marks specific notifications as seen for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
+        "operationId": "updateNotificationSeen",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
             "name": "body",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "seenAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp up to which notifications are marked as seen."
+                "notificationIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "A list of notification IDs to mark as seen."
                 }
-              },
-              "required": [
-                "seenAt"
-              ]
-            }
+              }
+            },
+            "description": "Details of the notifications being marked as seen.",
+            "x-ms-summary": "Notification IDs"
           }
         ],
         "responses": {
           "200": {
-            "description": "Notifications marked as seen successfully"
+            "description": "Successfully updated the seen status for the specified notifications.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the notifications were successfully marked as seen."
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.actor.deleteAccount": {
+      "delete": {
+        "tags": [
+          "chat.bsky.actor"
+        ],
+        "summary": "Delete Account",
+        "description": "Permanently deletes an actor's account and all associated data within the Bluesky network. This endpoint is part of the `chat.bsky.actor` namespace and requires authentication.",
+        "operationId": "deleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the account.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the account was successfully deleted."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.actor.exportAccountData": {
+      "get": {
+        "tags": [
+          "chat.bsky.actor"
+        ],
+        "summary": "Export Account Data",
+        "description": "Exports all data associated with an actor's account within the Bluesky network. This endpoint is part of the `chat.bsky.actor` namespace and requires authentication.",
+        "operationId": "exportAccountData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully exported the account data.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "description": "The exported account data, typically in JSON format."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.deleteMessageForSelf": {
+      "delete": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Delete Message for Self",
+        "description": "Deletes a message from a conversation for the authenticated actor only. The message remains visible to other participants. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "deleteMessageForSelf",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the message to delete.",
+            "x-ms-summary": "Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the message for the authenticated actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the message was successfully deleted for the actor."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.getConvo": {
+      "get": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Get Conversation",
+        "description": "Retrieves details of a specific conversation, including participants and metadata, within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "getConvo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "convoId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the conversation to retrieve.",
+            "x-ms-summary": "Conversation ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the conversation details.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation."
+                },
+                "participants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a participant in the conversation."
+                      }
+                    }
+                  }
+                },
+                "metadata": {
+                  "type": "object",
+                  "description": "Additional metadata about the conversation."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.getConvoForMembers": {
+      "get": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Get Conversation for Members",
+        "description": "Retrieves details of a conversation shared between specific members within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "getConvoForMembers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "memberIds",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The list of user IDs participating in the conversation.",
+            "x-ms-summary": "Member IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the conversation details for the specified members.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation."
+                },
+                "participants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "description": "The unique identifier of a participant in the conversation."
+                      }
+                    }
+                  }
+                },
+                "metadata": {
+                  "type": "object",
+                  "description": "Additional metadata about the conversation."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.getLog": {
+      "get": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Get Conversation Log",
+        "description": "Retrieves the log of a specific conversation, including all messages exchanged, within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "getConvoLog",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "convoId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the conversation whose log is being retrieved.",
+            "x-ms-summary": "Conversation ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of messages to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the conversation log.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "messageId": {
+                        "type": "string",
+                        "description": "The unique identifier of the message."
+                      },
+                      "senderId": {
+                        "type": "string",
+                        "description": "The unique identifier of the message sender."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the message."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the message was sent."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.getMessages": {
+      "get": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Get Messages",
+        "description": "Retrieves messages from a specific conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "getMessages",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "convoId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the conversation whose messages are being retrieved.",
+            "x-ms-summary": "Conversation ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of messages to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved messages from the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "messageId": {
+                        "type": "string",
+                        "description": "The unique identifier of the message."
+                      },
+                      "senderId": {
+                        "type": "string",
+                        "description": "The unique identifier of the message sender."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the message."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the message was sent."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.leaveConvo": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Leave Conversation",
+        "description": "Allows the authenticated user to leave a specific conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "leaveConvo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to leave."
+                }
+              }
+            },
+            "description": "Details of the conversation to leave.",
+            "x-ms-summary": "Conversation ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully left the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the user successfully left the conversation."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.listConvos": {
+      "get": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "List Conversations",
+        "description": "Retrieves a list of conversations for the authenticated user within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "listConvos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The maximum number of conversations to retrieve.",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Cursor for paginated results.",
+            "x-ms-summary": "Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of conversations.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "conversations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "convoId": {
+                        "type": "string",
+                        "description": "The unique identifier of the conversation."
+                      },
+                      "lastMessage": {
+                        "type": "object",
+                        "description": "Details of the last message in the conversation.",
+                        "properties": {
+                          "content": {
+                            "type": "string",
+                            "description": "The content of the last message."
+                          },
+                          "timestamp": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The timestamp of the last message."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.muteConvo": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Mute Conversation",
+        "description": "Mutes a specific conversation for the authenticated user within the Bluesky network. This prevents notifications for the conversation. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "muteConvo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to mute."
+                }
+              }
+            },
+            "description": "Details of the conversation to mute.",
+            "x-ms-summary": "Conversation ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully muted the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the conversation was successfully muted."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.sendMessage": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Send Message",
+        "description": "Sends a single message to a specified conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "sendMessage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to send a message to."
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the message to send."
+                }
+              }
+            },
+            "description": "Details of the message to send.",
+            "x-ms-summary": "Message Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully sent the message.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string",
+                  "description": "The unique identifier of the sent message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.sendMessageBatch": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Send Message Batch",
+        "description": "Sends multiple messages to a specified conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "sendMessageBatch",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to send messages to."
+                },
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the message."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp of the message."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Details of the batch of messages to send.",
+            "x-ms-summary": "Batch Message Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully sent the batch of messages.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the batch of messages was successfully sent."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.unmuteConvo": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Unmute Conversation",
+        "description": "Unmutes a specific conversation for the authenticated user within the Bluesky network. This allows notifications for the conversation. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "unmuteConvo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation to unmute."
+                }
+              }
+            },
+            "description": "Details of the conversation to unmute.",
+            "x-ms-summary": "Conversation ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unmuted the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the conversation was successfully unmuted."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.convo.updateRead": {
+      "post": {
+        "tags": [
+          "chat.bsky.convo"
+        ],
+        "summary": "Update Read Status",
+        "description": "Marks a conversation as read up to a specific message for the authenticated user within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
+        "operationId": "updateRead",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the conversation being updated."
+                },
+                "messageId": {
+                  "type": "string",
+                  "description": "The unique identifier of the message up to which the conversation is marked as read."
+                }
+              }
+            },
+            "description": "Details of the conversation and message for updating the read status.",
+            "x-ms-summary": "Read Status Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the read status for the conversation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the read status was successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.getActorMetadata": {
+      "get": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Get Actor Metadata",
+        "description": "Retrieves moderation metadata for a specific actor within the Bluesky network. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
+        "operationId": "getActorMetadata",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the actor whose metadata is being retrieved.",
+            "x-ms-summary": "Actor ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation metadata for the actor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the actor."
+                },
+                "metadata": {
+                  "type": "object",
+                  "description": "Moderation metadata for the actor."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.getMessageContext": {
+      "get": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Get Message Context",
+        "description": "Retrieves the context of a specific message, including its surrounding messages, for moderation purposes within the Bluesky network. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
+        "operationId": "getMessageContext",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique identifier of the message whose context is being retrieved.",
+            "x-ms-summary": "Message ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "The number of surrounding messages to retrieve.",
+            "x-ms-summary": "Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the message context.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string",
+                  "description": "The unique identifier of the message."
+                },
+                "context": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "messageId": {
+                        "type": "string",
+                        "description": "The unique identifier of a surrounding message."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the surrounding message."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp of the surrounding message."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/chat.bsky.moderation.updateActorAccess": {
+      "put": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Update Actor Access",
+        "description": "Updates access permissions for a specific actor within the Bluesky network for moderation purposes. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
+        "operationId": "updateActorAccess",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actorId": {
+                  "type": "string",
+                  "description": "The unique identifier of the actor whose access is being updated."
+                },
+                "accessLevel": {
+                  "type": "string",
+                  "enum": [
+                    "restricted",
+                    "banned",
+                    "active"
+                  ],
+                  "description": "The new access level for the actor."
+                }
+              }
+            },
+            "description": "Details of the actor and the new access level.",
+            "x-ms-summary": "Actor Access Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the actor's access level.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the actor's access level was successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - The server encountered an unexpected condition.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4648,7 +5878,6 @@
     }
   },
   "definitions": {
-
     "LabelerService": {
       "type": "object",
       "properties": {
