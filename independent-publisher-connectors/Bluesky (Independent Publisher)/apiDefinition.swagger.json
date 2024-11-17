@@ -46,7 +46,7 @@
         ],
         "summary": "Get Actor Likes",
         "description": "Retrieves a list of posts liked by a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getActorLikes",
+        "operationId": "GetActorLikes",
         "consumes": [
           "application/json"
         ],
@@ -165,7 +165,7 @@
         ],
         "summary": "Get Actor Preferences",
         "description": "Retrieves the preferences for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "getPreferences",
+        "operationId": "GetPreferences",
         "consumes": [
           "application/json"
         ],
@@ -229,7 +229,7 @@
         ],
         "summary": "Upload Video",
         "description": "Uploads a video to the Bluesky network for processing and sharing. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
-        "operationId": "uploadVideo",
+        "operationId": "UploadVideo",
         "consumes": [
           "multipart/form-data"
         ],
@@ -291,7 +291,7 @@
         ],
         "summary": "Get Video Upload Limits",
         "description": "Retrieves the upload limits for videos within the Bluesky network. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
-        "operationId": "getVideoUploadLimits",
+        "operationId": "GetVideoUploadLimits",
         "consumes": [
           "application/json"
         ],
@@ -341,7 +341,7 @@
         ],
         "summary": "Get Video Job Status",
         "description": "Retrieves the status of a specific video processing job within the Bluesky network. This endpoint is part of the `app.bsky.video` namespace and requires authentication.",
-        "operationId": "getVideoJobStatus",
+        "operationId": "GetVideoJobStatus",
         "consumes": [
           "application/json"
         ],
@@ -413,7 +413,7 @@
         ],
         "summary": "Get Unread Notification Count",
         "description": "Retrieves the count of unread notifications for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
-        "operationId": "getUnreadNotificationCount",
+        "operationId": "GetUnreadNotificationCount",
         "consumes": [
           "application/json"
         ],
@@ -456,7 +456,7 @@
         ],
         "summary": "Get Labeler Services",
         "description": "Retrieves a list of labeler services available within the Bluesky network. This endpoint is part of the `app.bsky.labeler` namespace and does not require authentication.",
-        "operationId": "getLabelerServices",
+        "operationId": "GetLabelerServices",
         "consumes": [
           "application/json"
         ],
@@ -504,7 +504,7 @@
         ],
         "summary": "Mute Thread",
         "description": "Mutes a specific thread within the Bluesky network, preventing its content from appearing in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "muteThread",
+        "operationId": "MuteThread",
         "consumes": [
           "application/json"
         ],
@@ -570,7 +570,7 @@
         ],
         "summary": "Get Starter Packs",
         "description": "Retrieves a list of starter packs within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getStarterPacks",
+        "operationId": "GetStarterPacks",
         "consumes": [
           "application/json"
         ],
@@ -652,7 +652,7 @@
         ],
         "summary": "Get Starter Pack",
         "description": "Retrieves details of a specific starter pack within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getStarterPack",
+        "operationId": "GetStarterPack",
         "consumes": [
           "application/json"
         ],
@@ -730,7 +730,7 @@
         ],
         "summary": "Get Known Followers",
         "description": "Retrieves a list of mutual followers or users following both the authenticated user and a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getKnownFollowers",
+        "operationId": "GetKnownFollowers",
         "consumes": [
           "application/json"
         ],
@@ -817,7 +817,7 @@
         ],
         "summary": "Get Actor Profile",
         "description": "Retrieves the profile information for a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "getProfile",
+        "operationId": "GetProfile",
         "consumes": [
           "application/json"
         ],
@@ -903,7 +903,7 @@
         ],
         "summary": "Get Actor Starter Packs",
         "description": "Retrieves a list of starter packs for a specific actor, which can include suggested connections or groups within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getActorStarterPacks",
+        "operationId": "GetActorStarterPacks",
         "consumes": [
           "application/json"
         ],
@@ -998,7 +998,7 @@
         ],
         "summary": "Get Multiple Actor Profiles",
         "description": "Retrieves profile information for multiple actors within the Bluesky network. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "getProfiles",
+        "operationId": "GetProfiles",
         "consumes": [
           "application/json"
         ],
@@ -1094,7 +1094,7 @@
         ],
         "summary": "Send Interactions",
         "description": "Sends user interactions, such as likes or reposts, for a specified post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "sendInteractions",
+        "operationId": "SendInteractions",
         "consumes": [
           "application/json"
         ],
@@ -1177,7 +1177,7 @@
         ],
         "summary": "Get Quotes",
         "description": "Retrieves a list of posts quoting a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getQuotes",
+        "operationId": "GetQuotes",
         "consumes": [
           "application/json"
         ],
@@ -1267,7 +1267,7 @@
         ],
         "summary": "Get Actor Suggestions",
         "description": "Retrieves a list of suggested actors (users) within the Bluesky network based on the current user's profile and interests. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "getSuggestions",
+        "operationId": "GetSuggestions",
         "consumes": [
           "application/json"
         ],
@@ -1348,7 +1348,7 @@
         ],
         "summary": "Update Notification Preferences",
         "description": "Updates the notification preferences for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
-        "operationId": "putNotificationPreferences",
+        "operationId": "PutNotificationPreferences",
         "consumes": [
           "application/json"
         ],
@@ -1414,7 +1414,7 @@
         ],
         "summary": "Get Feed Skeleton",
         "description": "Retrieves the skeleton structure of a feed for a specific generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getFeedSkeleton",
+        "operationId": "GetFeedSkeleton",
         "consumes": [
           "application/json"
         ],
@@ -1491,7 +1491,7 @@
         ],
         "summary": "Register Push Notification Device",
         "description": "Registers a device for receiving push notifications within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
-        "operationId": "registerPushNotificationDevice",
+        "operationId": "RegisterPushNotificationDevice",
         "consumes": [
           "application/json"
         ],
@@ -1557,7 +1557,7 @@
         ],
         "summary": "Search Actors",
         "description": "Searches for actors (users) within the Bluesky network based on a search query. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "searchActors",
+        "operationId": "SearchActors",
         "consumes": [
           "application/json"
         ],
@@ -1646,7 +1646,7 @@
         ],
         "summary": "Search Actors Typeahead",
         "description": "Provides typeahead suggestions for actors (users) within the Bluesky network based on a partial search query. This endpoint is part of the `app.bsky.actor` namespace and requires authentication.",
-        "operationId": "searchActorsTypeahead",
+        "operationId": "SearchActorsTypeahead",
         "consumes": [
           "application/json"
         ],
@@ -1723,7 +1723,7 @@
         ],
         "summary": "Get Reposted By",
         "description": "Retrieves a list of users who reposted a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getRepostedBy",
+        "operationId": "GetRepostedBy",
         "consumes": [
           "application/json"
         ],
@@ -1810,7 +1810,7 @@
         ],
         "summary": "Get Relationships",
         "description": "Retrieves the relationship status between the authenticated actor and specified users within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getRelationships",
+        "operationId": "GetRelationships",
         "consumes": [
           "application/json"
         ],
@@ -1889,7 +1889,7 @@
         ],
         "summary": "Get Suggested Follows by Actor",
         "description": "Retrieves a list of suggested follows based on a specific actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getSuggestedFollowsByActor",
+        "operationId": "GetSuggestedFollowsByActor",
         "consumes": [
           "application/json"
         ],
@@ -1975,7 +1975,7 @@
         ],
         "summary": "Get Suggested Feeds",
         "description": "Retrieves a list of suggested feeds for the user based on their activity and interests within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getSuggestedFeeds",
+        "operationId": "GetSuggestedFeeds",
         "consumes": [
           "application/json"
         ],
@@ -2057,7 +2057,7 @@
         ],
         "summary": "Get Actor Feeds",
         "description": "Retrieves a list of feeds created or associated with a specific actor (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getActorFeeds",
+        "operationId": "GetActorFeeds",
         "consumes": [
           "application/json"
         ],
@@ -2158,7 +2158,7 @@
         ],
         "summary": "Get Author Feed",
         "description": "Retrieves the feed of posts created by a specific author (user) within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getAuthorFeed",
+        "operationId": "GetAuthorFeed",
         "consumes": [
           "application/json"
         ],
@@ -2277,7 +2277,7 @@
         ],
         "summary": "Get Feed",
         "description": "Retrieves the main feed for a user, including posts from followed accounts and recommended content within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getFeed",
+        "operationId": "GetFeed",
         "consumes": [
           "application/json"
         ],
@@ -2400,7 +2400,7 @@
         ],
         "summary": "Get Feed Generator",
         "description": "Retrieves posts and related content from a specified feed generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getFeedGenerator",
+        "operationId": "GetFeedGenerator",
         "consumes": [
           "application/json"
         ],
@@ -2523,7 +2523,7 @@
         ],
         "summary": "Get Feed Generators",
         "description": "Retrieves metadata about multiple feed generators within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getFeedGenerators",
+        "operationId": "GetFeedGenerators",
         "consumes": [
           "application/json"
         ],
@@ -2595,7 +2595,7 @@
         ],
         "summary": "Describe Feed Generator",
         "description": "Retrieves metadata and configuration details about a feed generator within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "describeFeedGenerator",
+        "operationId": "DescribeFeedGenerator",
         "consumes": [
           "application/json"
         ],
@@ -2676,7 +2676,7 @@
         ],
         "summary": "Get Likes for a Post",
         "description": "Retrieves a list of users who liked a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getLikes",
+        "operationId": "GetLikes",
         "consumes": [
           "application/json"
         ],
@@ -2763,7 +2763,7 @@
         ],
         "summary": "Get Post Thread",
         "description": "Retrieves a thread of posts starting from a specific post within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getPostThread",
+        "operationId": "GetPostThread",
         "consumes": [
           "application/json"
         ],
@@ -2850,7 +2850,7 @@
         ],
         "summary": "Get Posts",
         "description": "Retrieves multiple posts by their unique identifiers within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getPosts",
+        "operationId": "GetPosts",
         "consumes": [
           "application/json"
         ],
@@ -3007,7 +3007,7 @@
         ],
         "summary": "Get Timeline",
         "description": "Retrieves the user's timeline, including posts from followed accounts and relevant content within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getTimeline",
+        "operationId": "GetTimeline",
         "consumes": [
           "application/json"
         ],
@@ -3302,7 +3302,7 @@
         ],
         "summary": "Get Followers",
         "description": "Retrieves a list of users following a specified actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getFollowers",
+        "operationId": "GetFollowers",
         "consumes": [
           "application/json"
         ],
@@ -3389,7 +3389,7 @@
         ],
         "summary": "Get Follows",
         "description": "Retrieves a list of users that a specified actor is following. This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`) and typically requires authentication. For further details, see the  [API Hosts and Auth guide](https://docs.bsky.app/docs/advanced-guides/api-directory).\n",
-        "operationId": "getFollows",
+        "operationId": "GetFollows",
         "parameters": [
           {
             "name": "actor",
@@ -3490,7 +3490,7 @@
         ],
         "summary": "Get List",
         "description": "Retrieves details about a specific list created by an actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getList",
+        "operationId": "GetList",
         "consumes": [
           "application/json"
         ],
@@ -3573,7 +3573,7 @@
         ],
         "summary": "Get List Mutes",
         "description": "Retrieves a list of mutes associated with a specific list within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getListMutes",
+        "operationId": "GetListMutes",
         "consumes": [
           "application/json"
         ],
@@ -3660,7 +3660,7 @@
         ],
         "summary": "Get List Feed",
         "description": "Retrieves a feed for a specific list of users within the Bluesky network. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "getListFeed",
+        "operationId": "GetListFeed",
         "consumes": [
           "application/json"
         ],
@@ -3750,7 +3750,7 @@
         ],
         "summary": "Get Lists",
         "description": "Retrieves all lists created by a specific actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getLists",
+        "operationId": "GetLists",
         "consumes": [
           "application/json"
         ],
@@ -3845,7 +3845,7 @@
         ],
         "summary": "Get Mutes",
         "description": "Retrieves a list of users muted by the authenticated actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getMutes",
+        "operationId": "GetMutes",
         "consumes": [
           "application/json"
         ],
@@ -3924,7 +3924,7 @@
         ],
         "summary": "Search Posts",
         "description": "Searches for posts across the Bluesky network based on a specified query. This endpoint is part of the `app.bsky.feed` namespace and requires authentication.",
-        "operationId": "searchPosts",
+        "operationId": "SearchPosts",
         "consumes": [
           "application/json"
         ],
@@ -4014,7 +4014,7 @@
         ],
         "summary": "Mute Actor",
         "description": "Mutes a specific actor (user) within the Bluesky network, preventing their content from appearing in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "muteActor",
+        "operationId": "MuteActor",
         "consumes": [
           "application/json"
         ],
@@ -4080,7 +4080,7 @@
         ],
         "summary": "Mute Actor List",
         "description": "Mutes a specific list of actors (users) within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "muteActorList",
+        "operationId": "MuteActorList",
         "consumes": [
           "application/json"
         ],
@@ -4146,7 +4146,7 @@
         ],
         "summary": "Unmute Thread",
         "description": "Unmutes a specific thread within the Bluesky network, allowing its content to reappear in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "unmuteThread",
+        "operationId": "UnmuteThread",
         "consumes": [
           "application/json"
         ],
@@ -4212,7 +4212,7 @@
         ],
         "summary": "Unmute Actor",
         "description": "Unmutes a specific actor (user) within the Bluesky network, allowing their content to reappear in the authenticated user's feed. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "unmuteActor",
+        "operationId": "UnmuteActor",
         "consumes": [
           "application/json"
         ],
@@ -4278,7 +4278,7 @@
         ],
         "summary": "Unmute Actor List",
         "description": "Unmutes a specific list of actors (users) within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "unmuteActorList",
+        "operationId": "UnmuteActorList",
         "consumes": [
           "application/json"
         ],
@@ -4344,7 +4344,7 @@
         ],
         "summary": "List Notifications",
         "description": "Retrieves a list of notifications for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
-        "operationId": "listNotifications",
+        "operationId": "ListNotifications",
         "consumes": [
           "application/json"
         ],
@@ -4425,7 +4425,7 @@
         ],
         "summary": "Update Notification Seen",
         "description": "Marks specific notifications as seen for the authenticated user within the Bluesky network. This endpoint is part of the `app.bsky.notification` namespace and requires authentication.",
-        "operationId": "updateNotificationSeen",
+        "operationId": "UpdateNotificationSeen",
         "consumes": [
           "application/json"
         ],
@@ -4494,7 +4494,7 @@
         ],
         "summary": "Delete Account",
         "description": "Permanently deletes an actor's account and all associated data within the Bluesky network. This endpoint is part of the `chat.bsky.actor` namespace and requires authentication.",
-        "operationId": "deleteAccount",
+        "operationId": "DeleteAccount",
         "consumes": [
           "application/json"
         ],
@@ -4537,7 +4537,7 @@
         ],
         "summary": "Export Account Data",
         "description": "Exports all data associated with an actor's account within the Bluesky network. This endpoint is part of the `chat.bsky.actor` namespace and requires authentication.",
-        "operationId": "exportAccountData",
+        "operationId": "ExportAccountData",
         "consumes": [
           "application/json"
         ],
@@ -4580,7 +4580,7 @@
         ],
         "summary": "Delete Message for Self",
         "description": "Deletes a message from a conversation for the authenticated actor only. The message remains visible to other participants. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "deleteMessageForSelf",
+        "operationId": "DeleteMessageForSelf",
         "consumes": [
           "application/json"
         ],
@@ -4638,7 +4638,7 @@
         ],
         "summary": "Get Conversation",
         "description": "Retrieves details of a specific conversation, including participants and metadata, within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "getConvo",
+        "operationId": "GetConvo",
         "consumes": [
           "application/json"
         ],
@@ -4712,7 +4712,7 @@
         ],
         "summary": "Get Conversation for Members",
         "description": "Retrieves details of a conversation shared between specific members within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "getConvoForMembers",
+        "operationId": "GetConvoForMembers",
         "consumes": [
           "application/json"
         ],
@@ -4789,7 +4789,7 @@
         ],
         "summary": "Get Conversation Log",
         "description": "Retrieves the log of a specific conversation, including all messages exchanged, within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "getConvoLog",
+        "operationId": "GetConvoLog",
         "consumes": [
           "application/json"
         ],
@@ -4884,7 +4884,7 @@
         ],
         "summary": "Get Messages",
         "description": "Retrieves messages from a specific conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "getMessages",
+        "operationId": "GetMessages",
         "consumes": [
           "application/json"
         ],
@@ -4979,7 +4979,7 @@
         ],
         "summary": "Leave Conversation",
         "description": "Allows the authenticated user to leave a specific conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "leaveConvo",
+        "operationId": "LeaveConvo",
         "consumes": [
           "application/json"
         ],
@@ -5045,7 +5045,7 @@
         ],
         "summary": "List Conversations",
         "description": "Retrieves a list of conversations for the authenticated user within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "listConvos",
+        "operationId": "ListConvos",
         "consumes": [
           "application/json"
         ],
@@ -5134,7 +5134,7 @@
         ],
         "summary": "Mute Conversation",
         "description": "Mutes a specific conversation for the authenticated user within the Bluesky network. This prevents notifications for the conversation. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "muteConvo",
+        "operationId": "MuteConvo",
         "consumes": [
           "application/json"
         ],
@@ -5200,7 +5200,7 @@
         ],
         "summary": "Send Message",
         "description": "Sends a single message to a specified conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "sendMessage",
+        "operationId": "SendMessage",
         "consumes": [
           "application/json"
         ],
@@ -5270,7 +5270,7 @@
         ],
         "summary": "Send Message Batch",
         "description": "Sends multiple messages to a specified conversation within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "sendMessageBatch",
+        "operationId": "SendMessageBatch",
         "consumes": [
           "application/json"
         ],
@@ -5353,7 +5353,7 @@
         ],
         "summary": "Unmute Conversation",
         "description": "Unmutes a specific conversation for the authenticated user within the Bluesky network. This allows notifications for the conversation. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "unmuteConvo",
+        "operationId": "UnmuteConvo",
         "consumes": [
           "application/json"
         ],
@@ -5419,7 +5419,7 @@
         ],
         "summary": "Update Read Status",
         "description": "Marks a conversation as read up to a specific message for the authenticated user within the Bluesky network. This endpoint is part of the `chat.bsky.convo` namespace and requires authentication.",
-        "operationId": "updateRead",
+        "operationId": "UpdateRead",
         "consumes": [
           "application/json"
         ],
@@ -5489,7 +5489,7 @@
         ],
         "summary": "Get Actor Metadata",
         "description": "Retrieves moderation metadata for a specific actor within the Bluesky network. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
-        "operationId": "getActorMetadata",
+        "operationId": "GetActorMetadata",
         "consumes": [
           "application/json"
         ],
@@ -5551,7 +5551,7 @@
         ],
         "summary": "Get Message Context",
         "description": "Retrieves the context of a specific message, including its surrounding messages, for moderation purposes within the Bluesky network. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
-        "operationId": "getMessageContext",
+        "operationId": "GetMessageContext",
         "consumes": [
           "application/json"
         ],
@@ -5638,7 +5638,7 @@
         ],
         "summary": "Update Actor Access",
         "description": "Updates access permissions for a specific actor within the Bluesky network for moderation purposes. This endpoint is part of the `chat.bsky.moderation` namespace and requires authentication.",
-        "operationId": "updateActorAccess",
+        "operationId": "UpdateActorAccess",
         "consumes": [
           "application/json"
         ],
