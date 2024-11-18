@@ -1,25 +1,52 @@
 {
-  "properties": {
-    "connectionParameters": {
-      "api_key": {
-        "type": "securestring",
-        "uiDefinition": {
-          "displayName": "API Key",
-          "description": "The API Key for the Bluesky API",
-          "tooltip": "Provide your Bluesky API Key",
-          "constraints": {
-            "tabIndex": 2,
-            "clearText": false,
-            "required": "true"
-          }
+  "connectionParameters": {
+    "clientId": {
+      "type": "string",
+      "uiDefinition": {
+        "displayName": "Client ID",
+        "description": "The client ID for your OAuth app.",
+        "tooltip": "Enter the OAuth client ID issued by Bluesky.",
+        "constraints": {
+          "required": "true"
         }
       }
     },
-    "iconBrandColor": "#da3b01",
-    "scriptOperations": [],
-    "capabilities": [],
-    "policyTemplateInstances": [],
-    "publisher": "Dan Romano",
-    "stackOwner": "Bluesky"
-  }
+    "clientSecret": {
+      "type": "securestring",
+      "uiDefinition": {
+        "displayName": "Client Secret",
+        "description": "The client secret for your OAuth app.",
+        "tooltip": "Enter the OAuth app's client secret securely.",
+        "constraints": {
+          "required": "true"
+        }
+      }
+    },
+    "apiKey": {
+      "type": "securestring",
+      "uiDefinition": {
+        "displayName": "API Key",
+        "description": "The API key for accessing Bluesky services.",
+        "tooltip": "Enter your Bluesky API key.",
+        "constraints": {
+          "required": "true"
+        }
+      }
+    }
+  },
+  "policies": [
+    {
+      "name": "AuthenticationPolicy",
+      "type": "Authentication",
+      "parameters": {
+        "authenticationType": "OAuth2",
+        "tokenUrl": "https://auth.bsky.app/oauth2/token",
+        "refreshUrl": "https://auth.bsky.app/oauth2/token",
+        "scopes": [
+          "transition:generic",
+          "transition:chat.bsky"
+        ]
+      }
+    }
+  ]
 }

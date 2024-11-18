@@ -32,6 +32,26 @@
   "schemes": [
     "https"
   ],
+  "securityDefinitions": {
+    "oauth2-auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/token",
+      "scopes": {
+        "transition:generic": "General access to user data and actions",
+        "transition:chat.bsky": "Access to chat features, including direct messages"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2-auth": [
+        "transition:generic",
+        "transition:chat.bsky"
+      ]
+    }
+  ],
   "consumes": [
     "application/json"
   ],
@@ -7384,19 +7404,5 @@
       }
     }
   },
-  "parameters": {},
-  "responses": {},
-  "securityDefinitions": {
-    "accessToken": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "Authorization"
-    }
-  },
-  "security": [
-    {
-      "accessToken": []
-    }
-  ],
   "tags": []
 }
