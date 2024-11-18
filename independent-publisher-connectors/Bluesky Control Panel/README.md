@@ -176,4 +176,25 @@ All other endpoints not listed can be found here (non-app.bsky): https://docs.bs
 
 ### Authentication
 
-- **TBD - In progress
+#### OAuth 2.0
+
+- **The custom connector uses OAuth 2.0 for secure access to the Bluesky API.
+
+- **Token URL: https://auth.bsky.app/oauth2/token
+
+#### Scopes
+
+- **transition:generic: General access to user data and actions.
+- **transition:chat.bsky: Access to chat features, including direct messages.
+
+#### API Key
+
+- **The connector requires an API Key for additional validation in all requests.
+- **Header: X-Api-Key
+- **Description: The Bluesky API Key is generated from your Bluesky account and must be added during connector setup.
+
+#### Headers
+
+- **Every API request includes the following headers:
+- **Authorization: Contains the OAuth 2.0 Bearer token.
+- **X-Api-Key: Contains the Bluesky API key.
