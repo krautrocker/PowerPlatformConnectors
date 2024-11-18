@@ -33,23 +33,15 @@
     "https"
   ],
   "securityDefinitions": {
-    "oauth2-auth": {
-      "type": "oauth2",
-      "flow": "accessCode",
-      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
-      "tokenUrl": "https://login.windows.net/common/oauth2/token",
-      "scopes": {
-        "transition:generic": "General access to user data and actions",
-        "transition:chat.bsky": "Access to chat features, including direct messages"
-      }
+    "api_key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
     }
   },
   "security": [
     {
-      "oauth2-auth": [
-        "transition:generic",
-        "transition:chat.bsky"
-      ]
+      "api_key": []
     }
   ],
   "consumes": [
@@ -75,7 +67,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -194,7 +186,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -759,7 +751,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -846,12 +838,13 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
             "description": "The unique identifier of the actor whose profile is being retrieved.",
-            "x-ms-summary": "Actor ID"
+            "x-ms-summary": "Actor",
+            "x-ms-visibility": "important"
           }
         ],
         "responses": {
@@ -932,7 +925,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -1050,7 +1043,7 @@
                     "type": "object",
                     "description": "An object containing profile details for each actor.",
                     "properties": {
-                      "actorId": {
+                      "actor": {
                         "type": "string",
                         "description": "The unique identifier of the actor."
                       },
@@ -1312,7 +1305,7 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "actorId": {
+                  "actor": {
                     "type": "string",
                     "description": "The unique identifier of the suggested actor."
                   },
@@ -1610,7 +1603,7 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "actorId": {
+                  "actor": {
                     "type": "string",
                     "description": "The unique identifier of the actor."
                   },
@@ -1699,7 +1692,7 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "actorId": {
+                  "actor": {
                     "type": "string",
                     "description": "The unique identifier of the suggested actor."
                   },
@@ -1918,7 +1911,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -2086,7 +2079,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -3156,7 +3149,7 @@
         ],
         "summary": "Get List Blocks",
         "description": "Retrieves a list of blocks associated with a specific list within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getListBlocks",
+        "operationId": "GetListBlocks",
         "consumes": [
           "application/json"
         ],
@@ -3243,7 +3236,7 @@
         ],
         "summary": "Get Blocks",
         "description": "Retrieves a list of users blocked by the authenticated actor within the Bluesky network. This endpoint is part of the `app.bsky.graph` namespace and requires authentication.",
-        "operationId": "getBlocks",
+        "operationId": "GetBlocks",
         "consumes": [
           "application/json"
         ],
@@ -3331,7 +3324,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -3399,7 +3392,8 @@
               "$ref": "#/definitions/ErrorResponse"
             }
           }
-        }
+        },
+        "x-ms-visibility": "important"
       }
     },
     "/app.bsky.graph.getFollows": {
@@ -3779,7 +3773,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -4049,7 +4043,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
+                "actor": {
                   "type": "string",
                   "description": "The unique identifier of the actor to mute."
                 }
@@ -4247,7 +4241,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
+                "actor": {
                   "type": "string",
                   "description": "The unique identifier of the actor to unmute."
                 }
@@ -5518,7 +5512,7 @@
         ],
         "parameters": [
           {
-            "name": "actorId",
+            "name": "actor",
             "in": "query",
             "required": true,
             "type": "string",
@@ -5532,7 +5526,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
+                "actor": {
                   "type": "string",
                   "description": "The unique identifier of the actor."
                 },
@@ -5673,7 +5667,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "actorId": {
+                "actor": {
                   "type": "string",
                   "description": "The unique identifier of the actor whose access is being updated."
                 },
@@ -5792,48 +5786,202 @@
     },
     "/com.atproto.server.createSession": {
       "post": {
-        "summary": "CreateSession",
-        "description": "Authenticates to Bluesky and retrieves session tokens",
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Create Session",
+        "description": "Authenticates to Bluesky and retrieves session tokens.",
         "operationId": "CreateSession",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "default": "application/json",
-            "x-ms-summary": "Content-Type header value",
-            "description": "Content-Type header value"
-          },
           {
             "name": "body",
             "in": "body",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "identifier": {
                   "type": "string",
-                  "description": "identifier"
+                  "description": "The username or email used for authentication.",
+                  "x-ms-summary": "Username",
+                  "x-ms-visibility": "important"
                 },
                 "password": {
                   "type": "string",
-                  "description": "password"
+                  "description": "The API key (password) for authentication.",
+                  "x-ms-summary": "Password",
+                  "x-ms-visibility": "important"
+                },
+                "pdsHost": {
+                  "type": "string",
+                  "description": "The Bluesky host (e.g., bsky.social).",
+                  "x-ms-summary": "Bluesky Host",
+                  "x-ms-visibility": "important",
+                  "title": "Bluesky Host",
+                  "default": "bluesky.social"
                 }
-              }
-            }
+              },
+              "required": [
+                "identifier",
+                "password",
+                "pdsHost"
+              ]
+            },
+            "description": "The credentials required to authenticate to Bluesky."
           }
         ],
         "responses": {
+          "200": {
+            "description": "Successfully authenticated and retrieved session tokens.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessJwt": {
+                  "type": "string",
+                  "description": "The access token for authenticated API calls."
+                },
+                "refreshJwt": {
+                  "type": "string",
+                  "description": "The refresh token for session renewal."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid username or password.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An unexpected error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
           "default": {
-            "description": "Unexpected error"
+            "description": "Unexpected error."
           }
         },
         "x-ms-visibility": "important"
       }
+    },
+    "/com.atproto.server.refreshSession": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Refresh Session",
+        "description": "Refreshes the session tokens using the refresh token.",
+        "operationId": "RefreshSession",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "refreshToken": {
+                  "type": "string",
+                  "description": "The refresh token issued during session creation."
+                }
+              },
+              "required": [
+                "refreshToken"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed the session tokens.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessJwt": {
+                  "type": "string",
+                  "description": "The new access token for authenticated API calls."
+                },
+                "refreshJwt": {
+                  "type": "string",
+                  "description": "The new refresh token for session renewal."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid or expired refresh token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An unexpected error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "CreateSessionRequest": {
+      "type": "object",
+      "required": [
+        "identifier",
+        "password",
+        "pdsHost"
+      ],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "The username or email used for authentication.",
+          "x-ms-summary": "Username",
+          "title": "Username",
+          "x-ms-visibility": "important"
+        },
+        "password": {
+          "type": "string",
+          "description": "The API key (password) for authentication.",
+          "x-ms-summary": "Password",
+          "title": "Password",
+          "x-ms-visibility": "important"
+        },
+        "pdsHost": {
+          "type": "string",
+          "description": "The Bluesky Host (e.g., bsky.social) used for API requests.",
+          "x-ms-summary": "Host",
+          "title": "Host",
+          "x-ms-visibility": "important"
+        }
+      }
+    },
     "ErrorResponse": {
       "type": "object",
       "required": [
@@ -5864,6 +6012,27 @@
         "details": {
           "type": "string",
           "description": "Additional information about the error for debugging purposes."
+        }
+      }
+    },
+    "CreateSessionResponse": {
+      "type": "object",
+      "properties": {
+        "accessJwt": {
+          "type": "string",
+          "description": "The access token for authenticated API calls."
+        },
+        "refreshJwt": {
+          "type": "string",
+          "description": "The refresh token for session renewal."
+        },
+        "handle": {
+          "type": "string",
+          "description": "The handle associated with the authenticated user."
+        },
+        "did": {
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the user."
         }
       }
     },
@@ -6207,7 +6376,11 @@
           },
           "level": {
             "type": "string",
-            "enum": [ "low", "medium", "high" ],
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
             "description": "The level of adult content preference."
           }
         }
@@ -6222,7 +6395,11 @@
         },
         "level": {
           "type": "string",
-          "enum": [ "low", "medium", "high" ],
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
           "description": "The level of adult content preference."
         }
       }

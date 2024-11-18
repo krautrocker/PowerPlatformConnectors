@@ -1,14 +1,16 @@
 # Bluesky API Connector
 
-This custom connector allows Power Platform apps to interact with Bluesky's API, supporting operations for managing feeds, conversations, notifications, video uploads, and account data.
+- **This custom connector allows Power Platform apps to interact with Bluesky's API, supporting operations for managing feeds, conversations, notifications, video uploads, and account data.
 
 ## Supported Endpoints
 
-To use this connector, you will need:
+- **To use this connector, you will need:
 
 - **A Bluesky account.
 - **API access to Bluesky with App Password.
-- **Obtaining Credentials
+
+## Obtaining Credentials
+
 - **Go to the Bluesky Developer Portal.
 - **Register your App Password in Settings.
 
@@ -99,7 +101,7 @@ To use this connector, you will need:
 
 ### How to Use
 
-Each endpoint has specific parameters (such as user IDs, query strings, or result limits) that need to be configured as per the endpoint's requirements.
+- **Each endpoint has specific parameters (such as user IDs, query strings, or result limits) that need to be configured as per the endpoint's requirements.
 
 - **Authenticate: Start by authenticating with your Bluesky credentials.
 - **Choose Endpoint: Select the desired endpoint, such as retrieving a feed or listing notifications.
@@ -115,17 +117,6 @@ Each endpoint has specific parameters (such as user IDs, query strings, or resul
 - **Upload Media: Allow users to upload and manage videos or blobs directly.
 
 ### Authentication
-
-#### OAuth 2.0
-
-- **The custom connector uses OAuth 2.0 for secure access to the Bluesky API.
-
-- **Token URL: https://auth.bsky.app/oauth2/token
-
-#### Scopes
-
-- **transition:generic: General access to user data and actions.
-- **transition:chat.bsky: Access to chat features, including direct messages.
 
 #### API Key
 
