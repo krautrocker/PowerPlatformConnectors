@@ -57,9 +57,17 @@
       }
     }
   ],
-  "authentication": {
-    "type": "apiKey",
-    "name": "Authorization",
-    "in": "header"
-  }
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Provide your Bearer token in the Authorization header."
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
