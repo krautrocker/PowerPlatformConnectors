@@ -22,6 +22,17 @@
         }
       }
     },
+    "accessJwt": {
+      "type": "securestring",
+      "uiDefinition": {
+        "displayName": "Access Token (JWT)",
+        "description": "The Bearer token used for authentication.",
+        "tooltip": "Enter your Bearer token.",
+        "constraints": {
+          "required": "true"
+        }
+      }
+    },
     "pdsHost": {
       "type": "string",
       "uiDefinition": {
@@ -45,5 +56,10 @@
         "x-ms-apimTemplateParameter.existsAction": "override"
       }
     }
-  ]
+  ],
+  "authentication": {
+    "type": "apiKey",
+    "name": "Authorization",
+    "in": "header"
+  }
 }
