@@ -14,6 +14,10 @@ To use this connector, you will need:
 - **Go to the [Bluesky Developer Portal](https://docs.bsky.app).
 - **Register your App Password in Settings.
 
+- **Steps:
+- **Use the CreateSession endpoint to authenticate and retrieve your accessJwt (access token) and refreshJwt (refresh token).	
+- **Use the RefreshSession endpoint when your token expires to retrieve a new accessJwt and refreshJwt.
+
 ## Supported Operations
 
 - **This connector includes the following operations:
@@ -176,25 +180,9 @@ All other endpoints not listed can be found here (non-app.bsky): https://docs.bs
 
 ### Authentication
 
-#### OAuth 2.0
-
-- **The custom connector uses OAuth 2.0 for secure access to the Bluesky API.
-
-- **Token URL: https://auth.bsky.app/oauth2/token
-
-#### Scopes
-
-- **transition:generic: General access to user data and actions.
-- **transition:chat.bsky: Access to chat features, including direct messages.
+- **The connector uses Bearer Authentication. The accessJwt is added automatically to the Authorization header for API calls after session creation.
 
 #### API Key
 
 - **The connector requires an API Key for additional validation in all requests.
-- **Header: X-Api-Key
 - **Description: The Bluesky API Key is generated from your Bluesky account and must be added during connector setup.
-
-#### Headers
-
-- **Every API request includes the following headers:
-- **Authorization: Contains the OAuth 2.0 Bearer token.
-- **X-Api-Key: Contains the Bluesky API key.

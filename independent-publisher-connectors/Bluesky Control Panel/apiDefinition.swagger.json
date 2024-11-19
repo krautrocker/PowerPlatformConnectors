@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Bluesky Social",
+    "title": "Bluesky Control Panel",
     "description": "Specification for the Bluesky Social endpoints",
     "contact": {
       "name": "Dan Romano",
@@ -33,23 +33,15 @@
     "https"
   ],
   "securityDefinitions": {
-    "oauth2-auth": {
-      "type": "oauth2",
-      "flow": "accessCode",
-      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
-      "tokenUrl": "https://login.windows.net/common/oauth2/token",
-      "scopes": {
-        "transition:generic": "General access to user data and actions",
-        "transition:chat.bsky": "Access to chat features, including direct messages"
-      }
+    "api_key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Password"
     }
   },
   "security": [
     {
-      "oauth2-auth": [
-        "transition:generic",
-        "transition:chat.bsky"
-      ]
+      "api_key": []
     }
   ],
   "consumes": [
@@ -761,45 +753,65 @@
           "com.atproto.server"
         ],
         "summary": "Create Session",
-        "description": "Initiates a new user session, providing an authentication token. This endpoint is part of the `atproto.server` namespace and requires authentication.",
+        "description": "Authenticates to Bluesky and retrieves session tokens.",
         "operationId": "CreateSession",
         "consumes": [
           "application/json"
         ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "sessionDetails",
+            "name": "body",
             "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "identifier": {
                   "type": "string",
-                  "description": "Username for the session."
+                  "description": "The username or email used for authentication.",
+                  "x-ms-summary": "Username",
+                  "x-ms-visibility": "important"
                 },
                 "password": {
                   "type": "string",
-                  "description": "Password for the session."
+                  "description": "The API key (password) for authentication.",
+                  "x-ms-summary": "Password",
+                  "x-ms-visibility": "important"
+                },
+                "pdsHost": {
+                  "type": "string",
+                  "description": "The Bluesky host (e.g., bsky.social).",
+                  "x-ms-summary": "Bluesky Host",
+                  "x-ms-visibility": "important",
+                  "title": "Bluesky Host",
+                  "default": "bluesky.social"
                 }
-              }
+              },
+              "required": [
+                "identifier",
+                "password",
+                "pdsHost"
+              ]
             },
-            "x-ms-summary": "Session details"
+            "description": "The credentials required to authenticate to Bluesky."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully created the session.",
+            "description": "Successfully authenticated and retrieved session tokens.",
             "schema": {
               "type": "object",
               "properties": {
-                "authToken": {
+                "accessJwt": {
                   "type": "string",
-                  "description": "The generated authentication token for the session."
+                  "description": "The access token for authenticated API calls."
                 },
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates if the session was successfully created."
+                "refreshJwt": {
+                  "type": "string",
+                  "description": "The refresh token for session renewal."
                 }
               }
             }
@@ -811,12 +823,22 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized - Invalid username or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "500": {
+            "description": "Internal Server Error - An unexpected error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error."
           }
-        }
+        },
+        "x-ms-visibility": "important"
       }
     },
     "/com.atproto.server.deactivateAccount": {
@@ -1550,40 +1572,71 @@
           "com.atproto.server"
         ],
         "summary": "Refresh Session",
-        "description": "Refreshes the current session, extending the authentication validity period. This endpoint is part of the `atproto.server` namespace and requires authentication.",
+        "description": "Refreshes the session tokens using the refresh token. This allows you to obtain a new access token and refresh token without re-authenticating.\n",
         "operationId": "RefreshSession",
-        "parameters": [
+        "consumes": [
+          "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "Successfully refreshed the session.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "authToken": {
+                "refreshToken": {
                   "type": "string",
-                  "description": "The new authentication token for the refreshed session."
+                  "description": "The refresh token issued during session creation. This token is used to obtain a new access token and refresh token.\n",
+                  "x-ms-summary": "Refresh Token"
+                }
+              },
+              "required": [
+                "refreshToken"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed the session tokens.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessJwt": {
+                  "type": "string",
+                  "description": "The new access token for authenticated API calls."
                 },
-                "expiresIn": {
-                  "type": "integer",
-                  "description": "Expiration time of the authentication token in seconds."
+                "refreshJwt": {
+                  "type": "string",
+                  "description": "The new refresh token for session renewal."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request - Invalid or expired refresh token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized - Missing or invalid authentication.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An unexpected error occurred.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           }
-        }
+        },
+        "x-ms-visibility": "important"
       }
     },
     "/com.atproto.server.requestAccountDelete": {

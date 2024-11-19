@@ -1,51 +1,48 @@
 {
   "connectionParameters": {
-    "clientId": {
+    "identifier": {
       "type": "string",
       "uiDefinition": {
-        "displayName": "Client ID",
-        "description": "The client ID for your OAuth app.",
-        "tooltip": "Enter the OAuth client ID issued by Bluesky.",
+        "displayName": "Bluesky Username",
+        "description": "The username or email used for authentication.",
+        "tooltip": "Enter your Bluesky username or email.",
         "constraints": {
           "required": "true"
         }
       }
     },
-    "clientSecret": {
+    "password": {
       "type": "securestring",
       "uiDefinition": {
-        "displayName": "Client Secret",
-        "description": "The client secret for your OAuth app.",
-        "tooltip": "Enter the OAuth app's client secret securely.",
+        "displayName": "Bluesky Password",
+        "description": "The password or API key for authentication.",
+        "tooltip": "Enter your Bluesky password or app password.",
         "constraints": {
           "required": "true"
         }
       }
     },
-    "apiKey": {
-      "type": "securestring",
+    "pdsHost": {
+      "type": "string",
       "uiDefinition": {
-        "displayName": "API Key",
-        "description": "The API key for accessing Bluesky services.",
-        "tooltip": "Enter your Bluesky API key.",
+        "displayName": "Bluesky Host",
+        "description": "The Bluesky server host (e.g., bsky.social).",
+        "tooltip": "Enter the Bluesky host. Default: bsky.social",
+        "default": "bsky.social",
         "constraints": {
-          "required": "true"
+          "required": "false"
         }
       }
     }
   },
-  "policies": [
+  "policyTemplateInstances": [
     {
-      "name": "AuthenticationPolicy",
-      "type": "Authentication",
+      "templateId": "setheader",
+      "title": "Add Authorization Header",
       "parameters": {
-        "authenticationType": "OAuth2",
-        "tokenUrl": "https://auth.bsky.app/oauth2/token",
-        "refreshUrl": "https://auth.bsky.app/oauth2/token",
-        "scopes": [
-          "transition:generic",
-          "transition:chat.bsky"
-        ]
+        "x-ms-apimTemplateParameter.name": "Authorization",
+        "x-ms-apimTemplateParameter.value": "Bearer @connectionParameters('accessJwt')",
+        "x-ms-apimTemplateParameter.existsAction": "override"
       }
     }
   ]
