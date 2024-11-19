@@ -33,15 +33,15 @@
     "https"
   ],
   "securityDefinitions": {
-    "api_key": {
+    "bearerAuth": {
       "type": "apiKey",
-      "in": "header",
-      "name": "Password"
+      "name": "Authorization",
+      "in": "header"
     }
   },
   "security": [
     {
-      "api_key": []
+      "bearerAuth": []
     }
   ],
   "consumes": [
