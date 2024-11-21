@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bluesky Social",
-    "description": "Specification for the Bluesky Social endpoints",
+    "description": "Specification for the Bluesky Social endpoints. Includes endpoints for social interaction, admin, chat, ATProto, and ozone.",
     "contact": {
       "name": "Dan Romano",
       "email": "dan.romano@swolcat.com"
@@ -347,6 +347,12 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
@@ -402,6 +408,12 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
@@ -453,6 +465,12 @@
                   }
                 }
               }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "400": {
@@ -536,6 +554,12 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
@@ -615,6 +639,12 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
@@ -692,6 +722,12 @@
                   }
                 }
               }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "400": {
@@ -776,6 +812,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -834,6 +876,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -903,6 +951,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -978,6 +1032,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1039,6 +1099,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1122,6 +1188,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1184,6 +1256,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1237,6 +1315,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1304,6 +1388,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1365,6 +1455,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1433,6 +1529,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1496,6 +1598,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1556,6 +1664,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1634,6 +1748,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1696,6 +1816,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1748,6 +1874,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1814,6 +1946,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1877,6 +2015,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -1937,6 +2081,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2004,6 +2154,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2065,6 +2221,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2133,6 +2295,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2212,6 +2380,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2264,6 +2438,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2323,6 +2503,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2372,6 +2558,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2442,6 +2634,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2505,6 +2703,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2557,6 +2761,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2615,6 +2825,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2667,6 +2883,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2725,6 +2947,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2777,6 +3005,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2835,6 +3069,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2884,6 +3124,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -2916,6 +3162,12 @@
           },
           "400": {
             "description": "Bad Request - Unable to retrieve unread count.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -2992,6 +3244,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3048,6 +3306,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3111,6 +3375,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3167,6 +3437,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3216,6 +3492,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3253,6 +3535,12 @@
           },
           "400": {
             "description": "Bad Request - Unable to retrieve upload limits.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3324,6 +3612,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3379,6 +3673,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3411,6 +3711,12 @@
           },
           "400": {
             "description": "Bad Request - Unable to export account data.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3466,6 +3772,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3557,6 +3869,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3645,6 +3963,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3722,6 +4046,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid conversation ID or input.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3805,6 +4135,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3857,6 +4193,12 @@
           },
           "400": {
             "description": "Invalid request or conversation ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -3946,6 +4288,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -3998,6 +4346,12 @@
           },
           "400": {
             "description": "Invalid request or conversation ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -4058,6 +4412,12 @@
           },
           "400": {
             "description": "Invalid request or conversation ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -4126,6 +4486,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4183,6 +4549,12 @@
           },
           "400": {
             "description": "Bad Request - Invalid or expired refresh token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -4255,6 +4627,12 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -4307,6 +4685,12 @@
           },
           "400": {
             "description": "Invalid request or conversation ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -4367,6 +4751,2861 @@
           },
           "400": {
             "description": "Invalid request or conversation ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/chat.bsky.moderation.getActorMetadata": {
+      "get": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Get Actor Metadata",
+        "description": "Retrieve metadata about a specific actor (user) for moderation purposes.\n",
+        "operationId": "GetActorMetadata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "query",
+            "description": "The DID or handle of the actor whose metadata is being fetched.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Actor Handle or DID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved actor metadata.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "type": "object",
+                  "description": "Metadata associated with the actor.",
+                  "properties": {
+                    "reputation": {
+                      "type": "string",
+                      "description": "The reputation of the actor.",
+                      "example": "good"
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "description": "List of warnings or infractions related to the actor.",
+                      "items": {
+                        "type": "string",
+                        "example": "Spam reported on 2023-11-19"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid actor identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/chat.bsky.moderation.getMessageContext": {
+      "get": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Get Message Context",
+        "description": "Retrieve the context of a specific message for moderation purposes, such as messages sent before and after it.\n",
+        "operationId": "GetMessageContext",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "description": "The unique identifier of the message to retrieve context for.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the message context.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "before": {
+                  "type": "array",
+                  "description": "Messages sent before the specified message.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Message ID.",
+                        "example": "msg123"
+                      },
+                      "text": {
+                        "type": "string",
+                        "description": "Message content.",
+                        "example": "What are you up to?"
+                      }
+                    }
+                  }
+                },
+                "after": {
+                  "type": "array",
+                  "description": "Messages sent after the specified message.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Message ID.",
+                        "example": "msg125"
+                      },
+                      "text": {
+                        "type": "string",
+                        "description": "Message content.",
+                        "example": "Let's catch up soon!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid message ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/chat.bsky.moderation.updateActorAccess": {
+      "post": {
+        "tags": [
+          "chat.bsky.moderation"
+        ],
+        "summary": "Update Actor Access",
+        "description": "Update the access permissions or restrictions for a specific actor (user) as part of moderation actions.\n",
+        "operationId": "UpdateActorAccess",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the access update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actor": {
+                  "type": "string",
+                  "description": "The DID or handle of the actor whose access is being updated.",
+                  "example": "did:plc:xyz123"
+                },
+                "accessLevel": {
+                  "type": "string",
+                  "description": "The new access level for the actor.",
+                  "example": "restricted"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated actor access.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid actor identifier or access level.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.deleteAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Delete Account",
+        "description": "Permanently delete an account, including all associated data. This action is irreversible.\n",
+        "operationId": "AdminDeleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account to delete.",
+                  "example": "account123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the account.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.disableAccountInvites": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Disable Account Invites",
+        "description": "Disable account invites for a specific user, preventing them from inviting others.\n",
+        "operationId": "DisableAccountInvites",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the user whose invites are being disabled.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully disabled account invites.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.disableInviteCodes": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Disable Invite Codes",
+        "description": "Disable specific invite codes to prevent further usage. This action is useful for invalidating compromised or misused codes.\n",
+        "operationId": "DisableInviteCodes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the invite codes to disable.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCodes": {
+                  "type": "array",
+                  "description": "A list of invite codes to disable.",
+                  "items": {
+                    "type": "string",
+                    "example": "ABC123"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully disabled the invite codes.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid or already disabled invite codes.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.enableAccountInvites": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Enable Account Invites",
+        "description": "Re-enable invite privileges for a specific account, allowing the user to issue new invite codes.\n",
+        "operationId": "EnableAccountInvites",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account whose invite privileges are being enabled.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully enabled account invites.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid or already enabled account ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.getAccountInfo": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Get Account Info",
+        "description": "Retrieve detailed information about a specific account, including metadata and activity status.\n",
+        "operationId": "GetAccountInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "The unique identifier of the account.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Account ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account": {
+                  "type": "object",
+                  "description": "Detailed information about the account.",
+                  "properties": {
+                    "accountId": {
+                      "type": "string",
+                      "description": "The unique identifier of the account.",
+                      "example": "account123"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The email associated with the account.",
+                      "example": "user@example.com"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The current status of the account.",
+                      "example": "active"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.getAccountInfos": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Get Account Infos",
+        "description": "Retrieve a list of accounts with their details, including pagination for larger datasets.\n",
+        "operationId": "GetAccountInfos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of accounts to retrieve.",
+            "required": false,
+            "type": "integer",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A pagination cursor for navigating accounts.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "A list of account details.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "The unique identifier of the account.",
+                        "example": "account123"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "The email associated with the account.",
+                        "example": "user@example.com"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The current status of the account.",
+                        "example": "active"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input or pagination cursor.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.getInviteCodes": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Get Invite Codes",
+        "description": "Retrieve a list of all active or disabled invite codes. Supports pagination for larger datasets.\n",
+        "operationId": "GetInviteCodes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of invite codes to retrieve.",
+            "required": false,
+            "type": "integer",
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A pagination cursor for navigating invite codes.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved invite codes.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCodes": {
+                  "type": "array",
+                  "description": "A list of invite codes.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "The invite code.",
+                        "example": "ABC123"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The status of the invite code (e.g., active, disabled).",
+                        "example": "active"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input or pagination cursor.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.getSubjectStatus": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Get Subject Status",
+        "description": "Retrieve the status of a specific subject (e.g., an account or actor), including moderation and activity details.\n",
+        "operationId": "GetSubjectStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subjectId",
+            "in": "query",
+            "description": "The unique identifier (e.g., DID or handle) of the subject to retrieve the status for.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Subject ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved subject status.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "The current status of the subject.",
+                  "example": "active"
+                },
+                "moderation": {
+                  "type": "object",
+                  "description": "Moderation details for the subject.",
+                  "properties": {
+                    "warnings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Spam activity detected."
+                      }
+                    },
+                    "actions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Restricted for policy violation."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid subject ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.searchAccounts": {
+      "get": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Search Accounts",
+        "description": "Search for accounts using specific query parameters, such as email, handle, or other identifiers.\n",
+        "operationId": "SearchAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The search query to match against account properties.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Search Query"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to retrieve.",
+            "required": false,
+            "type": "integer",
+            "x-ms-summary": "Result Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A pagination cursor for navigating the results.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account search results.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "A list of accounts matching the query.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "The unique identifier of the account.",
+                        "example": "account123"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "The email associated with the account.",
+                        "example": "user@example.com"
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "The handle of the account.",
+                        "example": "johndoe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query or parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.sendEmail": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Send Email",
+        "description": "Send an email to a specific account or group of accounts. This can be used for notifications or administrative purposes.\n",
+        "operationId": "SendEmail",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the email to send.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "to": {
+                  "type": "string",
+                  "description": "The email address or identifier of the recipient.",
+                  "example": "user@example.com"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "The subject line of the email.",
+                  "example": "Account Update Notification"
+                },
+                "body": {
+                  "type": "string",
+                  "description": "The content of the email.",
+                  "example": "Your account has been updated successfully."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully sent the email.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid email details or parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.updateAccountEmail": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Update Account Email",
+        "description": "Update the email address associated with a specific account.\n",
+        "operationId": "UpdateAccountEmail",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account and the new email address.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                },
+                "newEmail": {
+                  "type": "string",
+                  "description": "The new email address for the account.",
+                  "example": "newuser@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the account email.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier or email.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.updateAccountHandle": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Update Account Handle",
+        "description": "Update the handle associated with a specific account.\n",
+        "operationId": "UpdateAccountHandle",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account and the new handle.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                },
+                "newHandle": {
+                  "type": "string",
+                  "description": "The new handle for the account.",
+                  "example": "newhandle"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the account handle.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier or handle.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.updateAccountPassword": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Update Account Password",
+        "description": "Update the password for a specific account. This operation should only be performed with proper authorization.\n",
+        "operationId": "UpdateAccountPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account and the new password.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                },
+                "newPassword": {
+                  "type": "string",
+                  "description": "The new password for the account.",
+                  "example": "newSecurePassword123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the account password.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier or password.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.admin.updateSubjectStatus": {
+      "post": {
+        "tags": [
+          "com.atproto.admin"
+        ],
+        "summary": "Update Subject Status",
+        "description": "Update the status of a specific subject (e.g., account or actor) for administrative or moderation purposes.\n",
+        "operationId": "UpdateSubjectStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the subject and the new status.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subjectId": {
+                  "type": "string",
+                  "description": "The unique identifier of the subject.",
+                  "example": "did:plc:xyz123"
+                },
+                "newStatus": {
+                  "type": "string",
+                  "description": "The new status for the subject (e.g., active, restricted).",
+                  "example": "restricted"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the subject status.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid subject identifier or status.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.getRecommendedDidCredentials": {
+      "get": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Get Recommended DID Credentials",
+        "description": "Retrieve a list of recommended DID credentials for an identity. Useful for validating or enhancing account security.\n",
+        "operationId": "GetRecommendedDidCredentials",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved recommended DID credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "type": "array",
+                  "description": "A list of recommended DID credentials.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "The DID credential.",
+                        "example": "did:plc:xyz123"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve credentials.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.requestPlcOperationSignature": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Request PLC Operation Signature",
+        "description": "Request a signature for a PLC operation to validate or authenticate actions.\n",
+        "operationId": "RequestPlcOperationSignature",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the PLC operation to sign.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "operationDetails": {
+                  "type": "object",
+                  "description": "Details of the operation to sign.",
+                  "example": {
+                    "type": "update",
+                    "did": "did:plc:xyz123"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully generated a PLC operation signature.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "signature": {
+                  "type": "string",
+                  "description": "The generated signature for the PLC operation.",
+                  "example": "abc123signaturexyz"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to generate signature.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.resolveHandle": {
+      "get": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Resolve Handle",
+        "description": "Resolve a handle to its corresponding DID for account identification purposes.\n",
+        "operationId": "ResolveHandle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "handle",
+            "in": "query",
+            "description": "The handle to resolve into a DID.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Handle"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully resolved the handle.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "did": {
+                  "type": "string",
+                  "description": "The DID corresponding to the handle.",
+                  "example": "did:plc:xyz123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid or unresolved handle.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.signPlcOperation": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Sign PLC Operation",
+        "description": "Sign a PLC operation for authentication or validation. This operation ensures that the PLC operation is authorized and trusted.\n",
+        "operationId": "SignPlcOperation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the PLC operation to be signed.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "operationDetails": {
+                  "type": "object",
+                  "description": "The details of the PLC operation.",
+                  "example": {
+                    "type": "create",
+                    "did": "did:plc:xyz123",
+                    "metadata": {}
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully signed the PLC operation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "signature": {
+                  "type": "string",
+                  "description": "The signature of the PLC operation.",
+                  "example": "abc123signaturexyz"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to sign the PLC operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.submitPlcOperation": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Submit PLC Operation",
+        "description": "Submit a PLC operation to the network. This operation is used to apply changes or register new operations in the PLC system.\n",
+        "operationId": "SubmitPlcOperation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the PLC operation to submit.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "operationDetails": {
+                  "type": "object",
+                  "description": "The details of the PLC operation.",
+                  "example": {
+                    "type": "update",
+                    "did": "did:plc:xyz123",
+                    "metadata": {}
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully submitted the PLC operation.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates that the PLC operation was successfully submitted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to submit the PLC operation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.updateHandle": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "Update Handle",
+        "description": "Update the handle associated with a specific DID. This operation allows changing an account's publicly visible handle.\n",
+        "operationId": "UpdateHandle",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the DID and the new handle.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "did": {
+                  "type": "string",
+                  "description": "The DID associated with the handle to update.",
+                  "example": "did:plc:xyz123"
+                },
+                "newHandle": {
+                  "type": "string",
+                  "description": "The new handle to associate with the DID.",
+                  "example": "newhandle"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the handle.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates that the handle was successfully updated.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid DID or handle.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.label.queryLabels": {
+      "get": {
+        "tags": [
+          "com.atproto.label"
+        ],
+        "summary": "Query Labels",
+        "description": "Query the labels associated with specific content or entities. This operation is useful for moderation or content filtering.\n",
+        "operationId": "QueryLabels",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subjectId",
+            "in": "query",
+            "description": "The identifier of the subject (e.g., post or user) to query labels for.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Subject ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of labels to retrieve.",
+            "required": false,
+            "type": "integer",
+            "x-ms-summary": "Result Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A pagination cursor for navigating the labels.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved labels.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "labels": {
+                  "type": "array",
+                  "description": "A list of labels associated with the subject.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "labelId": {
+                        "type": "string",
+                        "description": "The unique identifier of the label.",
+                        "example": "label123"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The type of label (e.g., spam, offensive).",
+                        "example": "spam"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input or query.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.moderation.createReport": {
+      "post": {
+        "tags": [
+          "com.atproto.moderation"
+        ],
+        "summary": "Create Report",
+        "description": "Create a report for moderation purposes, such as flagging inappropriate content or behavior.\n",
+        "operationId": "CreateReport",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the report to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subjectId": {
+                  "type": "string",
+                  "description": "The identifier of the subject being reported.",
+                  "example": "did:plc:xyz123"
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "The reason for the report.",
+                  "example": "Spam content"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created the report.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reportId": {
+                  "type": "string",
+                  "description": "The unique identifier of the created report.",
+                  "example": "report123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid report details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.applyWrites": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Apply Writes",
+        "description": "Apply a set of writes (create, update, delete) to the repository in a single operation.\n",
+        "operationId": "ApplyWrites",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The list of writes to apply to the repository.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "writes": {
+                  "type": "array",
+                  "description": "A list of write operations to apply.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "operation": {
+                        "type": "string",
+                        "description": "The type of operation (e.g., create, update, delete).",
+                        "example": "create"
+                      },
+                      "record": {
+                        "type": "object",
+                        "description": "The record to apply the operation to."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Writes successfully applied to the repository.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates that the writes were applied successfully.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid write operations.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.createRecord": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Create Record",
+        "description": "Create a new record in the repository.\n",
+        "operationId": "CreateRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The details of the record to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "string",
+                  "description": "The name of the collection to create the record in.",
+                  "example": "posts"
+                },
+                "record": {
+                  "type": "object",
+                  "description": "The content of the record.",
+                  "example": {
+                    "content": "Hello World"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recordId": {
+                  "type": "string",
+                  "description": "The unique identifier of the created record.",
+                  "example": "record123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.deleteRecord": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Delete Record",
+        "description": "Delete a record from the repository.\n",
+        "operationId": "DeleteRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "The identifier of the record to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "string",
+                  "description": "The name of the collection containing the record.",
+                  "example": "posts"
+                },
+                "recordId": {
+                  "type": "string",
+                  "description": "The unique identifier of the record to delete.",
+                  "example": "record123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates that the record was successfully deleted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.describeRepo": {
+      "get": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Describe Repository",
+        "description": "Retrieve metadata about the repository, including collections and configurations.\n",
+        "operationId": "DescribeRepo",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved repository metadata.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collections": {
+                  "type": "array",
+                  "description": "List of collections in the repository.",
+                  "items": {
+                    "type": "string",
+                    "example": "posts"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repository details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.importRepo": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Import Repository",
+        "description": "Import an existing repository into the current system. This operation is used for migrating data.\n",
+        "operationId": "ImportRepo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the repository to import.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repoUrl": {
+                  "type": "string",
+                  "description": "The URL of the repository to import.",
+                  "example": "https://repo.example.com"
+                },
+                "credentials": {
+                  "type": "object",
+                  "description": "Credentials for accessing the repository.",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "description": "Username for repository access."
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Password for repository access."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Repository successfully imported.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful import operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.listMissingBlobs": {
+      "get": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "List Missing Blobs",
+        "description": "Retrieve a list of blobs missing from the repository. This is useful for synchronization or recovery operations.\n",
+        "operationId": "ListMissingBlobs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository to check.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of missing blobs.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "missingBlobs": {
+                  "type": "array",
+                  "description": "A list of missing blob identifiers.",
+                  "items": {
+                    "type": "string",
+                    "example": "blob123"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.listRecords": {
+      "get": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "List Records",
+        "description": "Retrieve a list of records from a specific collection in the repository.\n",
+        "operationId": "ListRecords",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "collection",
+            "in": "query",
+            "description": "The name of the collection to list records from.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Collection Name"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of records to retrieve.",
+            "required": false,
+            "type": "integer",
+            "x-ms-summary": "Result Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A pagination cursor for navigating the records.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of records.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "records": {
+                  "type": "array",
+                  "description": "A list of records from the collection.",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid collection name or parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.putRecord": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Update or Replace Record",
+        "description": "Update or replace an existing record in the repository.\n",
+        "operationId": "PutRecord",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the record to update or replace.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "string",
+                  "description": "The name of the collection containing the record.",
+                  "example": "posts"
+                },
+                "recordId": {
+                  "type": "string",
+                  "description": "The unique identifier of the record.",
+                  "example": "record123"
+                },
+                "record": {
+                  "type": "object",
+                  "description": "The new content of the record.",
+                  "example": {
+                    "content": "Updated Content"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record successfully updated or replaced.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful operation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.uploadBlob": {
+      "post": {
+        "tags": [
+          "com.atproto.repo"
+        ],
+        "summary": "Upload Blob",
+        "description": "Upload a blob to the repository. This is typically used for adding media or large binary data.\n",
+        "operationId": "UploadBlob",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "The blob file to upload.",
+            "required": true,
+            "type": "file",
+            "x-ms-summary": "Blob File"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blob successfully uploaded.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blobId": {
+                  "type": "string",
+                  "description": "The unique identifier of the uploaded blob.",
+                  "example": "blob123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to upload blob.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.activateAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Activate Account",
+        "description": "Activate a user account after registration or reactivation. Requires a valid activation token.\n",
+        "operationId": "ActivateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account activation request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "The activation token.",
+                  "example": "activationToken123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account successfully activated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful activation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid token or account status.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.checkAccountStatus": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Check Account Status",
+        "description": "Check the status of a specific account, such as active, pending, or deactivated.\n",
+        "operationId": "CheckAccountStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "The unique identifier of the account.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Account ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account status.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "The current status of the account.",
+                  "example": "active"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.confirmEmail": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Confirm Email",
+        "description": "Confirm the email address of a user account during registration or update.\n",
+        "operationId": "ConfirmEmail",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the email confirmation request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "The email address to confirm.",
+                  "example": "user@example.com"
+                },
+                "token": {
+                  "type": "string",
+                  "description": "The confirmation token.",
+                  "example": "emailToken123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email successfully confirmed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful email confirmation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid email or token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.createAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Create Account",
+        "description": "Register a new user account with the specified details.\n",
+        "operationId": "CreateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "The email address for the new account.",
+                  "example": "user@example.com"
+                },
+                "handle": {
+                  "type": "string",
+                  "description": "The desired handle for the account.",
+                  "example": "newhandle"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "The password for the account.",
+                  "example": "SecurePassword123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the new account.",
+                  "example": "account123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.createAppPassword": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Create App Password",
+        "description": "Generate a new application-specific password for a user account.\n",
+        "operationId": "CreateAppPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the app password to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name or purpose of the app password.",
+                  "example": "MyApp"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "App password successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appPassword": {
+                  "type": "string",
+                  "description": "The generated app password.",
+                  "example": "securePassword123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid request details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.createInviteCode": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Create Invite Code",
+        "description": "Generate a single-use invite code to allow new user registrations.\n",
+        "operationId": "CreateInviteCode",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the invite code to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "useLimit": {
+                  "type": "integer",
+                  "description": "The number of times this invite code can be used.",
+                  "example": 1
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invite code successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCode": {
+                  "type": "string",
+                  "description": "The generated invite code.",
+                  "example": "INVITE123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid invite code details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.createInviteCodes": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Create Multiple Invite Codes",
+        "description": "Generate multiple invite codes for user registrations.\n",
+        "operationId": "CreateInviteCodes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the invite codes to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "description": "The number of invite codes to generate.",
+                  "example": 5
+                },
+                "useLimit": {
+                  "type": "integer",
+                  "description": "The number of uses allowed per invite code.",
+                  "example": 1
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invite codes successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCodes": {
+                  "type": "array",
+                  "description": "A list of generated invite codes.",
+                  "items": {
+                    "type": "string",
+                    "example": "INVITE123"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid request details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.deactivateAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Deactivate Account",
+        "description": "Deactivate a user account, preventing further access until reactivation.\n",
+        "operationId": "DeactivateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account to deactivate.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account successfully deactivated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful account deactivation.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.deleteAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Delete Account",
+        "description": "Permanently delete a user account and all associated data. Use with caution.\n",
+        "operationId": "ATProtoDeleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the account to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accountId": {
+                  "type": "string",
+                  "description": "The unique identifier of the account.",
+                  "example": "account123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful account deletion.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.deleteSession": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Delete Session",
+        "description": "Log out the current session by invalidating the active token.\n",
+        "operationId": "DeleteSession",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Session successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates successful session termination.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid session or token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
