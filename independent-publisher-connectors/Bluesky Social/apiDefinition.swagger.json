@@ -57,7 +57,7 @@
           "app.bsky.actor"
         ],
         "summary": "Get Preferences for Current Account",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nGet private preferences attached to the current account. Expected use is \nsynchronization between multiple devices and import/export during account migration. Requires authentication.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). Public endpoints which don't require authentication can be made directly against the public Bluesky AppView API: https://public.api.bsky.app.  Authenticated requests are usually made to the user's PDS, with automatic service proxying. Authenticated requests can be used for both public and non-public endpoints.* *To learn more about calling atproto API endpoints like this one, see the Get private preferences attached to the current account. Expected use is synchronization between multiple devices and import/export during account migration. Requires authentication.\n",
         "operationId": "GetPreferences",
         "produces": [
           "application/json"
@@ -98,7 +98,7 @@
           "app.bsky.actor"
         ],
         "summary": "Get Detailed Profile of an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nGet a detailed profile view of an actor. This endpoint does not require authentication, \nbut the metadata returned will depend on whether the request is authenticated.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nGet a detailed profile view of an actor. This endpoint does not require authentication, \nbut the metadata returned will depend on whether the request is authenticated.\n",
         "operationId": "GetProfile",
         "produces": [
           "application/json"
@@ -141,7 +141,7 @@
           "app.bsky.actor"
         ],
         "summary": "Get Detailed Profiles of Multiple Actors",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches detailed profile views for multiple actors. This endpoint supports \nbatch retrieval of profiles based on identifiers.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches detailed profile views for multiple actors. This endpoint supports \nbatch retrieval of profiles based on identifiers.\n",
         "operationId": "GetProfiles",
         "produces": [
           "application/json"
@@ -196,7 +196,7 @@
           "app.bsky.actor"
         ],
         "summary": "Get Suggestions for Actors",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches suggested profiles for the authenticated user or general suggestions \nwhen unauthenticated. Suggestions are based on mutual follows or other platform-specific logic.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches suggested profiles for the authenticated user or general suggestions \nwhen unauthenticated. Suggestions are based on mutual follows or other platform-specific logic.\n",
         "operationId": "GetSuggestions",
         "produces": [
           "application/json"
@@ -252,7 +252,7 @@
           "app.bsky.actor"
         ],
         "summary": "Update Preferences for Current Account",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUpdate preferences for the current account. Requires authentication.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUpdate preferences for the current account. Requires authentication.\n",
         "operationId": "PutPreferences",
         "consumes": [
           "application/json"
@@ -307,7 +307,7 @@
           "app.bsky.actor"
         ],
         "summary": "Search for Actors",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSearch for actors (users) on the platform based on a query string. \nAuthentication can improve search relevance but is not required.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSearch for actors (users) on the platform based on a query string. \nAuthentication can improve search relevance but is not required.\n",
         "operationId": "SearchActors",
         "produces": [
           "application/json"
@@ -368,7 +368,7 @@
           "app.bsky.actor"
         ],
         "summary": "Search Actors for Typeahead",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nPerform a lightweight search for actors to support typeahead functionality. \nReturns minimal actor details for quick lookups.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nPerform a lightweight search for actors to support typeahead functionality. \nReturns minimal actor details for quick lookups.\n",
         "operationId": "SearchActorsTypeahead",
         "produces": [
           "application/json"
@@ -429,7 +429,7 @@
           "app.bsky.feed"
         ],
         "summary": "Describe Feed Generator",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nProvides metadata about the feed generator, including supported feed formats \nand other configuration details. No authentication is required.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nProvides metadata about the feed generator, including supported feed formats \nand other configuration details. No authentication is required.\n",
         "operationId": "DescribeFeedGenerator",
         "produces": [
           "application/json"
@@ -488,7 +488,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feeds for an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches a list of feeds created by a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches a list of feeds created by a specific actor.\n",
         "operationId": "GetActorFeeds",
         "produces": [
           "application/json"
@@ -575,7 +575,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Liked Posts by an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches posts that have been liked by a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches posts that have been liked by a specific actor.\n",
         "operationId": "GetActorLikes",
         "produces": [
           "application/json"
@@ -660,7 +660,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts by an Author",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches posts created by a specific author.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nFetches posts created by a specific author.\n",
         "operationId": "GetAuthorFeed",
         "produces": [
           "application/json"
@@ -745,7 +745,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed for a Specific URI",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the contents of a specific feed based on its URI.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the contents of a specific feed based on its URI.\n",
         "operationId": "GetFeed",
         "produces": [
           "application/json"
@@ -828,7 +828,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Metadata for a Feed Generator",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve metadata for a specific feed generator.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve metadata for a specific feed generator.\n",
         "operationId": "GetFeedGenerator",
         "produces": [
           "application/json"
@@ -895,7 +895,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Metadata for Multiple Feed Generators",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve metadata for multiple feed generators based on their URIs.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve metadata for multiple feed generators based on their URIs.\n",
         "operationId": "GetFeedGenerators",
         "produces": [
           "application/json"
@@ -970,7 +970,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Skeleton Feed",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieves a skeleton feed, typically used for pre-rendering or optimization.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieves a skeleton feed, typically used for pre-rendering or optimization.\n",
         "operationId": "GetFeedSkeleton",
         "produces": [
           "application/json"
@@ -1048,7 +1048,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Likes for a Post",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieves a list of actors who have liked a specific post.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieves a list of actors who have liked a specific post.\n",
         "operationId": "GetLikes",
         "produces": [
           "application/json"
@@ -1118,7 +1118,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed for a List",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the feed for a specific list of actors.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the feed for a specific list of actors.\n",
         "operationId": "GetListFeed",
         "produces": [
           "application/json"
@@ -1204,7 +1204,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts by URIs",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve posts specified by their URIs.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve posts specified by their URIs.\n",
         "operationId": "GetPosts",
         "produces": [
           "application/json"
@@ -1272,7 +1272,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Thread for a Post",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the thread for a specific post, including replies and related posts.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the thread for a specific post, including replies and related posts.\n",
         "operationId": "GetPostThread",
         "produces": [
           "application/json"
@@ -1334,7 +1334,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts Quoting a Specific Post",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve posts that quote a specific post.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve posts that quote a specific post.\n",
         "operationId": "GetQuotes",
         "produces": [
           "application/json"
@@ -1404,7 +1404,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Actors Who Reposted a Specific Post",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of actors who have reposted a specific post.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of actors who have reposted a specific post.\n",
         "operationId": "GetRepostedBy",
         "produces": [
           "application/json"
@@ -1474,7 +1474,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Suggested Feeds",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of suggested feeds for the authenticated user or general suggestions.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of suggested feeds for the authenticated user or general suggestions.\n",
         "operationId": "GetSuggestedFeeds",
         "produces": [
           "application/json"
@@ -1545,7 +1545,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Timeline",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the authenticated user's timeline, including posts from followed actors.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the authenticated user's timeline, including posts from followed actors.\n",
         "operationId": "GetTimeline",
         "produces": [
           "application/json"
@@ -1614,7 +1614,7 @@
           "app.bsky.feed"
         ],
         "summary": "Search Posts",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSearch posts based on a query string.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSearch posts based on a query string.\n",
         "operationId": "SearchPosts",
         "produces": [
           "application/json"
@@ -1683,7 +1683,7 @@
           "app.bsky.feed"
         ],
         "summary": "Send Interactions",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSend interactions like likes, reposts, or other custom interactions for a post.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nSend interactions like likes, reposts, or other custom interactions for a post.\n",
         "operationId": "SendInteractions",
         "consumes": [
           "application/json"
@@ -1764,7 +1764,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Packs for Actors",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve recommended starter packs of actors for a new user to follow.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve recommended starter packs of actors for a new user to follow.\n",
         "operationId": "GetActorStarterPacks",
         "produces": [
           "application/json"
@@ -1832,7 +1832,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Blocked Accounts",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts blocked by the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts blocked by the authenticated user.\n",
         "operationId": "GraphGetBlocks",
         "produces": [
           "application/json"
@@ -1893,7 +1893,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Followers",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of followers for a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of followers for a specific actor.\n",
         "operationId": "GetFollowers",
         "produces": [
           "application/json"
@@ -1962,7 +1962,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Follows",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts followed by a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts followed by a specific actor.\n",
         "operationId": "GetFollows",
         "produces": [
           "application/json"
@@ -2031,7 +2031,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Known Followers",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve known followers of a specific actor that are mutually followed by the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve known followers of a specific actor that are mutually followed by the authenticated user.\n",
         "operationId": "GetKnownFollowers",
         "produces": [
           "application/json"
@@ -2100,7 +2100,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Details",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific list.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific list.\n",
         "operationId": "GetList",
         "produces": [
           "application/json"
@@ -2170,7 +2170,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Blocks",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of blocked accounts within a specific list.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of blocked accounts within a specific list.\n",
         "operationId": "GetListBlocks",
         "produces": [
           "application/json"
@@ -2240,7 +2240,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Mutes",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve muted lists for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve muted lists for the authenticated user.\n",
         "operationId": "GetListMutes",
         "produces": [
           "application/json"
@@ -2314,7 +2314,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Lists for an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve all lists associated with a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve all lists associated with a specific actor.\n",
         "operationId": "GetLists",
         "produces": [
           "application/json"
@@ -2396,7 +2396,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Muted Accounts",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts muted by the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts muted by the authenticated user.\n",
         "operationId": "GetMutes",
         "produces": [
           "application/json"
@@ -2457,7 +2457,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Relationships Between Accounts",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve relationships between accounts for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve relationships between accounts for the authenticated user.\n",
         "operationId": "GetRelationships",
         "produces": [
           "application/json"
@@ -2519,7 +2519,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Pack Details",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific starter pack.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific starter pack.\n",
         "operationId": "GetStarterPack",
         "produces": [
           "application/json"
@@ -2577,7 +2577,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get All Starter Packs",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve all available starter packs for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve all available starter packs for the authenticated user.\n",
         "operationId": "GetStarterPacks",
         "produces": [
           "application/json"
@@ -2650,7 +2650,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Suggested Follows Based on Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of suggested follows based on a specific actor.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of suggested follows based on a specific actor.\n",
         "operationId": "GetSuggestedFollowsByActor",
         "produces": [
           "application/json"
@@ -2719,7 +2719,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific actor for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific actor for the authenticated user.\n",
         "operationId": "MuteActor",
         "consumes": [
           "application/json"
@@ -2780,7 +2780,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute an Actor List",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific actor list for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific actor list for the authenticated user.\n",
         "operationId": "MuteActorList",
         "consumes": [
           "application/json"
@@ -2841,7 +2841,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute a Thread",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific thread for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMute a specific thread for the authenticated user.\n",
         "operationId": "MuteThread",
         "consumes": [
           "application/json"
@@ -2902,7 +2902,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute an Actor",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific actor for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific actor for the authenticated user.\n",
         "operationId": "UnmuteActor",
         "consumes": [
           "application/json"
@@ -2963,7 +2963,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute an Actor List",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific actor list for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific actor list for the authenticated user.\n",
         "operationId": "UnmuteActorList",
         "consumes": [
           "application/json"
@@ -3024,7 +3024,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute a Thread",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific thread for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUnmute a specific thread for the authenticated user.\n",
         "operationId": "UnmuteThread",
         "consumes": [
           "application/json"
@@ -3085,7 +3085,7 @@
           "app.bsky.labeler"
         ],
         "summary": "Get Labeling Services",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of available labeling services.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of available labeling services.\n",
         "operationId": "GetServices",
         "produces": [
           "application/json"
@@ -3140,7 +3140,7 @@
           "app.bsky.notification"
         ],
         "summary": "Get Unread Notification Count",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the count of unread notifications for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the count of unread notifications for the authenticated user.\n",
         "operationId": "GetUnreadCount",
         "produces": [
           "application/json"
@@ -3181,7 +3181,7 @@
           "app.bsky.notification"
         ],
         "summary": "List Notifications",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of notifications for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of notifications for the authenticated user.\n",
         "operationId": "ListNotifications",
         "produces": [
           "application/json"
@@ -3260,7 +3260,7 @@
           "app.bsky.notification"
         ],
         "summary": "Update Notification Preferences",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUpdate the notification preferences for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUpdate the notification preferences for the authenticated user.\n",
         "operationId": "NotificationPutPreferences",
         "consumes": [
           "application/json"
@@ -3325,7 +3325,7 @@
           "app.bsky.notification"
         ],
         "summary": "Register Push Notifications",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRegister a device for push notifications.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRegister a device for push notifications.\n",
         "operationId": "RegisterPush",
         "consumes": [
           "application/json"
@@ -3391,7 +3391,7 @@
           "app.bsky.notification"
         ],
         "summary": "Update Notifications as Seen",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMark notifications as seen for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nMark notifications as seen for the authenticated user.\n",
         "operationId": "UpdateSeen",
         "consumes": [
           "application/json"
@@ -3453,7 +3453,7 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Job Status",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the status of a video processing job.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the status of a video processing job.\n",
         "operationId": "GetJobStatus",
         "produces": [
           "application/json"
@@ -3508,7 +3508,7 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Upload Limits",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the video upload limits for the authenticated user.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (app.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the video upload limits for the authenticated user.\n",
         "operationId": "GetUploadLimits",
         "produces": [
           "application/json"
@@ -3554,70 +3554,38 @@
           "app.bsky.video"
         ],
         "summary": "Upload Video",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nUpload a video file for processing and hosting.\n",
+        "description": "Upload a video file using multipart/form-data.",
         "operationId": "UploadVideo",
         "consumes": [
           "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
         ],
         "parameters": [
           {
             "name": "file",
             "in": "formData",
-            "description": "The video file to upload.",
             "required": true,
             "type": "file",
+            "description": "The video file to upload in MP4 format.",
             "x-ms-summary": "Video File"
           },
           {
-            "name": "title",
+            "name": "metadata",
             "in": "formData",
-            "description": "The title of the video.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Video Title"
-          },
-          {
-            "name": "description",
-            "in": "formData",
-            "description": "A description of the video.",
-            "required": false,
-            "type": "string",
-            "x-ms-summary": "Video Description"
+            "description": "Optional metadata for the video, such as title or description.",
+            "x-ms-summary": "Video Metadata"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully uploaded the video.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "videoId": {
-                  "type": "string",
-                  "description": "The ID of the uploaded video.",
-                  "example": "vid123"
-                },
-                "status": {
-                  "type": "string",
-                  "description": "The status of the upload (e.g., 'processing').",
-                  "example": "processing"
-                }
-              }
-            }
+            "description": "Successfully uploaded the video."
           },
           "400": {
-            "description": "Bad Request - Invalid input or file upload.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+            "description": "Bad Request - Invalid video file or parameters."
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
+          "500": {
+            "description": "Internal Server Error - Unexpected failure during video upload."
           }
         }
       }
@@ -3628,7 +3596,7 @@
           "chat.bsky.actor"
         ],
         "summary": "Delete Account",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nPermanently delete the authenticated user's account.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nPermanently delete the authenticated user's account.\n",
         "operationId": "DeleteAccount",
         "consumes": [
           "application/json"
@@ -3689,7 +3657,7 @@
           "chat.bsky.actor"
         ],
         "summary": "Export Account Data",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nExport the authenticated user's account data for backup or migration purposes.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nExport the authenticated user's account data for backup or migration purposes.\n",
         "operationId": "ExportAccountData",
         "produces": [
           "application/json"
@@ -3730,7 +3698,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Delete Message for Self",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nDelete a specific message for the authenticated user without affecting other participants.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nDelete a specific message for the authenticated user without affecting other participants.\n",
         "operationId": "DeleteMessageForSelf",
         "consumes": [
           "application/json"
@@ -3791,7 +3759,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific conversation by its unique identifier.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a specific conversation by its unique identifier.\n",
         "operationId": "GetConvo",
         "produces": [
           "application/json"
@@ -3885,7 +3853,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation for Members",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a conversation involving specific members.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the details of a conversation involving specific members.\n",
         "operationId": "GetConvoForMembers",
         "produces": [
           "application/json"
@@ -3979,7 +3947,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation Log",
-        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`chat.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the message log for a specific conversation.\n",
+        "description": "*This endpoint is part of the Bluesky application Lexicon APIs (chat.bsky.*). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve the message log for a specific conversation.\n",
         "operationId": "GetLog",
         "produces": [
           "application/json"
@@ -6961,46 +6929,50 @@
           "com.atproto.repo"
         ],
         "summary": "Upload Blob",
-        "description": "Upload a blob to the repository. This is typically used for adding media or large binary data.\n",
+        "description": "Uploads a binary blob to the specified repository using multipart/form-data.",
         "operationId": "UploadBlob",
         "consumes": [
           "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
         ],
         "parameters": [
           {
             "name": "file",
             "in": "formData",
-            "description": "The blob file to upload.",
             "required": true,
             "type": "file",
+            "description": "The binary blob to upload.",
             "x-ms-summary": "Blob File"
+          },
+          {
+            "name": "repoId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The unique repository ID where the blob will be stored.",
+            "x-ms-summary": "Repository ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Blob successfully uploaded.",
+            "description": "Successfully uploaded the blob.",
             "schema": {
               "type": "object",
               "properties": {
                 "blobId": {
                   "type": "string",
-                  "description": "The unique identifier of the uploaded blob.",
-                  "example": "blob123"
+                  "description": "The unique identifier of the uploaded blob."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Failed to upload blob.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "500": {
+            "description": "Internal Server Error - Unexpected failure during blob upload.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -8334,27 +8306,37 @@
           "com.atproto.sync"
         ],
         "summary": "Get Blob",
-        "description": "Retrieve a binary blob object using a multipart response.\n",
-        "operationId": "SyncetBlob",
+        "description": "Retrieve a binary blob from the specified repository using multipart/form-data.",
+        "operationId": "GetBlob",
         "produces": [
-          "multipart/form-data"
+          "application/json"
         ],
         "parameters": [
           {
             "name": "blobId",
             "in": "query",
-            "description": "The ID of the blob to retrieve.",
             "required": true,
             "type": "string",
+            "description": "The unique identifier of the blob to retrieve.",
             "x-ms-summary": "Blob ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "Binary blob retrieved successfully as multipart content.",
+            "description": "Successfully retrieved the blob as a JSON response.",
             "schema": {
-              "type": "string",
-              "format": "binary"
+              "type": "object",
+              "properties": {
+                "blobId": {
+                  "type": "string",
+                  "description": "The unique identifier of the blob."
+                },
+                "data": {
+                  "type": "string",
+                  "format": "byte",
+                  "description": "The binary content of the blob, base64-encoded."
+                }
+              }
             }
           },
           "400": {
@@ -8368,6 +8350,18 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "404": {
+            "description": "Not Found - The specified blob does not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected failure during blob retrieval.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -8378,10 +8372,10 @@
           "com.atproto.sync"
         ],
         "summary": "Get Blocks",
-        "description": "Retrieve multiple binary blocks using a multipart response.\n",
+        "description": "Retrieve multiple binary blocks from the specified repository. The blocks\nare returned as base64-encoded data in a JSON response.\n",
         "operationId": "SyncGetBlocks",
         "produces": [
-          "multipart/form-data"
+          "application/json"
         ],
         "parameters": [
           {
@@ -8395,20 +8389,50 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved binary blocks as multipart content.",
+            "description": "Successfully retrieved binary blocks.",
             "schema": {
-              "type": "string",
-              "format": "binary"
+              "type": "object",
+              "properties": {
+                "blocks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "blockId": {
+                        "type": "string",
+                        "description": "The unique identifier of the block."
+                      },
+                      "data": {
+                        "type": "string",
+                        "format": "byte",
+                        "description": "The base64-encoded binary data of the block."
+                      }
+                    }
+                  }
+                }
+              }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid block IDs.",
+            "description": "Bad Request - Invalid block IDs or request parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found - One or more specified blocks do not exist.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Unexpected failure during block retrieval.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -10650,62 +10674,6 @@
         }
       }
     },
-    "ProfileViewBasic": {
-      "type": "object",
-      "description": "Basic profile view for an actor in the Bluesky network.",
-      "properties": {
-        "did": {
-          "type": "string",
-          "description": "Decentralized Identifier (DID) of the actor."
-        },
-        "handle": {
-          "type": "string",
-          "description": "The unique handle or username of the actor."
-        },
-        "displayName": {
-          "type": "string",
-          "description": "The display name of the actor."
-        },
-        "avatar": {
-          "type": "string",
-          "format": "uri",
-          "description": "URL to the avatar image of the actor."
-        },
-        "viewer": {
-          "type": "object",
-          "description": "Viewer-specific state for the profile.",
-          "properties": {
-            "following": {
-              "type": "string",
-              "description": "URI of the profile the viewer is following."
-            },
-            "followedBy": {
-              "type": "string",
-              "description": "URI of the profile that is following the viewer."
-            },
-            "muted": {
-              "type": "boolean",
-              "description": "Indicates whether the viewer has muted this actor."
-            },
-            "blockedBy": {
-              "type": "boolean",
-              "description": "Indicates whether the viewer is blocked by this actor."
-            },
-            "blocking": {
-              "type": "string",
-              "description": "URI of the actor being blocked."
-            }
-          }
-        },
-        "labels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Label"
-          },
-          "description": "Metadata tags or labels associated with this actor."
-        }
-      }
-    },
     "ProfileView": {
       "type": "object",
       "description": "A minimal view of an actor's profile, used for search and typeahead results.",
@@ -10828,7 +10796,7 @@
         },
         "neg": {
           "type": "boolean",
-          "description": "If `true`, this is a negation label that invalidates a previous label."
+          "description": "If true, this is a negation label that invalidates a previous label."
         },
         "cts": {
           "type": "string",
