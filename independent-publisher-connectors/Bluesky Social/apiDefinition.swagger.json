@@ -347,14 +347,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -408,14 +408,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -467,14 +467,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -554,14 +554,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -639,14 +639,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -724,14 +724,14 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
           },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -1833,7 +1833,7 @@
         ],
         "summary": "Get Blocked Accounts",
         "description": "*This endpoint is part of the Bluesky application Lexicon APIs (`app.bsky.*`). \nPublic endpoints which don't require authentication can be made directly \nagainst the public Bluesky AppView API: https://public.api.bsky.app. \nAuthenticated requests are usually made to the user's PDS, with automatic \nservice proxying. Authenticated requests can be used for both public and non-public endpoints.*\n\n*To learn more about calling atproto API endpoints like this one, see the \n[API Hosts and Auth](https://docs.bsky.app/docs/advanced-guides/api-directory) guide.*\n\nRetrieve a list of accounts blocked by the authenticated user.\n",
-        "operationId": "GetBlocks",
+        "operationId": "GraphGetBlocks",
         "produces": [
           "application/json"
         ],
@@ -5516,7 +5516,7 @@
         ],
         "summary": "Search Accounts",
         "description": "Search for accounts using specific query parameters, such as email, handle, or other identifiers.\n",
-        "operationId": "SearchAccounts",
+        "operationId": "AdminSearchAccounts",
         "produces": [
           "application/json"
         ],
@@ -7600,6 +7600,2993 @@
           },
           "400": {
             "description": "Bad Request - Invalid session or token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.describeServer": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Describe Server",
+        "description": "Retrieve information about the current server, including supported features and configurations.\n",
+        "operationId": "DescribeServer",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved server description.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "description": "The server version.",
+                  "example": "1.0.0"
+                },
+                "features": {
+                  "type": "array",
+                  "description": "List of supported features.",
+                  "items": {
+                    "type": "string",
+                    "example": "feature1"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to retrieve server details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.getAccountInviteCodes": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Get Account Invite Codes",
+        "description": "Retrieve all invite codes associated with the authenticated account.\n",
+        "operationId": "GetAccountInviteCodes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "query",
+            "description": "The unique identifier of the account.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Account ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved account invite codes.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inviteCodes": {
+                  "type": "array",
+                  "description": "List of invite codes associated with the account.",
+                  "items": {
+                    "type": "string",
+                    "example": "INVITE123"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.getServiceAuth": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Get Service Auth",
+        "description": "Retrieve authentication tokens or keys for interacting with the server services.\n",
+        "operationId": "GetServiceAuth",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved service authentication details.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceAuth": {
+                  "type": "object",
+                  "description": "Details of the service authentication.",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Authentication token for the service.",
+                      "example": "token123"
+                    },
+                    "expiration": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Expiration time of the token.",
+                      "example": "2024-12-31T23:59:59Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to retrieve service authentication.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.getSession": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Get Session",
+        "description": "Retrieve information about the current session, including user details.\n",
+        "operationId": "GetSession",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved session information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The unique identifier of the authenticated user.",
+                  "example": "user123"
+                },
+                "sessionStatus": {
+                  "type": "string",
+                  "description": "The current status of the session.",
+                  "example": "active"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to retrieve session details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.listAppPasswords": {
+      "get": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "List App Passwords",
+        "description": "Retrieve a list of all application-specific passwords associated with the current account.\n",
+        "operationId": "ListAppPasswords",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved app passwords.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appPasswords": {
+                  "type": "array",
+                  "description": "List of application-specific passwords.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "appName": {
+                        "type": "string",
+                        "description": "The name of the app associated with the password.",
+                        "example": "MyApp"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The creation date of the app password.",
+                        "example": "2024-11-19T12:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Failed to retrieve app passwords.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.requestAccountDelete": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Request Account Deletion",
+        "description": "Submit a request to delete the authenticated user account. This may involve additional confirmation steps.\n",
+        "operationId": "RequestAccountDelete",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Account deletion request submitted successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the deletion request was accepted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to process the account deletion request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.requestEmailConfirmation": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Request Email Confirmation",
+        "description": "Request an email confirmation for the current user. This sends a confirmation link to the user's email address.\n",
+        "operationId": "RequestEmailConfirmation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Email confirmation request successfully submitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the confirmation request was accepted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to process the email confirmation request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.requestEmailUpdate": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Request Email Update",
+        "description": "Request an update to the user's email address. This sends a confirmation link to the new email address.\n",
+        "operationId": "RequestEmailUpdate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the email update request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newEmail": {
+                  "type": "string",
+                  "description": "The new email address for the user.",
+                  "example": "newuser@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email update request successfully submitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the update request was accepted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to process the email update request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.requestPasswordReset": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Request Password Reset",
+        "description": "Request a password reset for the user's account. Sends a reset link to the registered email address.\n",
+        "operationId": "RequestPasswordReset",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the password reset request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "The email address associated with the account.",
+                  "example": "user@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password reset request successfully submitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the reset request was accepted.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to process the password reset request.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.reserveSigningKey": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Reserve Signing Key",
+        "description": "Reserve a signing key for the user account. This key is used for cryptographic operations.\n",
+        "operationId": "ReserveSigningKey",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the signing key reservation request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "keyId": {
+                  "type": "string",
+                  "description": "The identifier for the signing key.",
+                  "example": "key123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signing key successfully reserved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the signing key reservation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to process the signing key reservation.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.resetPassword": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Reset Password",
+        "description": "Reset the user's password after confirming their identity with a token.\n",
+        "operationId": "ResetPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the password reset request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "The password reset token.",
+                  "example": "resetToken123"
+                },
+                "newPassword": {
+                  "type": "string",
+                  "description": "The new password for the account.",
+                  "example": "SecurePassword123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password successfully reset.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the password reset was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid token or password.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.revokeAppPassword": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Revoke App Password",
+        "description": "Revoke an application-specific password associated with the user's account.\n",
+        "operationId": "RevokeAppPassword",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the app password to revoke.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appPasswordId": {
+                  "type": "string",
+                  "description": "The unique identifier of the app password to revoke.",
+                  "example": "password123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "App password successfully revoked.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the app password was revoked successfully.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid app password identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.updateEmail": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Update Email",
+        "description": "Update the email address associated with the user's account after confirmation.\n",
+        "operationId": "UpdateEmail",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the email update request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "The confirmation token for the email update.",
+                  "example": "emailUpdateToken123"
+                },
+                "newEmail": {
+                  "type": "string",
+                  "description": "The new email address for the account.",
+                  "example": "newuser@example.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email successfully updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the email update was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid token or email.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getBlob": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Blob",
+        "description": "Retrieve a binary blob object using a multipart response.\n",
+        "operationId": "SyncetBlob",
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "blobId",
+            "in": "query",
+            "description": "The ID of the blob to retrieve.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Blob ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary blob retrieved successfully as multipart content.",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid blob ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getBlocks": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Blocks",
+        "description": "Retrieve multiple binary blocks using a multipart response.\n",
+        "operationId": "SyncGetBlocks",
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "blockIds",
+            "in": "query",
+            "description": "Comma-separated list of block IDs to retrieve.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Block IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved binary blocks as multipart content.",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid block IDs.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getLatestCommit": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Latest Commit",
+        "description": "Retrieve the latest commit for the repository. This provides details on the most recent update.\n",
+        "operationId": "GetLatestCommit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest commit successfully retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commit": {
+                  "type": "object",
+                  "description": "Details of the latest commit.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier of the commit.",
+                      "example": "commit123"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp of the commit.",
+                      "example": "2024-11-20T12:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getRecord": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Record",
+        "description": "Retrieve a specific record from the repository by its unique identifier.\n",
+        "operationId": "ATProtoGetRecord",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "query",
+            "description": "The unique identifier of the record.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Record ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record successfully retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "record": {
+                  "type": "object",
+                  "description": "Details of the retrieved record.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier of the record.",
+                      "example": "record123"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the record.",
+                      "example": "Record content here."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getRepo": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Repository",
+        "description": "Retrieve repository data as base64-encoded binary content.\n",
+        "operationId": "SyncGetRepo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository to retrieve.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the repository data.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the repository.",
+                  "example": "repo123"
+                },
+                "data": {
+                  "type": "string",
+                  "format": "byte",
+                  "description": "Base64-encoded repository data."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getRepoStatus": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Get Repository Status",
+        "description": "Retrieve the status of a repository, including synchronization details.\n",
+        "operationId": "GetRepoStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Repository status successfully retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "object",
+                  "description": "Details of the repository's status.",
+                  "properties": {
+                    "syncStatus": {
+                      "type": "string",
+                      "description": "The synchronization status of the repository.",
+                      "example": "synchronized"
+                    },
+                    "lastCommit": {
+                      "type": "string",
+                      "description": "The identifier of the last commit.",
+                      "example": "commit123"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.listBlobs": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "List Blobs",
+        "description": "Retrieve a list of all blobs in the repository.\n",
+        "operationId": "ListBlobs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blobs successfully listed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "blobs": {
+                  "type": "array",
+                  "description": "List of blobs in the repository.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the blob.",
+                        "example": "blob123"
+                      },
+                      "size": {
+                        "type": "integer",
+                        "description": "The size of the blob in bytes.",
+                        "example": 1024
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.listRepos": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "List Repositories",
+        "description": "Retrieve a list of all repositories available in the system.\n",
+        "operationId": "ListRepos",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved repositories list.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "type": "array",
+                  "description": "List of repositories.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the repository.",
+                        "example": "repo123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the repository.",
+                        "example": "MyRepository"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories list.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.notifyOfUpdate": {
+      "post": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Notify of Update",
+        "description": "Notify the system about updates to a repository to trigger synchronization.\n",
+        "operationId": "NotifyOfUpdate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the update notification.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the repository.",
+                  "example": "repo123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update notification successfully submitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the update notification was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid update details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.requestCrawl": {
+      "post": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "Request Crawl",
+        "description": "Submit a request to crawl a repository for updates.\n",
+        "operationId": "RequestCrawl",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the crawl request.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the repository to crawl.",
+                  "example": "repo123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Crawl request successfully submitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the crawl request was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid crawl request details.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.communication.createTemplate": {
+      "post": {
+        "tags": [
+          "tools.ozone.communication"
+        ],
+        "summary": "Create Template",
+        "description": "Create a new communication template for notifications or messages.\n",
+        "operationId": "CreateTemplate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the template to create.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the template.",
+                  "example": "WelcomeTemplate"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The content of the template.",
+                  "example": "Welcome to the service!"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template successfully created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string",
+                  "description": "The unique identifier of the created template.",
+                  "example": "template123"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to create template.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.communication.deleteTemplate": {
+      "post": {
+        "tags": [
+          "tools.ozone.communication"
+        ],
+        "summary": "Delete Template",
+        "description": "Delete an existing communication template.\n",
+        "operationId": "DeleteTemplate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the template to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string",
+                  "description": "The unique identifier of the template.",
+                  "example": "template123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the template was deleted successfully.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to delete template.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.communication.listTemplates": {
+      "get": {
+        "tags": [
+          "tools.ozone.communication"
+        ],
+        "summary": "List Templates",
+        "description": "Retrieve a list of all communication templates.\n",
+        "operationId": "ListTemplates",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of templates.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "templates": {
+                  "type": "array",
+                  "description": "List of communication templates.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the template.",
+                        "example": "template123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the template.",
+                        "example": "WelcomeTemplate"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the template.",
+                        "example": "Welcome to the service!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve templates.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.communication.updateTemplate": {
+      "post": {
+        "tags": [
+          "tools.ozone.communication"
+        ],
+        "summary": "Update Template",
+        "description": "Update an existing communication template.\n",
+        "operationId": "UpdateTemplate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the template to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string",
+                  "description": "The unique identifier of the template.",
+                  "example": "template123"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The new name for the template.",
+                  "example": "UpdatedTemplate"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "The new content for the template.",
+                  "example": "Updated content for the template."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template successfully updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the template was updated successfully.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to update template.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.emitEvent": {
+      "post": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Emit Moderation Event",
+        "description": "Emit a moderation event for tracking or logging purposes.\n",
+        "operationId": "EmitEvent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the moderation event.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eventType": {
+                  "type": "string",
+                  "description": "The type of moderation event.",
+                  "example": "userBan"
+                },
+                "details": {
+                  "type": "string",
+                  "description": "Additional details about the event.",
+                  "example": "User banned for violating terms of service."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Moderation event successfully emitted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the event was emitted successfully.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to emit moderation event.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getEvent": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Event",
+        "description": "Retrieve details of a specific moderation event.\n",
+        "operationId": "GetEvent",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "description": "The unique identifier of the moderation event.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Event ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation event.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "type": "object",
+                  "description": "Details of the moderation event.",
+                  "properties": {
+                    "eventType": {
+                      "type": "string",
+                      "description": "The type of moderation event.",
+                      "example": "userBan"
+                    },
+                    "details": {
+                      "type": "string",
+                      "description": "Additional details about the event.",
+                      "example": "User banned for violating terms of service."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid event identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRecord": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Record",
+        "description": "Retrieve a moderation record associated with an entity or user.\n",
+        "operationId": "OzoneGetRecord",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "query",
+            "description": "The unique identifier of the moderation record.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Record ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation record.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "record": {
+                  "type": "object",
+                  "description": "Details of the moderation record.",
+                  "properties": {
+                    "entityId": {
+                      "type": "string",
+                      "description": "The ID of the entity associated with the record.",
+                      "example": "entity123"
+                    },
+                    "actions": {
+                      "type": "array",
+                      "description": "List of actions associated with the moderation record.",
+                      "items": {
+                        "type": "string",
+                        "example": "userBan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRecords": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Records",
+        "description": "Retrieve moderation records based on provided filters.\n",
+        "operationId": "ModerationGetRecords",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Filter criteria for retrieving moderation records.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Filter Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation records.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "records": {
+                  "type": "array",
+                  "description": "List of moderation records.",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRepo": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Repository",
+        "description": "Retrieve details of a specific moderation repository.\n",
+        "operationId": "OzoneGetRepo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "repoId",
+            "in": "query",
+            "description": "The unique identifier of the repository.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Repository ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation repository.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "object",
+                  "description": "Details of the moderation repository.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The unique identifier of the repository.",
+                      "example": "repo123"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the repository.",
+                      "example": "active"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository identifier.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRepos": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Repositories",
+        "description": "Retrieve a list of all moderation repositories.\n",
+        "operationId": "GetRepos",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation repositories.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "type": "array",
+                  "description": "List of moderation repositories.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the repository.",
+                        "example": "repo123"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The status of the repository.",
+                        "example": "active"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.queryEvents": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Query Moderation Events",
+        "description": "Retrieve moderation events based on specified criteria.\n",
+        "operationId": "ModerationQueryEvents",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Filter criteria for querying moderation events.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Filter Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation events.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "description": "List of moderation events.",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.queryStatuses": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Query Moderation Statuses",
+        "description": "Retrieve the statuses of moderated entities.\n",
+        "operationId": "QueryStatuses",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for filtering moderation statuses.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Status Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation statuses.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statuses": {
+                  "type": "array",
+                  "description": "List of moderation statuses.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "entityId": {
+                        "type": "string",
+                        "description": "The unique identifier of the moderated entity.",
+                        "example": "entity123"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The status of the entity.",
+                        "example": "banned"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.searchRepos": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Search Repositories",
+        "description": "Search moderation repositories based on query parameters.\n",
+        "operationId": "SearchRepos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query string for searching repositories.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Repository Search Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved matching repositories.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "type": "array",
+                  "description": "List of matching moderation repositories.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the repository.",
+                        "example": "repo123"
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The status of the repository.",
+                        "example": "active"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.server.getConfig": {
+      "get": {
+        "tags": [
+          "tools.ozone.server"
+        ],
+        "summary": "Get Server Configuration",
+        "description": "Retrieve the current server configuration details.\n",
+        "operationId": "GetConfig",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved server configuration.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "description": "Details of the server configuration.",
+                  "properties": {
+                    "version": {
+                      "type": "string",
+                      "description": "The server version.",
+                      "example": "1.0.0"
+                    },
+                    "environment": {
+                      "type": "string",
+                      "description": "The server environment (e.g., production, staging).",
+                      "example": "production"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve server configuration.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.addValues": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Add Values to Set",
+        "description": "Add values to an existing set in the system.\n",
+        "operationId": "AddValues",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the values to add.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "The unique identifier of the set.",
+                  "example": "set123"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "Values to add to the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Values successfully added to the set.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to add values.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.deleteSet": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Delete Set",
+        "description": "Delete an existing set by its unique identifier.\n",
+        "operationId": "DeleteSet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the set to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "The unique identifier of the set.",
+                  "example": "set123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to delete the set.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.deleteValues": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Delete Values from Set",
+        "description": "Remove specific values from a set by its unique identifier.\n",
+        "operationId": "DeleteValues",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the values to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "The unique identifier of the set.",
+                  "example": "set123"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "Values to remove from the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Values successfully removed from the set.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to remove values.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.getValues": {
+      "get": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Get Values from Set",
+        "description": "Retrieve the values stored in a specific set.\n",
+        "operationId": "GetValues",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "setId",
+            "in": "query",
+            "description": "The unique identifier of the set.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Set ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved set values.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "values": {
+                  "type": "array",
+                  "description": "List of values in the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid set ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.querySets": {
+      "get": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Query Sets",
+        "description": "Retrieve a list of sets matching the provided query criteria.\n",
+        "operationId": "QuerySets",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query criteria for filtering sets.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Set Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved matching sets.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sets": {
+                  "type": "array",
+                  "description": "List of matching sets.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "setId": {
+                        "type": "string",
+                        "description": "The unique identifier of the set.",
+                        "example": "set123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the set.",
+                        "example": "MySet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.upsertSet": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Upsert Set",
+        "description": "Create or update a set with specified values.\n",
+        "operationId": "UpsertSet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the set to create or update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "The unique identifier of the set.",
+                  "example": "set123"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the set.",
+                  "example": "MySet"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "The values to include in the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set successfully created or updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to upsert set.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.findCorrelation": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Find Correlation",
+        "description": "Search for correlations between entities based on their signatures.\n",
+        "operationId": "FindCorrelation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "The signature to search for correlations.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved correlations.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "correlations": {
+                  "type": "array",
+                  "description": "List of correlations found.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "entityId": {
+                        "type": "string",
+                        "description": "The ID of the correlated entity.",
+                        "example": "entity123"
+                      },
+                      "similarity": {
+                        "type": "number",
+                        "description": "The similarity score.",
+                        "example": 0.85
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid signature.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.findRelatedAccounts": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Find Related Accounts",
+        "description": "Retrieve accounts related to the specified signature.\n",
+        "operationId": "FindRelatedAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "The signature to search for related accounts.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved related accounts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "List of related accounts.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "The unique identifier of the related account.",
+                        "example": "account123"
+                      },
+                      "relationship": {
+                        "type": "string",
+                        "description": "The type of relationship.",
+                        "example": "associated"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid signature.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.searchAccounts": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Search Accounts by Signature",
+        "description": "Search for accounts associated with a specific signature.\n",
+        "operationId": "OzoneSearchAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The signature or criteria to search for accounts.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Search Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved matching accounts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "List of accounts matching the query.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "The unique identifier of the account.",
+                        "example": "account123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the account.",
+                        "example": "John Doe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid search query.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.addMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Add Team Member",
+        "description": "Add a new member to a team.\n",
+        "operationId": "AddMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to add.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "The unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "The unique identifier of the member.",
+                  "example": "member456"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The role of the new member.",
+                  "example": "Developer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member successfully added to the team.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to add member.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.deleteMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Delete Team Member",
+        "description": "Remove a member from a team.\n",
+        "operationId": "DeleteMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to remove.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "The unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "The unique identifier of the member.",
+                  "example": "member456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member successfully removed from the team.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to remove member.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.listMembers": {
+      "get": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "List Team Members",
+        "description": "Retrieve a list of members in a specific team.\n",
+        "operationId": "ListMembers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "description": "The unique identifier of the team.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved team members.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "members": {
+                  "type": "array",
+                  "description": "List of team members.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "memberId": {
+                        "type": "string",
+                        "description": "The unique identifier of the member.",
+                        "example": "member456"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the team member.",
+                        "example": "Jane Doe"
+                      },
+                      "role": {
+                        "type": "string",
+                        "description": "The role of the team member.",
+                        "example": "Developer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid team ID.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.updateMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Update Team Member",
+        "description": "Update details of a team member.\n",
+        "operationId": "UpdateMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "The unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "The unique identifier of the member.",
+                  "example": "member456"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The updated role of the team member.",
+                  "example": "Team Lead"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member details successfully updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to update member details.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
