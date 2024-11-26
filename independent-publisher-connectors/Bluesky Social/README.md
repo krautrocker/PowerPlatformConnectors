@@ -2,17 +2,14 @@
 
 - **This custom connector allows Power Platform apps to interact with Bluesky's API, supporting operations for managing feeds, conversations, notifications, video uploads, and account data.
 
-## Supported Endpoints
+## Publisher: Dan Romano
+
+## Prerequisites
 
 - **To use this connector, you will need:
 
 - **A Bluesky account.
 - **API access to Bluesky with App Password.
-
-## Obtaining Credentials
-
-- **Go to the Bluesky Developer Portal.
-- **Register your App Password in Settings.
 
 ## Supported Operations
 
@@ -95,42 +92,34 @@
 - **GET /app.bsky.unspecced.getBlob — Retrieve a binary blob from the user's account.
 
 
-### Authentication
+## Obtaining Credentials
 
-- **TBD - In progress
+- Go to the [Bluesky Developer Portal](https://bsky.app/settings).
+- Generate an App Password under "Account Settings."
+- Save the App Password for use in connector setup.
 
-### How to Use
 
-- **Each endpoint has specific parameters (such as user IDs, query strings, or result limits) that need to be configured as per the endpoint's requirements.
+## Getting Started
+
+- **Some endpoints require specific parameters (such as actor/user Ids for examples).
 
 - **Authenticate: Start by authenticating with your Bluesky credentials.
 - **Choose Endpoint: Select the desired endpoint, such as retrieving a feed or listing notifications.
 - **Set Parameters: Provide the required parameters like user IDs, limits, or query strings.
 - **Execute Request: Run the request to retrieve data or perform actions within your Power Platform app.
 
-### Example Use Cases
+## Known Issues and Limitations
 
-- **Retrieve User Feed: Get posts from a user's timeline or feed to display in your app.
-- **Search for Posts: Use a search query to find posts matching user input.
-- **Manage Mutes and Blocks: Allow users to manage their mutes and blocks efficiently.
-- **Send Notifications: Keep users informed with real-time notifications.
-- **Upload Media: Allow users to upload and manage videos or blobs directly.
+- **Uses API Token, not OAuth 2.0. [Bluesky docs on OAuth 2.0](https://docs.bsky.app/docs/advanced-guides/oauth-client).
 
-### Authentication
+### Frequently Asked Questions
 
-#### API Key
+- **Q: How do I generate an App Password?**  
+  A: Visit the [Bluesky Developer Portal](https://bsky.app/settings) and generate a new App Password. Use the password to generate a token.
+- **Q: What are the API rate limits?**  
+  A: Bluesky imposes a rate limit of 100 requests per minute per account.
 
-- **The connector requires an API Key for additional validation in all requests.
-- **Header: X-Api-Key
-- **Description: The Bluesky API Key is generated from your Bluesky account and must be added during connector setup.
-
-#### Headers
-
-- **Every API request includes the following headers:
-- **Authorization: Contains the OAuth 2.0 Bearer token.
-- **X-Api-Key: Contains the Bluesky API key.
-
-### Contact
+### Support
 
 - **dan.romano@swolcat.com or torin@imp.sh (original owner)
 
