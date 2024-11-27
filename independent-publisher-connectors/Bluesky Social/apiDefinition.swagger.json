@@ -4033,7 +4033,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation Messages",
-        "description": "Retrieve a list of messages in a specific conversation. This API supports pagination for large conversations.\n",
+        "description": "Retrieve a list of messages in a specific conversation.",
         "operationId": "GetMessages",
         "produces": [
           "application/json"
@@ -4119,7 +4119,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Leave Conversation",
-        "description": "Leave a specific conversation. Once left, the user will no longer receive notifications or messages for that conversation.\n",
+        "description": "Leave a specific conversation.",
         "operationId": "LeaveConvo",
         "consumes": [
           "application/json"
@@ -4180,7 +4180,7 @@
           "chat.bsky.convo"
         ],
         "summary": "List Conversations",
-        "description": "Retrieve a list of all conversations for the authenticated user. Supports pagination for larger conversation lists.\n",
+        "description": "Retrieve a list of all conversations for the authenticated user.",
         "operationId": "ListConvos",
         "produces": [
           "application/json"
@@ -4399,7 +4399,7 @@
           "com.atproto.server"
         ],
         "summary": "Create Session",
-        "description": "Create a new session for authentication. This endpoint generates an access token and refresh token for the user.\n",
+        "description": "Create a new session for authentication. Generates access and refresh tokens.",
         "operationId": "CreateSession",
         "consumes": [
           "application/json"
@@ -4470,7 +4470,7 @@
           "com.atproto.server"
         ],
         "summary": "Refresh Session",
-        "description": "Refresh an existing session to obtain a new access token and refresh token. The previous refresh token becomes invalid.\n",
+        "description": "Refresh an existing session to obtain a new access token and refresh token.",
         "operationId": "RefreshSession",
         "consumes": [
           "application/json"
@@ -4611,7 +4611,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Unmute Conversation",
-        "description": "Unmute a previously muted conversation. The user will start receiving notifications for the conversation again.\n",
+        "description": "Unmute a previously muted conversation.",
         "operationId": "UnmuteConvo",
         "consumes": [
           "application/json"
@@ -4738,7 +4738,7 @@
           "chat.bsky.moderation"
         ],
         "summary": "Get Actor Metadata",
-        "description": "Retrieve metadata about a specific actor (user) for moderation purposes.\n",
+        "description": "Retrieve metadata about a specific actor for moderation.\n",
         "operationId": "GetActorMetadata",
         "produces": [
           "application/json"
@@ -4802,7 +4802,7 @@
           "chat.bsky.moderation"
         ],
         "summary": "Get Message Context",
-        "description": "Retrieve the context of a specific message for moderation purposes, such as messages sent before and after it.\n",
+        "description": "Retrieve the context of a specific message for moderation purposes.\n",
         "operationId": "GetMessageContext",
         "produces": [
           "application/json"
@@ -4885,7 +4885,7 @@
           "chat.bsky.moderation"
         ],
         "summary": "Update Actor Access",
-        "description": "Update the access permissions or restrictions for a specific actor (user) as part of moderation actions.\n",
+        "description": "Update actor access permissions or restrictions.\n",
         "operationId": "UpdateActorAccess",
         "consumes": [
           "application/json"
@@ -4951,7 +4951,7 @@
           "com.atproto.admin"
         ],
         "summary": "Delete Account",
-        "description": "Permanently delete an account, including all associated data. This action is irreversible.\n",
+        "description": "Permanently delete an account, including all associated data.\n",
         "operationId": "AdminDeleteAccount",
         "consumes": [
           "application/json"
@@ -5012,7 +5012,7 @@
           "com.atproto.admin"
         ],
         "summary": "Disable Account Invites",
-        "description": "Disable account invites for a specific user, preventing them from inviting others.\n",
+        "description": "Disable account invites for a specific user.\n",
         "operationId": "DisableAccountInvites",
         "consumes": [
           "application/json"
@@ -5073,7 +5073,7 @@
           "com.atproto.admin"
         ],
         "summary": "Disable Invite Codes",
-        "description": "Disable specific invite codes to prevent further usage. This action is useful for invalidating compromised or misused codes.\n",
+        "description": "Disable specific invite codes to prevent further usage.\n",
         "operationId": "DisableInviteCodes",
         "consumes": [
           "application/json"
@@ -5137,7 +5137,7 @@
           "com.atproto.admin"
         ],
         "summary": "Enable Account Invites",
-        "description": "Re-enable invite privileges for a specific account, allowing the user to issue new invite codes.\n",
+        "description": "Re-enable invite privileges for a specific account.\n",
         "operationId": "EnableAccountInvites",
         "consumes": [
           "application/json"
@@ -5198,7 +5198,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Info",
-        "description": "Retrieve detailed information about a specific account, including metadata and activity status.\n",
+        "description": "Retrieve detailed information about a specific account.\n",
         "operationId": "GetAccountInfo",
         "produces": [
           "application/json"
@@ -5264,7 +5264,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Infos",
-        "description": "Retrieve a list of accounts with their details, including pagination for larger datasets.\n",
+        "description": "Retrieve a list of accounts with their details.\n",
         "operationId": "GetAccountInfos",
         "produces": [
           "application/json"
@@ -5341,7 +5341,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Invite Codes",
-        "description": "Retrieve a list of all active or disabled invite codes. Supports pagination for larger datasets.\n",
+        "description": "Retrieve a list of all active or disabled invite codes.\n",
         "operationId": "GetInviteCodes",
         "produces": [
           "application/json"
@@ -5413,7 +5413,7 @@
           "com.atproto.admin"
         ],
         "summary": "Get Subject Status",
-        "description": "Retrieve the status of a specific subject (e.g., an account or actor), including moderation and activity details.\n",
+        "description": "Retrieve the status of a specific subject (e.g., an account or actor).\n",
         "operationId": "GetSubjectStatus",
         "produces": [
           "application/json"
@@ -5483,7 +5483,7 @@
           "com.atproto.admin"
         ],
         "summary": "Search Accounts",
-        "description": "Search for accounts using specific query parameters, such as email, handle, or other identifiers.\n",
+        "description": "Search for accounts with a specific email, handle, etc.\n",
         "operationId": "AdminSearchAccounts",
         "produces": [
           "application/json"
@@ -5568,7 +5568,7 @@
           "com.atproto.admin"
         ],
         "summary": "Send Email",
-        "description": "Send an email to a specific account or group of accounts. This can be used for notifications or administrative purposes.\n",
+        "description": "Send an email to a specific account or group of accounts.\n",
         "operationId": "SendEmail",
         "consumes": [
           "application/json"
@@ -5771,7 +5771,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Password",
-        "description": "Update the password for a specific account. This operation should only be performed with proper authorization.\n",
+        "description": "Update the password for a specific account.\n",
         "operationId": "UpdateAccountPassword",
         "consumes": [
           "application/json"
@@ -5837,7 +5837,7 @@
           "com.atproto.admin"
         ],
         "summary": "Update Subject Status",
-        "description": "Update the status of a specific subject (e.g., account or actor) for administrative or moderation purposes.\n",
+        "description": "Update the status of a specific subject (e.g., actor).\n",
         "operationId": "UpdateSubjectStatus",
         "consumes": [
           "application/json"
@@ -5903,7 +5903,7 @@
           "com.atproto.identity"
         ],
         "summary": "Get Recommended DID Credentials",
-        "description": "Retrieve a list of recommended DID credentials for an identity. Useful for validating or enhancing account security.\n",
+        "description": "Retrieve a list of recommended DID credentials for an identity.\n",
         "operationId": "GetRecommendedDidCredentials",
         "produces": [
           "application/json"
@@ -6017,7 +6017,7 @@
           "com.atproto.identity"
         ],
         "summary": "Resolve Handle",
-        "description": "Resolve a handle to its corresponding DID for account identification purposes.\n",
+        "description": "Resolve a handle to its DID for account identification.\n",
         "operationId": "ResolveHandle",
         "produces": [
           "application/json"
@@ -6067,7 +6067,7 @@
           "com.atproto.identity"
         ],
         "summary": "Sign PLC Operation",
-        "description": "Sign a PLC operation for authentication or validation. This operation ensures that the PLC operation is authorized and trusted.\n",
+        "description": "Sign a PLC operation for authentication or validation.\n",
         "operationId": "SignPlcOperation",
         "consumes": [
           "application/json"
@@ -6132,7 +6132,7 @@
           "com.atproto.identity"
         ],
         "summary": "Submit PLC Operation",
-        "description": "Submit a PLC operation to the network. This operation is used to apply changes or register new operations in the PLC system.\n",
+        "description": "Submit a PLC operation to the network.\n",
         "operationId": "SubmitPlcOperation",
         "consumes": [
           "application/json"
@@ -6197,7 +6197,7 @@
           "com.atproto.identity"
         ],
         "summary": "Update Handle",
-        "description": "Update the handle associated with a specific DID. This operation allows changing an account's publicly visible handle.\n",
+        "description": "Update the handle associated with a specific DID.\n",
         "operationId": "UpdateHandle",
         "consumes": [
           "application/json"
@@ -6263,7 +6263,7 @@
           "com.atproto.label"
         ],
         "summary": "Query Labels",
-        "description": "Query the labels associated with specific content or entities. This operation is useful for moderation or content filtering.\n",
+        "description": "Query the labels associated with specific content or entities.\n",
         "operationId": "QueryLabels",
         "produces": [
           "application/json"
@@ -6343,7 +6343,7 @@
           "com.atproto.moderation"
         ],
         "summary": "Create Report",
-        "description": "Create a report for moderation purposes, such as flagging inappropriate content or behavior.\n",
+        "description": "Create a report flagging inappropriate content or behavior.\n",
         "operationId": "CreateReport",
         "consumes": [
           "application/json"
@@ -6409,7 +6409,7 @@
           "com.atproto.repo"
         ],
         "summary": "Apply Writes",
-        "description": "Apply a set of writes (create, update, delete) to the repository in a single operation.\n",
+        "description": "Apply a set of write operations to the repo.\n",
         "operationId": "ApplyWrites",
         "consumes": [
           "application/json"
@@ -6617,7 +6617,7 @@
           "com.atproto.repo"
         ],
         "summary": "Describe Repository",
-        "description": "Retrieve metadata about the repository, including collections and configurations.\n",
+        "description": "Retrieve metadata about the repository.\n",
         "operationId": "DescribeRepo",
         "produces": [
           "application/json"
@@ -6660,7 +6660,7 @@
           "com.atproto.repo"
         ],
         "summary": "Import Repository",
-        "description": "Import an existing repository into the current system. This operation is used for migrating data.\n",
+        "description": "Import an existing repository into the current system.\n",
         "operationId": "ImportRepo",
         "consumes": [
           "application/json"
@@ -6735,7 +6735,7 @@
           "com.atproto.repo"
         ],
         "summary": "List Missing Blobs",
-        "description": "Retrieve a list of blobs missing from the repository. This is useful for synchronization or recovery operations.\n",
+        "description": "Retrieve a list of blobs missing from the repository.\n",
         "operationId": "ListMissingBlobs",
         "produces": [
           "application/json"
@@ -6788,7 +6788,7 @@
           "com.atproto.repo"
         ],
         "summary": "List Records",
-        "description": "Retrieve a list of records from a specific collection in the repository.\n",
+        "description": "Retrieve list records from a collection in a repository.\n",
         "operationId": "ListRecords",
         "produces": [
           "application/json"
@@ -6929,7 +6929,7 @@
           "com.atproto.repo"
         ],
         "summary": "Upload Blob",
-        "description": "Uploads a binary blob to the specified repository using multipart/form-data.",
+        "description": "Uploads a binary blob to a repo using multipart/form-data.",
         "operationId": "UploadBlob",
         "consumes": [
           "multipart/form-data"
@@ -6986,7 +6986,7 @@
           "com.atproto.server"
         ],
         "summary": "Activate Account",
-        "description": "Activate a user account after registration or reactivation. Requires a valid activation token.\n",
+        "description": "Activate a user account after registration or reactivation.\n",
         "operationId": "ActivateAccount",
         "consumes": [
           "application/json"
@@ -7047,7 +7047,7 @@
           "com.atproto.server"
         ],
         "summary": "Check Account Status",
-        "description": "Check the status of a specific account, such as active, pending, or deactivated.\n",
+        "description": "Check the status of an account - active, pending, or deactivated.\n",
         "operationId": "CheckAccountStatus",
         "produces": [
           "application/json"
@@ -7097,7 +7097,7 @@
           "com.atproto.server"
         ],
         "summary": "Confirm Email",
-        "description": "Confirm the email address of a user account during registration or update.\n",
+        "description": "Confirm the account/email address during registration or update.\n",
         "operationId": "ConfirmEmail",
         "consumes": [
           "application/json"
@@ -7234,7 +7234,7 @@
           "com.atproto.server"
         ],
         "summary": "Create App Password",
-        "description": "Generate a new application-specific password for a user account.\n",
+        "description": "Generate a new app-specific password for a user account.\n",
         "operationId": "CreateAppPassword",
         "consumes": [
           "application/json"
@@ -7425,7 +7425,7 @@
           "com.atproto.server"
         ],
         "summary": "Deactivate Account",
-        "description": "Deactivate a user account, preventing further access until reactivation.\n",
+        "description": "Deactivate a user account.\n",
         "operationId": "DeactivateAccount",
         "consumes": [
           "application/json"
@@ -7486,7 +7486,7 @@
           "com.atproto.server"
         ],
         "summary": "Delete Account",
-        "description": "Permanently delete a user account and all associated data. Use with caution.\n",
+        "description": "Permanently delete a user account and all associated data\n",
         "operationId": "ATProtoDeleteAccount",
         "consumes": [
           "application/json"
@@ -7547,7 +7547,7 @@
           "com.atproto.server"
         ],
         "summary": "Delete Session",
-        "description": "Log out the current session by invalidating the active token.\n",
+        "description": "Log out the current session.\n",
         "operationId": "DeleteSession",
         "consumes": [
           "application/json"
@@ -7591,7 +7591,7 @@
           "com.atproto.server"
         ],
         "summary": "Describe Server",
-        "description": "Retrieve information about the current server, including supported features and configurations.\n",
+        "description": "Retrieve information about the current server.\n",
         "operationId": "DescribeServer",
         "produces": [
           "application/json"
@@ -7639,7 +7639,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Account Invite Codes",
-        "description": "Retrieve all invite codes associated with the authenticated account.\n",
+        "description": "Retrieve all invite codes for an authenticated account.\n",
         "operationId": "GetAccountInviteCodes",
         "produces": [
           "application/json"
@@ -7692,7 +7692,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Service Auth",
-        "description": "Retrieve authentication tokens or keys for interacting with the server services.\n",
+        "description": "Retrieve auth tokens for interacting with the server services.\n",
         "operationId": "GetServiceAuth",
         "produces": [
           "application/json"
@@ -7744,7 +7744,7 @@
           "com.atproto.server"
         ],
         "summary": "Get Session",
-        "description": "Retrieve information about the current session, including user details.\n",
+        "description": "Retrieve information about the current session.\n",
         "operationId": "GetSession",
         "produces": [
           "application/json"
@@ -7789,7 +7789,7 @@
           "com.atproto.server"
         ],
         "summary": "List App Passwords",
-        "description": "Retrieve a list of all application-specific passwords associated with the current account.\n",
+        "description": "Retrieve a list of all app-specific passwords for an account.\n",
         "operationId": "ListAppPasswords",
         "produces": [
           "application/json"
@@ -7844,7 +7844,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Account Deletion",
-        "description": "Submit a request to delete the authenticated user account. This may involve additional confirmation steps.\n",
+        "description": "Submit a request to delete the authenticated user account.\n",
         "operationId": "RequestAccountDelete",
         "consumes": [
           "application/json"
@@ -7887,7 +7887,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Email Confirmation",
-        "description": "Request an email confirmation for the current user. This sends a confirmation link to the user's email address.\n",
+        "description": "Request an email confirmation for the current user\n",
         "operationId": "RequestEmailConfirmation",
         "consumes": [
           "application/json"
@@ -7930,7 +7930,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Email Update",
-        "description": "Request an update to the user's email address. This sends a confirmation link to the new email address.\n",
+        "description": "Request an update to the user's email address.\n",
         "operationId": "RequestEmailUpdate",
         "consumes": [
           "application/json"
@@ -7991,7 +7991,7 @@
           "com.atproto.server"
         ],
         "summary": "Request Password Reset",
-        "description": "Request a password reset for the user's account. Sends a reset link to the registered email address.\n",
+        "description": "Request a password reset for the user's account.\n",
         "operationId": "RequestPasswordReset",
         "consumes": [
           "application/json"
@@ -8052,7 +8052,7 @@
           "com.atproto.server"
         ],
         "summary": "Reserve Signing Key",
-        "description": "Reserve a signing key for the user account. This key is used for cryptographic operations.\n",
+        "description": "Reserve a signing key for the user account.\n",
         "operationId": "ReserveSigningKey",
         "consumes": [
           "application/json"
@@ -8179,7 +8179,7 @@
           "com.atproto.server"
         ],
         "summary": "Revoke App Password",
-        "description": "Revoke an application-specific password associated with the user's account.\n",
+        "description": "Revoke an app-specific password for a user's account.\n",
         "operationId": "RevokeAppPassword",
         "consumes": [
           "application/json"
@@ -8240,7 +8240,7 @@
           "com.atproto.server"
         ],
         "summary": "Update Email",
-        "description": "Update the email address associated with the user's account after confirmation.\n",
+        "description": "Update an email address for a user's account after confirmation.\n",
         "operationId": "UpdateEmail",
         "consumes": [
           "application/json"
@@ -8306,7 +8306,7 @@
           "com.atproto.sync"
         ],
         "summary": "Get Blob",
-        "description": "Retrieve a binary blob from the specified repository using multipart/form-data.",
+        "description": "Retrieve a binary blob from a repo using multipart/form-data.",
         "operationId": "GetBlob",
         "produces": [
           "application/json"
@@ -8372,7 +8372,7 @@
           "com.atproto.sync"
         ],
         "summary": "Get Blocks",
-        "description": "Retrieve multiple binary blocks from the specified repository. The blocks\nare returned as base64-encoded data in a JSON response.\n",
+        "description": "Retrieve multiple binary blocks from the specified repository.\n",
         "operationId": "SyncGetBlocks",
         "produces": [
           "application/json"
@@ -8446,7 +8446,7 @@
           "com.atproto.sync"
         ],
         "summary": "Get Latest Commit",
-        "description": "Retrieve the latest commit for the repository. This provides details on the most recent update.\n",
+        "description": "Retrieve the latest commit for the repository.\n",
         "operationId": "GetLatestCommit",
         "produces": [
           "application/json"
@@ -8508,7 +8508,7 @@
           "com.atproto.sync"
         ],
         "summary": "Get Record",
-        "description": "Retrieve a specific record from the repository by its unique identifier.\n",
+        "description": "Retrieve a record from the repo by its unique identifier.\n",
         "operationId": "ATProtoGetRecord",
         "produces": [
           "application/json"
@@ -8624,7 +8624,7 @@
           "com.atproto.sync"
         ],
         "summary": "Get Repository Status",
-        "description": "Retrieve the status of a repository, including synchronization details.\n",
+        "description": "Retrieve repo status, incl. synchronization info.\n",
         "operationId": "GetRepoStatus",
         "produces": [
           "application/json"
@@ -8803,7 +8803,7 @@
           "com.atproto.sync"
         ],
         "summary": "Notify of Update",
-        "description": "Notify the system about updates to a repository to trigger synchronization.\n",
+        "description": "Notify the system about updates to a repo to trigger sync.\n",
         "operationId": "NotifyOfUpdate",
         "consumes": [
           "application/json"
@@ -9309,7 +9309,7 @@
           "tools.ozone.moderation"
         ],
         "summary": "Get Moderation Record",
-        "description": "Retrieve a moderation record associated with an entity or user.\n",
+        "description": "Retrieve a moderation record for an entity or user.\n",
         "operationId": "OzoneGetRecord",
         "produces": [
           "application/json"
@@ -9656,7 +9656,7 @@
           "tools.ozone.moderation"
         ],
         "summary": "Search Repositories",
-        "description": "Search moderation repositories based on query parameters.\n",
+        "description": "Search moderation repos based on query params.\n",
         "operationId": "SearchRepos",
         "produces": [
           "application/json"
@@ -9720,7 +9720,7 @@
           "tools.ozone.server"
         ],
         "summary": "Get Server Configuration",
-        "description": "Retrieve the current server configuration details.\n",
+        "description": "Retrieve the current server config details.\n",
         "operationId": "GetConfig",
         "produces": [
           "application/json"
@@ -10023,7 +10023,7 @@
           "tools.ozone.set"
         ],
         "summary": "Query Sets",
-        "description": "Retrieve a list of sets matching the provided query criteria.\n",
+        "description": "Retrieve a list of sets matching query criteria.\n",
         "operationId": "QuerySets",
         "produces": [
           "application/json"
@@ -10161,7 +10161,7 @@
           "tools.ozone.signature"
         ],
         "summary": "Find Correlation",
-        "description": "Search for correlations between entities based on their signatures.\n",
+        "description": "Search for correlations btw. entities based on their signatures.\n",
         "operationId": "FindCorrelation",
         "produces": [
           "application/json"
