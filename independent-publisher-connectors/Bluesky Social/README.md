@@ -8,8 +8,8 @@
 
 - **To use this connector, you will need:
 
-- **A Bluesky account.
-- **API access to Bluesky with App Password.
+    - **A Bluesky account.
+    - **API access to Bluesky with App Password.
 
 ## Supported Operations
 
@@ -257,10 +257,10 @@
 
 - **Some endpoints require specific parameters (such as actor/user Ids for examples).
 
-- **Authenticate: Start by authenticating with your Bluesky credentials.
-- **Choose Endpoint: Select the desired endpoint, such as retrieving a feed or listing notifications.
-- **Set Parameters: Provide the required parameters like user IDs, limits, or query strings.
-- **Execute Request: Run the request to retrieve data or perform actions within your Power Platform app.
+    - **Authenticate: Start by authenticating with your Bluesky credentials.
+    - **Choose Endpoint: Select the desired endpoint, such as retrieving a feed or listing notifications.
+    - **Set Parameters: Provide the required parameters like user IDs, limits, or query strings.
+    - **Execute Request: Run the request to retrieve data or perform actions within your Power Platform app.
 
 ## Known Issues and Limitations
 
@@ -270,8 +270,18 @@
 
 - **Q: How do I generate an App Password?**  
   A: Visit the [Bluesky Developer Portal](https://bsky.app/settings) and generate a new App Password. Use the password to generate a token.
+
 - **Q: What are the API rate limits?**  
   A: Bluesky imposes a rate limit of 100 requests per minute per account.
+
+- **Q: What are some useful terms and definitions, such as actor or DID?**  
+  **A:** Useful terms to know:
+    - **Actor:** An entity, typically a user, that interacts with the system. This can represent a person, organization, or automated system.
+    - **Starter Pack:** A curated set of suggested accounts or content designed to help new users get started on the platform.
+    - **Signature:** A cryptographic proof used to verify the authenticity and integrity of a transaction or operation within the system.
+    - **PLC (Personal Linked Chain):** A blockchain-like structure used to maintain a verifiable history of account operations (e.g., handle updates, key rotations). It ensures transparency and trustworthiness.
+    - **DID (Decentralized Identifier):** A globally unique identifier for an actor that is not tied to a centralized registry. DIDs are foundational to the decentralized nature of Bluesky.
+
 
 ### Support
 
