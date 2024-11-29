@@ -1,73 +1,55 @@
 {
-  "connectionParameters": {
-    "identifier": {
-      "type": "string",
-      "uiDefinition": {
-        "displayName": "Bluesky Username",
-        "description": "The username or email used for authentication.",
-        "tooltip": "Enter your Bluesky username or email.",
-        "constraints": {
-          "required": "true"
+  "properties": {
+    "connectionParameters": {
+      "pdshost": {
+        "type": "string",
+        "uiDefinition": {
+          "displayName": "PDS Host",
+          "description": "The Bluesky host. Default: bsky.social",
+          "tooltip": "Provide the Bluesky host. Default: bsky.social",
+          "default": "bsky.social",
+          "constraints": {
+            "required": true
+          }
+        }
+      },
+      "username": {
+        "type": "string",
+        "uiDefinition": {
+          "displayName": "Bluesky Handle",
+          "description": "The Bluesky Handle used for authentication.",
+          "tooltip": "Enter the Bluesky handle (username).",
+          "constraints": {
+            "required": true
+          }
+        }
+      },
+      "password": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "Bluesky Password",
+          "description": "The Bluesky Password used for authentication.",
+          "tooltip": "Enter the Bluesky password.",
+          "constraints": {
+            "required": true
+          }
         }
       }
     },
-    "password": {
-      "type": "securestring",
-      "uiDefinition": {
-        "displayName": "Bluesky Password",
-        "description": "The password or API key for authentication.",
-        "tooltip": "Enter your Bluesky password or app password.",
-        "constraints": {
-          "required": "true"
+    "policyTemplateInstances": [
+      {
+        "templateId": "setheader",
+        "title": "Add Authorization Header",
+        "parameters": {
+          "x-ms-apimTemplateParameter.name": "Authorization",
+          "x-ms-apimTemplateParameter.value": "Bearer {{accessJwt}}",
+          "x-ms-apimTemplateParameter.existsAction": "override"
         }
       }
-    },
-    "accessJwt": {
-      "type": "securestring",
-      "uiDefinition": {
-        "displayName": "Access Token (JWT)",
-        "description": "The Bearer token used for authentication.",
-        "tooltip": "Enter your Bearer token.",
-        "constraints": {
-          "required": "true"
-        }
-      }
-    },
-    "pdsHost": {
-      "type": "string",
-      "uiDefinition": {
-        "displayName": "Bluesky Host",
-        "description": "The Bluesky server host (e.g., bsky.social).",
-        "tooltip": "Enter the Bluesky host. Default: bsky.social",
-        "default": "bsky.social",
-        "constraints": {
-          "required": "false"
-        }
-      }
-    }
-  },
-  "policyTemplateInstances": [
-    {
-      "templateId": "setheader",
-      "title": "Add Authorization Header",
-      "parameters": {
-        "x-ms-apimTemplateParameter.name": "Authorization",
-        "x-ms-apimTemplateParameter.value": "Bearer @connectionParameters('accessJwt')",
-        "x-ms-apimTemplateParameter.existsAction": "override"
-      }
-    }
-  ],
-  "securityDefinitions": {
-    "bearerAuth": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Provide your Bearer token in the Authorization header."
-    }
-  },
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ]
+    ],
+    "iconBrandColor": "#da3b01",
+    "capabilities": [],
+    "publisher": "Dan Romano",
+    "stackOwner": "Bluesky PBC"
+  }
 }
