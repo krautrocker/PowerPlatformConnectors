@@ -5106,7 +5106,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Details",
-        "description": "Retrieve a specific list of users.\n",
+        "description": "Retrieve details and items of a specific user list.",
         "operationId": "GetList",
         "produces": [
           "application/json"
@@ -5124,7 +5124,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of list items to retrieve.",
+            "description": "Max number of list items to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -5133,7 +5133,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -5145,11 +5145,258 @@
             "schema": {
               "type": "object",
               "properties": {
-                "listItems": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "list": {
+                  "type": "object",
+                  "description": "Details of the retrieved list.",
+                  "properties": {
+                    "uri": {
+                      "type": "string",
+                      "description": "URI of the list."
+                    },
+                    "cid": {
+                      "type": "string",
+                      "description": "Content ID of the list."
+                    },
+                    "creator": {
+                      "type": "object",
+                      "description": "Details of the list creator.",
+                      "properties": {
+                        "did": {
+                          "type": "string",
+                          "description": "Decentralized identifier of the creator."
+                        },
+                        "handle": {
+                          "type": "string",
+                          "description": "Handle of the creator."
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "description": "Display name of the creator."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Profile description of the creator."
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "description": "Avatar URL of the creator."
+                        },
+                        "associated": {
+                          "type": "object",
+                          "description": "Metadata about the creator.",
+                          "properties": {
+                            "lists": {
+                              "type": "integer",
+                              "description": "Number of lists created."
+                            },
+                            "feedgens": {
+                              "type": "integer",
+                              "description": "Number of feed generators."
+                            },
+                            "starterPacks": {
+                              "type": "integer",
+                              "description": "Number of starter packs."
+                            },
+                            "labeler": {
+                              "type": "boolean",
+                              "description": "Indicates if labeled."
+                            },
+                            "chat": {
+                              "type": "object",
+                              "description": "Chat permissions.",
+                              "properties": {
+                                "allowIncoming": {
+                                  "type": "string",
+                                  "description": "Incoming chat permissions."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the list."
+                    },
+                    "purpose": {
+                      "type": "string",
+                      "description": "Purpose of the list."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the list."
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "Avatar image URL of the list."
+                    },
+                    "listItemCount": {
+                      "type": "integer",
+                      "description": "Number of items in the list."
+                    },
+                    "labels": {
+                      "type": "array",
+                      "description": "Labels associated with the list.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ver": {
+                            "type": "integer",
+                            "description": "Version of the label."
+                          },
+                          "src": {
+                            "type": "string",
+                            "description": "Source of the label."
+                          },
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the label."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content ID of the label."
+                          },
+                          "val": {
+                            "type": "string",
+                            "description": "Value of the label."
+                          },
+                          "neg": {
+                            "type": "boolean",
+                            "description": "Indicates if the label is negative."
+                          },
+                          "cts": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the label was created."
+                          },
+                          "exp": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Expiration timestamp of the label."
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "items": {
                   "type": "array",
-                  "description": "An array of profiles or items in the list.",
+                  "description": "Items in the list.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a list item.",
+                    "properties": {
+                      "uri": {
+                        "type": "string",
+                        "description": "URI of the list item."
+                      },
+                      "subject": {
+                        "type": "object",
+                        "description": "Profile details of the list item.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the subject."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the subject."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the subject."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Profile description of the subject."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "Avatar URL of the subject."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Metadata about the subject.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "description": "Number of feed generators."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "description": "Number of starter packs."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Indicates if labeled."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat permissions.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Incoming chat permissions."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the subject.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ver": {
+                                  "type": "integer",
+                                  "description": "Version of the label."
+                                },
+                                "src": {
+                                  "type": "string",
+                                  "description": "Source of the label."
+                                },
+                                "uri": {
+                                  "type": "string",
+                                  "description": "URI of the label."
+                                },
+                                "cid": {
+                                  "type": "string",
+                                  "description": "Content ID of the label."
+                                },
+                                "val": {
+                                  "type": "string",
+                                  "description": "Value of the label."
+                                },
+                                "neg": {
+                                  "type": "boolean",
+                                  "description": "Indicates if the label is negative."
+                                },
+                                "cts": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Timestamp of label creation."
+                                },
+                                "exp": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Expiration timestamp of the label."
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -5176,7 +5423,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Blocks",
-        "description": "Retrieve users blocked within a specific list.\n",
+        "description": "Retrieve users blocked within a specific list.",
         "operationId": "GetListBlocks",
         "produces": [
           "application/json"
@@ -5194,7 +5441,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of blocked accounts to retrieve.",
+            "description": "Max number of blocked accounts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -5203,7 +5450,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -5215,11 +5462,158 @@
             "schema": {
               "type": "object",
               "properties": {
-                "blockedAccounts": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "lists": {
                   "type": "array",
-                  "description": "An array of profiles representing blocked accounts within the list.",
+                  "description": "An array of blocked accounts within the specified list.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of the blocked list.",
+                    "properties": {
+                      "uri": {
+                        "type": "string",
+                        "description": "URI of the blocked list."
+                      },
+                      "cid": {
+                        "type": "string",
+                        "description": "Content ID of the list."
+                      },
+                      "creator": {
+                        "type": "object",
+                        "description": "Details about the creator of the blocked list.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the creator."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the creator."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the creator."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the creator's avatar."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Metadata about the creator.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "description": "Number of lists associated with the creator."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Indicates if the creator is labeled."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat permissions for the creator.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Incoming chat permissions."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the list."
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "description": "Purpose of the list."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the list."
+                      },
+                      "listItemCount": {
+                        "type": "integer",
+                        "description": "Number of items in the list."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the list.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Label version."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Label source."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "Label URI."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Content ID of the label."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Value of the label."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Timestamp when the label was created."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Timestamp when the label expires."
+                            }
+                          }
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Information about the viewer of the list.",
+                        "properties": {
+                          "muted": {
+                            "type": "boolean",
+                            "description": "Indicates if the viewer has muted the list."
+                          },
+                          "blocked": {
+                            "type": "string",
+                            "description": "Indicates if the list is blocked."
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the list was indexed."
+                      }
+                    }
                   }
                 }
               }
@@ -5246,7 +5640,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get List Mutes",
-        "description": "Retrieve muted lists for the authenticated user.\n",
+        "description": "Retrieve muted lists for the authenticated user.",
         "operationId": "GetListMutes",
         "produces": [
           "application/json"
@@ -5255,7 +5649,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of muted lists to retrieve.",
+            "description": "Max number of muted lists to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -5264,7 +5658,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -5276,9 +5670,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "mutedLists": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "lists": {
                   "type": "array",
-                  "description": "An array of muted list details.",
+                  "description": "An array of muted lists.",
                   "items": {
                     "type": "object",
                     "description": "Details of a muted list.",
@@ -5288,10 +5686,149 @@
                         "description": "URI of the muted list.",
                         "example": "at://did:plc:abcd1234/app.bsky.graph/list123"
                       },
+                      "cid": {
+                        "type": "string",
+                        "description": "Content ID of the muted list."
+                      },
+                      "creator": {
+                        "type": "object",
+                        "description": "Details of the muted list's creator.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the creator."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the creator."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the creator."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Profile description of the creator."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the creator's avatar."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Metadata about the creator.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "description": "Number of lists associated with the creator."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Indicates if the creator is labeled."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat permissions for the creator.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Incoming chat permissions."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
                       "name": {
                         "type": "string",
-                        "description": "The name of the muted list.",
-                        "example": "Blocked Users"
+                        "description": "Name of the muted list."
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "description": "Purpose of the muted list."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the muted list."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "Avatar image URL of the muted list."
+                      },
+                      "listItemCount": {
+                        "type": "integer",
+                        "description": "Number of items in the muted list."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the muted list.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Version of the label."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Source of the label."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "URI of the label."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Content ID of the label."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Value of the label."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Timestamp of label creation."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Timestamp when the label expires."
+                            }
+                          }
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Details about the viewer of the muted list.",
+                        "properties": {
+                          "muted": {
+                            "type": "boolean",
+                            "description": "Indicates if the viewer has muted the list."
+                          },
+                          "blocked": {
+                            "type": "string",
+                            "description": "Indicates if the viewer has blocked the list."
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the list was indexed."
                       }
                     }
                   }
@@ -5402,7 +5939,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Muted Accounts",
-        "description": "Retrieve muted users for the authenticated user.\n",
+        "description": "Retrieve muted users for the authenticated user.",
         "operationId": "GetMutes",
         "produces": [
           "application/json"
@@ -5411,7 +5948,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of muted accounts to retrieve.",
+            "description": "Max number of muted accounts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -5420,7 +5957,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -5432,11 +5969,161 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "mutedAccounts": {
                   "type": "array",
                   "description": "An array of profiles representing muted accounts.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a muted account.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier of the muted account."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the muted account."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the muted account."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description of the muted account."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "Avatar URL of the muted account."
+                      },
+                      "associated": {
+                        "type": "object",
+                        "description": "Metadata about the muted account.",
+                        "properties": {
+                          "lists": {
+                            "type": "integer",
+                            "description": "Number of lists associated with the account."
+                          },
+                          "feedgens": {
+                            "type": "integer",
+                            "description": "Number of feed generators."
+                          },
+                          "starterPacks": {
+                            "type": "integer",
+                            "description": "Number of starter packs."
+                          },
+                          "labeler": {
+                            "type": "boolean",
+                            "description": "Indicates if labeled."
+                          },
+                          "chat": {
+                            "type": "object",
+                            "description": "Chat permissions.",
+                            "properties": {
+                              "allowIncoming": {
+                                "type": "string",
+                                "description": "Incoming chat permissions."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Viewer-specific metadata.",
+                        "properties": {
+                          "muted": {
+                            "type": "boolean",
+                            "description": "Indicates if the viewer has muted the account."
+                          },
+                          "mutedByList": {
+                            "type": "object",
+                            "description": "Details of the list that muted this account.",
+                            "properties": {
+                              "uri": {
+                                "type": "string",
+                                "description": "URI of the list."
+                              },
+                              "cid": {
+                                "type": "string",
+                                "description": "Content ID of the list."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the list."
+                              },
+                              "purpose": {
+                                "type": "string",
+                                "description": "Purpose of the list."
+                              },
+                              "avatar": {
+                                "type": "string",
+                                "description": "Avatar URL of the list."
+                              },
+                              "listItemCount": {
+                                "type": "integer",
+                                "description": "Number of items in the list."
+                              },
+                              "labels": {
+                                "type": "array",
+                                "description": "Labels associated with the list.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "ver": {
+                                      "type": "integer",
+                                      "description": "Version of the label."
+                                    },
+                                    "src": {
+                                      "type": "string",
+                                      "description": "Source of the label."
+                                    },
+                                    "uri": {
+                                      "type": "string",
+                                      "description": "URI of the label."
+                                    },
+                                    "cid": {
+                                      "type": "string",
+                                      "description": "Content ID of the label."
+                                    },
+                                    "val": {
+                                      "type": "string",
+                                      "description": "Value of the label."
+                                    },
+                                    "neg": {
+                                      "type": "boolean",
+                                      "description": "Indicates if the label is negative."
+                                    },
+                                    "cts": {
+                                      "type": "string",
+                                      "format": "date-time",
+                                      "description": "Timestamp of label creation."
+                                    },
+                                    "exp": {
+                                      "type": "string",
+                                      "format": "date-time",
+                                      "description": "Expiration timestamp of the label."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "blockedBy": {
+                            "type": "boolean",
+                            "description": "Indicates if the account is blocked by the viewer."
+                          },
+                          "blocking": {
+                            "type": "string",
+                            "description": "Details of blocking status."
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -5463,7 +6150,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Relationships Between Accounts",
-        "description": "Retrieve relationships between the authenticated user and specified accounts.\n",
+        "description": "Retrieve relationships between the authenticated user and specified accounts.",
         "operationId": "GetRelationships",
         "produces": [
           "application/json"
@@ -5525,7 +6212,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Pack Details",
-        "description": "Retrieve a single starter pack for a new user.\n",
+        "description": "Retrieve a single starter pack for a new user.",
         "operationId": "GetStarterPack",
         "produces": [
           "application/json"
@@ -5583,7 +6270,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get All Starter Packs",
-        "description": "Retrieve all starter packs for new users.\n",
+        "description": "Retrieve all starter packs for new users.",
         "operationId": "GetStarterPacks",
         "produces": [
           "application/json"
