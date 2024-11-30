@@ -1395,7 +1395,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts by an Author",
-        "description": "Retrieve posts from a specific author.\n",
+        "description": "Retrieve posts from a specific author.",
         "operationId": "GetAuthorFeed",
         "produces": [
           "application/json"
@@ -1412,7 +1412,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of posts to retrieve.",
+            "description": "Maximum number of posts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -1433,25 +1433,128 @@
             "schema": {
               "type": "object",
               "properties": {
-                "posts": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "feed": {
                   "type": "array",
-                  "description": "An array of posts created by the author.",
+                  "description": "An array of feed items.",
                   "items": {
                     "type": "object",
-                    "description": "Details of a post.",
+                    "description": "Details of a feed item.",
                     "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the post.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/post123"
-                      },
-                      "author": {
-                        "$ref": "#/definitions/ProfileView"
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Content of the post.",
-                        "example": "This is a sample post content."
+                      "post": {
+                        "type": "object",
+                        "description": "Details of the post.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the post."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "CID of the post."
+                          },
+                          "author": {
+                            "$ref": "#/definitions/ProfileViewDetailed"
+                          },
+                          "record": {
+                            "type": "object",
+                            "description": "Record metadata for the post."
+                          },
+                          "embed": {
+                            "type": "object",
+                            "description": "Embed metadata for the post."
+                          },
+                          "replyCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of replies to the post."
+                          },
+                          "repostCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of reposts of the post."
+                          },
+                          "likeCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of likes on the post."
+                          },
+                          "quoteCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of quotes of the post."
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the post was indexed."
+                          },
+                          "viewer": {
+                            "type": "object",
+                            "description": "Viewer-specific metadata.",
+                            "properties": {
+                              "repost": {
+                                "type": "string",
+                                "description": "URI of the viewer's repost of the post."
+                              },
+                              "like": {
+                                "type": "string",
+                                "description": "URI of the viewer's like on the post."
+                              },
+                              "threadMuted": {
+                                "type": "boolean",
+                                "description": "Indicates if the viewer muted the thread."
+                              },
+                              "replyDisabled": {
+                                "type": "boolean",
+                                "description": "Indicates if replies are disabled for the post."
+                              },
+                              "embeddingDisabled": {
+                                "type": "boolean",
+                                "description": "Indicates if embedding is disabled for the post."
+                              },
+                              "pinned": {
+                                "type": "boolean",
+                                "description": "Indicates if the post is pinned."
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the post.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          },
+                          "threadgate": {
+                            "type": "object",
+                            "description": "Thread gate metadata.",
+                            "properties": {
+                              "uri": {
+                                "type": "string",
+                                "description": "URI of the thread gate."
+                              },
+                              "cid": {
+                                "type": "string",
+                                "description": "CID of the thread gate."
+                              },
+                              "record": {
+                                "type": "object",
+                                "description": "Record metadata for the thread gate."
+                              },
+                              "lists": {
+                                "type": "array",
+                                "description": "Lists associated with the thread gate.",
+                                "items": {
+                                  "$ref": "#/definitions/ListDetails"
+                                }
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -1480,7 +1583,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Feed for a Specific URI",
-        "description": "Retrieve posts from a specific feed or tag.\n",
+        "description": "Retrieve posts from a specific feed or tag.",
         "operationId": "GetFeed",
         "produces": [
           "application/json"
@@ -1498,7 +1601,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of items to retrieve in the feed.",
+            "description": "Maximum number of items to retrieve in the feed.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -1519,22 +1622,130 @@
             "schema": {
               "type": "object",
               "properties": {
-                "feedItems": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "feed": {
                   "type": "array",
                   "description": "An array of feed items.",
                   "items": {
                     "type": "object",
                     "description": "Details of a feed item.",
                     "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the feed item.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/post123"
+                      "post": {
+                        "type": "object",
+                        "description": "Details of the post.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the post."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content identifier of the post."
+                          },
+                          "author": {
+                            "type": "object",
+                            "description": "Information about the post author.",
+                            "properties": {
+                              "did": {
+                                "type": "string",
+                                "description": "DID of the author."
+                              },
+                              "handle": {
+                                "type": "string",
+                                "description": "Handle of the author."
+                              },
+                              "displayName": {
+                                "type": "string",
+                                "description": "Display name of the author."
+                              },
+                              "avatar": {
+                                "type": "string",
+                                "description": "URL of the author's avatar image."
+                              },
+                              "associated": {
+                                "type": "object",
+                                "description": "Associated metadata for the author.",
+                                "properties": {
+                                  "lists": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of lists associated."
+                                  },
+                                  "feedgens": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of feed generators associated."
+                                  },
+                                  "starterPacks": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of starter packs associated."
+                                  },
+                                  "labeler": {
+                                    "type": "boolean",
+                                    "description": "Whether the author is a labeler."
+                                  },
+                                  "chat": {
+                                    "type": "object",
+                                    "description": "Chat settings for the author.",
+                                    "properties": {
+                                      "allowIncoming": {
+                                        "type": "string",
+                                        "description": "Type of incoming messages allowed."
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "viewer": {
+                                "type": "object",
+                                "description": "Viewer-specific metadata.",
+                                "properties": {
+                                  "muted": {
+                                    "type": "boolean",
+                                    "description": "Whether the viewer has muted the author."
+                                  },
+                                  "blockedBy": {
+                                    "type": "boolean",
+                                    "description": "Whether the viewer is blocked by the author."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the post.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the post was created."
+                          }
+                        }
                       },
-                      "content": {
+                      "reply": {
+                        "type": "object",
+                        "description": "Reply-specific metadata for the feed item."
+                      },
+                      "reason": {
+                        "type": "object",
+                        "description": "Reason for including the feed item."
+                      },
+                      "feedContext": {
                         "type": "string",
-                        "description": "The content of the feed item.",
-                        "example": "This is a sample feed item."
+                        "description": "Context of the feed item in the feed."
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the feed item was indexed."
                       }
                     }
                   }
@@ -1563,7 +1774,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Metadata for a Feed Generator",
-        "description": "Retrieve metadata about a specific feed generator.\n",
+        "description": "Retrieve metadata about a specific feed generator.",
         "operationId": "GetFeedGenerator",
         "produces": [
           "application/json"
@@ -1585,26 +1796,177 @@
             "schema": {
               "type": "object",
               "properties": {
-                "metadata": {
+                "view": {
                   "type": "object",
-                  "description": "Metadata about the feed generator.",
+                  "description": "Detailed metadata about the feed generator.",
                   "properties": {
-                    "name": {
+                    "uri": {
                       "type": "string",
-                      "description": "The name of the feed generator.",
-                      "example": "Tech News Feeds"
+                      "description": "URI of the feed generator."
                     },
-                    "avatar": {
+                    "cid": {
                       "type": "string",
-                      "description": "URL of the feed generator's avatar image.",
-                      "example": "https://example.com/generator-avatar.jpg"
+                      "description": "Content identifier for the feed generator."
+                    },
+                    "did": {
+                      "type": "string",
+                      "description": "DID of the feed generator creator."
+                    },
+                    "creator": {
+                      "type": "object",
+                      "description": "Information about the creator of the feed generator.",
+                      "properties": {
+                        "did": {
+                          "type": "string",
+                          "description": "DID of the creator."
+                        },
+                        "handle": {
+                          "type": "string",
+                          "description": "Handle of the creator."
+                        },
+                        "displayName": {
+                          "type": "string",
+                          "description": "Display name of the creator."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the creator."
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "description": "URL of the creator's avatar image."
+                        },
+                        "associated": {
+                          "type": "object",
+                          "description": "Associated metadata for the creator.",
+                          "properties": {
+                            "lists": {
+                              "type": "integer",
+                              "format": "int32",
+                              "description": "Number of lists associated."
+                            },
+                            "feedgens": {
+                              "type": "integer",
+                              "format": "int32",
+                              "description": "Number of feed generators associated."
+                            },
+                            "starterPacks": {
+                              "type": "integer",
+                              "format": "int32",
+                              "description": "Number of starter packs associated."
+                            },
+                            "labeler": {
+                              "type": "boolean",
+                              "description": "Whether the creator is a labeler."
+                            },
+                            "chat": {
+                              "type": "object",
+                              "description": "Chat settings for the creator.",
+                              "properties": {
+                                "allowIncoming": {
+                                  "type": "string",
+                                  "description": "Type of incoming messages allowed."
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "indexedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the creator was indexed."
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the creator was created."
+                        }
+                      }
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "Display name of the feed generator."
                     },
                     "description": {
                       "type": "string",
-                      "description": "A brief description of the feed generator.",
-                      "example": "A generator for curated tech news feeds."
+                      "description": "Description of the feed generator."
+                    },
+                    "descriptionFacets": {
+                      "type": "array",
+                      "description": "Facets within the description of the feed generator.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "object",
+                            "description": "Index information for facets.",
+                            "properties": {
+                              "byteStart": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Start byte of the facet."
+                              },
+                              "byteEnd": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "End byte of the facet."
+                              }
+                            }
+                          },
+                          "features": {
+                            "type": "array",
+                            "description": "Features associated with the facet.",
+                            "items": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "URL of the feed generator's avatar image."
+                    },
+                    "likeCount": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "Number of likes on the feed generator."
+                    },
+                    "acceptsInteractions": {
+                      "type": "boolean",
+                      "description": "Whether the feed generator accepts interactions."
+                    },
+                    "labels": {
+                      "type": "array",
+                      "description": "Labels associated with the feed generator.",
+                      "items": {
+                        "$ref": "#/definitions/Label"
+                      }
+                    },
+                    "viewer": {
+                      "type": "object",
+                      "description": "Viewer-specific metadata.",
+                      "properties": {
+                        "like": {
+                          "type": "string",
+                          "description": "URI of the viewer's like."
+                        }
+                      }
+                    },
+                    "indexedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the feed generator was indexed."
                     }
                   }
+                },
+                "isOnline": {
+                  "type": "boolean",
+                  "description": "Whether the feed generator is online."
+                },
+                "isValid": {
+                  "type": "boolean",
+                  "description": "Whether the feed generator is valid."
                 }
               }
             }
@@ -1630,7 +1992,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Metadata for Multiple Feed Generators",
-        "description": "Retrieve metadata about all feed generators.\n",
+        "description": "Retrieve metadata about multiple feed generators.",
         "operationId": "GetFeedGenerators",
         "produces": [
           "application/json"
@@ -1651,32 +2013,170 @@
             "schema": {
               "type": "object",
               "properties": {
-                "metadata": {
+                "feeds": {
                   "type": "array",
-                  "description": "An array of metadata for the feed generators.",
+                  "description": "An array of feed generator metadata.",
                   "items": {
                     "type": "object",
                     "description": "Metadata for a single feed generator.",
                     "properties": {
                       "uri": {
                         "type": "string",
-                        "description": "URI of the feed generator.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/generator123"
+                        "description": "URI of the feed generator."
                       },
-                      "name": {
+                      "cid": {
                         "type": "string",
-                        "description": "The name of the feed generator.",
-                        "example": "Tech News Feeds"
+                        "description": "Content identifier for the feed generator."
                       },
-                      "avatar": {
+                      "did": {
                         "type": "string",
-                        "description": "URL of the feed generator's avatar image.",
-                        "example": "https://example.com/generator-avatar.jpg"
+                        "description": "DID of the feed generator creator."
+                      },
+                      "creator": {
+                        "type": "object",
+                        "description": "Information about the creator of the feed generator.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "DID of the creator."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the creator."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the creator."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Description of the creator."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the creator's avatar image."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Associated metadata for the creator.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Whether the creator is a labeler."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat settings for the creator.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Type of incoming messages allowed."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the creator was indexed."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the creator was created."
+                          }
+                        }
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the feed generator."
                       },
                       "description": {
                         "type": "string",
-                        "description": "A brief description of the feed generator.",
-                        "example": "A generator for curated tech news feeds."
+                        "description": "Description of the feed generator."
+                      },
+                      "descriptionFacets": {
+                        "type": "array",
+                        "description": "Facets within the description of the feed generator.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "index": {
+                              "type": "object",
+                              "description": "Index information for facets.",
+                              "properties": {
+                                "byteStart": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Start byte of the facet."
+                                },
+                                "byteEnd": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "End byte of the facet."
+                                }
+                              }
+                            },
+                            "features": {
+                              "type": "array",
+                              "description": "Features associated with the facet.",
+                              "items": {
+                                "type": "object"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the feed generator's avatar image."
+                      },
+                      "likeCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of likes on the feed generator."
+                      },
+                      "acceptsInteractions": {
+                        "type": "boolean",
+                        "description": "Whether the feed generator accepts interactions."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the feed generator.",
+                        "items": {
+                          "$ref": "#/definitions/Label"
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Viewer-specific metadata.",
+                        "properties": {
+                          "like": {
+                            "type": "string",
+                            "description": "URI of the viewer's like."
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the feed generator was indexed."
                       }
                     }
                   }
@@ -1705,7 +2205,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Skeleton Feed",
-        "description": "Retrieve a minimal skeletal version of a feed.\n",
+        "description": "Retrieve a minimal skeletal version of a feed.",
         "operationId": "GetFeedSkeleton",
         "produces": [
           "application/json"
@@ -1723,7 +2223,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of items in the skeleton.",
+            "description": "Maximum number of items in the skeleton.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -1744,17 +2244,28 @@
             "schema": {
               "type": "object",
               "properties": {
-                "skeleton": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "feed": {
                   "type": "array",
                   "description": "An array of skeleton feed items.",
                   "items": {
                     "type": "object",
                     "description": "Details of a skeleton feed item.",
                     "properties": {
-                      "uri": {
+                      "post": {
                         "type": "string",
-                        "description": "URI of the feed item.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/item123"
+                        "description": "URI of the feed item post."
+                      },
+                      "reason": {
+                        "type": "object",
+                        "description": "Reason for including the feed item."
+                      },
+                      "feedContext": {
+                        "type": "string",
+                        "description": "Context of the feed item in the skeleton."
                       }
                     }
                   }
@@ -1783,7 +2294,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Likes for a Post",
-        "description": "Retrieve users who liked a specific post.\n",
+        "description": "Retrieve users who liked a specific post.",
         "operationId": "GetLikes",
         "produces": [
           "application/json"
@@ -1801,7 +2312,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of likes to retrieve.",
+            "description": "Maximum number of likes to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -1822,11 +2333,128 @@
             "schema": {
               "type": "object",
               "properties": {
+                "uri": {
+                  "type": "string",
+                  "description": "URI of the post."
+                },
+                "cid": {
+                  "type": "string",
+                  "description": "Content identifier for the post."
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "likes": {
                   "type": "array",
                   "description": "An array of actors who liked the post.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a user who liked the post.",
+                    "properties": {
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the like was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the like was created."
+                      },
+                      "actor": {
+                        "type": "object",
+                        "description": "Details of the actor who liked the post.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "DID of the actor."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the actor."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the actor."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Description of the actor."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the actor's avatar image."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Associated metadata for the actor.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Whether the actor is a labeler."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat settings for the actor.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Type of incoming messages allowed."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the actor was indexed."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the actor was created."
+                          },
+                          "viewer": {
+                            "type": "object",
+                            "description": "Viewer-specific metadata for the actor.",
+                            "properties": {
+                              "muted": {
+                                "type": "boolean",
+                                "description": "Whether the viewer has muted the actor."
+                              },
+                              "blockedBy": {
+                                "type": "boolean",
+                                "description": "Whether the viewer is blocked by the actor."
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the actor.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -1900,7 +2528,124 @@
                   "type": "array",
                   "description": "Array of feed items.",
                   "items": {
-                    "$ref": "#/definitions/FeedItem"
+                    "type": "object",
+                    "description": "Details of a feed item.",
+                    "properties": {
+                      "post": {
+                        "type": "object",
+                        "description": "Details of the post.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the post."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content identifier of the post."
+                          },
+                          "author": {
+                            "type": "object",
+                            "description": "Information about the post author.",
+                            "properties": {
+                              "did": {
+                                "type": "string",
+                                "description": "DID of the author."
+                              },
+                              "handle": {
+                                "type": "string",
+                                "description": "Handle of the author."
+                              },
+                              "displayName": {
+                                "type": "string",
+                                "description": "Display name of the author."
+                              },
+                              "avatar": {
+                                "type": "string",
+                                "description": "URL of the author's avatar image."
+                              },
+                              "associated": {
+                                "type": "object",
+                                "description": "Associated metadata for the author.",
+                                "properties": {
+                                  "lists": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of lists associated."
+                                  },
+                                  "feedgens": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of feed generators associated."
+                                  },
+                                  "starterPacks": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of starter packs associated."
+                                  },
+                                  "labeler": {
+                                    "type": "boolean",
+                                    "description": "Whether the author is a labeler."
+                                  },
+                                  "chat": {
+                                    "type": "object",
+                                    "description": "Chat settings for the author.",
+                                    "properties": {
+                                      "allowIncoming": {
+                                        "type": "string",
+                                        "description": "Type of incoming messages allowed."
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "viewer": {
+                                "type": "object",
+                                "description": "Viewer-specific metadata.",
+                                "properties": {
+                                  "muted": {
+                                    "type": "boolean",
+                                    "description": "Whether the viewer has muted the author."
+                                  },
+                                  "blockedBy": {
+                                    "type": "boolean",
+                                    "description": "Whether the viewer is blocked by the author."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the post.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the post was created."
+                          }
+                        }
+                      },
+                      "reply": {
+                        "type": "object",
+                        "description": "Reply-specific metadata for the feed item."
+                      },
+                      "reason": {
+                        "type": "object",
+                        "description": "Reason for including the feed item."
+                      },
+                      "feedContext": {
+                        "type": "string",
+                        "description": "Context of the feed item in the feed."
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the feed item was indexed."
+                      }
+                    }
                   }
                 }
               }
@@ -1927,7 +2672,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts by URIs",
-        "description": "Retrieve specific posts by their IDs.\n",
+        "description": "Retrieve specific posts by their URIs.",
         "operationId": "GetPosts",
         "produces": [
           "application/json"
@@ -1957,16 +2702,223 @@
                     "properties": {
                       "uri": {
                         "type": "string",
-                        "description": "URI of the post.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/post123"
+                        "description": "URI of the post."
+                      },
+                      "cid": {
+                        "type": "string",
+                        "description": "Content identifier of the post."
                       },
                       "author": {
-                        "$ref": "#/definitions/ProfileView"
+                        "type": "object",
+                        "description": "Information about the post author.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "DID of the author."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the author."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the author."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the author's avatar image."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Associated metadata for the author.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Whether the author is a labeler."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat settings for the author.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Type of incoming messages allowed."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "viewer": {
+                            "type": "object",
+                            "description": "Viewer-specific metadata.",
+                            "properties": {
+                              "muted": {
+                                "type": "boolean",
+                                "description": "Whether the viewer has muted the author."
+                              },
+                              "blockedBy": {
+                                "type": "boolean",
+                                "description": "Whether the viewer is blocked by the author."
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the author.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the author was created."
+                          }
+                        }
                       },
-                      "content": {
+                      "record": {
+                        "type": "object",
+                        "description": "Metadata for the post."
+                      },
+                      "embed": {
+                        "type": "object",
+                        "description": "Embed metadata for the post."
+                      },
+                      "replyCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of replies to the post."
+                      },
+                      "repostCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of reposts of the post."
+                      },
+                      "likeCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of likes on the post."
+                      },
+                      "quoteCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of quotes of the post."
+                      },
+                      "indexedAt": {
                         "type": "string",
-                        "description": "The content of the post.",
-                        "example": "This is a sample post content."
+                        "format": "date-time",
+                        "description": "Timestamp when the post was indexed."
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Viewer-specific metadata for the post.",
+                        "properties": {
+                          "repost": {
+                            "type": "string",
+                            "description": "URI of the viewer's repost of the post."
+                          },
+                          "like": {
+                            "type": "string",
+                            "description": "URI of the viewer's like on the post."
+                          },
+                          "threadMuted": {
+                            "type": "boolean",
+                            "description": "Whether the viewer muted the thread."
+                          },
+                          "replyDisabled": {
+                            "type": "boolean",
+                            "description": "Whether replies are disabled for the post."
+                          },
+                          "embeddingDisabled": {
+                            "type": "boolean",
+                            "description": "Whether embedding is disabled for the post."
+                          },
+                          "pinned": {
+                            "type": "boolean",
+                            "description": "Whether the post is pinned."
+                          }
+                        }
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the post.",
+                        "items": {
+                          "$ref": "#/definitions/Label"
+                        }
+                      },
+                      "threadgate": {
+                        "type": "object",
+                        "description": "Thread gate metadata.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the thread gate."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "CID of the thread gate."
+                          },
+                          "record": {
+                            "type": "object",
+                            "description": "Metadata for the thread gate."
+                          },
+                          "lists": {
+                            "type": "array",
+                            "description": "Lists associated with the thread gate.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "uri": {
+                                  "type": "string",
+                                  "description": "URI of the list."
+                                },
+                                "cid": {
+                                  "type": "string",
+                                  "description": "CID of the list."
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the list."
+                                },
+                                "purpose": {
+                                  "type": "string",
+                                  "description": "Purpose of the list."
+                                },
+                                "avatar": {
+                                  "type": "string",
+                                  "description": "URL of the list's avatar image."
+                                },
+                                "listItemCount": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Number of items in the list."
+                                },
+                                "labels": {
+                                  "type": "array",
+                                  "description": "Labels associated with the list.",
+                                  "items": {
+                                    "$ref": "#/definitions/Label"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -1995,7 +2947,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Thread for a Post",
-        "description": "Retrieve the thread of posts related to a specific post.\n",
+        "description": "Retrieve the thread of posts related to a specific post.",
         "operationId": "GetPostThread",
         "produces": [
           "application/json"
@@ -2022,13 +2974,89 @@
                   "description": "The root post of the thread with its replies.",
                   "properties": {
                     "root": {
-                      "$ref": "#/definitions/Post"
+                      "type": "object",
+                      "description": "The root post of the thread.",
+                      "properties": {
+                        "uri": {
+                          "type": "string",
+                          "description": "URI of the root post."
+                        },
+                        "cid": {
+                          "type": "string",
+                          "description": "Content identifier of the root post."
+                        },
+                        "author": {
+                          "type": "object",
+                          "description": "Information about the author of the root post.",
+                          "properties": {
+                            "did": {
+                              "type": "string",
+                              "description": "DID of the author."
+                            },
+                            "handle": {
+                              "type": "string",
+                              "description": "Handle of the author."
+                            },
+                            "displayName": {
+                              "type": "string",
+                              "description": "Display name of the author."
+                            },
+                            "avatar": {
+                              "type": "string",
+                              "description": "URL of the author's avatar image."
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Timestamp when the root post was created."
+                        }
+                      }
                     },
                     "replies": {
                       "type": "array",
                       "description": "An array of replies to the root post.",
                       "items": {
-                        "$ref": "#/definitions/Post"
+                        "type": "object",
+                        "description": "Details of a reply to the root post.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the reply post."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content identifier of the reply post."
+                          },
+                          "author": {
+                            "type": "object",
+                            "description": "Information about the author of the reply post.",
+                            "properties": {
+                              "did": {
+                                "type": "string",
+                                "description": "DID of the author."
+                              },
+                              "handle": {
+                                "type": "string",
+                                "description": "Handle of the author."
+                              },
+                              "displayName": {
+                                "type": "string",
+                                "description": "Display name of the author."
+                              },
+                              "avatar": {
+                                "type": "string",
+                                "description": "URL of the author's avatar image."
+                              }
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the reply post was created."
+                          }
+                        }
                       }
                     }
                   }
@@ -2057,7 +3085,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Posts Quoting a Specific Post",
-        "description": "Retrieve posts that quote a specific post.\n",
+        "description": "Retrieve posts that quote a specific post.",
         "operationId": "GetQuotes",
         "produces": [
           "application/json"
@@ -2075,7 +3103,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of quotes to retrieve.",
+            "description": "Maximum number of quotes to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -2084,7 +3112,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -2096,11 +3124,211 @@
             "schema": {
               "type": "object",
               "properties": {
-                "quotes": {
+                "uri": {
+                  "type": "string",
+                  "description": "URI of the original post."
+                },
+                "cid": {
+                  "type": "string",
+                  "description": "Content identifier of the original post."
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "posts": {
                   "type": "array",
                   "description": "An array of posts that quote the specified post.",
                   "items": {
-                    "$ref": "#/definitions/Post"
+                    "type": "object",
+                    "description": "Details of a quoted post.",
+                    "properties": {
+                      "uri": {
+                        "type": "string",
+                        "description": "URI of the quoted post."
+                      },
+                      "cid": {
+                        "type": "string",
+                        "description": "Content identifier of the quoted post."
+                      },
+                      "author": {
+                        "type": "object",
+                        "description": "Information about the author of the quoted post.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "DID of the author."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the author."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the author."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the author's avatar image."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Associated metadata for the author.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Whether the author is a labeler."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat settings for the author.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Type of incoming messages allowed."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "viewer": {
+                            "type": "object",
+                            "description": "Viewer-specific metadata.",
+                            "properties": {
+                              "muted": {
+                                "type": "boolean",
+                                "description": "Whether the viewer has muted the author."
+                              },
+                              "blockedBy": {
+                                "type": "boolean",
+                                "description": "Whether the viewer is blocked by the author."
+                              }
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "description": "Labels associated with the author.",
+                            "items": {
+                              "$ref": "#/definitions/Label"
+                            }
+                          }
+                        }
+                      },
+                      "record": {
+                        "type": "object",
+                        "description": "Metadata for the quoted post."
+                      },
+                      "embed": {
+                        "type": "object",
+                        "description": "Embed metadata for the quoted post."
+                      },
+                      "replyCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of replies to the quoted post."
+                      },
+                      "repostCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of reposts of the quoted post."
+                      },
+                      "likeCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of likes on the quoted post."
+                      },
+                      "quoteCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of quotes of the quoted post."
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the quoted post was indexed."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the quoted post.",
+                        "items": {
+                          "$ref": "#/definitions/Label"
+                        }
+                      },
+                      "threadgate": {
+                        "type": "object",
+                        "description": "Thread gate metadata.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the thread gate."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content identifier of the thread gate."
+                          },
+                          "record": {
+                            "type": "object",
+                            "description": "Metadata for the thread gate."
+                          },
+                          "lists": {
+                            "type": "array",
+                            "description": "Lists associated with the thread gate.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "uri": {
+                                  "type": "string",
+                                  "description": "URI of the list."
+                                },
+                                "cid": {
+                                  "type": "string",
+                                  "description": "Content identifier of the list."
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the list."
+                                },
+                                "purpose": {
+                                  "type": "string",
+                                  "description": "Purpose of the list."
+                                },
+                                "avatar": {
+                                  "type": "string",
+                                  "description": "URL of the list's avatar image."
+                                },
+                                "listItemCount": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Number of items in the list."
+                                },
+                                "labels": {
+                                  "type": "array",
+                                  "description": "Labels associated with the list.",
+                                  "items": {
+                                    "$ref": "#/definitions/Label"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -2127,7 +3355,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Actors Who Reposted a Specific Post",
-        "description": "Retrieve users who reposted a specific post.\n",
+        "description": "Retrieve users who reposted a specific post.",
         "operationId": "GetRepostedBy",
         "produces": [
           "application/json"
@@ -2145,7 +3373,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of reposts to retrieve.",
+            "description": "Maximum number of reposts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -2154,7 +3382,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -2166,11 +3394,116 @@
             "schema": {
               "type": "object",
               "properties": {
+                "uri": {
+                  "type": "string",
+                  "description": "URI of the original post."
+                },
+                "cid": {
+                  "type": "string",
+                  "description": "Content identifier of the original post."
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "repostedBy": {
                   "type": "array",
                   "description": "An array of actors who reposted the specified post.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of an actor who reposted the post.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "DID of the actor."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the actor."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the actor."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Bio or description of the actor."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the actor's avatar image."
+                      },
+                      "associated": {
+                        "type": "object",
+                        "description": "Associated metadata for the actor.",
+                        "properties": {
+                          "lists": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of lists associated."
+                          },
+                          "feedgens": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of feed generators associated."
+                          },
+                          "starterPacks": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of starter packs associated."
+                          },
+                          "labeler": {
+                            "type": "boolean",
+                            "description": "Whether the actor is a labeler."
+                          },
+                          "chat": {
+                            "type": "object",
+                            "description": "Chat settings for the actor.",
+                            "properties": {
+                              "allowIncoming": {
+                                "type": "string",
+                                "description": "Type of incoming messages allowed."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Viewer-specific metadata for the actor.",
+                        "properties": {
+                          "muted": {
+                            "type": "boolean",
+                            "description": "Whether the viewer has muted the actor."
+                          },
+                          "blockedBy": {
+                            "type": "boolean",
+                            "description": "Whether the viewer is blocked by the actor."
+                          },
+                          "blocking": {
+                            "type": "string",
+                            "description": "Whether the viewer is blocking the actor."
+                          }
+                        }
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the actor.",
+                        "items": {
+                          "$ref": "#/definitions/Label"
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the actor was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the actor was created."
+                      }
+                    }
                   }
                 }
               }
@@ -2197,7 +3530,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Suggested Feeds",
-        "description": "Retrieve suggested feeds for the user.\n",
+        "description": "Retrieve suggested feeds for the user.",
         "operationId": "GetSuggestedFeeds",
         "produces": [
           "application/json"
@@ -2206,7 +3539,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of suggested feeds to retrieve.",
+            "description": "Maximum number of suggested feeds to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -2219,7 +3552,11 @@
             "schema": {
               "type": "object",
               "properties": {
-                "suggestedFeeds": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "feeds": {
                   "type": "array",
                   "description": "An array of suggested feeds.",
                   "items": {
@@ -2228,18 +3565,129 @@
                     "properties": {
                       "uri": {
                         "type": "string",
-                        "description": "URI of the feed.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/generator123"
+                        "description": "URI of the feed."
                       },
-                      "name": {
+                      "cid": {
                         "type": "string",
-                        "description": "The name of the feed.",
-                        "example": "Tech News Feeds"
+                        "description": "Content identifier of the feed."
+                      },
+                      "did": {
+                        "type": "string",
+                        "description": "DID of the feed's creator."
+                      },
+                      "creator": {
+                        "type": "object",
+                        "description": "Details about the creator of the feed.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "DID of the creator."
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the creator."
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the creator."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Bio or description of the creator."
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the creator's avatar image."
+                          },
+                          "associated": {
+                            "type": "object",
+                            "description": "Associated metadata for the creator.",
+                            "properties": {
+                              "lists": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of lists associated."
+                              },
+                              "feedgens": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of feed generators associated."
+                              },
+                              "starterPacks": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Number of starter packs associated."
+                              },
+                              "labeler": {
+                                "type": "boolean",
+                                "description": "Whether the creator is a labeler."
+                              },
+                              "chat": {
+                                "type": "object",
+                                "description": "Chat settings for the creator.",
+                                "properties": {
+                                  "allowIncoming": {
+                                    "type": "string",
+                                    "description": "Type of incoming messages allowed."
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the creator was indexed."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the creator was created."
+                          }
+                        }
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the feed."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A brief description of the feed."
                       },
                       "avatar": {
                         "type": "string",
-                        "description": "URL of the feed's avatar image.",
-                        "example": "https://example.com/feed-avatar.jpg"
+                        "description": "URL of the feed's avatar image."
+                      },
+                      "likeCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Number of likes for the feed."
+                      },
+                      "acceptsInteractions": {
+                        "type": "boolean",
+                        "description": "Whether the feed accepts interactions."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the feed.",
+                        "items": {
+                          "$ref": "#/definitions/Label"
+                        }
+                      },
+                      "viewer": {
+                        "type": "object",
+                        "description": "Viewer-specific metadata for the feed.",
+                        "properties": {
+                          "like": {
+                            "type": "string",
+                            "description": "Whether the viewer liked the feed."
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the feed was indexed."
                       }
                     }
                   }
@@ -2268,7 +3716,7 @@
           "app.bsky.feed"
         ],
         "summary": "Get Timeline",
-        "description": "Retrieve the timeline of posts for the user.\n",
+        "description": "Retrieve the timeline of posts for the user.",
         "operationId": "GetTimeline",
         "produces": [
           "application/json"
@@ -2285,7 +3733,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of posts to retrieve.",
+            "description": "Maximum number of posts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -2294,7 +3742,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -2306,11 +3754,162 @@
             "schema": {
               "type": "object",
               "properties": {
-                "timeline": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
+                "feed": {
                   "type": "array",
-                  "description": "An array of posts in the user's timeline.",
+                  "description": "Array of posts in the user's timeline.",
                   "items": {
-                    "$ref": "#/definitions/Post"
+                    "type": "object",
+                    "description": "Details of a post in the timeline.",
+                    "properties": {
+                      "post": {
+                        "type": "object",
+                        "description": "Details of the post.",
+                        "properties": {
+                          "uri": {
+                            "type": "string",
+                            "description": "URI of the post."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Content identifier of the post."
+                          },
+                          "author": {
+                            "type": "object",
+                            "description": "Details about the post's author.",
+                            "properties": {
+                              "did": {
+                                "type": "string",
+                                "description": "DID of the author."
+                              },
+                              "handle": {
+                                "type": "string",
+                                "description": "Handle of the author."
+                              },
+                              "displayName": {
+                                "type": "string",
+                                "description": "Display name of the author."
+                              },
+                              "avatar": {
+                                "type": "string",
+                                "description": "URL of the author's avatar."
+                              },
+                              "associated": {
+                                "type": "object",
+                                "description": "Associated metadata for the author.",
+                                "properties": {
+                                  "lists": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of lists associated."
+                                  },
+                                  "feedgens": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of feed generators associated."
+                                  },
+                                  "starterPacks": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "Number of starter packs associated."
+                                  },
+                                  "labeler": {
+                                    "type": "boolean",
+                                    "description": "Whether the author is a labeler."
+                                  },
+                                  "chat": {
+                                    "type": "object",
+                                    "description": "Chat settings for the author.",
+                                    "properties": {
+                                      "allowIncoming": {
+                                        "type": "string",
+                                        "description": "Type of incoming messages allowed."
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "indexedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Timestamp when the author was indexed."
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Timestamp when the author was created."
+                              }
+                            }
+                          },
+                          "record": {
+                            "type": "object",
+                            "description": "Additional metadata about the post."
+                          },
+                          "embed": {
+                            "type": "object",
+                            "description": "Embedded content in the post."
+                          },
+                          "replyCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of replies to the post."
+                          },
+                          "repostCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of reposts of the post."
+                          },
+                          "likeCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of likes for the post."
+                          },
+                          "quoteCount": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Number of quotes of the post."
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp when the post was indexed."
+                          },
+                          "viewer": {
+                            "type": "object",
+                            "description": "Viewer-specific metadata for the post.",
+                            "properties": {
+                              "repost": {
+                                "type": "string",
+                                "description": "Whether the viewer reposted the post."
+                              },
+                              "like": {
+                                "type": "string",
+                                "description": "Whether the viewer liked the post."
+                              },
+                              "threadMuted": {
+                                "type": "boolean",
+                                "description": "Whether the thread is muted by the viewer."
+                              },
+                              "replyDisabled": {
+                                "type": "boolean",
+                                "description": "Whether replies are disabled."
+                              },
+                              "embeddingDisabled": {
+                                "type": "boolean",
+                                "description": "Whether embedding is disabled."
+                              },
+                              "pinned": {
+                                "type": "boolean",
+                                "description": "Whether the post is pinned."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -2337,7 +3936,7 @@
           "app.bsky.feed"
         ],
         "summary": "Search Posts",
-        "description": "Search for posts matching a query.\n",
+        "description": "Search for posts matching a query.",
         "operationId": "SearchPosts",
         "produces": [
           "application/json"
@@ -2354,7 +3953,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of posts to retrieve.",
+            "description": "Max number of posts to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -2375,6 +3974,15 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                "hitsTotal": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Total number of posts matching the search term."
+                },
                 "posts": {
                   "type": "array",
                   "description": "An array of posts matching the search criteria.",
@@ -11913,6 +13521,111 @@
               "$ref": "#/definitions/AssociatedMetadata"
             }
           }
+        }
+      }
+    },
+    "ListMetadata": {
+      "type": "object",
+      "description": "Metadata for a list.",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "The URI of the list."
+        },
+        "cid": {
+          "type": "string",
+          "description": "The content identifier (CID) of the list."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the list."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "The purpose or category of the list."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL of the list's avatar."
+        },
+        "listItemCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of items in the list."
+        },
+        "labels": {
+          "type": "array",
+          "description": "Labels associated with the list.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "viewer": {
+          "type": "object",
+          "description": "Viewer-specific metadata for the list.",
+          "properties": {
+            "muted": {
+              "type": "boolean",
+              "description": "Whether the viewer has muted the list."
+            },
+            "blocked": {
+              "type": "string",
+              "description": "Whether the viewer has blocked the list."
+            }
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the list was indexed."
+        }
+      }
+    },
+    "ListDetails": {
+      "type": "object",
+      "description": "Details about a specific list.",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "The URI of the list."
+        },
+        "cid": {
+          "type": "string",
+          "description": "The content identifier (CID) of the list."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the list."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "The purpose or category of the list."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL of the list's avatar."
+        },
+        "listItemCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of items in the list."
+        },
+        "labels": {
+          "type": "array",
+          "description": "Labels associated with the list.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the list was created."
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the list was indexed."
         }
       }
     },
