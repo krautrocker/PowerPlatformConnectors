@@ -7364,7 +7364,7 @@
           "chat.bsky.actor"
         ],
         "summary": "Delete Account",
-        "description": "Permanently delete the user's account and associated data.\n",
+        "description": "Permanently delete the user's account and associated data.",
         "operationId": "DeleteAccount",
         "consumes": [
           "application/json"
@@ -7425,7 +7425,7 @@
           "chat.bsky.actor"
         ],
         "summary": "Export Account Data",
-        "description": "Export the user's account data for archival or migration.\n",
+        "description": "Export the user's account data for archival or migration.",
         "operationId": "ExportAccountData",
         "produces": [
           "application/json"
@@ -7466,7 +7466,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Delete Message for Self",
-        "description": "Delete a message from the user's view only (does not delete for others).\n",
+        "description": "Delete a message from the user's view only (does not delete for others).",
         "operationId": "DeleteMessageForSelf",
         "consumes": [
           "application/json"
@@ -7527,7 +7527,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation",
-        "description": "Retrieve a specific conversation for the authenticated user.\n",
+        "description": "Retrieve a specific conversation for the authenticated user.",
         "operationId": "GetConvo",
         "produces": [
           "application/json"
@@ -7536,7 +7536,7 @@
           {
             "name": "convoId",
             "in": "query",
-            "description": "Unique identifier of the convo to retrieve.",
+            "description": "Unique identifier of the conversation to retrieve.",
             "required": true,
             "type": "string",
             "x-ms-summary": "Conversation ID"
@@ -7621,7 +7621,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation for Members",
-        "description": "Get a conversation involving specific members.\n",
+        "description": "Retrieve a conversation involving specific members.",
         "operationId": "GetConvoForMembers",
         "produces": [
           "application/json"
@@ -7638,7 +7638,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the convo for the specified members.",
+            "description": "Successfully retrieved the conversation for the specified members.",
             "schema": {
               "type": "object",
               "properties": {
@@ -7715,7 +7715,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation Log",
-        "description": "Retrieve the activity log for a conversation.\n",
+        "description": "Retrieve the activity log for a conversation.",
         "operationId": "GetLog",
         "produces": [
           "application/json"
@@ -7724,7 +7724,7 @@
           {
             "name": "convoId",
             "in": "query",
-            "description": "Unique identifier of the convo to retrieve the log for.",
+            "description": "Unique identifier of the conversation to retrieve the log for.",
             "required": true,
             "type": "string",
             "x-ms-summary": "Conversation ID"
@@ -7748,11 +7748,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the convo log.",
+            "description": "Successfully retrieved the conversation log.",
             "schema": {
               "type": "object",
               "properties": {
-                "log": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for navigating logs.",
+                  "example": "next-page-token"
+                },
+                "logs": {
                   "type": "array",
                   "description": "An array of log entries for the conversation.",
                   "items": {
@@ -7801,7 +7806,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Get Conversation Messages",
-        "description": "Get a list of messages in a specific conversation.",
+        "description": "Retrieve a list of messages in a specific conversation.",
         "operationId": "GetMessages",
         "produces": [
           "application/json"
@@ -7838,9 +7843,14 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for fetching the next set of messages.",
+                  "example": "next-page-token"
+                },
                 "messages": {
                   "type": "array",
-                  "description": "A list of messages.",
+                  "description": "A list of messages in the conversation.",
                   "items": {
                     "type": "object",
                     "properties": {
@@ -7899,15 +7909,20 @@
           {
             "name": "body",
             "in": "body",
-            "description": "The details of the convo to leave.",
+            "description": "Details of the conversation to leave.",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "convoId": {
                   "type": "string",
-                  "description": "Unique identifier of the convo to leave.",
+                  "description": "Unique identifier of the conversation to leave.",
                   "example": "convo123"
+                },
+                "rev": {
+                  "type": "string",
+                  "description": "Revision of the conversation to ensure consistency.",
+                  "example": "rev456"
                 }
               }
             }
@@ -7921,14 +7936,14 @@
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
+                  "description": "Indicates if the operation was successful.",
                   "example": true
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request or conversation ID.",
+            "description": "Invalid request, conversation ID, or revision.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -7948,7 +7963,7 @@
           "chat.bsky.convo"
         ],
         "summary": "List Conversations",
-        "description": "Get a list of all conversations for the authenticated user.",
+        "description": "Retrieve a list of all conversations for the authenticated user.",
         "operationId": "ListConvos",
         "produces": [
           "application/json"
@@ -7977,6 +7992,11 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "A pagination cursor for the next set of results.",
+                  "example": "next123"
+                },
                 "conversations": {
                   "type": "array",
                   "description": "A list of conversations.",
@@ -7988,30 +8008,76 @@
                         "description": "Conversation ID.",
                         "example": "convo123"
                       },
-                      "participants": {
+                      "rev": {
+                        "type": "string",
+                        "description": "Revision of the conversation data.",
+                        "example": "rev456"
+                      },
+                      "unreadCount": {
+                        "type": "integer",
+                        "description": "Number of unread messages in the conversation.",
+                        "example": 2
+                      },
+                      "members": {
                         "type": "array",
                         "description": "Participants in the conversation.",
                         "items": {
                           "type": "object",
                           "properties": {
+                            "did": {
+                              "type": "string",
+                              "description": "Decentralized identifier of the participant.",
+                              "example": "did:plc:abcd1234"
+                            },
                             "handle": {
                               "type": "string",
-                              "description": "Participant handle.",
+                              "description": "Handle of the participant.",
                               "example": "johndoe"
                             },
                             "displayName": {
                               "type": "string",
-                              "description": "Participant display name.",
+                              "description": "Display name of the participant.",
                               "example": "John Doe"
+                            },
+                            "avatar": {
+                              "type": "string",
+                              "description": "URL of the participant's avatar.",
+                              "example": "https://example.com/avatar.jpg"
+                            },
+                            "chatDisabled": {
+                              "type": "boolean",
+                              "description": "Indicates if chat is disabled for this participant.",
+                              "example": false
                             }
                           }
                         }
                       },
-                      "lastMessageAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the last message in the conversation.",
-                        "example": "2023-11-19T12:34:56Z"
+                      "lastMessage": {
+                        "type": "object",
+                        "description": "Details of the last message in the conversation.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID of the last message.",
+                            "example": "msg123"
+                          },
+                          "text": {
+                            "type": "string",
+                            "description": "Content of the last message.",
+                            "example": "See you soon!"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Timestamp of the last message.",
+                            "example": "2023-11-19T12:34:56Z"
+                          }
+                        }
+                      },
+                      "muted": {
+                        "type": "boolean",
+                        "description": "Indicates if the conversation is muted.",
+                        "example": false
                       }
                     }
                   }
@@ -8040,7 +8106,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Mute Conversation",
-        "description": "Mute a specific conversation. Muted conversations will not send notifications.\n",
+        "description": "Mute a specific conversation. Muted conversations will not send notifications.",
         "operationId": "MuteConvo",
         "consumes": [
           "application/json"
@@ -8072,10 +8138,71 @@
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                "convo": {
+                  "type": "object",
+                  "description": "Details of the muted conversation.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Conversation ID.",
+                      "example": "convo123"
+                    },
+                    "rev": {
+                      "type": "string",
+                      "description": "Revision token of the conversation.",
+                      "example": "rev456"
+                    },
+                    "members": {
+                      "type": "array",
+                      "description": "Participants in the conversation.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the participant.",
+                            "example": "did:plc:abcd1234"
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Participant handle.",
+                            "example": "johndoe"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Participant display name.",
+                            "example": "John Doe"
+                          }
+                        }
+                      }
+                    },
+                    "lastMessage": {
+                      "type": "object",
+                      "description": "Details of the last message in the conversation.",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Message ID.",
+                          "example": "msg789"
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "Content of the last message.",
+                          "example": "Hello, how are you?"
+                        }
+                      }
+                    },
+                    "muted": {
+                      "type": "boolean",
+                      "description": "Indicates if the conversation is muted.",
+                      "example": true
+                    },
+                    "unreadCount": {
+                      "type": "integer",
+                      "description": "Number of unread messages in the conversation.",
+                      "example": 0
+                    }
+                  }
                 }
               }
             }
