@@ -8228,7 +8228,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Send Message",
-        "description": "Send a new message in a specific conversation.\n",
+        "description": "Send a new message in a specific conversation.",
         "operationId": "SendMessage",
         "consumes": [
           "application/json"
@@ -8265,10 +8265,73 @@
             "schema": {
               "type": "object",
               "properties": {
-                "messageId": {
+                "id": {
                   "type": "string",
                   "description": "Unique identifier of the sent message.",
                   "example": "msg123"
+                },
+                "rev": {
+                  "type": "string",
+                  "description": "Revision token of the message.",
+                  "example": "rev456"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "The content of the sent message.",
+                  "example": "Hello, world!"
+                },
+                "facets": {
+                  "type": "array",
+                  "description": "Facets for advanced metadata about the message.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "object",
+                        "description": "Byte range for the facet.",
+                        "properties": {
+                          "byteStart": {
+                            "type": "integer",
+                            "description": "Start byte of the facet.",
+                            "example": 0
+                          },
+                          "byteEnd": {
+                            "type": "integer",
+                            "description": "End byte of the facet.",
+                            "example": 10
+                          }
+                        }
+                      },
+                      "features": {
+                        "type": "array",
+                        "description": "Features associated with the facet.",
+                        "items": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "embed": {
+                  "type": "object",
+                  "description": "Embed object for the message."
+                },
+                "sender": {
+                  "type": "object",
+                  "description": "Details of the message sender.",
+                  "properties": {
+                    "did": {
+                      "type": "string",
+                      "description": "Decentralized identifier of the sender.",
+                      "example": "did:plc:abcd1234"
+                    }
+                  }
+                },
+                "sentAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the message was sent.",
+                  "example": "2024-11-07T00:27:31.513Z"
                 }
               }
             }
@@ -8431,7 +8494,7 @@
           "chat.bsky.convo"
         ],
         "summary": "Send Message Batch",
-        "description": "Send a batch of messages to multiple conversations.\n",
+        "description": "Send a batch of messages to multiple conversations.",
         "operationId": "SendMessageBatch",
         "consumes": [
           "application/json"
@@ -8477,10 +8540,82 @@
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                "items": {
+                  "type": "array",
+                  "description": "Details of the sent messages.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Unique identifier of the sent message.",
+                        "example": "msg123"
+                      },
+                      "rev": {
+                        "type": "string",
+                        "description": "Revision token of the message.",
+                        "example": "rev456"
+                      },
+                      "text": {
+                        "type": "string",
+                        "description": "Content of the sent message.",
+                        "example": "Hello, everyone!"
+                      },
+                      "facets": {
+                        "type": "array",
+                        "description": "Facets of the message for advanced metadata.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "index": {
+                              "type": "object",
+                              "description": "Byte range for the facet.",
+                              "properties": {
+                                "byteStart": {
+                                  "type": "integer",
+                                  "description": "Start byte of the facet.",
+                                  "example": 0
+                                },
+                                "byteEnd": {
+                                  "type": "integer",
+                                  "description": "End byte of the facet.",
+                                  "example": 10
+                                }
+                              }
+                            },
+                            "features": {
+                              "type": "array",
+                              "description": "Features of the facet.",
+                              "items": {
+                                "type": "object"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "embed": {
+                        "type": "object",
+                        "description": "Embed object for the message."
+                      },
+                      "sender": {
+                        "type": "object",
+                        "description": "Details of the message sender.",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the sender.",
+                            "example": "did:plc:abcd1234"
+                          }
+                        }
+                      },
+                      "sentAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the message was sent.",
+                        "example": "2024-11-07T00:27:31.600Z"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -8538,10 +8673,60 @@
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                "convo": {
+                  "type": "object",
+                  "description": "Details of the unmuted conversation.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier of the conversation.",
+                      "example": "convo123"
+                    },
+                    "rev": {
+                      "type": "string",
+                      "description": "Revision token for the conversation.",
+                      "example": "rev456"
+                    },
+                    "members": {
+                      "type": "array",
+                      "description": "List of members in the conversation.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "did": {
+                            "type": "string",
+                            "description": "Decentralized identifier of the member.",
+                            "example": "did:plc:abcd1234"
+                          },
+                          "handle": {
+                            "type": "string",
+                            "description": "Handle of the member.",
+                            "example": "johndoe"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "Display name of the member.",
+                            "example": "John Doe"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "description": "URL of the member's avatar.",
+                            "example": "https://example.com/avatar.jpg"
+                          }
+                        }
+                      }
+                    },
+                    "muted": {
+                      "type": "boolean",
+                      "description": "Indicates if the conversation is currently muted.",
+                      "example": false
+                    },
+                    "unreadCount": {
+                      "type": "integer",
+                      "description": "Number of unread messages in the conversation.",
+                      "example": 0
+                    }
+                  }
                 }
               }
             }
