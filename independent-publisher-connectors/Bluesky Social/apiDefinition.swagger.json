@@ -6343,7 +6343,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Suggested Follows Based on Actor",
-        "description": "Retrieve suggested accounts to follow, filtered by an actor.\n",
+        "description": "Retrieve suggested accounts to follow, filtered by an actor.",
         "operationId": "GetSuggestedFollowsByActor",
         "produces": [
           "application/json"
@@ -6387,6 +6387,10 @@
                   "items": {
                     "$ref": "#/definitions/ProfileView"
                   }
+                },
+                "isFallback": {
+                  "type": "boolean",
+                  "description": "Indicates if the suggestions are fallback results."
                 }
               }
             }
@@ -6412,7 +6416,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute an Actor",
-        "description": "Mute a specific actor for the authenticated user.\n",
+        "description": "Mute a specific actor for the authenticated user.",
         "operationId": "MuteActor",
         "consumes": [
           "application/json"
@@ -6473,7 +6477,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute an Actor List",
-        "description": "Mute a specific list of actors for the authenticated user.\n",
+        "description": "Mute a specific list of actors for the authenticated user.",
         "operationId": "MuteActorList",
         "consumes": [
           "application/json"
@@ -6534,7 +6538,7 @@
           "app.bsky.graph"
         ],
         "summary": "Mute a Thread",
-        "description": "Mute an entire thread of posts for the authenticated user.\n",
+        "description": "Mute an entire thread of posts for the authenticated user.",
         "operationId": "MuteThread",
         "consumes": [
           "application/json"
@@ -6595,7 +6599,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute an Actor",
-        "description": "Unmute a specific actor for the authenticated user.\n",
+        "description": "Unmute a specific actor for the authenticated user.",
         "operationId": "UnmuteActor",
         "consumes": [
           "application/json"
@@ -6656,7 +6660,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute an Actor List",
-        "description": "Unmute a specific list of actors for the authenticated user.\n",
+        "description": "Unmute a specific list of actors for the authenticated user.",
         "operationId": "UnmuteActorList",
         "consumes": [
           "application/json"
@@ -6717,7 +6721,7 @@
           "app.bsky.graph"
         ],
         "summary": "Unmute a Thread",
-        "description": "Unmute an entire thread of posts for the authenticated user.\n",
+        "description": "Unmute an entire thread of posts for the authenticated user.",
         "operationId": "UnmuteThread",
         "consumes": [
           "application/json"
@@ -6778,7 +6782,7 @@
           "app.bsky.labeler"
         ],
         "summary": "Get Labeling Services",
-        "description": "Retrieve the list of labeler services available to the user.\n",
+        "description": "Retrieve the list of labeler services available to the user.",
         "operationId": "GetServices",
         "produces": [
           "application/json"
@@ -6833,7 +6837,7 @@
           "app.bsky.notification"
         ],
         "summary": "Get Unread Notification Count",
-        "description": "Retrieve the count of unread notifications for the authenticated user.\n",
+        "description": "Retrieve the count of unread notifications for the authenticated user.",
         "operationId": "GetUnreadCount",
         "produces": [
           "application/json"
@@ -6874,7 +6878,7 @@
           "app.bsky.notification"
         ],
         "summary": "List Notifications",
-        "description": "List notifications for the authenticated user.\n",
+        "description": "List notifications for the authenticated user.",
         "operationId": "ListNotifications",
         "produces": [
           "application/json"
@@ -6953,7 +6957,7 @@
           "app.bsky.notification"
         ],
         "summary": "Update Notification Preferences",
-        "description": "Update notification preferences for the authenticated user.\n",
+        "description": "Update notification preferences for the authenticated user.",
         "operationId": "NotificationPutPreferences",
         "consumes": [
           "application/json"
@@ -7018,7 +7022,7 @@
           "app.bsky.notification"
         ],
         "summary": "Register Push Notifications",
-        "description": "Register the user for push notifications.\n",
+        "description": "Register the user for push notifications.",
         "operationId": "RegisterPush",
         "consumes": [
           "application/json"
@@ -7084,7 +7088,7 @@
           "app.bsky.notification"
         ],
         "summary": "Update Notifications as Seen",
-        "description": "Mark notifications as seen for the authenticated user.\n",
+        "description": "Mark notifications as seen for the authenticated user.",
         "operationId": "UpdateSeen",
         "consumes": [
           "application/json"
@@ -7146,7 +7150,7 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Job Status",
-        "description": "Retrieve the status of a video upload job.\n",
+        "description": "Retrieve the status of a video upload job.",
         "operationId": "GetJobStatus",
         "produces": [
           "application/json"
@@ -7201,7 +7205,7 @@
           "app.bsky.video"
         ],
         "summary": "Get Video Upload Limits",
-        "description": "Retrieve the upload limits for videos, such as file size or resolution.\n",
+        "description": "Retrieve the upload limits for videos, such as file size or resolution.",
         "operationId": "GetUploadLimits",
         "produces": [
           "application/json"
@@ -7222,6 +7226,31 @@
                   "type": "integer",
                   "description": "The maximum duration allowed for video uploads (in seconds).",
                   "example": 300
+                },
+                "canUpload": {
+                  "type": "boolean",
+                  "description": "Indicates whether the user can currently upload videos.",
+                  "example": true
+                },
+                "remainingDailyVideos": {
+                  "type": "integer",
+                  "description": "The remaining number of videos the user can upload today.",
+                  "example": 3
+                },
+                "remainingDailyBytes": {
+                  "type": "integer",
+                  "description": "The remaining number of bytes the user can upload today.",
+                  "example": 524288000
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Additional information or warnings about upload limits.",
+                  "example": "You have 3 uploads remaining today."
+                },
+                "error": {
+                  "type": "string",
+                  "description": "Error message if upload limits cannot be retrieved.",
+                  "example": "User not authorized."
                 }
               }
             }
@@ -7272,7 +7301,53 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully uploaded the video."
+            "description": "Successfully uploaded the video.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jobStatus": {
+                  "type": "object",
+                  "description": "The status of the video upload job.",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "description": "The ID of the video upload job.",
+                      "example": "job12345"
+                    },
+                    "did": {
+                      "type": "string",
+                      "description": "The decentralized identifier (DID) of the user.",
+                      "example": "did:plc:abcd1234"
+                    },
+                    "state": {
+                      "type": "string",
+                      "description": "The state of the video upload job.",
+                      "example": "JOB_STATE_COMPLETED"
+                    },
+                    "progress": {
+                      "type": "integer",
+                      "description": "The progress of the upload, represented as a percentage.",
+                      "example": 100
+                    },
+                    "blob": {
+                      "type": "string",
+                      "description": "Reference to the uploaded video blob.",
+                      "example": "blob12345"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error details if the upload failed.",
+                      "example": "File format not supported."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Additional information about the upload.",
+                      "example": "Upload successful."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request - Invalid video file or parameters."
