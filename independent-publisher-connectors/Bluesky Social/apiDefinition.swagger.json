@@ -4014,7 +4014,7 @@
           "app.bsky.feed"
         ],
         "summary": "Send Interactions",
-        "description": "Send interactions (like, repost) for a post.\n",
+        "description": "Send interactions (like, repost) for a post.",
         "operationId": "SendInteractions",
         "consumes": [
           "application/json"
@@ -4085,6 +4085,9 @@
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
+          },
+          "default": {
+            "description": "Unexpected error response."
           }
         }
       }
@@ -4095,7 +4098,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Starter Packs for Actors",
-        "description": "Retrieve starter packs of accounts for new users.\n",
+        "description": "Retrieve starter packs of accounts for new users.",
         "operationId": "GetActorStarterPacks",
         "produces": [
           "application/json"
@@ -4117,6 +4120,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page."
+                },
                 "starterPacks": {
                   "type": "array",
                   "description": "An array of actor starter packs.",
@@ -4124,17 +4131,84 @@
                     "type": "object",
                     "description": "Details of a starter pack.",
                     "properties": {
-                      "title": {
+                      "uri": {
                         "type": "string",
-                        "description": "The title of the starter pack.",
-                        "example": "Tech Enthusiasts"
+                        "description": "The URI of the starter pack."
                       },
-                      "actors": {
+                      "cid": {
+                        "type": "string",
+                        "description": "Content ID of the starter pack."
+                      },
+                      "record": {
+                        "type": "object",
+                        "description": "Additional metadata for the starter pack."
+                      },
+                      "creator": {
+                        "$ref": "#/definitions/ProfileView"
+                      },
+                      "listItemCount": {
+                        "type": "integer",
+                        "description": "Count of items in the list."
+                      },
+                      "joinedWeekCount": {
+                        "type": "integer",
+                        "description": "Number of users who joined this week."
+                      },
+                      "joinedAllTimeCount": {
+                        "type": "integer",
+                        "description": "Number of users who joined all time."
+                      },
+                      "labels": {
                         "type": "array",
-                        "description": "An array of actor profiles included in the pack.",
+                        "description": "Labels associated with the starter pack.",
                         "items": {
-                          "$ref": "#/definitions/ProfileView"
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Version of the label."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Source of the label."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "URI for the label."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Content ID for the label."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Value of the label."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Creation timestamp of the label."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Expiration timestamp of the label."
+                            },
+                            "sig": {
+                              "type": "string",
+                              "description": "Signature of the label."
+                            }
+                          }
                         }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the starter pack was indexed."
                       }
                     }
                   }
@@ -4163,7 +4237,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Blocked Accounts",
-        "description": "Retrieve users blocked by the authenticated user.\n",
+        "description": "Retrieve users blocked by the authenticated user.",
         "operationId": "GraphGetBlocks",
         "produces": [
           "application/json"
@@ -4193,11 +4267,126 @@
             "schema": {
               "type": "object",
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page."
+                },
                 "blocks": {
                   "type": "array",
                   "description": "An array of profiles representing blocked accounts.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a blocked account.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier of the blocked account."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the blocked account."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the blocked account."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description of the blocked account."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the avatar for the blocked account."
+                      },
+                      "associated": {
+                        "type": "object",
+                        "description": "Associated metadata for the blocked account.",
+                        "properties": {
+                          "lists": {
+                            "type": "integer",
+                            "description": "Number of lists the account belongs to."
+                          },
+                          "feedgens": {
+                            "type": "integer",
+                            "description": "Number of feed generators."
+                          },
+                          "starterPacks": {
+                            "type": "integer",
+                            "description": "Number of starter packs."
+                          },
+                          "labeler": {
+                            "type": "boolean",
+                            "description": "Indicates if the account is labeled."
+                          },
+                          "chat": {
+                            "type": "object",
+                            "properties": {
+                              "allowIncoming": {
+                                "type": "string",
+                                "description": "Incoming chat permissions."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the blocked account.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Version of the label."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Source of the label."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "URI for the label."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Content ID for the label."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Value of the label."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Creation timestamp of the label."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Expiration timestamp of the label."
+                            },
+                            "sig": {
+                              "type": "string",
+                              "description": "Signature of the label."
+                            }
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the block was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the block was created."
+                      }
+                    }
                   }
                 }
               }
@@ -4224,7 +4413,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Followers",
-        "description": "Get a list of followers for a user.\n",
+        "description": "Retrieve a list of followers for a specified user.",
         "operationId": "GetFollowers",
         "produces": [
           "application/json"
@@ -4241,7 +4430,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of followers to retrieve.",
+            "description": "Max number of followers to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -4250,7 +4439,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -4262,11 +4451,201 @@
             "schema": {
               "type": "object",
               "properties": {
+                "subject": {
+                  "type": "object",
+                  "description": "Details of the actor whose followers are being retrieved.",
+                  "properties": {
+                    "did": {
+                      "type": "string",
+                      "description": "Decentralized identifier of the actor."
+                    },
+                    "handle": {
+                      "type": "string",
+                      "description": "Handle of the actor."
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "Display name of the actor."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Profile description of the actor."
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "URL of the actor's avatar image."
+                    },
+                    "associated": {
+                      "type": "object",
+                      "description": "Additional metadata about the actor.",
+                      "properties": {
+                        "lists": {
+                          "type": "integer",
+                          "description": "Number of lists associated with the actor."
+                        },
+                        "feedgens": {
+                          "type": "integer",
+                          "description": "Number of feed generators associated."
+                        },
+                        "starterPacks": {
+                          "type": "integer",
+                          "description": "Number of starter packs associated."
+                        },
+                        "labeler": {
+                          "type": "boolean",
+                          "description": "Indicates if the actor is labeled."
+                        },
+                        "chat": {
+                          "type": "object",
+                          "properties": {
+                            "allowIncoming": {
+                              "type": "string",
+                              "description": "Incoming chat permissions."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "labels": {
+                      "type": "array",
+                      "description": "Labels associated with the actor.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ver": {
+                            "type": "integer",
+                            "description": "Label version."
+                          },
+                          "src": {
+                            "type": "string",
+                            "description": "Label source."
+                          },
+                          "uri": {
+                            "type": "string",
+                            "description": "Label URI."
+                          },
+                          "cid": {
+                            "type": "string",
+                            "description": "Label content ID."
+                          },
+                          "val": {
+                            "type": "string",
+                            "description": "Label value."
+                          },
+                          "neg": {
+                            "type": "boolean",
+                            "description": "Indicates if the label is negative."
+                          },
+                          "cts": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Label creation timestamp."
+                          },
+                          "exp": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Label expiration timestamp."
+                          }
+                        }
+                      }
+                    },
+                    "indexedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was indexed."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was created."
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "followers": {
                   "type": "array",
-                  "description": "An array of profiles representing followers.",
+                  "description": "List of profiles representing the actor's followers.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a follower.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier of the follower."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the follower."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the follower."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description of the follower."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the follower's avatar image."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the follower.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Label version."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Label source."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "Label URI."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Label content ID."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Label value."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label creation timestamp."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label expiration timestamp."
+                            }
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the follower was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the follower profile was created."
+                      }
+                    }
                   }
                 }
               }
@@ -4293,7 +4672,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Follows",
-        "description": "Get a list of users followed by a specific user.\n",
+        "description": "Retrieve a list of users followed by the specified user.",
         "operationId": "GetFollows",
         "produces": [
           "application/json"
@@ -4310,7 +4689,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of follows to retrieve.",
+            "description": "Max number of follows to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -4319,7 +4698,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -4331,11 +4710,159 @@
             "schema": {
               "type": "object",
               "properties": {
+                "subject": {
+                  "type": "object",
+                  "description": "Details of the actor whose follows are being retrieved.",
+                  "properties": {
+                    "did": {
+                      "type": "string",
+                      "description": "Decentralized identifier of the actor."
+                    },
+                    "handle": {
+                      "type": "string",
+                      "description": "Handle of the actor."
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "Display name of the actor."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Profile description of the actor."
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "URL of the actor's avatar image."
+                    },
+                    "associated": {
+                      "type": "object",
+                      "description": "Additional metadata about the actor.",
+                      "properties": {
+                        "lists": {
+                          "type": "integer",
+                          "description": "Number of lists associated with the actor."
+                        },
+                        "feedgens": {
+                          "type": "integer",
+                          "description": "Number of feed generators associated."
+                        },
+                        "starterPacks": {
+                          "type": "integer",
+                          "description": "Number of starter packs associated."
+                        },
+                        "labeler": {
+                          "type": "boolean",
+                          "description": "Indicates if the actor is labeled."
+                        },
+                        "chat": {
+                          "type": "object",
+                          "description": "Actor's chat settings.",
+                          "properties": {
+                            "allowIncoming": {
+                              "type": "string",
+                              "description": "Incoming chat permissions."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "indexedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was indexed."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was created."
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "follows": {
                   "type": "array",
-                  "description": "An array of profiles representing accounts followed by the actor.",
+                  "description": "List of profiles representing the accounts followed by the actor.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of an account followed by the actor.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier of the account."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the account."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the account."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description of the account."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the account's avatar image."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the account.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Label version."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Label source."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "Label URI."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Label content ID."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Label value."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label creation timestamp."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label expiration timestamp."
+                            }
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the account was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the account was created."
+                      }
+                    }
                   }
                 }
               }
@@ -4362,7 +4889,7 @@
           "app.bsky.graph"
         ],
         "summary": "Get Known Followers",
-        "description": "Retrieve followers who are known to the authenticated user.\n",
+        "description": "Retrieve followers who are known to the authenticated user.",
         "operationId": "GetKnownFollowers",
         "produces": [
           "application/json"
@@ -4379,7 +4906,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of known followers to retrieve.",
+            "description": "Max number of known followers to retrieve.",
             "required": false,
             "type": "integer",
             "format": "int32",
@@ -4388,7 +4915,7 @@
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "description": "Pagination cursor for navigating through results.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -4400,11 +4927,159 @@
             "schema": {
               "type": "object",
               "properties": {
+                "subject": {
+                  "type": "object",
+                  "description": "Details of the actor whose known followers are being retrieved.",
+                  "properties": {
+                    "did": {
+                      "type": "string",
+                      "description": "Decentralized identifier of the actor."
+                    },
+                    "handle": {
+                      "type": "string",
+                      "description": "Handle of the actor."
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "Display name of the actor."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Profile description of the actor."
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "description": "URL of the actor's avatar image."
+                    },
+                    "associated": {
+                      "type": "object",
+                      "description": "Additional metadata about the actor.",
+                      "properties": {
+                        "lists": {
+                          "type": "integer",
+                          "description": "Number of lists associated with the actor."
+                        },
+                        "feedgens": {
+                          "type": "integer",
+                          "description": "Number of feed generators associated."
+                        },
+                        "starterPacks": {
+                          "type": "integer",
+                          "description": "Number of starter packs associated."
+                        },
+                        "labeler": {
+                          "type": "boolean",
+                          "description": "Indicates if the actor is labeled."
+                        },
+                        "chat": {
+                          "type": "object",
+                          "description": "Actor's chat settings.",
+                          "properties": {
+                            "allowIncoming": {
+                              "type": "string",
+                              "description": "Incoming chat permissions."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "indexedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was indexed."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Timestamp when the actor was created."
+                    }
+                  }
+                },
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "followers": {
                   "type": "array",
-                  "description": "An array of profiles representing known followers.",
+                  "description": "List of profiles representing known followers.",
                   "items": {
-                    "$ref": "#/definitions/ProfileView"
+                    "type": "object",
+                    "description": "Details of a known follower.",
+                    "properties": {
+                      "did": {
+                        "type": "string",
+                        "description": "Decentralized identifier of the follower."
+                      },
+                      "handle": {
+                        "type": "string",
+                        "description": "Handle of the follower."
+                      },
+                      "displayName": {
+                        "type": "string",
+                        "description": "Display name of the follower."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description of the follower."
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "description": "URL of the follower's avatar image."
+                      },
+                      "labels": {
+                        "type": "array",
+                        "description": "Labels associated with the follower.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ver": {
+                              "type": "integer",
+                              "description": "Label version."
+                            },
+                            "src": {
+                              "type": "string",
+                              "description": "Label source."
+                            },
+                            "uri": {
+                              "type": "string",
+                              "description": "Label URI."
+                            },
+                            "cid": {
+                              "type": "string",
+                              "description": "Label content ID."
+                            },
+                            "val": {
+                              "type": "string",
+                              "description": "Label value."
+                            },
+                            "neg": {
+                              "type": "boolean",
+                              "description": "Indicates if the label is negative."
+                            },
+                            "cts": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label creation timestamp."
+                            },
+                            "exp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "description": "Label expiration timestamp."
+                            }
+                          }
+                        }
+                      },
+                      "indexedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the follower was indexed."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the follower was created."
+                      }
+                    }
                   }
                 }
               }
@@ -13091,41 +13766,45 @@
     },
     "Post": {
       "type": "object",
-      "description": "Metadata and content of a post.",
+      "description": "Details of a post.",
       "properties": {
         "uri": {
           "type": "string",
-          "description": "URI of the post."
+          "description": "The unique URI of the post."
         },
         "cid": {
           "type": "string",
-          "description": "Content identifier (CID) of the post."
+          "description": "The content identifier (CID) of the post."
         },
         "author": {
-          "$ref": "#/definitions/ProfileView"
+          "$ref": "#/definitions/Author"
         },
         "record": {
           "type": "object",
-          "description": "Record associated with the post."
+          "description": "The content record of the post."
         },
         "embed": {
           "type": "object",
-          "description": "Embedded content within the post."
+          "description": "Embedded content associated with the post."
         },
         "replyCount": {
           "type": "integer",
+          "format": "int32",
           "description": "Number of replies to the post."
         },
         "repostCount": {
           "type": "integer",
-          "description": "Number of reposts of the post."
+          "format": "int32",
+          "description": "Number of times the post has been reposted."
         },
         "likeCount": {
           "type": "integer",
+          "format": "int32",
           "description": "Number of likes on the post."
         },
         "quoteCount": {
           "type": "integer",
+          "format": "int32",
           "description": "Number of quotes of the post."
         },
         "indexedAt": {
@@ -13134,7 +13813,34 @@
           "description": "Timestamp when the post was indexed."
         },
         "viewer": {
-          "$ref": "#/definitions/ViewerPostMetadata"
+          "type": "object",
+          "description": "Viewer-specific metadata for the post.",
+          "properties": {
+            "repost": {
+              "type": "string",
+              "description": "Viewer's repost action ID, if applicable."
+            },
+            "like": {
+              "type": "string",
+              "description": "Viewer's like action ID, if applicable."
+            },
+            "threadMuted": {
+              "type": "boolean",
+              "description": "Whether the viewer has muted the thread."
+            },
+            "replyDisabled": {
+              "type": "boolean",
+              "description": "Whether replies are disabled for the post."
+            },
+            "embeddingDisabled": {
+              "type": "boolean",
+              "description": "Whether embedding is disabled for the post."
+            },
+            "pinned": {
+              "type": "boolean",
+              "description": "Whether the post is pinned."
+            }
+          }
         },
         "labels": {
           "type": "array",
@@ -13144,7 +13850,29 @@
           }
         },
         "threadgate": {
-          "$ref": "#/definitions/Threadgate"
+          "type": "object",
+          "description": "Details about thread-related restrictions or lists.",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "The URI for the threadgate."
+            },
+            "cid": {
+              "type": "string",
+              "description": "The CID for the threadgate."
+            },
+            "record": {
+              "type": "object",
+              "description": "Record details for the threadgate."
+            },
+            "lists": {
+              "type": "array",
+              "description": "Lists associated with the threadgate.",
+              "items": {
+                "$ref": "#/definitions/ListMetadata"
+              }
+            }
+          }
         }
       }
     },
@@ -13626,6 +14354,63 @@
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when the list was indexed."
+        }
+      }
+    },
+    "Author": {
+      "type": "object",
+      "description": "Details about the author of the post.",
+      "properties": {
+        "did": {
+          "type": "string",
+          "description": "The decentralized identifier (DID) of the author."
+        },
+        "handle": {
+          "type": "string",
+          "description": "The author's handle or username."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the author."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL of the author's avatar image."
+        },
+        "associated": {
+          "type": "object",
+          "description": "Associated metadata for the author.",
+          "properties": {
+            "lists": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Number of lists associated with the author."
+            },
+            "feedgens": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Number of feed generators associated with the author."
+            },
+            "starterPacks": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Number of starter packs associated with the author."
+            },
+            "labeler": {
+              "type": "boolean",
+              "description": "Whether the author is a labeler."
+            },
+            "chat": {
+              "type": "object",
+              "description": "Chat-related metadata for the author.",
+              "properties": {
+                "allowIncoming": {
+                  "type": "string",
+                  "description": "Allowed incoming chat types."
+                }
+              }
+            }
+          }
         }
       }
     },
