@@ -6518,11 +6518,8 @@
           "chat.bsky.actor"
         ],
         "summary": "Delete Account",
-        "description": "Permanently delete the user's account and associated data.",
-        "operationId": "DeleteAccount",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Delete an account.",
+        "operationId": "actorDeleteAccount",
         "produces": [
           "application/json"
         ],
@@ -6531,48 +6528,65 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Details to confirm account deletion.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "confirmDelete": {
-                  "type": "boolean",
-                  "description": "Confirmation flag to delete the account.",
-                  "example": true
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Successfully deleted the account.",
+            "description": "Account deleted successfully.",
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates whether the account was successfully deleted.",
-                  "example": true
+                "_unknown_": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -6584,8 +6598,8 @@
           "chat.bsky.actor"
         ],
         "summary": "Export Account Data",
-        "description": "Export the user's account data for archival or migration.",
-        "operationId": "ExportAccountData",
+        "description": "Export account data.",
+        "operationId": "actorExportAccountData",
         "produces": [
           "application/json"
         ],
@@ -6594,31 +6608,59 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully exported account data.",
+            "description": "Account data exported successfully.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "accountData": {
-                  "type": "string",
-                  "description": "The exported account data in JSON format.",
-                  "example": "{\"username\": \"johndoe\", \"posts\": [...]}"
-                }
-              }
+              "type": "file"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to export account data.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -8475,6 +8517,110 @@
                 },
                 "message": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.server.deleteAccount": {
+      "post": {
+        "tags": [
+          "com.atproto.server"
+        ],
+        "summary": "Delete Account",
+        "description": "Delete an actor's account with a token and password.",
+        "operationId": "serverDeleteAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Payload to delete an actor's account.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "did",
+                "password",
+                "token"
+              ],
+              "properties": {
+                "did": {
+                  "type": "string",
+                  "description": "Decentralized Identifier (DID) of the account to be deleted."
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Password of the account."
+                },
+                "token": {
+                  "type": "string",
+                  "description": "Token associated with the account."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account deleted successfully."
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
                 }
               }
             }
@@ -11131,8 +11277,8 @@
           "com.atproto.server"
         ],
         "summary": "Create App Password",
-        "description": "Generate a new app-specific password for a user account.\n",
-        "operationId": "CreateAppPassword",
+        "description": "Create an App Password.",
+        "operationId": "serverCreateAppPassword",
         "consumes": [
           "application/json"
         ],
@@ -11148,15 +11294,21 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the app password to create.",
             "required": true,
+            "description": "Payload to create an App Password.",
             "schema": {
               "type": "object",
+              "required": [
+                "name"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "The name or purpose of the app password.",
-                  "example": "MyApp"
+                  "description": "A short name for the App Password, to help distinguish them."
+                },
+                "privileged": {
+                  "type": "boolean",
+                  "description": "If an app password has 'privileged' access to possibly sensitive account state. Meant for use with trusted clients."
                 }
               }
             }
@@ -11164,28 +11316,58 @@
         ],
         "responses": {
           "200": {
-            "description": "App password successfully created.",
+            "description": "App password created successfully.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "appPassword": {
-                  "type": "string",
-                  "description": "The generated app password.",
-                  "example": "securePassword123"
-                }
-              }
+              "$ref": "#/definitions/appPassword"
             }
           },
           "400": {
-            "description": "Bad Request - Invalid request details.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "AccountTakedown"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11426,11 +11608,8 @@
           "com.atproto.server"
         ],
         "summary": "Delete Session",
-        "description": "Log out the current session.\n",
-        "operationId": "DeleteSession",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Delete the current session.",
+        "operationId": "serverDeleteSession",
         "produces": [
           "application/json"
         ],
@@ -11439,31 +11618,56 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "Session successfully deleted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful session termination.",
-                  "example": true
-                }
-              }
-            }
+            "description": "Session deleted successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid session or token.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11475,8 +11679,8 @@
           "com.atproto.server"
         ],
         "summary": "Describe Server",
-        "description": "Retrieve information about the current server.\n",
-        "operationId": "DescribeServer",
+        "description": "Describes the server's account creation requirements and capabilities.",
+        "operationId": "serverDescribeServer",
         "produces": [
           "application/json"
         ],
@@ -11487,36 +11691,87 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved server description.",
+            "description": "Server description retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "did",
+                "availableUserDomains"
+              ],
               "properties": {
-                "version": {
-                  "type": "string",
-                  "description": "The server version.",
-                  "example": "1.0.0"
+                "inviteCodeRequired": {
+                  "type": "boolean",
+                  "description": "If true, an invite code must be supplied to create an account on this instance."
                 },
-                "features": {
+                "phoneVerificationRequired": {
+                  "type": "boolean",
+                  "description": "If true, a phone verification token must be supplied to create an account on this instance."
+                },
+                "availableUserDomains": {
                   "type": "array",
-                  "description": "List of supported features.",
                   "items": {
-                    "type": "string",
-                    "example": "feature1"
+                    "type": "string"
                   }
+                },
+                "links": {
+                  "$ref": "#/definitions/describeServerLinks"
+                },
+                "contact": {
+                  "$ref": "#/definitions/describeServerContact"
+                },
+                "did": {
+                  "type": "string",
+                  "description": "Decentralized Identifier (DID) of the server."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Failed to retrieve server details.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11528,8 +11783,8 @@
           "com.atproto.server"
         ],
         "summary": "Get Account Invite Codes",
-        "description": "Retrieve all invite codes for an authenticated account.\n",
-        "operationId": "GetAccountInviteCodes",
+        "description": "Get all invite codes for the current account.",
+        "operationId": "serverGetAccountInviteCodes",
         "produces": [
           "application/json"
         ],
@@ -11540,41 +11795,87 @@
         ],
         "parameters": [
           {
-            "name": "accountId",
+            "name": "includeUsed",
             "in": "query",
-            "description": "Unique identifier of the account.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Account ID"
+            "type": "boolean",
+            "default": true,
+            "description": "Include used invite codes in the response.",
+            "x-ms-summary": "Include Used"
+          },
+          {
+            "name": "createAvailable",
+            "in": "query",
+            "type": "boolean",
+            "default": true,
+            "description": "Controls whether any new 'earned' but not 'created' invites should be created.",
+            "x-ms-summary": "Create Available"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account invite codes.",
+            "description": "Invite codes retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "codes"
+              ],
               "properties": {
-                "inviteCodes": {
+                "codes": {
                   "type": "array",
-                  "description": "List of invite codes associated with the account.",
                   "items": {
-                    "type": "string",
-                    "example": "INVITE123"
+                    "$ref": "#/definitions/inviteCode"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier.",
+            "description": "Bad Request - Invalid or missing input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "DuplicateCreate"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11736,15 +12037,14 @@
         }
       }
     },
-
     "/xrpc/com.atproto.server.listAppPasswords": {
       "get": {
         "tags": [
           "com.atproto.server"
         ],
         "summary": "List App Passwords",
-        "description": "Get a list of all app-specific passwords for an account.\n",
-        "operationId": "ListAppPasswords",
+        "description": "List all App Passwords.",
+        "operationId": "serverListAppPasswords",
         "produces": [
           "application/json"
         ],
@@ -11755,43 +12055,69 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved app passwords.",
+            "description": "App passwords retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "passwords"
+              ],
               "properties": {
-                "appPasswords": {
+                "passwords": {
                   "type": "array",
-                  "description": "List of application-specific passwords.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "appName": {
-                        "type": "string",
-                        "description": "The name of the app associated with the password.",
-                        "example": "MyApp"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The creation date of the app password.",
-                        "example": "2024-11-19T12:00:00Z"
-                      }
-                    }
+                    "$ref": "#/definitions/appPassword"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Failed to retrieve app passwords.",
+            "description": "Bad Request - Invalid or missing input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "AccountTakedown"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11803,11 +12129,8 @@
           "com.atproto.server"
         ],
         "summary": "Request Account Deletion",
-        "description": "Submit a request to delete the authenticated user account.\n",
-        "operationId": "RequestAccountDelete",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Initiate a user account deletion via email.",
+        "operationId": "serverRequestAccountDelete",
         "produces": [
           "application/json"
         ],
@@ -11818,28 +12141,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deletion request submitted successfully.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the deletion request was accepted.",
-                  "example": true
-                }
-              }
-            }
+            "description": "Account deletion request initiated successfully."
           },
           "400": {
-            "description": "Bad Request - Unable to process the account deletion request.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11848,12 +12197,11 @@
     "/xrpc/com.atproto.server.requestEmailConfirmation": {
       "post": {
         "tags": [
-          "server"
+          "com.atproto.server"
         ],
         "summary": "Request Email Confirmation",
-        "x-ms-summary": "Send an email confirmation code.",
-        "description": "Request an email with a code to confirm ownership of the email address.",
-        "operationId": "requestEmailConfirmation",
+        "description": "Request an email with a code to confirm ownership of email.",
+        "operationId": "serverRequestEmailConfirmation",
         "produces": [
           "application/json"
         ],
@@ -11864,18 +12212,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Email confirmation request sent successfully. No response body."
+            "description": "Email confirmation request sent successfully."
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11887,11 +12271,8 @@
           "com.atproto.server"
         ],
         "summary": "Request Email Update",
-        "description": "Request an update to the user's email address.\n",
-        "operationId": "RequestEmailUpdate",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Request a token in order to update email.",
+        "operationId": "serverRequestEmailUpdate",
         "produces": [
           "application/json"
         ],
@@ -11900,48 +12281,68 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Details of the email update request.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "newEmail": {
-                  "type": "string",
-                  "description": "The new email address for the user.",
-                  "example": "newuser@example.com"
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Email update request successfully submitted.",
+            "description": "Token request for email update successful.",
             "schema": {
               "type": "object",
+              "required": [
+                "tokenRequired"
+              ],
               "properties": {
-                "success": {
+                "tokenRequired": {
                   "type": "boolean",
-                  "description": "Indicates the update request was accepted.",
-                  "example": true
+                  "description": "Indicates if a token is required for the email update."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to process the email update request.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -12144,11 +12545,8 @@
           "com.atproto.server"
         ],
         "summary": "Revoke App Password",
-        "description": "Revoke an app-specific password for a user's account.\n",
-        "operationId": "RevokeAppPassword",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Revoke an App Password by name.",
+        "operationId": "serverRevokeAppPassword",
         "produces": [
           "application/json"
         ],
@@ -12161,15 +12559,17 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the app password to revoke.",
             "required": true,
+            "description": "Payload containing the name of the App Password to revoke.",
             "schema": {
               "type": "object",
+              "required": [
+                "name"
+              ],
               "properties": {
-                "appPasswordId": {
+                "name": {
                   "type": "string",
-                  "description": "Unique identifier of the app password to revoke.",
-                  "example": "password123"
+                  "description": "The name of the App Password to revoke."
                 }
               }
             }
@@ -12177,28 +12577,54 @@
         ],
         "responses": {
           "200": {
-            "description": "App password successfully revoked.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the app password was revoked successfully.",
-                  "example": true
-                }
-              }
-            }
+            "description": "App Password revoked successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid app password identifier.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -12210,11 +12636,8 @@
           "com.atproto.server"
         ],
         "summary": "Update Email",
-        "description": "Update an email address for a user's account after confirmation.\n",
-        "operationId": "UpdateEmail",
-        "consumes": [
-          "application/json"
-        ],
+        "description": "Update an account's email.",
+        "operationId": "serverUpdateEmail",
         "produces": [
           "application/json"
         ],
@@ -12227,20 +12650,25 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the email update request.",
             "required": true,
+            "description": "Payload containing email update information.",
             "schema": {
               "type": "object",
+              "required": [
+                "email"
+              ],
               "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "The new email address to update the account with."
+                },
+                "emailAuthFactor": {
+                  "type": "boolean",
+                  "description": "Whether email is used as an authentication factor."
+                },
                 "token": {
                   "type": "string",
-                  "description": "The confirmation token for the email update.",
-                  "example": "emailUpdateToken123"
-                },
-                "newEmail": {
-                  "type": "string",
-                  "description": "The new email address for the account.",
-                  "example": "newuser@example.com"
+                  "description": "A token from requestEmailUpdate if the account's email has been confirmed."
                 }
               }
             }
@@ -12248,28 +12676,55 @@
         ],
         "responses": {
           "200": {
-            "description": "Email successfully updated.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the email update was successful.",
-                  "example": true
-                }
-              }
-            }
+            "description": "Email updated successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid token or email.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "TokenRequired"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -13810,8 +14265,8 @@
           "tools.ozone.server"
         ],
         "summary": "Get Server Configuration",
-        "description": "Retrieve the current server config details.\n",
-        "operationId": "GetConfig",
+        "description": "Get details about ozone's server configuration.",
+        "operationId": "serverGetConfig",
         "produces": [
           "application/json"
         ],
@@ -13822,39 +14277,74 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved server configuration.",
+            "description": "Server configuration retrieved successfully.",
             "schema": {
               "type": "object",
               "properties": {
-                "config": {
-                  "type": "object",
-                  "description": "Details of the server configuration.",
-                  "properties": {
-                    "version": {
-                      "type": "string",
-                      "description": "The server version.",
-                      "example": "1.0.0"
-                    },
-                    "environment": {
-                      "type": "string",
-                      "description": "The server environment (e.g., production, staging).",
-                      "example": "production"
-                    }
-                  }
+                "appview": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "pds": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "blobDivert": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "chat": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "viewer": {
+                  "$ref": "#/definitions/viewerConfig"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve server configuration.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -16499,6 +16989,72 @@
           "type": "boolean"
         },
         "ref": {
+          "type": "string"
+        }
+      }
+    },
+    "appPassword": {
+      "type": "object",
+      "required": [
+        "name",
+        "password",
+        "createdAt"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "privileged": {
+          "type": "boolean"
+        }
+      }
+    },
+    "describeServerLinks": {
+      "type": "object",
+      "properties": {
+        "privacyPolicy": {
+          "type": "string",
+          "format": "uri"
+        },
+        "termsOfService": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "serviceConfig": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "viewerConfig": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "tools.ozone.team.defs#roleAdmin",
+            "tools.ozone.team.defs#roleModerator",
+            "tools.ozone.team.defs#roleTriage"
+          ]
+        }
+      }
+    },
+    "describeServerContact": {
+      "type": "object",
+      "properties": {
+        "email": {
           "type": "string"
         }
       }
