@@ -118,9 +118,9 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get Detailed Profiles of Multiple Actors",
-        "description": "Retrieve profiles for multiple actors.",
-        "operationId": "GetProfiles",
+        "summary": "Get Profiles",
+        "description": "Get detailed profile views of multiple actors.",
+        "operationId": "getProfiles",
         "produces": [
           "application/json"
         ],
@@ -133,15 +133,19 @@
           {
             "name": "actors",
             "in": "query",
-            "description": "Comma-separated list of handles or DIDs of the accounts to fetch profiles for.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Actor Identifiers"
+            "description": "Actor Identifier",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 25,
+            "x-ms-summary": "List of actor identifiers"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved detailed profiles of the specified actors.",
+            "description": "Profiles retrieved successfully.",
             "schema": {
               "type": "object",
               "required": [
@@ -150,155 +154,8 @@
               "properties": {
                 "profiles": {
                   "type": "array",
-                  "description": "An array of detailed profile views for the specified actors.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized Identifier (DID) of the actor."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Unique handle of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the actor."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Profile description of the actor."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "URI for the actor's avatar image."
-                      },
-                      "banner": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "URI for the actor's banner image."
-                      },
-                      "followersCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of followers the actor has."
-                      },
-                      "followsCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of accounts the actor is following."
-                      },
-                      "postsCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of posts by the actor."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Associated data for the actor.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "description": "Number of lists the actor is part of."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "description": "Number of feed generators associated with the actor."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "description": "Number of starter packs associated with the actor."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is a labeler."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "description": "Chat-related preferences.",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Preference for allowing incoming chats."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the actor.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific data for the profile.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is muted."
-                          },
-                          "mutedByList": {
-                            "$ref": "#/definitions/MutedByList"
-                          },
-                          "blockedBy": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is blocked by the viewer."
-                          },
-                          "blocking": {
-                            "type": "string",
-                            "description": "Details of blocking, if any."
-                          },
-                          "blockingByList": {
-                            "$ref": "#/definitions/BlockingByList"
-                          },
-                          "following": {
-                            "type": "string",
-                            "description": "Indicates if the viewer is following the actor."
-                          },
-                          "followedBy": {
-                            "type": "string",
-                            "description": "Indicates if the actor is following the viewer."
-                          },
-                          "knownFollowers": {
-                            "type": "object",
-                            "description": "Known followers of the actor.",
-                            "properties": {
-                              "count": {
-                                "type": "integer",
-                                "description": "Total count of known followers."
-                              },
-                              "followers": {
-                                "type": "array",
-                                "description": "List of known followers.",
-                                "items": {
-                                  "$ref": "#/definitions/ProfileView"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "pinnedPost": {
-                        "type": "object",
-                        "description": "Pinned post details.",
-                        "properties": {
-                          "uri": {
-                            "type": "string",
-                            "format": "uri",
-                            "description": "URI of the pinned post."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "Content identifier of the pinned post."
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/profileViewDetailed"
                   }
                 }
               }
@@ -307,13 +164,49 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -601,7 +494,7 @@
                   "type": "array",
                   "description": "An array of actors matching the search criteria.",
                   "items": {
-                    "$ref": "#/definitions/ProfileViewDetailed"
+                    "$ref": "#/definitions/profileViewDetailed"
                   }
                 }
               }
@@ -805,21 +698,12 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Describe Feed Generator",
-        "description": "Retrieve metadata about the feed generator.",
+        "summary": "Get information about a feed",
+        "x-ms-summary": "Get information about a feed generator",
+        "description": "Get information about a feed generator.",
         "operationId": "DescribeFeedGenerator",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "generatorUri",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The URI of the feed generator to describe.",
-            "x-ms-summary": "Feed Generator URI"
-          }
         ],
         "security": [
           {
@@ -828,56 +712,71 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved metadata about the feed generator.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "did",
+                "feeds"
+              ],
               "properties": {
                 "did": {
-                  "type": "string",
-                  "description": "Decentralized Identifier of the feed generator."
+                  "type": "string"
                 },
                 "feeds": {
                   "type": "array",
-                  "description": "A list of feed URIs associated with the feed generator.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the feed."
-                      }
-                    }
+                    "$ref": "#/definitions/describeFeedGeneratorFeed"
                   }
                 },
                 "links": {
-                  "type": "object",
-                  "description": "Relevant links or metadata for the feed generator.",
-                  "properties": {
-                    "privacyPolicy": {
-                      "type": "string",
-                      "description": "URL of the feed generator's privacy policy.",
-                      "example": "https://example.com/privacy"
-                    },
-                    "termsOfService": {
-                      "type": "string",
-                      "description": "URL of the feed generator's terms of service.",
-                      "example": "https://example.com/terms"
-                    }
-                  }
+                  "$ref": "#/definitions/describeFeedGeneratorLinks"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -1043,7 +942,7 @@
                             "description": "Content ID (CID) of the post."
                           },
                           "author": {
-                            "$ref": "#/definitions/ProfileViewDetailed"
+                            "$ref": "#/definitions/profileViewDetailed"
                           },
                           "labels": {
                             "type": "array",
@@ -1210,7 +1109,7 @@
                             "description": "CID of the post."
                           },
                           "author": {
-                            "$ref": "#/definitions/ProfileViewDetailed"
+                            "$ref": "#/definitions/profileViewDetailed"
                           },
                           "record": {
                             "type": "object",
@@ -2355,276 +2254,92 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Posts by URIs",
-        "description": "Retrieve specific posts by their URIs.",
+        "summary": "Get Posts",
+        "x-ms-summary": "Retrieve post views for specified posts.",
+        "description": "Gets post views for a specified list of posts.",
         "operationId": "GetPosts",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "uris",
-            "in": "query",
-            "description": "Comma-separated list of post URIs to retrieve.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Post URIs"
-          }
         ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "name": "uris",
+            "in": "query",
+            "description": "List of post AT-URIs to return hydrated views for.",
+            "x-ms-summary": "Post AT-URIs",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 25
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the posts.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "posts"
+              ],
               "properties": {
                 "posts": {
                   "type": "array",
-                  "description": "An array of posts corresponding to the provided URIs.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a post.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the post."
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content identifier of the post."
-                      },
-                      "author": {
-                        "type": "object",
-                        "description": "Information about the post author.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "DID of the author."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the author."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the author."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the author's avatar image."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Associated metadata for the author.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of lists associated."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Whether the author is a labeler."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat settings for the author.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Type of incoming messages allowed."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "viewer": {
-                            "type": "object",
-                            "description": "Viewer-specific metadata.",
-                            "properties": {
-                              "muted": {
-                                "type": "boolean",
-                                "description": "Whether the viewer has muted the author."
-                              },
-                              "blockedBy": {
-                                "type": "boolean",
-                                "description": "Whether the viewer is blocked by the author."
-                              }
-                            }
-                          },
-                          "labels": {
-                            "type": "array",
-                            "description": "Labels associated with the author.",
-                            "items": {
-                              "$ref": "#/definitions/Label"
-                            }
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the author was created."
-                          }
-                        }
-                      },
-                      "record": {
-                        "type": "object",
-                        "description": "Metadata for the post."
-                      },
-                      "embed": {
-                        "type": "object",
-                        "description": "Embed metadata for the post."
-                      },
-                      "replyCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of replies to the post."
-                      },
-                      "repostCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of reposts of the post."
-                      },
-                      "likeCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of likes on the post."
-                      },
-                      "quoteCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of quotes of the post."
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the post was indexed."
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata for the post.",
-                        "properties": {
-                          "repost": {
-                            "type": "string",
-                            "description": "URI of the viewer's repost of the post."
-                          },
-                          "like": {
-                            "type": "string",
-                            "description": "URI of the viewer's like on the post."
-                          },
-                          "threadMuted": {
-                            "type": "boolean",
-                            "description": "Whether the viewer muted the thread."
-                          },
-                          "replyDisabled": {
-                            "type": "boolean",
-                            "description": "Whether replies are disabled for the post."
-                          },
-                          "embeddingDisabled": {
-                            "type": "boolean",
-                            "description": "Whether embedding is disabled for the post."
-                          },
-                          "pinned": {
-                            "type": "boolean",
-                            "description": "Whether the post is pinned."
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the post.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "threadgate": {
-                        "type": "object",
-                        "description": "Thread gate metadata.",
-                        "properties": {
-                          "uri": {
-                            "type": "string",
-                            "description": "URI of the thread gate."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "CID of the thread gate."
-                          },
-                          "record": {
-                            "type": "object",
-                            "description": "Metadata for the thread gate."
-                          },
-                          "lists": {
-                            "type": "array",
-                            "description": "Lists associated with the thread gate.",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "uri": {
-                                  "type": "string",
-                                  "description": "URI of the list."
-                                },
-                                "cid": {
-                                  "type": "string",
-                                  "description": "CID of the list."
-                                },
-                                "name": {
-                                  "type": "string",
-                                  "description": "Name of the list."
-                                },
-                                "purpose": {
-                                  "type": "string",
-                                  "description": "Purpose of the list."
-                                },
-                                "avatar": {
-                                  "type": "string",
-                                  "description": "URL of the list's avatar image."
-                                },
-                                "listItemCount": {
-                                  "type": "integer",
-                                  "format": "int32",
-                                  "description": "Number of items in the list."
-                                },
-                                "labels": {
-                                  "type": "array",
-                                  "description": "Labels associated with the list.",
-                                  "items": {
-                                    "$ref": "#/definitions/Label"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/postView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8575,7 +8290,20 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deleted successfully."
+            "description": "Account deleted successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the account deletion was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional success message."
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
@@ -15373,67 +15101,69 @@
         }
       }
     },
-    "ProfileViewDetailed": {
+    "profileViewDetailed": {
       "type": "object",
-      "description": "Detailed profile view of an actor.",
+      "required": [
+        "did",
+        "handle"
+      ],
       "properties": {
         "did": {
-          "type": "string",
-          "description": "Decentralized Identifier (DID) of the actor.",
-          "example": "did:plc:abcd1234"
+          "type": "string"
         },
         "handle": {
-          "type": "string",
-          "description": "Handle of the actor.",
-          "example": "user.handle.bsky.app"
+          "type": "string"
         },
         "displayName": {
           "type": "string",
-          "description": "The display name of the actor.",
-          "example": "John Doe"
+          "maxLength": 640
         },
-        "bio": {
+        "description": {
           "type": "string",
-          "description": "The biography or about section of the actor.",
-          "example": "Just another Bluesky enthusiast."
+          "maxLength": 2560
         },
         "avatar": {
           "type": "string",
-          "description": "URL of the actor's avatar image.",
-          "example": "https://example.com/avatar.jpg"
+          "format": "uri"
         },
         "banner": {
           "type": "string",
-          "description": "URL of the actor's banner image.",
-          "example": "https://example.com/banner.jpg"
+          "format": "uri"
         },
         "followersCount": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Number of followers the actor has.",
-          "example": 123
+          "type": "integer"
         },
-        "followingCount": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Number of accounts the actor is following.",
-          "example": 456
+        "followsCount": {
+          "type": "integer"
         },
         "postsCount": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Total number of posts the actor has made.",
-          "example": 789
+          "type": "integer"
         },
-        "isFollowing": {
-          "type": "boolean",
-          "description": "Whether the authenticated user is following the actor.",
-          "example": true
+        "associated": {
+          "$ref": "#/definitions/profileAssociated"
         },
-        "isFollowedBy": {
-          "type": "boolean",
-          "description": "Whether the authenticated user is followed by the actor.",
-          "example": false
+        "joinedViaStarterPack": {
+          "$ref": "#/definitions/starterPackViewBasic"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "viewer": {
+          "$ref": "#/definitions/viewerState"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "pinnedPost": {
+          "$ref": "#/definitions/strongRef"
         }
       }
     },
@@ -16109,33 +15839,7 @@
     },
     "postView": {
       "type": "object",
-      "required": [
-        "post"
-      ],
-      "properties": {
-        "post": {
-          "$ref": "#/definitions/postView"
-        },
-        "reply": {
-          "$ref": "#/definitions/replyRef"
-        },
-        "reason": {
-          "type": "object",
-          "properties": {
-            "repost": {
-              "$ref": "#/definitions/reasonRepost"
-            },
-            "pin": {
-              "$ref": "#/definitions/reasonPin"
-            }
-          }
-        },
-        "feedContext": {
-          "type": "string",
-          "description": "Context provided by feed generator that may be passed back alongside interactions.",
-          "maxLength": 2000
-        }
-      }
+      "additionalProperties": true
     },
     "replyRef": {
       "type": "object",
@@ -17055,6 +16759,72 @@
       "type": "object",
       "properties": {
         "email": {
+          "type": "string"
+        }
+      }
+    },
+    "starterPackViewBasic": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "record",
+        "creator",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "record": {},
+        "creator": {
+          "$ref": "#/definitions/profileViewBasic"
+        },
+        "listItemCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joinedWeekCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joinedAllTimeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "describeFeedGeneratorFeed": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "describeFeedGeneratorLinks": {
+      "type": "object",
+      "properties": {
+        "privacyPolicy": {
+          "type": "string"
+        },
+        "termsOfService": {
           "type": "string"
         }
       }
