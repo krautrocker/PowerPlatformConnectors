@@ -6910,9 +6910,10 @@
         "tags": [
           "chat.bsky.convo"
         ],
-        "summary": "Get Conversation Log",
-        "description": "Retrieve the activity log for a conversation.",
-        "operationId": "GetLog",
+        "summary": "Get Log",
+        "x-ms-summary": "Retrieve a conversation log.",
+        "description": "Retrieve the log of actions and messages in a conversation.",
+        "operationId": "getLog",
         "produces": [
           "application/json"
         ],
@@ -6923,25 +6924,9 @@
         ],
         "parameters": [
           {
-            "name": "convoId",
-            "in": "query",
-            "description": "Unique identifier of the conversation to retrieve the log for.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Conversation ID"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of log entries to retrieve.",
-            "required": false,
-            "type": "integer",
-            "x-ms-summary": "Limit"
-          },
-          {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating the log.",
+            "description": "Pagination cursor for retrieving the next set of logs.",
             "required": false,
             "type": "string",
             "x-ms-summary": "Pagination Cursor"
@@ -6949,36 +6934,35 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the conversation log.",
+            "description": "Log retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "logs"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for navigating logs.",
-                  "example": "next-page-token"
+                  "description": "Cursor for pagination.",
+                  "x-ms-summary": "Pagination Cursor"
                 },
                 "logs": {
                   "type": "array",
-                  "description": "An array of log entries for the conversation.",
+                  "description": "Array of log events.",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "id": {
+                      "type": {
                         "type": "string",
-                        "description": "Message ID in the log.",
-                        "example": "msg123"
+                        "description": "The type of log event."
                       },
-                      "text": {
-                        "type": "string",
-                        "description": "The text content of the message.",
-                        "example": "Hello, world!"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp of the message.",
-                        "example": "2023-11-19T12:34:56Z"
+                      "event": {
+                        "type": "object",
+                        "description": "Details about the event.",
+                        "x-ms-dynamic-schema": {
+                          "operationId": "getLog",
+                          "value-path": "logs"
+                        }
                       }
                     }
                   }
@@ -6987,15 +6971,51 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid conversation ID or input.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -7129,8 +7149,9 @@
           "chat.bsky.convo"
         ],
         "summary": "Leave Conversation",
-        "description": "Leave a specific conversation.",
-        "operationId": "LeaveConvo",
+        "x-ms-summary": "Leave a conversation.",
+        "description": "Leave a conversation by specifying its ID.",
+        "operationId": "leaveConvo",
         "consumes": [
           "application/json"
         ],
@@ -7146,20 +7167,17 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the conversation to leave.",
             "required": true,
+            "description": "Details of the conversation to leave.",
             "schema": {
               "type": "object",
+              "required": [
+                "convoId"
+              ],
               "properties": {
                 "convoId": {
                   "type": "string",
-                  "description": "Unique identifier of the conversation to leave.",
-                  "example": "convo123"
-                },
-                "rev": {
-                  "type": "string",
-                  "description": "Revision of the conversation to ensure consistency.",
-                  "example": "rev456"
+                  "description": "The ID of the conversation to leave."
                 }
               }
             }
@@ -7170,25 +7188,68 @@
             "description": "Successfully left the conversation.",
             "schema": {
               "type": "object",
+              "required": [
+                "convoId",
+                "rev"
+              ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates if the operation was successful.",
-                  "example": true
+                "convoId": {
+                  "type": "string",
+                  "description": "The ID of the conversation that was left."
+                },
+                "rev": {
+                  "type": "string",
+                  "description": "The revision identifier of the conversation."
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request, conversation ID, or revision.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -8016,9 +8077,10 @@
         "tags": [
           "chat.bsky.convo"
         ],
-        "summary": "Update Read Status",
-        "description": "Mark messages in a conversation as read up to a specified point.\n",
-        "operationId": "UpdateRead",
+        "summary": "Update Conversation Read Status",
+        "x-ms-summary": "Mark a conversation item as read.",
+        "description": "Update an item in a conversation to mark it as read.",
+        "operationId": "updateRead",
         "consumes": [
           "application/json"
         ],
@@ -8034,20 +8096,21 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the convo and read status update.",
             "required": true,
+            "description": "Details of the conversation and item to update as read.",
             "schema": {
               "type": "object",
+              "required": [
+                "convoId"
+              ],
               "properties": {
                 "convoId": {
                   "type": "string",
-                  "description": "Unique identifier of the conversation.",
-                  "example": "convo123"
+                  "description": "The ID of the conversation."
                 },
-                "readUpToMessageId": {
+                "messageId": {
                   "type": "string",
-                  "description": "The ID of the last message read.",
-                  "example": "msg456"
+                  "description": "The ID of the message to mark as read."
                 }
               }
             }
@@ -8055,28 +8118,65 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the read status.",
+            "description": "Successfully marked the item as read.",
             "schema": {
               "type": "object",
+              "required": [
+                "convo"
+              ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                "convo": {
+                  "$ref": "#/definitions/convoView"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request or conversation ID.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -8153,8 +8253,9 @@
           "chat.bsky.moderation"
         ],
         "summary": "Get Message Context",
-        "description": "Retrieve the context of a specific message for moderation purposes.\n",
-        "operationId": "GetMessageContext",
+        "x-ms-summary": "Retrieve the context around a specific message.",
+        "description": "Fetch surrounding messages from a conversation for moderation purposes.",
+        "operationId": "getMessageContext",
         "produces": [
           "application/json"
         ],
@@ -8165,12 +8266,38 @@
         ],
         "parameters": [
           {
+            "name": "convoId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Conversation that the message is from.",
+            "x-ms-summary": "Conversation Id"
+          },
+          {
             "name": "messageId",
             "in": "query",
-            "description": "Unique identifier of the message to retrieve context for.",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Message ID"
+            "description": "The ID of the message.",
+            "x-ms-summary": "Message Id"
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "description": "Number of messages to include before the specified message.",
+            "x-ms-summary": "Number of messages to include before the specified message."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 5,
+            "description": "Number of messages to include after the specified message.",
+            "x-ms-summary": "Number of messages to include after the specified message."
           }
         ],
         "responses": {
@@ -8178,58 +8305,65 @@
             "description": "Successfully retrieved the message context.",
             "schema": {
               "type": "object",
+              "required": [
+                "messages"
+              ],
               "properties": {
-                "before": {
+                "messages": {
                   "type": "array",
-                  "description": "Messages sent before the specified message.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Message ID.",
-                        "example": "msg123"
-                      },
-                      "text": {
-                        "type": "string",
-                        "description": "Message content.",
-                        "example": "What are you up to?"
-                      }
-                    }
-                  }
-                },
-                "after": {
-                  "type": "array",
-                  "description": "Messages sent after the specified message.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Message ID.",
-                        "example": "msg125"
-                      },
-                      "text": {
-                        "type": "string",
-                        "description": "Message content.",
-                        "example": "Let's catch up soon!"
-                      }
-                    }
+                    "$ref": "#/definitions/messageView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid message ID.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -8241,8 +8375,9 @@
           "chat.bsky.moderation"
         ],
         "summary": "Update Actor Access",
-        "description": "Update actor access permissions or restrictions.\n",
-        "operationId": "UpdateActorAccess",
+        "x-ms-summary": "Modify access permissions for an actor.",
+        "description": "Update an actor's access permissions.",
+        "operationId": "updateActorAccess",
         "consumes": [
           "application/json"
         ],
@@ -8258,20 +8393,26 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the access update.",
             "required": true,
+            "x-ms-summary": "Access Update Request",
             "schema": {
               "type": "object",
+              "required": [
+                "actor",
+                "allowAccess"
+              ],
               "properties": {
                 "actor": {
                   "type": "string",
-                  "description": "The DID or handle of the actor whose access is being updated.",
-                  "example": "did:plc:xyz123"
+                  "x-ms-summary": "Actor Identifier"
                 },
-                "accessLevel": {
+                "allowAccess": {
+                  "type": "boolean",
+                  "x-ms-summary": "Allow Access"
+                },
+                "ref": {
                   "type": "string",
-                  "description": "The new access level for the actor.",
-                  "example": "restricted"
+                  "x-ms-summary": "Reference ID"
                 }
               }
             }
@@ -8279,28 +8420,63 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated actor access.",
+            "description": "Actor access updated successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates if the access update was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional message detailing the result."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid actor identifier or access level.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8312,8 +8488,9 @@
           "com.atproto.admin"
         ],
         "summary": "Delete Account",
-        "description": "Permanently delete an account, including all associated data.\n",
-        "operationId": "AdminDeleteAccount",
+        "x-ms-summary": "Delete a user account as an administrator.",
+        "description": "Delete a user account as an administrator.",
+        "operationId": "adminDeleteAccount",
         "consumes": [
           "application/json"
         ],
@@ -8329,15 +8506,17 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the account to delete.",
             "required": true,
+            "x-ms-summary": "Account Deletion Request",
             "schema": {
               "type": "object",
+              "required": [
+                "did"
+              ],
               "properties": {
-                "accountId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the account to delete.",
-                  "example": "account123"
+                  "x-ms-summary": "Decentralized Identifier (DID)"
                 }
               }
             }
@@ -8345,94 +8524,63 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully deleted the account.",
+            "description": "Account deleted successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid account identifier.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/com.atproto.admin.disableAccountInvites": {
-      "post": {
-        "tags": [
-          "com.atproto.admin"
-        ],
-        "summary": "Disable Account Invites",
-        "description": "Disable account invites for a specific user.\n",
-        "operationId": "DisableAccountInvites",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Details of the user whose invites are being disabled.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accountId": {
+                  "description": "Indicates whether the account was deleted successfully."
+                },
+                "message": {
                   "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully disabled account invites.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Optional message detailing the result."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8513,8 +8661,9 @@
           "com.atproto.admin"
         ],
         "summary": "Enable Account Invites",
-        "description": "Re-enable invite privileges for a specific account.\n",
-        "operationId": "EnableAccountInvites",
+        "x-ms-summary": "Re-enable an account's ability to receive invite codes.",
+        "description": "Re-enable an account's ability to receive invite codes.",
+        "operationId": "adminEnableAccountInvites",
         "consumes": [
           "application/json"
         ],
@@ -8530,15 +8679,24 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the account whose invite privileges are being enabled.",
+            "x-ms-summary": "Enable Account Invites Request",
+            "description": "Request payload to enable account invites.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "account"
+              ],
               "properties": {
-                "accountId": {
+                "account": {
                   "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
+                  "x-ms-summary": "Account Identifier",
+                  "description": "The account identifier (DID) for which invites are being enabled."
+                },
+                "note": {
+                  "type": "string",
+                  "x-ms-summary": "Reason for Enable",
+                  "description": "Optional reason for enabling invites."
                 }
               }
             }
@@ -8546,28 +8704,63 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully enabled account invites.",
+            "description": "Account invites enabled successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates if the operation was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional message detailing the result."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or already enabled account ID.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8579,8 +8772,9 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Info",
-        "description": "Retrieve detailed information about a specific account.\n",
-        "operationId": "GetAccountInfo",
+        "x-ms-summary": "Retrieve details about an account.",
+        "description": "Get details about an account.",
+        "operationId": "adminGetAccountInfo",
         "produces": [
           "application/json"
         ],
@@ -8591,54 +8785,63 @@
         ],
         "parameters": [
           {
-            "name": "accountId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier of the account.",
+            "x-ms-summary": "Account Identifier",
+            "description": "Decentralized Identifier (DID) of the account.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Account ID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account information.",
+            "description": "Account details retrieved successfully.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "account": {
-                  "type": "object",
-                  "description": "Detailed information about the account.",
-                  "properties": {
-                    "accountId": {
-                      "type": "string",
-                      "description": "Unique identifier of the account.",
-                      "example": "account123"
-                    },
-                    "email": {
-                      "type": "string",
-                      "description": "The email associated with the account.",
-                      "example": "user@example.com"
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The current status of the account.",
-                      "example": "active"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/accountView"
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8650,8 +8853,9 @@
           "com.atproto.admin"
         ],
         "summary": "Get Account Infos",
-        "description": "Get a list of accounts with their details.\n",
-        "operationId": "GetAccountInfos",
+        "x-ms-summary": "Retrieve account details.",
+        "description": "Get details about some accounts.",
+        "operationId": "adminGetAccountInfos",
         "produces": [
           "application/json"
         ],
@@ -8662,65 +8866,77 @@
         ],
         "parameters": [
           {
-            "name": "limit",
+            "name": "dids",
             "in": "query",
-            "description": "The maximum number of accounts to retrieve.",
-            "required": false,
-            "type": "integer",
-            "x-ms-summary": "Limit"
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "description": "A pagination cursor for navigating accounts.",
-            "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "x-ms-summary": "Account Identifiers",
+            "description": "Array of account identifiers (DIDs).",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account information.",
+            "description": "Account details retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "infos"
+              ],
               "properties": {
-                "accounts": {
+                "infos": {
                   "type": "array",
-                  "description": "A list of account details.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the account.",
-                        "example": "account123"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "The email associated with the account.",
-                        "example": "user@example.com"
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "The current status of the account.",
-                        "example": "active"
-                      }
-                    }
+                    "$ref": "#/definitions/accountView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input or pagination cursor.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8732,8 +8948,9 @@
           "com.atproto.admin"
         ],
         "summary": "Get Invite Codes",
-        "description": "Get a list of all active or disabled invite codes.\n",
-        "operationId": "GetInviteCodes",
+        "x-ms-summary": "Admin view of invite codes.",
+        "description": "Get an admin view of invite codes.",
+        "operationId": "adminGetInviteCodes",
         "produces": [
           "application/json"
         ],
@@ -8744,60 +8961,99 @@
         ],
         "parameters": [
           {
+            "name": "sort",
+            "in": "query",
+            "type": "string",
+            "description": "Sorting method for invite codes.",
+            "enum": [
+              "recent",
+              "usage"
+            ],
+            "default": "recent",
+            "x-ms-summary": "Sort Method"
+          },
+          {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of invite codes to retrieve.",
-            "required": false,
             "type": "integer",
+            "description": "Maximum number of results to return.",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100,
             "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating invite codes.",
-            "required": false,
             "type": "string",
+            "description": "Cursor for pagination.",
             "x-ms-summary": "Pagination Cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved invite codes.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "codes"
+              ],
               "properties": {
-                "inviteCodes": {
+                "cursor": {
+                  "type": "string",
+                  "x-ms-summary": "Cursor for pagination."
+                },
+                "codes": {
                   "type": "array",
-                  "description": "A list of invite codes.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "code": {
-                        "type": "string",
-                        "description": "The invite code.",
-                        "example": "ABC123"
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "The status of the invite code (e.g., active, disabled).",
-                        "example": "active"
-                      }
-                    }
+                    "$ref": "#/definitions/inviteCode"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input or pagination cursor.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8809,8 +9065,9 @@
           "com.atproto.admin"
         ],
         "summary": "Get Subject Status",
-        "description": "Retrieve the status of a specific subject (e.g., an account or actor).\n",
-        "operationId": "GetSubjectStatus",
+        "x-ms-summary": "Retrieve the admin status of a subject.",
+        "description": "Get the service-specific admin status of a subject.",
+        "operationId": "adminGetSubjectStatus",
         "produces": [
           "application/json"
         ],
@@ -8821,58 +9078,91 @@
         ],
         "parameters": [
           {
-            "name": "subjectId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier (e.g., DID or handle) of the subject to retrieve the status for.",
-            "required": true,
             "type": "string",
-            "x-ms-summary": "Subject ID"
+            "description": "Decentralized Identifier (DID) of the subject.",
+            "x-ms-summary": "DID"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "type": "string",
+            "description": "The AT-URI of the subject.",
+            "x-ms-summary": "URI"
+          },
+          {
+            "name": "blob",
+            "in": "query",
+            "type": "string",
+            "description": "The CID of the subject.",
+            "x-ms-summary": "Blob"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved subject status.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "subject"
+              ],
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "The current status of the subject.",
-                  "example": "active"
-                },
-                "moderation": {
+                "subject": {
                   "type": "object",
-                  "description": "Moderation details for the subject.",
-                  "properties": {
-                    "warnings": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "example": "Spam activity detected."
-                      }
-                    },
-                    "actions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "example": "Restricted for policy violation."
-                      }
-                    }
-                  }
+                  "x-ms-summary": "Subject Information"
+                },
+                "takedown": {
+                  "$ref": "#/definitions/statusAttr"
+                },
+                "deactivated": {
+                  "$ref": "#/definitions/statusAttr"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid subject ID.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -8884,8 +9174,8 @@
           "com.atproto.admin"
         ],
         "summary": "Search Accounts",
-        "description": "Search for accounts with a specific email, handle, etc.\n",
-        "operationId": "AdminSearchAccounts",
+        "description": "Get a list of accounts that matches your search query.",
+        "operationId": "adminSearchAccounts",
         "produces": [
           "application/json"
         ],
@@ -8896,73 +9186,102 @@
         ],
         "parameters": [
           {
-            "name": "query",
+            "name": "email",
             "in": "query",
-            "description": "The search query to match against account properties.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Search Query"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to retrieve.",
             "required": false,
-            "type": "integer",
-            "x-ms-summary": "Result Limit"
+            "type": "string",
+            "description": "The email address to search for.",
+            "x-ms-summary": "Email address to search."
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating the results.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "description": "Pagination cursor for the next set of results.",
+            "x-ms-summary": "Pagination cursor for next results."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "description": "The maximum number of results to retrieve. Defaults to 50.",
+            "x-ms-summary": "Maximum number of results to retrieve."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account search results.",
+            "description": "List of matching accounts retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "accounts"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor to retrieve the next set of results."
+                },
                 "accounts": {
                   "type": "array",
-                  "description": "A list of accounts matching the query.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the account.",
-                        "example": "account123"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "The email associated with the account.",
-                        "example": "user@example.com"
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "The handle of the account.",
-                        "example": "johndoe"
-                      }
-                    }
-                  }
+                    "$ref": "#/definitions/accountView"
+                  },
+                  "description": "List of matching accounts."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid query or parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -11088,72 +11407,6 @@
           },
           "400": {
             "description": "Bad Request - Invalid input parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/com.atproto.server.deleteAccount": {
-      "post": {
-        "tags": [
-          "com.atproto.server"
-        ],
-        "summary": "Delete Account",
-        "description": "Permanently delete a user account and all associated data\n",
-        "operationId": "ATProtoDeleteAccount",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Details of the account to delete.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accountId": {
-                  "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Account successfully deleted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful account deletion.",
-                  "example": true
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid account identifier.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -16107,6 +16360,146 @@
           "type": "string",
           "format": "date-time",
           "description": "The time at which the message was sent."
+        }
+      }
+    },
+    "accountView": {
+      "type": "object",
+      "required": [
+        "did",
+        "handle",
+        "indexedAt"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "relatedRecords": {
+          "type": "array",
+          "items": {}
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "invitedBy": {
+          "$ref": "#/definitions/inviteCode"
+        },
+        "invites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inviteCode"
+          }
+        },
+        "invitesDisabled": {
+          "type": "boolean"
+        },
+        "emailConfirmedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "inviteNote": {
+          "type": "string"
+        },
+        "deactivatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "threatSignatures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/threatSignature"
+          }
+        }
+      }
+    },
+    "inviteCode": {
+      "type": "object",
+      "required": [
+        "code",
+        "available",
+        "disabled",
+        "forAccount",
+        "createdBy",
+        "createdAt",
+        "uses"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "available": {
+          "type": "integer"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "forAccount": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inviteCodeUse"
+          }
+        }
+      }
+    },
+    "threatSignature": {
+      "type": "object",
+      "required": [
+        "property",
+        "value"
+      ],
+      "properties": {
+        "property": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "inviteCodeUse": {
+      "type": "object",
+      "required": [
+        "usedBy",
+        "usedAt"
+      ],
+      "properties": {
+        "usedBy": {
+          "type": "string"
+        },
+        "usedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "statusAttr": {
+      "type": "object",
+      "required": [
+        "applied"
+      ],
+      "properties": {
+        "applied": {
+          "type": "boolean"
+        },
+        "ref": {
+          "type": "string"
         }
       }
     },
