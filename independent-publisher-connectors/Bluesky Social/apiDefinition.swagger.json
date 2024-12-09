@@ -52,6 +52,52 @@
     "application/json"
   ],
   "paths": {
+    "/xrpc/app.bsky.actor.getpreferences": {
+      "get": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Getpreferences",
+        "description": "Get private preferences attached to the current account.",
+        "operationId": "Getpreferences",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "preferences"
+              ],
+              "properties": {
+                "preferences": {
+                  "$ref": "#/definitions/preferences"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier or token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/xrpc/app.bsky.actor.getProfile": {
       "get": {
         "tags": [
@@ -217,12 +263,10 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Get Suggestions for Actors",
-        "description": "Retrieve account suggestions for the user.",
+        "summary": "Get Suggested Actors",
+        "x-ms-summary": "Get Suggested Actors",
+        "description": "Get a list of suggested actors.",
         "operationId": "GetSuggestions",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -232,18 +276,31 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of suggestions to retrieve.",
+            "x-ms-summary": "Limit",
+            "description": "The maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Cursor",
+            "description": "A cursor for pagination.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved suggested profiles.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "actors"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -251,120 +308,9 @@
                 },
                 "actors": {
                   "type": "array",
-                  "description": "An array of suggested actor profiles.",
+                  "description": "List of suggested actor profiles.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized Identifier (DID) of the actor."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Unique handle of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the actor."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Profile description of the actor."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "URI of the actor's avatar image."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Associated metadata for the actor.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "description": "Number of lists the actor is part of."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "description": "Number of feed generators associated with the actor."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "description": "Number of starter packs associated with the actor."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is a labeler."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "description": "Chat preferences for the actor.",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Specifies if incoming chats are allowed."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata for the actor.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is muted by the viewer."
-                          },
-                          "mutedByList": {
-                            "$ref": "#/definitions/MutedByList"
-                          },
-                          "blockedBy": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is blocked by the viewer."
-                          },
-                          "blocking": {
-                            "type": "string",
-                            "description": "Details of the block, if applicable."
-                          },
-                          "blockingByList": {
-                            "$ref": "#/definitions/BlockingByList"
-                          },
-                          "following": {
-                            "type": "string",
-                            "description": "Indicates if the viewer is following the actor."
-                          },
-                          "followedBy": {
-                            "type": "string",
-                            "description": "Indicates if the actor is following the viewer."
-                          },
-                          "knownFollowers": {
-                            "type": "object",
-                            "description": "Known followers of the actor.",
-                            "properties": {
-                              "count": {
-                                "type": "integer",
-                                "description": "Total number of known followers."
-                              },
-                              "followers": {
-                                "type": "array",
-                                "description": "List of known followers.",
-                                "items": {
-                                  "$ref": "#/definitions/profileView"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the actor.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/profileView"
                   }
                 }
               }
@@ -385,14 +331,14 @@
         }
       }
     },
-    "/xrpc/app.bsky.actor.putPreferences": {
+    "/xrpc/app.bsky.actor.putpreferences": {
       "post": {
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Update Preferences for current account",
+        "summary": "Update preferences for current account",
         "description": "Update the user's preferences.\n",
-        "operationId": "PutPreferences",
+        "operationId": "Putpreferences",
         "consumes": [
           "application/json"
         ],
@@ -411,9 +357,9 @@
             "description": "An object containing the preferences to be updated.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Preferences"
+              "$ref": "#/definitions/preferences"
             },
-            "x-ms-summary": "Preferences Payload"
+            "x-ms-summary": "preferences Payload"
           }
         ],
         "responses": {
@@ -450,12 +396,10 @@
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Search for Actors",
-        "description": "Search for actors by a query term.",
+        "summary": "Find actors (profiles) matching search criteria",
+        "x-ms-summary": "Search Actors",
+        "description": "Find actors (profiles) matching search criteria.",
         "operationId": "SearchActors",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -465,36 +409,49 @@
           {
             "name": "q",
             "in": "query",
-            "description": "The search term used to find actors.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Search Term"
+            "required": false,
+            "x-ms-summary": "Search Query",
+            "description": "Search query string. Syntax, phrase, boolean, and faceting is unspecified, but Lucene query syntax is recommended.",
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Max number of results to retrieve.",
             "required": false,
+            "x-ms-summary": "Result Limit",
+            "description": "The maximum number of actors to return.",
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor for pagination to fetch the next set of results.",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved a list of actors matching the search term.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "actors"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for navigating results."
+                  "description": "Cursor for pagination."
                 },
                 "actors": {
                   "type": "array",
-                  "description": "An array of actors matching the search criteria.",
+                  "description": "List of matching actor profiles.",
                   "items": {
-                    "$ref": "#/definitions/profileViewDetailed"
+                    "$ref": "#/definitions/profileView"
                   }
                 }
               }
@@ -522,6 +479,7 @@
         ],
         "summary": "Search Actors for Typeahead",
         "description": "Retrieve account suggestions for typeahead search.",
+        "x-ms-summary": "Retrieve account suggestions for typeahead search.",
         "operationId": "SearchActorsTypeahead",
         "produces": [
           "application/json"
@@ -1678,9 +1636,13 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Feed for a List",
-        "description": "Retrieve posts from a specific list.",
+        "summary": "Get List Feed",
+        "x-ms-summary": "Get List Feed",
+        "description": "Get a feed of recent posts from a list.",
         "operationId": "GetListFeed",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -1693,163 +1655,50 @@
           {
             "name": "list",
             "in": "query",
-            "description": "URI of the list to retrieve the feed for.",
+            "x-ms-summary": "List Reference",
+            "description": "Reference (AT-URI) to the list record.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "List URI"
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
+            "x-ms-summary": "Result Limit",
             "description": "Maximum number of posts to retrieve.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through the feed.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Optional pagination mechanism.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list feed.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "feed"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next page."
+                  "description": "Pagination cursor for the next set of results."
                 },
                 "feed": {
                   "type": "array",
-                  "description": "Array of feed items.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a feed item.",
-                    "properties": {
-                      "post": {
-                        "type": "object",
-                        "description": "Details of the post.",
-                        "properties": {
-                          "uri": {
-                            "type": "string",
-                            "description": "URI of the post."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "Content identifier of the post."
-                          },
-                          "author": {
-                            "type": "object",
-                            "description": "Information about the post author.",
-                            "properties": {
-                              "did": {
-                                "type": "string",
-                                "description": "DID of the author."
-                              },
-                              "handle": {
-                                "type": "string",
-                                "description": "Handle of the author."
-                              },
-                              "displayName": {
-                                "type": "string",
-                                "description": "Display name of the author."
-                              },
-                              "avatar": {
-                                "type": "string",
-                                "description": "URL of the author's avatar image."
-                              },
-                              "associated": {
-                                "type": "object",
-                                "description": "Associated metadata for the author.",
-                                "properties": {
-                                  "lists": {
-                                    "type": "integer",
-                                    "format": "int32",
-                                    "description": "Number of lists associated."
-                                  },
-                                  "feedgens": {
-                                    "type": "integer",
-                                    "format": "int32",
-                                    "description": "Number of feed generators associated."
-                                  },
-                                  "starterPacks": {
-                                    "type": "integer",
-                                    "format": "int32",
-                                    "description": "Number of starter packs associated."
-                                  },
-                                  "labeler": {
-                                    "type": "boolean",
-                                    "description": "Whether the author is a labeler."
-                                  },
-                                  "chat": {
-                                    "type": "object",
-                                    "description": "Chat settings for the author.",
-                                    "properties": {
-                                      "allowIncoming": {
-                                        "type": "string",
-                                        "description": "Type of incoming messages allowed."
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                              "viewer": {
-                                "type": "object",
-                                "description": "Viewer-specific metadata.",
-                                "properties": {
-                                  "muted": {
-                                    "type": "boolean",
-                                    "description": "Whether the viewer has muted the author."
-                                  },
-                                  "blockedBy": {
-                                    "type": "boolean",
-                                    "description": "Whether the viewer is blocked by the author."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "labels": {
-                            "type": "array",
-                            "description": "Labels associated with the post.",
-                            "items": {
-                              "$ref": "#/definitions/Label"
-                            }
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the post was created."
-                          }
-                        }
-                      },
-                      "reply": {
-                        "type": "object",
-                        "description": "Reply-specific metadata for the feed item."
-                      },
-                      "reason": {
-                        "type": "object",
-                        "description": "Reason for including the feed item."
-                      },
-                      "feedContext": {
-                        "type": "string",
-                        "description": "Context of the feed item in the feed."
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the feed item was indexed."
-                      }
-                    }
-                  }
+                    "$ref": "#/definitions/feedViewPost"
+                  },
+                  "description": "Array of posts in the feed."
                 }
               }
             }
@@ -1857,13 +1706,50 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "UnknownList"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -2101,9 +1987,13 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Posts Quoting a Specific Post",
-        "description": "Retrieve posts that quote a specific post.",
+        "summary": "Get Quotes",
+        "x-ms-summary": "Get Quotes",
+        "description": "Get a list of quotes for a given post.",
         "operationId": "GetQuotes",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -2116,43 +2006,56 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the post to retrieve quotes for.",
+            "x-ms-summary": "Post Reference URI",
+            "description": "Reference (AT-URI) of the post record.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "Post URI"
+            "type": "string"
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "x-ms-summary": "Specific Version CID",
+            "description": "If supplied, filters to quotes of specific version (by CID) of the post record.",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
+            "x-ms-summary": "Result Limit",
             "description": "Maximum number of quotes to retrieve.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Optional pagination mechanism.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved posts quoting the specified post.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "uri",
+                "posts"
+              ],
               "properties": {
                 "uri": {
                   "type": "string",
-                  "description": "URI of the original post."
+                  "description": "Reference (AT-URI) of the post record."
                 },
                 "cid": {
                   "type": "string",
-                  "description": "Content identifier of the original post."
+                  "description": "Specific version (CID) of the post record."
                 },
                 "cursor": {
                   "type": "string",
@@ -2160,198 +2063,10 @@
                 },
                 "posts": {
                   "type": "array",
-                  "description": "An array of posts that quote the specified post.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a quoted post.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the quoted post."
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content identifier of the quoted post."
-                      },
-                      "author": {
-                        "type": "object",
-                        "description": "Information about the author of the quoted post.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "DID of the author."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the author."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the author."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the author's avatar image."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Associated metadata for the author.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of lists associated."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Whether the author is a labeler."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat settings for the author.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Type of incoming messages allowed."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "viewer": {
-                            "type": "object",
-                            "description": "Viewer-specific metadata.",
-                            "properties": {
-                              "muted": {
-                                "type": "boolean",
-                                "description": "Whether the viewer has muted the author."
-                              },
-                              "blockedBy": {
-                                "type": "boolean",
-                                "description": "Whether the viewer is blocked by the author."
-                              }
-                            }
-                          },
-                          "labels": {
-                            "type": "array",
-                            "description": "Labels associated with the author.",
-                            "items": {
-                              "$ref": "#/definitions/Label"
-                            }
-                          }
-                        }
-                      },
-                      "record": {
-                        "type": "object",
-                        "description": "Metadata for the quoted post."
-                      },
-                      "embed": {
-                        "type": "object",
-                        "description": "Embed metadata for the quoted post."
-                      },
-                      "replyCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of replies to the quoted post."
-                      },
-                      "repostCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of reposts of the quoted post."
-                      },
-                      "likeCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of likes on the quoted post."
-                      },
-                      "quoteCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of quotes of the quoted post."
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the quoted post was indexed."
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the quoted post.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "threadgate": {
-                        "type": "object",
-                        "description": "Thread gate metadata.",
-                        "properties": {
-                          "uri": {
-                            "type": "string",
-                            "description": "URI of the thread gate."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "Content identifier of the thread gate."
-                          },
-                          "record": {
-                            "type": "object",
-                            "description": "Metadata for the thread gate."
-                          },
-                          "lists": {
-                            "type": "array",
-                            "description": "Lists associated with the thread gate.",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "uri": {
-                                  "type": "string",
-                                  "description": "URI of the list."
-                                },
-                                "cid": {
-                                  "type": "string",
-                                  "description": "Content identifier of the list."
-                                },
-                                "name": {
-                                  "type": "string",
-                                  "description": "Name of the list."
-                                },
-                                "purpose": {
-                                  "type": "string",
-                                  "description": "Purpose of the list."
-                                },
-                                "avatar": {
-                                  "type": "string",
-                                  "description": "URL of the list's avatar image."
-                                },
-                                "listItemCount": {
-                                  "type": "integer",
-                                  "format": "int32",
-                                  "description": "Number of items in the list."
-                                },
-                                "labels": {
-                                  "type": "array",
-                                  "description": "Labels associated with the list.",
-                                  "items": {
-                                    "$ref": "#/definitions/Label"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                    "$ref": "#/definitions/postView"
+                  },
+                  "description": "Array of post views for quotes."
                 }
               }
             }
@@ -2359,13 +2074,49 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -2376,9 +2127,13 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Actors Who Reposted a Specific Post",
-        "description": "Retrieve users who reposted a specific post.",
+        "summary": "Get Reposted By",
+        "x-ms-summary": "Get Reposted By",
+        "description": "Get a list of reposts for a given post.",
         "operationId": "GetRepostedBy",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -2391,43 +2146,56 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the post to retrieve reposts for.",
+            "x-ms-summary": "Post Reference URI",
+            "description": "Reference (AT-URI) of the post record.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "Post URI"
+            "type": "string"
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "x-ms-summary": "Specific Version CID",
+            "description": "If supplied, filters to reposts of specific version (by CID) of the post record.",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
+            "x-ms-summary": "Result Limit",
             "description": "Maximum number of reposts to retrieve.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Optional pagination mechanism.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved actors who reposted the post.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "uri",
+                "repostedBy"
+              ],
               "properties": {
                 "uri": {
                   "type": "string",
-                  "description": "URI of the original post."
+                  "description": "Reference (AT-URI) of the post record."
                 },
                 "cid": {
                   "type": "string",
-                  "description": "Content identifier of the original post."
+                  "description": "Specific version (CID) of the post record."
                 },
                 "cursor": {
                   "type": "string",
@@ -2435,103 +2203,10 @@
                 },
                 "repostedBy": {
                   "type": "array",
-                  "description": "An array of actors who reposted the specified post.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of an actor who reposted the post.",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "DID of the actor."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Handle of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the actor."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Bio or description of the actor."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the actor's avatar image."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Associated metadata for the actor.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "Number of lists associated."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "Number of feed generators associated."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "Number of starter packs associated."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Whether the actor is a labeler."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "description": "Chat settings for the actor.",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Type of incoming messages allowed."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata for the actor.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Whether the viewer has muted the actor."
-                          },
-                          "blockedBy": {
-                            "type": "boolean",
-                            "description": "Whether the viewer is blocked by the actor."
-                          },
-                          "blocking": {
-                            "type": "string",
-                            "description": "Whether the viewer is blocking the actor."
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the actor.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the actor was indexed."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the actor was created."
-                      }
-                    }
-                  }
+                    "$ref": "#/definitions/profileView"
+                  },
+                  "description": "Array of profiles who reposted the post."
                 }
               }
             }
@@ -2539,13 +2214,49 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -3020,12 +2731,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get Starter Packs for Actors",
-        "description": "Retrieve starter packs of accounts for new users.",
+        "summary": "Get a list of starter packs created by the actor",
+        "x-ms-summary": "Get Actor Starter Packs",
+        "description": "Get a list of starter packs created by the actor.",
         "operationId": "GetActorStarterPacks",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -3033,112 +2742,50 @@
         ],
         "parameters": [
           {
+            "name": "actor",
+            "in": "query",
+            "required": true,
+            "x-ms-summary": "Actor Identifier",
+            "description": "The actor identifier for which to retrieve starter packs.",
+            "type": "string"
+          },
+          {
             "name": "limit",
             "in": "query",
-            "description": "Max num of starter packs to retrieve.",
             "required": false,
+            "x-ms-summary": "Result Limit",
+            "description": "The maximum number of starter packs to return.",
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor for pagination to fetch the next set of results.",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved actor starter packs.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "starterPacks"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next page."
+                  "description": "Cursor for pagination."
                 },
                 "starterPacks": {
                   "type": "array",
-                  "description": "An array of actor starter packs.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a starter pack.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "The URI of the starter pack."
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content ID of the starter pack."
-                      },
-                      "record": {
-                        "type": "object",
-                        "description": "Additional metadata for the starter pack."
-                      },
-                      "creator": {
-                        "$ref": "#/definitions/profileView"
-                      },
-                      "listItemCount": {
-                        "type": "integer",
-                        "description": "Count of items in the list."
-                      },
-                      "joinedWeekCount": {
-                        "type": "integer",
-                        "description": "Number of users who joined this week."
-                      },
-                      "joinedAllTimeCount": {
-                        "type": "integer",
-                        "description": "Number of users who joined all time."
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the starter pack.",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ver": {
-                              "type": "integer",
-                              "description": "Version of the label."
-                            },
-                            "src": {
-                              "type": "string",
-                              "description": "Source of the label."
-                            },
-                            "uri": {
-                              "type": "string",
-                              "description": "URI for the label."
-                            },
-                            "cid": {
-                              "type": "string",
-                              "description": "Content ID for the label."
-                            },
-                            "val": {
-                              "type": "string",
-                              "description": "Value of the label."
-                            },
-                            "neg": {
-                              "type": "boolean",
-                              "description": "Indicates if the label is negative."
-                            },
-                            "cts": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Creation timestamp of the label."
-                            },
-                            "exp": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Expiration timestamp of the label."
-                            },
-                            "sig": {
-                              "type": "string",
-                              "description": "Signature of the label."
-                            }
-                          }
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the starter pack was indexed."
-                      }
-                    }
+                    "$ref": "#/definitions/starterPackViewBasic"
                   }
                 }
               }
@@ -4702,12 +4349,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get Relationships Between Accounts",
-        "description": "Retrieve relationships between the authenticated user and specified accounts.",
+        "summary": "Get public relationships between one account, and a list of other accounts",
+        "x-ms-summary": "Get Relationships",
+        "description": "Get public relationships between one account, and a list of other accounts.",
         "operationId": "GetRelationships",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4715,33 +4360,48 @@
         ],
         "parameters": [
           {
-            "name": "actors",
+            "name": "actor",
             "in": "query",
-            "description": "Comma-separated list of actor DIDs or handles to retrieve relationships for.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Actor Identifiers"
+            "x-ms-summary": "Primary Account",
+            "description": "Primary account requesting relationships for.",
+            "type": "string"
+          },
+          {
+            "name": "others",
+            "in": "query",
+            "required": false,
+            "x-ms-summary": "Other Accounts",
+            "description": "List of 'other' accounts to be related back to the primary.",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved account relationships.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "relationships"
+              ],
               "properties": {
+                "actor": {
+                  "type": "string",
+                  "description": "The DID of the primary account."
+                },
                 "relationships": {
                   "type": "array",
-                  "description": "An array of relationship data between the authenticated user and specified actors.",
+                  "description": "List of relationships between the actor and other accounts.",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "actor": {
-                        "$ref": "#/definitions/profileView"
-                      },
-                      "relationship": {
+                      "type": {
                         "type": "string",
-                        "description": "The type of relationship (e.g., 'following', 'followed_by', 'muted').",
-                        "example": "following"
+                        "enum": [
+                          "relationship",
+                          "notFoundActor"
+                        ],
+                        "description": "The type of relationship or status."
                       }
                     }
                   }
@@ -4896,12 +4556,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get Suggested Follows Based on Actor",
-        "description": "Retrieve suggested accounts to follow, filtered by an actor.",
+        "summary": "Get Suggested Follows by Actor",
+        "x-ms-summary": "Get Suggested Follows by Actor",
+        "description": "Enumerates follows similar to a given account.",
         "operationId": "GetSuggestedFollowsByActor",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4911,45 +4569,31 @@
           {
             "name": "actor",
             "in": "query",
-            "description": "Handle or DID of the actor to base suggestions on.",
+            "x-ms-summary": "Actor",
+            "description": "The account identifier for which similar follows are suggested.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Actor Identifier"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max num of suggestions to retrieve.",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "description": "A pagination cursor for navigating through results.",
-            "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved suggested follows.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "suggestions"
+              ],
               "properties": {
-                "suggestedFollows": {
+                "suggestions": {
                   "type": "array",
-                  "description": "An array of suggested profiles to follow.",
+                  "description": "List of suggested profiles to follow.",
                   "items": {
                     "$ref": "#/definitions/profileView"
                   }
                 },
                 "isFallback": {
                   "type": "boolean",
-                  "description": "Indicates if the suggestions are fallback results."
+                  "description": "Indicates if the results are fallback generic suggestions."
                 }
               }
             }
@@ -5477,11 +5121,9 @@
           "app.bsky.notification"
         ],
         "summary": "List Notifications",
-        "description": "List notifications for the authenticated user.",
+        "x-ms-summary": "List Notifications",
+        "description": "Enumerate notifications for the requesting account.",
         "operationId": "ListNotifications",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5491,51 +5133,68 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of notifications to retrieve.",
+            "x-ms-summary": "Limit",
+            "description": "The maximum number of notifications to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "x-ms-summary": "Priority",
+            "description": "Filter notifications by priority status.",
+            "required": false,
+            "type": "boolean"
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "x-ms-summary": "Cursor",
+            "description": "Pagination cursor for retrieving the next set of notifications.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "seenAt",
+            "in": "query",
+            "x-ms-summary": "Seen At",
+            "description": "Filter notifications seen at or after the specified date-time.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "format": "date-time"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved notifications.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "notifications"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next set of results."
+                },
                 "notifications": {
                   "type": "array",
-                  "description": "An array of notifications.",
+                  "description": "List of notifications.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "The ID of the notification.",
-                        "example": "notif123"
-                      },
-                      "type": {
-                        "type": "string",
-                        "description": "The type of notification (e.g., 'like', 'mention').",
-                        "example": "like"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the notification was created.",
-                        "example": "2023-11-19T12:34:56Z"
-                      }
-                    }
+                    "$ref": "#/definitions/notification"
                   }
+                },
+                "priority": {
+                  "type": "boolean",
+                  "description": "Indicates if priority notifications are included."
+                },
+                "seenAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp indicating when notifications were last seen."
                 }
               }
             }
@@ -5555,14 +5214,14 @@
         }
       }
     },
-    "/xrpc/app.bsky.notification.putPreferences": {
+    "/xrpc/app.bsky.notification.putpreferences": {
       "post": {
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Update Notification Preferences",
+        "summary": "Update Notification preferences",
         "description": "Update notification preferences for the authenticated user.",
-        "operationId": "NotificationPutPreferences",
+        "operationId": "NotificationPutpreferences",
         "consumes": [
           "application/json"
         ],
@@ -8905,8 +8564,9 @@
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Send Email",
-        "description": "Send an email to a specific account or group of accounts.\n",
+        "summary": "Send email to a user's account email address",
+        "x-ms-summary": "Send Email",
+        "description": "Send email to a user's account email address.",
         "operationId": "SendEmail",
         "consumes": [
           "application/json"
@@ -8923,25 +8583,41 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the email to send.",
             "required": true,
+            "x-ms-summary": "Email Payload",
+            "description": "Payload for sending an email.",
             "schema": {
               "type": "object",
+              "required": [
+                "recipientDid",
+                "content",
+                "senderDid"
+              ],
               "properties": {
-                "to": {
+                "recipientDid": {
                   "type": "string",
-                  "description": "The email address or identifier of the recipient.",
-                  "example": "user@example.com"
+                  "description": "Decentralized Identifier (DID) of the recipient.",
+                  "x-ms-summary": "Recipient DID"
+                },
+                "content": {
+                  "type": "string",
+                  "description": "Content of the email.",
+                  "x-ms-summary": "Content"
                 },
                 "subject": {
                   "type": "string",
-                  "description": "The subject line of the email.",
-                  "example": "Account Update Notification"
+                  "description": "Subject of the email.",
+                  "x-ms-summary": "Subject"
                 },
-                "body": {
+                "senderDid": {
                   "type": "string",
-                  "description": "The content of the email.",
-                  "example": "Your account has been updated successfully."
+                  "description": "DID of the sender.",
+                  "x-ms-summary": "Sender DID"
+                },
+                "comment": {
+                  "type": "string",
+                  "description": "Additional comment by the sender that won't be used in the email itself.",
+                  "x-ms-summary": "Additional comment"
                 }
               }
             }
@@ -8949,28 +8625,66 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully sent the email.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "sent"
+              ],
               "properties": {
-                "success": {
+                "sent": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates whether the email was successfully sent."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid email details or parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -8982,7 +8696,8 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Email",
-        "description": "Update the email address associated with a specific account.\n",
+        "x-ms-summary": "Update Account Email",
+        "description": "Administrative action to update an account's email.",
         "operationId": "UpdateAccountEmail",
         "consumes": [
           "application/json"
@@ -8999,20 +8714,23 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the account and the new email address.",
             "required": true,
+            "x-ms-summary": "Update Email Request",
+            "description": "Payload to update an account's email.",
             "schema": {
               "type": "object",
+              "required": [
+                "account",
+                "email"
+              ],
               "properties": {
-                "accountId": {
+                "account": {
                   "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
+                  "description": "The handle or DID of the repo."
                 },
-                "newEmail": {
+                "email": {
                   "type": "string",
-                  "description": "The new email address for the account.",
-                  "example": "newuser@example.com"
+                  "description": "The new email address for the account."
                 }
               }
             }
@@ -9020,28 +8738,67 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the account email.",
+            "description": "OK - Email updated successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates whether the update was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional message providing additional information."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or email.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -9053,7 +8810,8 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Handle",
-        "description": "Update the handle associated with a specific account.\n",
+        "x-ms-summary": "Update Account Handle",
+        "description": "Administrative action to update an account's handle.",
         "operationId": "UpdateAccountHandle",
         "consumes": [
           "application/json"
@@ -9070,20 +8828,23 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the account and the new handle.",
             "required": true,
+            "x-ms-summary": "Update Handle Request",
+            "description": "Payload to update an account's handle.",
             "schema": {
               "type": "object",
+              "required": [
+                "did",
+                "handle"
+              ],
               "properties": {
-                "accountId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
+                  "description": "The DID of the account."
                 },
-                "newHandle": {
+                "handle": {
                   "type": "string",
-                  "description": "The new handle for the account.",
-                  "example": "newhandle"
+                  "description": "The new handle for the account."
                 }
               }
             }
@@ -9091,20 +8852,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the account handle.",
+            "description": "OK - Handle updated successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates whether the update was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional message providing additional information."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or handle.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9124,7 +8888,8 @@
           "com.atproto.admin"
         ],
         "summary": "Update Account Password",
-        "description": "Update the password for a specific account.\n",
+        "x-ms-summary": "Update Account Password",
+        "description": "Update the password for a user account as an administrator.",
         "operationId": "UpdateAccountPassword",
         "consumes": [
           "application/json"
@@ -9141,20 +8906,23 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the account and the new password.",
             "required": true,
+            "x-ms-summary": "Update Password Request",
+            "description": "Payload to update a user's account password.",
             "schema": {
               "type": "object",
+              "required": [
+                "did",
+                "password"
+              ],
               "properties": {
-                "accountId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the account.",
-                  "example": "account123"
+                  "description": "The DID of the account to update."
                 },
-                "newPassword": {
+                "password": {
                   "type": "string",
-                  "description": "The new password for the account.",
-                  "example": "newSecurePassword123"
+                  "description": "The new password for the account."
                 }
               }
             }
@@ -9162,14 +8930,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the account password.",
+            "description": "OK - Password updated successfully.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                  "description": "Indicates if the operation was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Additional details about the operation result."
                 }
               }
             }
@@ -9191,11 +8962,12 @@
     },
     "/xrpc/com.atproto.admin.updateSubjectStatus": {
       "post": {
+        "summary": "Update Subject Status",
+        "x-ms-summary": "Update the service-specific admin status of a subject.",
         "tags": [
           "com.atproto.admin"
         ],
-        "summary": "Update Subject Status",
-        "description": "Update the status of a specific subject (e.g., actor).\n",
+        "description": "Update the service-specific admin status of a subject.",
         "operationId": "UpdateSubjectStatus",
         "consumes": [
           "application/json"
@@ -9212,90 +8984,65 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the subject and the new status.",
             "required": true,
+            "x-ms-summary": "The subject and status updates for the request.",
             "schema": {
               "type": "object",
+              "required": [
+                "subject"
+              ],
               "properties": {
-                "subjectId": {
-                  "type": "string",
-                  "description": "Unique identifier of the subject.",
-                  "example": "did:plc:xyz123"
-                },
-                "newStatus": {
-                  "type": "string",
-                  "description": "The new status for the subject (e.g., active, restricted).",
-                  "example": "restricted"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated the subject status.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid subject identifier or status.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/com.atproto.identity.getRecommendedDidCredentials": {
-      "get": {
-        "tags": [
-          "com.atproto.identity"
-        ],
-        "summary": "Get Recommended DID Credentials",
-        "description": "Get a list of recommended DID credentials for an identity.\n",
-        "operationId": "GetRecommendedDidCredentials",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved recommended DID credentials.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "credentials": {
-                  "type": "array",
-                  "description": "A list of recommended DID credentials.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "The DID credential.",
-                        "example": "did:plc:xyz123"
-                      }
+                "subject": {
+                  "type": "object",
+                  "description": "The subject of the update, either a repository, reference, or blob.",
+                  "properties": {
+                    "repoRef": {
+                      "$ref": "#/definitions/repoRef"
+                    },
+                    "strongRef": {
+                      "$ref": "#/definitions/strongRef"
+                    },
+                    "repoBlobRef": {
+                      "$ref": "#/definitions/repoBlobRef"
                     }
                   }
+                },
+                "takedown": {
+                  "$ref": "#/definitions/statusAttr"
+                },
+                "deactivated": {
+                  "$ref": "#/definitions/statusAttr"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "subject"
+              ],
+              "properties": {
+                "subject": {
+                  "type": "object",
+                  "description": "The updated subject of the status change.",
+                  "properties": {
+                    "repoRef": {
+                      "$ref": "#/definitions/repoRef"
+                    },
+                    "strongRef": {
+                      "$ref": "#/definitions/strongRef"
+                    },
+                    "repoBlobRef": {
+                      "$ref": "#/definitions/repoBlobRef"
+                    }
+                  }
+                },
+                "takedown": {
+                  "$ref": "#/definitions/statusAttr"
                 }
               }
             }
@@ -9315,62 +9062,89 @@
         }
       }
     },
-    "/xrpc/com.atproto.identity.requestPlcOperationSignature": {
-      "post": {
+    "/xrpc/com.atproto.identity.getRecommendedDidCredentials": {
+      "get": {
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Request PLC Operation Signature",
-        "description": "Request a signature for a PLC operation to validate or authenticate actions.\n",
-        "operationId": "RequestPlcOperationSignature",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "GetRecommendedDidCredentials",
+        "description": "Describe the credentials that should be included in the DID doc of an account that is migrating to this service.",
+        "operationId": "GetRecommendedDidCredentials",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Details of the PLC operation to sign.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "operationDetails": {
-                  "type": "object",
-                  "description": "Details of the operation to sign.",
-                  "example": {
-                    "type": "update",
-                    "did": "did:plc:xyz123"
-                  }
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Successfully generated a PLC operation signature.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
-                "signature": {
-                  "type": "string",
-                  "description": "The generated signature for the PLC operation.",
-                  "example": "abc123signaturexyz"
+                "rotationKeys": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "alsoKnownAs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "verificationMethods": {
+                  "type": "object"
+                },
+                "services": {
+                  "type": "object"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to generate signature.",
+            "description": "Bad Request - Invalid account identifier or password.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.identity.requestPlcOperationSignature": {
+      "post": {
+        "tags": [
+          "com.atproto.identity"
+        ],
+        "summary": "RequestPlcOperationSignature",
+        "description": "Request an email with a code to in order to request a signed PLC operation.",
+        "operationId": "RequestPlcOperationSignature",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates if the request was successful."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9389,12 +9163,9 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Resolve Handle",
-        "description": "Resolve a handle to its DID for account identification.\n",
+        "summary": "ResolveHandle",
+        "description": "Resolves a handle (domain name) to a DID.",
         "operationId": "ResolveHandle",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -9404,28 +9175,30 @@
           {
             "name": "handle",
             "in": "query",
-            "description": "The handle to resolve into a DID.",
+            "description": "The handle to resolve.",
             "required": true,
             "type": "string",
-            "x-ms-summary": "Handle"
+            "x-ms-summary": "The handle to resolve."
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully resolved the handle.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "did"
+              ],
               "properties": {
                 "did": {
                   "type": "string",
-                  "description": "The DID corresponding to the handle.",
-                  "example": "did:plc:xyz123"
+                  "description": "The resolved DID."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or unresolved handle.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9444,37 +9217,52 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Sign PLC Operation",
-        "description": "Sign a PLC operation for authentication or validation.\n",
+        "summary": "SignPlcOperation",
+        "description": "Signs a PLC operation to update some value(s) in the requesting DID's document.",
         "operationId": "SignPlcOperation",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the PLC operation to be signed.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "token"
+              ],
               "properties": {
-                "operationDetails": {
-                  "type": "object",
-                  "description": "The details of the PLC operation.",
-                  "example": {
-                    "type": "create",
-                    "did": "did:plc:xyz123",
-                    "metadata": {}
+                "token": {
+                  "type": "string",
+                  "description": "A token received through com.atproto.identity.requestPlcOperationSignature."
+                },
+                "rotationKeys": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
                   }
+                },
+                "alsoKnownAs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "verificationMethods": {
+                  "type": "object"
+                },
+                "services": {
+                  "type": "object"
                 }
               }
             }
@@ -9482,20 +9270,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully signed the PLC operation.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "operation"
+              ],
               "properties": {
-                "signature": {
-                  "type": "string",
-                  "description": "The signature of the PLC operation.",
-                  "example": "abc123signaturexyz"
+                "operation": {
+                  "type": "object"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Failed to sign the PLC operation.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9514,37 +9303,34 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Submit PLC Operation",
-        "description": "Submit a PLC operation to the network.\n",
+        "summary": "SubmitPlcOperation",
+        "description": "Validates a PLC operation to ensure that it doesn't violate a service's constraints.",
         "operationId": "SubmitPlcOperation",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the PLC operation to submit.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "operation"
+              ],
               "properties": {
-                "operationDetails": {
+                "operation": {
                   "type": "object",
-                  "description": "The details of the PLC operation.",
-                  "example": {
-                    "type": "update",
-                    "did": "did:plc:xyz123",
-                    "metadata": {}
-                  }
+                  "description": "The PLC operation to be validated."
                 }
               }
             }
@@ -9552,20 +9338,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully submitted the PLC operation.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates that the PLC operation was successfully submitted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successfully validated."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Failed to submit the PLC operation.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9584,38 +9369,34 @@
         "tags": [
           "com.atproto.identity"
         ],
-        "summary": "Update Handle",
-        "description": "Update the handle associated with a specific DID.\n",
+        "summary": "UpdateHandle",
+        "description": "Updates the current account's handle. Verifies handle validity, and updates did:plc document if necessary.",
         "operationId": "UpdateHandle",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the DID and the new handle.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "handle"
+              ],
               "properties": {
-                "did": {
+                "handle": {
                   "type": "string",
-                  "description": "The DID associated with the handle to update.",
-                  "example": "did:plc:xyz123"
-                },
-                "newHandle": {
-                  "type": "string",
-                  "description": "The new handle to associate with the DID.",
-                  "example": "newhandle"
+                  "description": "The new handle."
                 }
               }
             }
@@ -9623,20 +9404,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated the handle.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates that the handle was successfully updated.",
-                  "example": true
+                  "description": "Indicates whether the handle was successfully updated."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Additional information about the operation."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid DID or handle.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -9741,7 +9525,8 @@
           "com.atproto.moderation"
         ],
         "summary": "Create Report",
-        "description": "Create a report flagging inappropriate content or behavior.\n",
+        "x-ms-summary": "Create Report",
+        "description": "Submit a moderation report regarding an atproto account or record. Implemented by moderation services (with PDS proxying), and requires auth.",
         "operationId": "CreateReport",
         "consumes": [
           "application/json"
@@ -9758,20 +9543,36 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the report to create.",
             "required": true,
+            "x-ms-summary": "Moderation Report Payload",
+            "description": "Payload to submit a moderation report.",
             "schema": {
               "type": "object",
+              "required": [
+                "reasonType",
+                "subject"
+              ],
               "properties": {
-                "subjectId": {
-                  "type": "string",
-                  "description": "The identifier of the subject being reported.",
-                  "example": "did:plc:xyz123"
+                "reasonType": {
+                  "$ref": "#/definitions/reasonType"
                 },
                 "reason": {
                   "type": "string",
-                  "description": "The reason for the report.",
-                  "example": "Spam content"
+                  "description": "Additional context about the content and violation.",
+                  "maxLength": 20000
+                },
+                "subject": {
+                  "type": "object",
+                  "description": "Subject of the report. Must match either repoRef or strongRef.",
+                  "properties": {
+                    "repoRef": {
+                      "$ref": "#/definitions/repoRef"
+                    },
+                    "strongRef": {
+                      "$ref": "#/definitions/strongRef"
+                    }
+                  },
+                  "additionalProperties": false
                 }
               }
             }
@@ -9779,20 +9580,56 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully created the report.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "id",
+                "reasonType",
+                "subject",
+                "reportedBy",
+                "createdAt"
+              ],
               "properties": {
-                "reportId": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unique identifier for the report."
+                },
+                "reasonType": {
+                  "$ref": "#/definitions/reasonType"
+                },
+                "reason": {
                   "type": "string",
-                  "description": "Unique identifier of the created report.",
-                  "example": "report123"
+                  "description": "Additional context about the content and violation.",
+                  "maxLength": 20000
+                },
+                "subject": {
+                  "type": "object",
+                  "description": "Subject of the report, must match either repoRef or strongRef.",
+                  "properties": {
+                    "repoRef": {
+                      "$ref": "#/definitions/repoRef"
+                    },
+                    "strongRef": {
+                      "$ref": "#/definitions/strongRef"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "reportedBy": {
+                  "type": "string",
+                  "description": "DID of the user who submitted the report."
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Timestamp when the report was created.",
+                  "format": "date-time"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid report details.",
+            "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
               "$ref": "#/definitions/ErrorResponse"
             }
@@ -14792,51 +14629,472 @@
     }
   },
   "definitions": {
-    "Preferences": {
+    "preferences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "A preference entry in the user's settings.",
+        "properties": {
+          "adultContentPref": {
+            "$ref": "#/definitions/adultContentPref"
+          },
+          "contentLabelPref": {
+            "$ref": "#/definitions/contentLabelPref"
+          },
+          "savedFeedsPref": {
+            "$ref": "#/definitions/savedFeedsPref"
+          },
+          "savedFeedsPrefV2": {
+            "$ref": "#/definitions/savedFeedsPrefV2"
+          },
+          "personalDetailsPref": {
+            "$ref": "#/definitions/personalDetailsPref"
+          },
+          "feedViewPref": {
+            "$ref": "#/definitions/feedViewPref"
+          },
+          "threadViewPref": {
+            "$ref": "#/definitions/threadViewPref"
+          },
+          "interestsPref": {
+            "$ref": "#/definitions/interestsPref"
+          },
+          "mutedWordsPref": {
+            "$ref": "#/definitions/mutedWordsPref"
+          },
+          "hiddenPostsPref": {
+            "$ref": "#/definitions/hiddenPostsPref"
+          },
+          "bskyAppStatePref": {
+            "$ref": "#/definitions/bskyAppStatePref"
+          },
+          "labelersPref": {
+            "$ref": "#/definitions/labelersPref"
+          }
+        }
+      }
+    },
+    "adultContentPref": {
       "type": "object",
-      "description": "An object containing preferences attached to the current account.",
+      "required": [
+        "enabled"
+      ],
       "properties": {
-        "theme": {
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "contentLabelPref": {
+      "type": "object",
+      "required": [
+        "label",
+        "visibility"
+      ],
+      "properties": {
+        "labelerDid": {
           "type": "string",
-          "description": "The user's theme preference (e.g., 'dark' or 'light').",
-          "example": "dark"
+          "description": "Which labeler does this preference apply to?"
         },
-        "notifications": {
-          "type": "object",
-          "description": "The user's notification preferences.",
-          "properties": {
-            "email": {
-              "type": "boolean",
-              "description": "Whether email notifications are enabled.",
-              "example": true
-            },
-            "push": {
-              "type": "boolean",
-              "description": "Whether push notifications are enabled.",
-              "example": false
-            }
+        "label": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "show",
+            "warn",
+            "hide"
+          ]
+        }
+      }
+    },
+    "savedFeed": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "value",
+        "pinned"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "feed",
+            "list",
+            "timeline"
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "pinned": {
+          "type": "boolean"
+        }
+      }
+    },
+    "savedFeedsPrefV2": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/savedFeed"
+          }
+        }
+      }
+    },
+    "savedFeedsPref": {
+      "type": "object",
+      "required": [
+        "pinned",
+        "saved"
+      ],
+      "properties": {
+        "pinned": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         },
-        "language": {
-          "type": "string",
-          "description": "The user's preferred language code (e.g., 'en', 'fr').",
-          "example": "en"
-        },
-        "privacySettings": {
-          "type": "object",
-          "description": "The user's privacy-related preferences.",
-          "properties": {
-            "profileVisibility": {
-              "type": "string",
-              "description": "The visibility of the user's profile (e.g., 'public', 'private').",
-              "example": "public"
-            },
-            "messagePermissions": {
-              "type": "string",
-              "description": "Who can send messages to the user (e.g., 'anyone', 'contacts').",
-              "example": "contacts"
-            }
+        "saved": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
+        },
+        "timelineIndex": {
+          "type": "integer"
+        }
+      }
+    },
+    "personalDetailsPref": {
+      "type": "object",
+      "properties": {
+        "birthDate": {
+          "type": "string",
+          "description": "The birth date of account owner.",
+          "format": "date-time"
+        }
+      }
+    },
+    "feedViewPref": {
+      "type": "object",
+      "required": [
+        "feed"
+      ],
+      "properties": {
+        "feed": {
+          "type": "string",
+          "description": "The URI of the feed, or an identifier which describes the feed."
+        },
+        "hideReplies": {
+          "type": "boolean",
+          "description": "Hide replies in the feed."
+        },
+        "hideRepliesByUnfollowed": {
+          "type": "boolean",
+          "description": "Hide replies in the feed if they are not by followed users.",
+          "default": true
+        },
+        "hideRepliesByLikeCount": {
+          "type": "integer"
+        },
+        "hideReposts": {
+          "type": "boolean",
+          "description": "Hide reposts in the feed."
+        },
+        "hideQuotePosts": {
+          "type": "boolean",
+          "description": "Hide quote posts in the feed."
+        }
+      }
+    },
+    "threadViewPref": {
+      "type": "object",
+      "properties": {
+        "sort": {
+          "type": "string",
+          "description": "Sorting mode for threads.",
+          "enum": [
+            "oldest",
+            "newest",
+            "most-likes",
+            "random",
+            "hotness"
+          ]
+        },
+        "prioritizeFollowedUsers": {
+          "type": "boolean",
+          "description": "Show followed users at the top of all replies."
+        }
+      }
+    },
+    "interestsPref": {
+      "type": "object",
+      "required": [
+        "tags"
+      ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 640
+          },
+          "maxItems": 100
+        }
+      }
+    },
+    "mutedWordTarget": {
+      "type": "string",
+      "maxLength": 640,
+      "enum": [
+        "content",
+        "tag"
+      ]
+    },
+    "mutedWord": {
+      "type": "object",
+      "description": "A word that the account owner has muted.",
+      "required": [
+        "value",
+        "targets"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "description": "The muted word itself.",
+          "maxLength": 10000
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/mutedWordTarget"
+          }
+        },
+        "actorTarget": {
+          "type": "string",
+          "description": "Groups of users to apply the muted word to. If undefined, applies to all users.",
+          "default": "all",
+          "enum": [
+            "all",
+            "exclude-following"
+          ]
+        },
+        "expiresAt": {
+          "type": "string",
+          "description": "The date and time at which the muted word will expire and no longer be applied.",
+          "format": "date-time"
+        }
+      }
+    },
+    "mutedWordsPref": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/mutedWord"
+          }
+        }
+      }
+    },
+    "hiddenPostsPref": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "labelersPref": {
+      "type": "object",
+      "required": [
+        "labelers"
+      ],
+      "properties": {
+        "labelers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/labelerPrefItem"
+          }
+        }
+      }
+    },
+    "labelerPrefItem": {
+      "type": "object",
+      "required": [
+        "did"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        }
+      }
+    },
+    "starterPackViewBasic": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "record",
+        "creator",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "record": {},
+        "creator": {
+          "$ref": "#/definitions/profileViewBasic"
+        },
+        "listItemCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joinedWeekCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joinedAllTimeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "bskyAppStatePref": {
+      "type": "object",
+      "description": "A grab bag of state that's specific to the bsky.app program.",
+      "properties": {
+        "activeProgressGuide": {
+          "$ref": "#/definitions/bskyAppProgressGuide"
+        },
+        "queuedNudges": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "maxItems": 1000
+        },
+        "nuxs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/nux"
+          },
+          "maxItems": 100
+        }
+      }
+    },
+    "bskyAppProgressGuide": {
+      "type": "object",
+      "description": "If set, an active progress guide.",
+      "required": [
+        "guide"
+      ],
+      "properties": {
+        "guide": {
+          "type": "string",
+          "maxLength": 100
+        }
+      }
+    },
+    "nux": {
+      "type": "object",
+      "description": "A new user experiences (NUX) storage object",
+      "required": [
+        "id",
+        "completed"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "data": {
+          "type": "string",
+          "description": "Arbitrary data for the NUX. 300-character limit.",
+          "maxLength": 3000
+        },
+        "expiresAt": {
+          "type": "string",
+          "description": "The date and time at which the NUX will expire and completed.",
+          "format": "date-time"
+        }
+      }
+    },
+    "notifications": {
+      "type": "object",
+      "description": "The user's notification preferences.",
+      "properties": {
+        "email": {
+          "type": "boolean",
+          "description": "Whether email notifications are enabled.",
+          "example": true
+        },
+        "push": {
+          "type": "boolean",
+          "description": "Whether push notifications are enabled.",
+          "example": false
+        }
+      }
+    },
+    "language": {
+      "type": "string",
+      "description": "The user's preferred language code (e.g., 'en', 'fr').",
+      "example": "en"
+    },
+    "privacySettings": {
+      "type": "object",
+      "description": "The user's privacy-related preferences.",
+      "properties": {
+        "profileVisibility": {
+          "type": "string",
+          "description": "The visibility of the user's profile (e.g., 'public', 'private').",
+          "example": "public"
+        },
+        "messagePermissions": {
+          "type": "string",
+          "description": "Who can send messages to the user (e.g., 'anyone', 'contacts').",
+          "example": "contacts"
         }
       }
     },
@@ -16449,9 +16707,9 @@
         "role": {
           "type": "string",
           "enum": [
-            "tools.ozone.team.defs#roleAdmin",
-            "tools.ozone.team.defs#roleModerator",
-            "tools.ozone.team.defs#roleTriage"
+            "roleAdmin",
+            "roleModerator",
+            "roleTriage"
           ]
         }
       }
@@ -16461,50 +16719,6 @@
       "properties": {
         "email": {
           "type": "string"
-        }
-      }
-    },
-    "starterPackViewBasic": {
-      "type": "object",
-      "required": [
-        "uri",
-        "cid",
-        "record",
-        "creator",
-        "indexedAt"
-      ],
-      "properties": {
-        "uri": {
-          "type": "string"
-        },
-        "cid": {
-          "type": "string"
-        },
-        "record": {},
-        "creator": {
-          "$ref": "#/definitions/profileViewBasic"
-        },
-        "listItemCount": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "joinedWeekCount": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "joinedAllTimeCount": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "labels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/label"
-          }
-        },
-        "indexedAt": {
-          "type": "string",
-          "format": "date-time"
         }
       }
     },
@@ -16664,18 +16878,18 @@
         "event": {
           "type": "string",
           "enum": [
-            "app.bsky.feed.defs#requestLess",
-            "app.bsky.feed.defs#requestMore",
-            "app.bsky.feed.defs#clickthroughItem",
-            "app.bsky.feed.defs#clickthroughAuthor",
-            "app.bsky.feed.defs#clickthroughReposter",
-            "app.bsky.feed.defs#clickthroughEmbed",
-            "app.bsky.feed.defs#interactionSeen",
-            "app.bsky.feed.defs#interactionLike",
-            "app.bsky.feed.defs#interactionRepost",
-            "app.bsky.feed.defs#interactionReply",
-            "app.bsky.feed.defs#interactionQuote",
-            "app.bsky.feed.defs#interactionShare"
+            "requestLess",
+            "requestMore",
+            "clickthroughItem",
+            "clickthroughAuthor",
+            "clickthroughReposter",
+            "clickthroughEmbed",
+            "interactionSeen",
+            "interactionLike",
+            "interactionRepost",
+            "interactionReply",
+            "interactionQuote",
+            "interactionShare"
           ]
         },
         "feedContext": {
@@ -16808,6 +17022,150 @@
     "skeletonReasonPin": {
       "type": "object",
       "properties": {}
+    },
+    "reasonType": {
+      "type": "object",
+      "description": "Reason type for the moderation report. One of the predefined reasons.",
+      "properties": {
+        "reasonSpam": {
+          "$ref": "#/definitions/reasonSpam"
+        },
+        "reasonViolation": {
+          "$ref": "#/definitions/reasonViolation"
+        },
+        "reasonMisleading": {
+          "$ref": "#/definitions/reasonMisleading"
+        },
+        "reasonSexual": {
+          "$ref": "#/definitions/reasonSexual"
+        },
+        "reasonRude": {
+          "$ref": "#/definitions/reasonRude"
+        },
+        "reasonOther": {
+          "$ref": "#/definitions/reasonOther"
+        },
+        "reasonAppeal": {
+          "$ref": "#/definitions/reasonAppeal"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "reasonSpam": {
+          "details": "Spam content"
+        }
+      }
+    },
+
+    "reasonSpam": {
+      "type": "string",
+      "description": "Spam: frequent unwanted promotion, replies, mentions"
+    },
+    "reasonViolation": {
+      "type": "string",
+      "description": "Direct violation of server rules, laws, terms of service"
+    },
+    "reasonMisleading": {
+      "type": "string",
+      "description": "Misleading identity, affiliation, or content"
+    },
+    "reasonSexual": {
+      "type": "string",
+      "description": "Unwanted or mislabeled sexual content"
+    },
+    "reasonRude": {
+      "type": "string",
+      "description": "Rude, harassing, explicit, or otherwise unwelcoming behavior"
+    },
+    "reasonOther": {
+      "type": "string",
+      "description": "Other: reports not falling under another report category"
+    },
+    "reasonAppeal": {
+      "type": "string",
+      "description": "Appeal: appeal a previously taken moderation action"
+    },
+    "repoRef": {
+      "type": "object",
+      "required": [
+        "did"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        }
+      }
+    },
+    "repoBlobRef": {
+      "type": "object",
+      "required": [
+        "did",
+        "cid"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "recordUri": {
+          "type": "string"
+        }
+      }
+    },
+    "notification": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "author",
+        "reason",
+        "record",
+        "isRead",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/profileView"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', and 'starterpack-joined'.",
+          "enum": [
+            "like",
+            "repost",
+            "follow",
+            "mention",
+            "reply",
+            "quote",
+            "starterpack-joined"
+          ]
+        },
+        "reasonSubject": {
+          "type": "string"
+        },
+        "record": {},
+        "isRead": {
+          "type": "boolean"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        }
+      }
     },
     "ErrorResponse": {
       "type": "object",
