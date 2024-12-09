@@ -1334,9 +1334,11 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Metadata for Multiple Feed Generators",
-        "description": "Retrieve metadata about multiple feed generators.",
+        "summary": "Get Feed Generators Information",
+        "x-ms-summary": "Retrieve details about multiple feed generators.",
+        "description": "Get information about a list of feed generators.",
         "operationId": "GetFeedGenerators",
+        "consumes": [],
         "produces": [
           "application/json"
         ],
@@ -1347,186 +1349,30 @@
         ],
         "parameters": [
           {
-            "name": "generators",
+            "name": "feeds",
             "in": "query",
-            "description": "Comma-separated list of feed generator URIs to retrieve metadata for.",
+            "x-ms-summary": "List of Feed Generator AT-URIs",
+            "description": "A list of AT-URIs representing the feed generators to retrieve information for.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Feed Generator URIs"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved metadata for multiple feed generators.",
+            "description": "Feed generator details retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "feeds"
+              ],
               "properties": {
                 "feeds": {
                   "type": "array",
-                  "description": "An array of feed generator metadata.",
                   "items": {
-                    "type": "object",
-                    "description": "Metadata for a single feed generator.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the feed generator."
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content identifier for the feed generator."
-                      },
-                      "did": {
-                        "type": "string",
-                        "description": "DID of the feed generator creator."
-                      },
-                      "creator": {
-                        "type": "object",
-                        "description": "Information about the creator of the feed generator.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "DID of the creator."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the creator."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the creator."
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "Description of the creator."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the creator's avatar image."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Associated metadata for the creator.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of lists associated."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Whether the creator is a labeler."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat settings for the creator.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Type of incoming messages allowed."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "indexedAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the creator was indexed."
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the creator was created."
-                          }
-                        }
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the feed generator."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description of the feed generator."
-                      },
-                      "descriptionFacets": {
-                        "type": "array",
-                        "description": "Facets within the description of the feed generator.",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "index": {
-                              "type": "object",
-                              "description": "Index information for facets.",
-                              "properties": {
-                                "byteStart": {
-                                  "type": "integer",
-                                  "format": "int32",
-                                  "description": "Start byte of the facet."
-                                },
-                                "byteEnd": {
-                                  "type": "integer",
-                                  "format": "int32",
-                                  "description": "End byte of the facet."
-                                }
-                              }
-                            },
-                            "features": {
-                              "type": "array",
-                              "description": "Features associated with the facet.",
-                              "items": {
-                                "type": "object"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the feed generator's avatar image."
-                      },
-                      "likeCount": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Number of likes on the feed generator."
-                      },
-                      "acceptsInteractions": {
-                        "type": "boolean",
-                        "description": "Whether the feed generator accepts interactions."
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the feed generator.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata.",
-                        "properties": {
-                          "like": {
-                            "type": "string",
-                            "description": "URI of the viewer's like."
-                          }
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the feed generator was indexed."
-                      }
-                    }
+                    "$ref": "#/definitions/generatorView"
                   }
                 }
               }
@@ -1535,13 +1381,49 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -2130,9 +2012,11 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Thread for a Post",
-        "description": "Retrieve the thread of posts related to a specific post.",
+        "summary": "Get Post Thread",
+        "x-ms-summary": "Retrieve posts in a thread.",
+        "description": "Get posts in a thread.",
         "operationId": "GetPostThread",
+        "consumes": [],
         "produces": [
           "application/json"
         ],
@@ -2145,110 +2029,59 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the post to retrieve the thread for.",
+            "x-ms-summary": "Post AT-URI",
+            "description": "Reference (AT-URI) to post record.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "Post URI"
+            "type": "string"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "x-ms-summary": "Reply Depth",
+            "description": "How many levels of reply depth should be included in response.",
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000,
+            "default": 6
+          },
+          {
+            "name": "parentHeight",
+            "in": "query",
+            "x-ms-summary": "Parent Post Levels",
+            "description": "How many levels of parent (and grandparent, etc) post to include.",
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000,
+            "default": 80
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the thread for the specified post.",
+            "description": "Thread details retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "thread"
+              ],
               "properties": {
                 "thread": {
                   "type": "object",
-                  "description": "The root post of the thread with its replies.",
                   "properties": {
-                    "root": {
-                      "type": "object",
-                      "description": "The root post of the thread.",
-                      "properties": {
-                        "uri": {
-                          "type": "string",
-                          "description": "URI of the root post."
-                        },
-                        "cid": {
-                          "type": "string",
-                          "description": "Content identifier of the root post."
-                        },
-                        "author": {
-                          "type": "object",
-                          "description": "Information about the author of the root post.",
-                          "properties": {
-                            "did": {
-                              "type": "string",
-                              "description": "DID of the author."
-                            },
-                            "handle": {
-                              "type": "string",
-                              "description": "Handle of the author."
-                            },
-                            "displayName": {
-                              "type": "string",
-                              "description": "Display name of the author."
-                            },
-                            "avatar": {
-                              "type": "string",
-                              "description": "URL of the author's avatar image."
-                            }
-                          }
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "format": "date-time",
-                          "description": "Timestamp when the root post was created."
-                        }
-                      }
-                    },
-                    "replies": {
-                      "type": "array",
-                      "description": "An array of replies to the root post.",
-                      "items": {
-                        "type": "object",
-                        "description": "Details of a reply to the root post.",
-                        "properties": {
-                          "uri": {
-                            "type": "string",
-                            "description": "URI of the reply post."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "Content identifier of the reply post."
-                          },
-                          "author": {
-                            "type": "object",
-                            "description": "Information about the author of the reply post.",
-                            "properties": {
-                              "did": {
-                                "type": "string",
-                                "description": "DID of the author."
-                              },
-                              "handle": {
-                                "type": "string",
-                                "description": "Handle of the author."
-                              },
-                              "displayName": {
-                                "type": "string",
-                                "description": "Display name of the author."
-                              },
-                              "avatar": {
-                                "type": "string",
-                                "description": "URL of the author's avatar image."
-                              }
-                            }
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the reply post was created."
-                          }
-                        }
-                      }
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "found",
+                        "notFound",
+                        "blocked"
+                      ]
                     }
-                  }
+                  },
+                  "description": "Thread details for the requested post."
+                },
+                "threadgate": {
+                  "$ref": "#/definitions/threadgateView"
                 }
               }
             }
@@ -2256,13 +2089,50 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "NotFound"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
             }
           }
         }
@@ -15705,44 +15575,6 @@
         }
       }
     },
-    "profileViewBasic": {
-      "type": "object",
-      "required": [
-        "did",
-        "handle"
-      ],
-      "properties": {
-        "did": {
-          "type": "string"
-        },
-        "handle": {
-          "type": "string"
-        },
-        "displayName": {
-          "type": "string",
-          "maxLength": 640
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "associated": {
-          "$ref": "#/definitions/profileAssociated"
-        },
-        "viewer": {
-          "$ref": "#/definitions/viewerState"
-        },
-        "labels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/label"
-          }
-        },
-        "chatDisabled": {
-          "type": "boolean",
-          "description": "Set to true when the actor cannot actively participate in conversations"
-        }
-      }
-    },
     "blockedAuthor": {
       "type": "object",
       "required": [
@@ -16713,6 +16545,24 @@
       "properties": {
         "like": {
           "type": "string"
+        }
+      }
+    },
+    "threadgateView": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "record": {},
+        "lists": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/listViewBasic"
+          }
         }
       }
     },
