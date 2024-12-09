@@ -1434,8 +1434,9 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Skeleton Feed",
-        "description": "Retrieve a minimal skeletal version of a feed.",
+        "summary": "Get Feed Skeleton",
+        "x-ms-summary": "Retrieve a skeleton of a feed from a generator.",
+        "description": "Get a skeleton of a feed provided by a feed generator.",
         "operationId": "GetFeedSkeleton",
         "produces": [
           "application/json"
@@ -1449,60 +1450,47 @@
           {
             "name": "feed",
             "in": "query",
-            "description": "URI of the feed to retrieve the skeleton for.",
+            "description": "Reference to feed generator record describing the specific feed being requested.",
+            "x-ms-summary": "Feed generator reference.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "Feed URI"
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of items in the skeleton.",
+            "x-ms-summary": "Number of results to retrieve.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "description": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating the skeleton.",
+            "x-ms-summary": "Pagination cursor.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "description": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the skeleton feed.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "feed"
+              ],
               "properties": {
                 "cursor": {
-                  "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "type": "string"
                 },
                 "feed": {
                   "type": "array",
-                  "description": "An array of skeleton feed items.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a skeleton feed item.",
-                    "properties": {
-                      "post": {
-                        "type": "string",
-                        "description": "URI of the feed item post."
-                      },
-                      "reason": {
-                        "type": "object",
-                        "description": "Reason for including the feed item."
-                      },
-                      "feedContext": {
-                        "type": "string",
-                        "description": "Context of the feed item in the skeleton."
-                      }
-                    }
+                    "$ref": "#/definitions/skeletonFeedPost"
                   }
                 }
               }
@@ -1511,13 +1499,46 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "UnknownFeed"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -1528,8 +1549,9 @@
         "tags": [
           "app.bsky.feed"
         ],
-        "summary": "Get Likes for a Post",
-        "description": "Retrieve users who liked a specific post.",
+        "summary": "Get Likes",
+        "x-ms-summary": "Get like records referencing a subject.",
+        "description": "Get like records which reference a subject (by AT-URI and CID).",
         "operationId": "GetLikes",
         "produces": [
           "application/json"
@@ -1543,158 +1565,62 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the post to retrieve likes for.",
+            "description": "AT-URI of the subject (e.g., a post record).",
+            "x-ms-summary": "AT-URI of the subject.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "Post URI"
+            "type": "string"
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "description": "CID of the subject record (specific version of record), to filter likes.",
+            "x-ms-summary": "CID of the subject record.",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of likes to retrieve.",
+            "x-ms-summary": "Limit number of results.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "description": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination cursor.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "description": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved likes for the specified post.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "uri",
+                "likes"
+              ],
               "properties": {
                 "uri": {
-                  "type": "string",
-                  "description": "URI of the post."
+                  "type": "string"
                 },
                 "cid": {
-                  "type": "string",
-                  "description": "Content identifier for the post."
+                  "type": "string"
                 },
                 "cursor": {
-                  "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "type": "string"
                 },
                 "likes": {
                   "type": "array",
-                  "description": "An array of actors who liked the post.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a user who liked the post.",
-                    "properties": {
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the like was indexed."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the like was created."
-                      },
-                      "actor": {
-                        "type": "object",
-                        "description": "Details of the actor who liked the post.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "DID of the actor."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the actor."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the actor."
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "Description of the actor."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the actor's avatar image."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Associated metadata for the actor.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of lists associated."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "format": "int32",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Whether the actor is a labeler."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat settings for the actor.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Type of incoming messages allowed."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "indexedAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the actor was indexed."
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the actor was created."
-                          },
-                          "viewer": {
-                            "type": "object",
-                            "description": "Viewer-specific metadata for the actor.",
-                            "properties": {
-                              "muted": {
-                                "type": "boolean",
-                                "description": "Whether the viewer has muted the actor."
-                              },
-                              "blockedBy": {
-                                "type": "boolean",
-                                "description": "Whether the viewer is blocked by the actor."
-                              }
-                            }
-                          },
-                          "labels": {
-                            "type": "array",
-                            "description": "Labels associated with the actor.",
-                            "items": {
-                              "$ref": "#/definitions/Label"
-                            }
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/like"
                   }
                 }
               }
@@ -1703,13 +1629,45 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -2760,8 +2718,10 @@
           "app.bsky.feed"
         ],
         "summary": "Search Posts",
-        "description": "Search for posts matching a query.",
+        "x-ms-summary": "Find posts matching search criteria.",
+        "description": "Find posts matching search criteria, returning views of those posts.",
         "operationId": "SearchPosts",
+        "consumes": [],
         "produces": [
           "application/json"
         ],
@@ -2772,51 +2732,133 @@
         ],
         "parameters": [
           {
-            "name": "term",
+            "name": "q",
             "in": "query",
-            "description": "The search term used to find posts.",
+            "x-ms-summary": "Search Query",
+            "description": "Search query string.",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "x-ms-summary": "Sort Order",
+            "description": "Specifies the ranking order of results.",
+            "required": false,
             "type": "string",
-            "x-ms-summary": "Search Term"
+            "default": "latest",
+            "enum": [
+              "top",
+              "latest"
+            ]
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "x-ms-summary": "Since Datetime",
+            "description": "Filter results for posts after the indicated datetime (inclusive).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "x-ms-summary": "Until Datetime",
+            "description": "Filter results for posts before the indicated datetime (not inclusive).",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mentions",
+            "in": "query",
+            "x-ms-summary": "Mentions Account",
+            "description": "Filter to posts which mention the given account.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "x-ms-summary": "Author Account",
+            "description": "Filter to posts by the given account. Handles are resolved to DID before query-time.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "x-ms-summary": "Language Filter",
+            "description": "Filter to posts in the given language.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "domain",
+            "in": "query",
+            "x-ms-summary": "Domain Filter",
+            "description": "Filter to posts with URLs.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "x-ms-summary": "URL Filter",
+            "description": "Filter to posts with links.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "x-ms-summary": "Hashtag Filter",
+            "description": "Filter to posts with the given tag (hashtag).",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 640
+            }
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Max number of posts to retrieve.",
+            "x-ms-summary": "Result Limit",
+            "description": "Maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Optional pagination mechanism.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved posts matching the search term.",
+            "description": "Posts retrieved successfully.",
             "schema": {
               "type": "object",
+              "required": [
+                "posts"
+              ],
               "properties": {
                 "cursor": {
-                  "type": "string",
-                  "description": "Pagination cursor for the next page of results."
+                  "type": "string"
                 },
                 "hitsTotal": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "Total number of posts matching the search term."
+                  "type": "integer"
                 },
                 "posts": {
                   "type": "array",
-                  "description": "An array of posts matching the search criteria.",
                   "items": {
-                    "$ref": "#/definitions/Post"
+                    "$ref": "#/definitions/postView"
                   }
                 }
               }
@@ -2825,13 +2867,46 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "BadQueryString"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -2843,7 +2918,8 @@
           "app.bsky.feed"
         ],
         "summary": "Send Interactions",
-        "description": "Send interactions (like, repost) for a post.",
+        "x-ms-summary": "Send information about interactions.",
+        "description": "Send information about interactions.",
         "operationId": "SendInteractions",
         "consumes": [
           "application/json"
@@ -2860,34 +2936,19 @@
           {
             "name": "body",
             "in": "body",
-            "description": "An object containing the interactions to be sent.",
+            "x-ms-summary": "Interactions Payload",
+            "description": "Payload containing interactions to send.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "interactions"
+              ],
               "properties": {
                 "interactions": {
                   "type": "array",
-                  "description": "An array of interactions to send.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "The type of interaction (e.g., 'like', 'repost').",
-                        "example": "like"
-                      },
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the post the interaction is for.",
-                        "example": "at://did:plc:abcd1234/app.bsky.feed/post123"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp when the interaction was created.",
-                        "example": "2023-11-19T12:34:56Z"
-                      }
-                    }
+                    "$ref": "#/definitions/interaction"
                   }
                 }
               }
@@ -2896,14 +2957,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully sent interactions.",
+            "description": "Interactions sent successfully.",
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates whether the interactions were successfully sent.",
-                  "example": true
+                "_unknown_": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
@@ -2911,17 +2971,46 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
-          },
-          "default": {
-            "description": "Unexpected error response."
           }
         }
       }
@@ -16565,6 +16654,160 @@
           }
         }
       }
+    },
+    "interaction": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string",
+          "enum": [
+            "app.bsky.feed.defs#requestLess",
+            "app.bsky.feed.defs#requestMore",
+            "app.bsky.feed.defs#clickthroughItem",
+            "app.bsky.feed.defs#clickthroughAuthor",
+            "app.bsky.feed.defs#clickthroughReposter",
+            "app.bsky.feed.defs#clickthroughEmbed",
+            "app.bsky.feed.defs#interactionSeen",
+            "app.bsky.feed.defs#interactionLike",
+            "app.bsky.feed.defs#interactionRepost",
+            "app.bsky.feed.defs#interactionReply",
+            "app.bsky.feed.defs#interactionQuote",
+            "app.bsky.feed.defs#interactionShare"
+          ]
+        },
+        "feedContext": {
+          "type": "string",
+          "description": "Context on a feed item originally supplied by the feed generator on getFeedSkeleton.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "requestLess": {
+      "type": "string",
+      "description": "Request that less content like the given feed item be shown in the feed."
+    },
+    "requestMore": {
+      "type": "string",
+      "description": "Request that more content like the given feed item be shown in the feed."
+    },
+    "clickthroughItem": {
+      "type": "string",
+      "description": "User clicked through to the feed item"
+    },
+    "clickthroughAuthor": {
+      "type": "string",
+      "description": "User clicked through to the author of the feed item"
+    },
+    "clickthroughReposter": {
+      "type": "string",
+      "description": "User clicked through to the reposter of the feed item"
+    },
+    "clickthroughEmbed": {
+      "type": "string",
+      "description": "User clicked through to the embedded content of the feed item"
+    },
+    "interactionSeen": {
+      "type": "string",
+      "description": "Feed item was seen by user"
+    },
+    "interactionLike": {
+      "type": "string",
+      "description": "User liked the feed item"
+    },
+    "interactionRepost": {
+      "type": "string",
+      "description": "User reposted the feed item"
+    },
+    "interactionReply": {
+      "type": "string",
+      "description": "User replied to the feed item"
+    },
+    "interactionQuote": {
+      "type": "string",
+      "description": "User quoted the feed item"
+    },
+    "interactionShare": {
+      "type": "string",
+      "description": "User shared the feed item"
+    },
+    "like": {
+      "type": "object",
+      "required": [
+        "indexedAt",
+        "createdAt",
+        "actor"
+      ],
+      "properties": {
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "actor": {
+          "$ref": "#/definitions/profileView"
+        }
+      }
+    },
+    "app.bsky.feed.like": {
+      "type": "object",
+      "required": [
+        "subject",
+        "createdAt"
+      ],
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/strongRef"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "skeletonFeedPost": {
+      "type": "object",
+      "required": [
+        "post"
+      ],
+      "properties": {
+        "post": {
+          "type": "string",
+          "description": "The AT-URI of the post.",
+          "maxLength": 2000
+        },
+        "reasonRepost": {
+          "$ref": "#/definitions/skeletonReasonRepost"
+        },
+        "reasonPin": {
+          "$ref": "#/definitions/skeletonReasonPin"
+        },
+        "feedContext": {
+          "type": "string",
+          "description": "Context passed through to the client and returned to the feed generator alongside interactions.",
+          "maxLength": 2000
+        }
+      }
+    },
+    "skeletonReasonRepost": {
+      "type": "object",
+      "required": [
+        "repost"
+      ],
+      "properties": {
+        "repost": {
+          "type": "string"
+        }
+      }
+    },
+    "skeletonReasonPin": {
+      "type": "object",
+      "properties": {}
     },
     "ErrorResponse": {
       "type": "object",
