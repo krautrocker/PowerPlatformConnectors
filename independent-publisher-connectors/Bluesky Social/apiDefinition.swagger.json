@@ -8562,79 +8562,88 @@
         "tags": [
           "com.atproto.label"
         ],
-        "summary": "Query Labels",
-        "description": "Query the labels associated with specific content or entities.\n",
+        "summary": "Find labels relevant to the provided AT-URI patterns",
+        "description": "Find labels relevant to the provided AT-URI patterns.",
         "operationId": "QueryLabels",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
-            "name": "subjectId",
+            "name": "uriPatterns",
             "in": "query",
-            "description": "The identifier of the subject (e.g., post or user) to query labels for.",
+            "description": "List of AT URI patterns to match (boolean 'OR').",
+            "required": true,
+            "type": "array",
+            "x-ms-summary": "List of AT URI patterns to match",
+            "items": {
+              "type": "string"
+            },
+            "x-ms-summary": "List of AT URI patterns"
+          },
+          {
+            "name": "sources",
+            "in": "query",
+            "description": "Optional list of label sources (DIDs) to filter on.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Subject ID"
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-ms-summary": "DIDs to filter on"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of labels to retrieve.",
+            "description": "The maximum number of labels to return.",
             "required": false,
             "type": "integer",
-            "x-ms-summary": "Result Limit"
+            "minimum": 1,
+            "maximum": 250,
+            "default": 50,
+            "x-ms-summary": "Limit"
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating the labels.",
+            "description": "A cursor for pagination.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "x-ms-summary": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved labels.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "labels"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for pagination."
+                },
                 "labels": {
                   "type": "array",
-                  "description": "A list of labels associated with the subject.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "labelId": {
-                        "type": "string",
-                        "description": "Unique identifier of the label.",
-                        "example": "label123"
-                      },
-                      "type": {
-                        "type": "string",
-                        "description": "The type of label (e.g., spam, offensive).",
-                        "example": "spam"
-                      }
-                    }
+                    "$ref": "#/definitions/label"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input or query.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11824,38 +11833,46 @@
         "tags": [
           "tools.ozone.communication"
         ],
-        "summary": "Create Template",
-        "description": "Create a new communication template for notifications or messages.\n",
+        "summary": "Create a reusable communication template",
+        "description": "Administrative action to create a new, reusable communication template.",
         "operationId": "CreateTemplate",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the template to create.",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "subject",
+                "contentMarkdown",
+                "name"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "The name of the template.",
-                  "example": "WelcomeTemplate"
+                  "description": "Name of the template."
                 },
-                "content": {
+                "contentMarkdown": {
                   "type": "string",
-                  "description": "The content of the template.",
-                  "example": "Welcome to the service!"
+                  "description": "Content of the template, markdown supported, can contain variable placeholders."
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Subject of the message, used in emails."
+                },
+                "lang": {
+                  "type": "string",
+                  "description": "Message language."
+                },
+                "createdBy": {
+                  "type": "string",
+                  "description": "DID of the user who is creating the template."
                 }
               }
             }
@@ -11863,26 +11880,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Template successfully created.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "templateId": {
-                  "type": "string",
-                  "description": "Unique identifier of the created template.",
-                  "example": "template123"
-                }
-              }
+              "$ref": "#/definitions/templateView"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to create template.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11895,33 +11905,28 @@
         "tags": [
           "tools.ozone.communication"
         ],
-        "summary": "Delete Template",
-        "description": "Delete an existing communication template.\n",
+        "summary": "Delete a communication template",
+        "description": "Delete a communication template by its unique ID.",
         "operationId": "DeleteTemplate",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the template to delete.",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "id"
+              ],
               "properties": {
-                "templateId": {
+                "id": {
                   "type": "string",
-                  "description": "Unique identifier of the template.",
-                  "example": "template123"
+                  "description": "The unique identifier of the template to be deleted."
                 }
               }
             }
@@ -11929,26 +11934,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Template successfully deleted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the template was deleted successfully.",
-                  "example": true
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to delete template.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11961,58 +11956,40 @@
         "tags": [
           "tools.ozone.communication"
         ],
-        "summary": "List Templates",
-        "description": "Get a list of all communication templates.\n",
+        "summary": "Get list of communication templates",
+        "description": "Retrieve a list of all available communication templates.",
         "operationId": "ListTemplates",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list of templates.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "communicationTemplates"
+              ],
               "properties": {
-                "templates": {
+                "communicationTemplates": {
                   "type": "array",
-                  "description": "List of communication templates.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier of the template.",
-                        "example": "template123"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the template.",
-                        "example": "WelcomeTemplate"
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "The content of the template.",
-                        "example": "Welcome to the service!"
-                      }
-                    }
+                    "$ref": "#/definitions/templateView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve templates.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12025,43 +12002,52 @@
         "tags": [
           "tools.ozone.communication"
         ],
-        "summary": "Update Template",
-        "description": "Update an existing communication template.\n",
+        "summary": "Update an existing communication template",
+        "description": "Administrative action to update an existing communication template.",
         "operationId": "UpdateTemplate",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the template to update.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "id"
+              ],
               "properties": {
-                "templateId": {
+                "id": {
                   "type": "string",
-                  "description": "Unique identifier of the template.",
-                  "example": "template123"
+                  "description": "ID of the template to be updated."
                 },
                 "name": {
                   "type": "string",
-                  "description": "The new name for the template.",
-                  "example": "UpdatedTemplate"
+                  "description": "Name of the template."
                 },
-                "content": {
+                "lang": {
                   "type": "string",
-                  "description": "The new content for the template.",
-                  "example": "Updated content for the template."
+                  "description": "Message language."
+                },
+                "contentMarkdown": {
+                  "type": "string",
+                  "description": "Content of the template, markdown supported, can contain variable placeholders."
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Subject of the message, used in emails."
+                },
+                "updatedBy": {
+                  "type": "string",
+                  "description": "DID of the user who is updating the template."
+                },
+                "disabled": {
+                  "type": "boolean",
+                  "description": "Whether the template is disabled."
                 }
               }
             }
@@ -12069,26 +12055,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Template successfully updated.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the template was updated successfully.",
-                  "example": true
-                }
-              }
+              "$ref": "#/definitions/templateView"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to update template.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -16649,6 +16628,54 @@
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "templateView": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "contentMarkdown",
+        "disabled",
+        "lastUpdatedBy",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the template."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Content of the template, can contain markdown and variable placeholders."
+        },
+        "contentMarkdown": {
+          "type": "string",
+          "description": "Subject of the message, used in emails."
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Message language."
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "description": "DID of the user who last updated the template."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
