@@ -4072,7 +4072,7 @@
         "operationId": "GetServices",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -4139,7 +4139,7 @@
         "operationId": "GetUnreadCount",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -4369,7 +4369,7 @@
         "operationId": "RegisterPush",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -4449,7 +4449,7 @@
         "operationId": "UpdateSeen",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -4511,7 +4511,7 @@
         "operationId": "GetjobStatus",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -4565,7 +4565,7 @@
         "operationId": "GetUploadLimits",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -7454,115 +7454,6 @@
         }
       }
     },
-    "/xrpc/com.atproto.admin.getSubjectStatus": {
-      "get": {
-        "tags": [
-          "com.atproto.admin"
-        ],
-        "summary": "Get Subject Status",
-        "x-ms-summary": "Retrieve the admin status of a subject.",
-        "description": "Get the service-specific admin status of a subject.",
-        "operationId": "adminGetSubjectStatus",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "did",
-            "in": "query",
-            "type": "string",
-            "description": "Decentralized Identifier (DID) of the subject.",
-            "x-ms-summary": "DID"
-          },
-          {
-            "name": "uri",
-            "in": "query",
-            "type": "string",
-            "description": "The AT-URI of the subject.",
-            "x-ms-summary": "URI"
-          },
-          {
-            "name": "blob",
-            "in": "query",
-            "type": "string",
-            "description": "The CID of the subject.",
-            "x-ms-summary": "Blob"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "required": [
-                "subject"
-              ],
-              "properties": {
-                "subject": {
-                  "type": "object",
-                  "x-ms-summary": "Subject Information"
-                },
-                "takedown": {
-                  "$ref": "#/definitions/statusAttr"
-                },
-                "deactivated": {
-                  "$ref": "#/definitions/statusAttr"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/xrpc/com.atproto.admin.searchAccounts": {
       "get": {
         "tags": [
@@ -8567,7 +8458,7 @@
         "operationId": "QueryLabels",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -8580,8 +8471,7 @@
             "x-ms-summary": "List of AT URI patterns to match",
             "items": {
               "type": "string"
-            },
-            "x-ms-summary": "List of AT URI patterns"
+            }
           },
           {
             "name": "sources",
@@ -11838,7 +11728,7 @@
         "operationId": "CreateTemplate",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -11910,7 +11800,7 @@
         "operationId": "DeleteTemplate",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -11961,7 +11851,7 @@
         "operationId": "ListTemplates",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -12007,7 +11897,7 @@
         "operationId": "UpdateTemplate",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -12080,15 +11970,10 @@
         "tags": [
           "tools.ozone.moderation"
         ],
-        "summary": "Emit Moderation Event",
-        "description": "Emit a moderation event for tracking or logging purposes.\n",
+        "description": "Take a moderation action on an actor",
         "operationId": "EmitEvent",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Take a moderation action on an actor",
+        "x-ms-summary": "Take a moderation action on an actor",
         "security": [
           {
             "bearerAuth": []
@@ -12096,22 +11981,56 @@
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the moderation event.",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "event",
+                "subject",
+                "createdBy"
+              ],
               "properties": {
-                "eventType": {
+                "event": {
+                  "description": "The moderation event to emit.",
                   "type": "string",
-                  "description": "The type of moderation event.",
-                  "example": "userBan"
+                  "enum": [
+                    "modEventTakedown",
+                    "modEventAcknowledge",
+                    "modEventEscalate",
+                    "modEventComment",
+                    "modEventLabel",
+                    "modEventReport",
+                    "modEventMute",
+                    "modEventUnmute",
+                    "modEventMuteReporter",
+                    "modEventUnmuteReporter",
+                    "modEventReverseTakedown",
+                    "modEventResolveAppeal",
+                    "modEventEmail",
+                    "modEventTag",
+                    "accountEvent",
+                    "identityEvent",
+                    "recordEvent"
+                  ]
                 },
-                "details": {
+                "subject": {
+                  "description": "The subject of the moderation event.",
                   "type": "string",
-                  "description": "Additional details about the event.",
-                  "example": "User banned for violating terms of service."
+                  "enum": [
+                    "repoRef",
+                    "strongRef"
+                  ]
+                },
+                "subjectBlobCids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "createdBy": {
+                  "type": "string"
                 }
               }
             }
@@ -12119,28 +12038,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Moderation event successfully emitted.",
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/modEventView"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
               "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the event was emitted successfully.",
-                  "example": true
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken",
+                    "SubjectHasAction"
+                  ]
+                },
+                "message": {
+                  "type": "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad Request - Unable to emit moderation event.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/errorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -12468,12 +12413,10 @@
         "tags": [
           "tools.ozone.moderation"
         ],
-        "summary": "Query Moderation Events",
-        "description": "Retrieve moderation events based on specified criteria.\n",
-        "operationId": "ModerationQueryEvents",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "List moderation events related to a subject",
+        "description": "List moderation events related to a subject.",
+        "operationId": "QueryEvents",
+        "x-ms-summary": "List moderation events related to a subject",
         "security": [
           {
             "bearerAuth": []
@@ -12481,40 +12424,245 @@
         ],
         "parameters": [
           {
-            "name": "query",
+            "name": "types",
             "in": "query",
-            "description": "Filter criteria for querying moderation events.",
+            "description": "Event type to filter by: defs#modEvent<name>",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Event type for filtering",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "description": "Created by user",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Filter Query"
+            "x-ms-summary": "Created by"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction for the events.",
+            "required": false,
+            "type": "string",
+            "default": "desc",
+            "x-ms-summary": "Sort order"
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "Retrieve events created after a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Events created after a timestamp"
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "Retrieve events created before a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Events created before a timestamp"
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "description": "Subject",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Subject"
+          },
+          {
+            "name": "collections",
+            "in": "query",
+            "description": "Returns events where the subject belongs to the given collections.",
+            "required": false,
+            "type": "array",
+            "maxItems": 20,
+            "x-ms-summary": "Event collection",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectType",
+            "in": "query",
+            "description": "Returns events where the subject is account or record.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Subject Type",
+            "enum": [
+              "account",
+              "record"
+            ]
+          },
+          {
+            "name": "includeAllUserRecords",
+            "in": "query",
+            "description": "Returns events on all record type from given 'collections' param.",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Returns events of all types"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "hasComment",
+            "in": "query",
+            "description": "If true, only events with comments are returned.",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Has comment, yes/no"
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "description": "Returns events with comments containing the keyword.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Comment"
+          },
+          {
+            "name": "addedLabels",
+            "in": "query",
+            "description": "Returns events where all of these labels were added are returned.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Addedl labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "removedLabels",
+            "in": "query",
+            "description": "Returns events where labels were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Events with removed labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addedTags",
+            "in": "query",
+            "description": "Returns events where labels were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Removed labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "removedTags",
+            "in": "query",
+            "description": "Returns events where tags were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Removed tags",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reportTypes",
+            "in": "query",
+            "description": "Report type for moderation event",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Report types",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Pagination cursor",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved moderation events.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "events"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string"
+                },
                 "events": {
                   "type": "array",
-                  "description": "List of moderation events.",
                   "items": {
-                    "type": "object"
+                    "$ref": "#/definitions/modEventView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid query parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/errorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/errorResponse"
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -12594,12 +12742,9 @@
         "tags": [
           "tools.ozone.moderation"
         ],
-        "summary": "Search Repositories",
-        "description": "Search moderation repos based on query params.\n",
+        "summary": "Find repositories based on a search term",
+        "description": "Find repositories based on a search term.",
         "operationId": "SearchRepos",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -12607,50 +12752,63 @@
         ],
         "parameters": [
           {
-            "name": "query",
+            "name": "q",
             "in": "query",
-            "description": "Query string for searching repositories.",
+            "description": "The search query term.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Repository Search Query"
+            "x-ms-summary": "Search query term"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of repositories to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "A cursor for pagination.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination cursor"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved matching repositories.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "repos"
+              ],
               "properties": {
-                "repositories": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for pagination."
+                },
+                "repos": {
                   "type": "array",
-                  "description": "List of matching moderation repositories.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier of the repository.",
-                        "example": "repo123"
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "The status of the repository.",
-                        "example": "active"
-                      }
-                    }
+                    "$ref": "#/definitions/repoView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid query parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -16676,6 +16834,388 @@
         "updatedAt": {
           "type": "string",
           "format": "date-time"
+        }
+      }
+    },
+    "repoView": {
+      "type": "object",
+      "required": [
+        "did",
+        "handle",
+        "relatedRecords",
+        "indexedAt",
+        "moderation"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "relatedRecords": {
+          "type": "array",
+          "items": {}
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "moderation": {
+          "$ref": "#/definitions/moderation"
+        },
+        "invitedBy": {
+          "$ref": "#/definitions/inviteCode"
+        },
+        "invitesDisabled": {
+          "type": "boolean"
+        },
+        "inviteNote": {
+          "type": "string"
+        },
+        "deactivatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "threatSignatures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/threatSignature"
+          }
+        }
+      }
+    },
+    "moderation": {
+      "type": "object",
+      "properties": {
+        "subjectStatus": {
+          "$ref": "#/definitions/subjectStatusView"
+        }
+      }
+    },
+    "accountHosting": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "takendown",
+            "suspended",
+            "deleted",
+            "deactivated",
+            "unknown"
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deactivatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reactivatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "subjectStatusView": {
+      "type": "object",
+      "required": [
+        "id",
+        "subject",
+        "createdAt",
+        "updatedAt",
+        "reviewState"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique identifier of the subject status."
+        },
+        "subject": {
+          "type": "object",
+          "description": "One of the subject references.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The type of subject reference.",
+              "enum": [
+                "repoRef",
+                "strongRef"
+              ]
+            },
+            "repoRef": {
+              "$ref": "#/definitions/repoRef"
+            },
+            "strongRef": {
+              "$ref": "#/definitions/strongRef"
+            }
+          }
+        },
+        "hosting": {
+          "type": "object",
+          "description": "Hosting options.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The type of hosting.",
+              "enum": [
+                "accountHosting",
+                "recordHosting"
+              ]
+            },
+            "accountHosting": {
+              "type": "object",
+              "description": "Details for account hosting.",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "takendown",
+                    "suspended",
+                    "deleted",
+                    "deactivated",
+                    "unknown"
+                  ]
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "recordHosting": {
+              "type": "object",
+              "description": "Details for record hosting.",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "deleted",
+                    "unknown"
+                  ]
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the subject status was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the subject status was last updated."
+        },
+        "reviewState": {
+          "type": "string",
+          "description": "The review state of the subject.",
+          "enum": [
+            "reviewed",
+            "pending",
+            "escalated"
+          ]
+        }
+      }
+    },
+    "recordHosting": {
+      "type": "object",
+      "description": "Details for record hosting.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "deleted",
+            "unknown"
+          ]
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "subjectReviewState": {
+      "type": "string",
+      "enum": [
+        "reviewed",
+        "pending",
+        "escalated"
+      ]
+    },
+    "subjectBlobCids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subjectRepoHandle": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Timestamp referencing when the last update was made to the moderation status of the subject",
+      "format": "date-time"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Timestamp referencing the first moderation status impacting event was emitted on the subject",
+      "format": "date-time"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Sticky comment on the subject."
+    },
+    "muteUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "muteReportingUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastReviewedBy": {
+      "type": "string"
+    },
+    "lastReviewedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastReportedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastAppealedAt": {
+      "type": "string",
+      "description": "Timestamp referencing when the author of the subject appealed a moderation action",
+      "format": "date-time"
+    },
+    "takendown": {
+      "type": "boolean"
+    },
+    "appealed": {
+      "type": "boolean",
+      "description": "True indicates that the a previously taken moderator action was appealed against, by the author of the content"
+    },
+    "suspendUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modEventView": {
+      "type": "object",
+      "required": [
+        "id",
+        "event",
+        "subject",
+        "subjectBlobCids",
+        "createdBy",
+        "createdAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "event": {
+          "type": "object",
+          "description": "Represents one of the moderation event types.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "modEventTakedown",
+                "modEventReverseTakedown",
+                "modEventComment",
+                "modEventReport",
+                "modEventLabel",
+                "modEventAcknowledge",
+                "modEventEscalate",
+                "modEventMute",
+                "modEventUnmute",
+                "modEventMuteReporter",
+                "modEventUnmuteReporter",
+                "modEventEmail",
+                "modEventResolveAppeal",
+                "modEventDivert",
+                "modEventTag",
+                "accountEvent",
+                "identityEvent",
+                "recordEvent"
+              ]
+            }
+          }
+        },
+        "subject": {
+          "type": "object",
+          "description": "Represents one of the subject references.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "repoRef",
+                "strongRef",
+                "messageRef"
+              ]
+            }
+          }
+        },
+        "subjectBlobCids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creatorHandle": {
+          "type": "string"
+        },
+        "subjectHandle": {
+          "type": "string"
         }
       }
     },
