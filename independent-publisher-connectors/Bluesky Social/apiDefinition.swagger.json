@@ -86,13 +86,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -147,13 +147,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -319,73 +319,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/app.bsky.actor.putpreferences": {
-      "post": {
-        "tags": [
-          "app.bsky.actor"
-        ],
-        "summary": "Update preferences for current account",
-        "description": "Update the user's preferences.\n",
-        "operationId": "Putpreferences",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "An object containing the preferences to be updated.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/preferences"
-            },
-            "x-ms-summary": "preferences Payload"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated preferences for the current account.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates whether the preferences update was successful.",
-                  "example": true
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -460,13 +400,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -639,13 +579,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -815,13 +755,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1171,13 +1111,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1578,7 +1518,7 @@
                 "likes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/like"
+                    "$ref": "#/definitions/getLikesLike"
                   }
                 }
               }
@@ -2327,13 +2267,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2411,13 +2351,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2794,194 +2734,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/app.bsky.graph.getBlocks": {
-      "get": {
-        "tags": [
-          "app.bsky.graph"
-        ],
-        "summary": "Get Blocked Accounts",
-        "description": "Retrieve users blocked by the authenticated user.",
-        "operationId": "GraphGetBlocks",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Max num of blocked accounts to retrieve.",
-            "required": false,
-            "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "description": "A pagination cursor for navigating through results.",
-            "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved blocked accounts.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "cursor": {
-                  "type": "string",
-                  "description": "Pagination cursor for the next page."
-                },
-                "blocks": {
-                  "type": "array",
-                  "description": "An array of profiles representing blocked accounts.",
-                  "items": {
-                    "type": "object",
-                    "description": "Details of a blocked account.",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized identifier of the blocked account."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Handle of the blocked account."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the blocked account."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Profile description of the blocked account."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "URL of the avatar for the blocked account."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Associated metadata for the blocked account.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "description": "Number of lists the account belongs to."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "description": "Number of feed generators."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "description": "Number of starter packs."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Indicates if the account is labeled."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Incoming chat permissions."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the blocked account.",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ver": {
-                              "type": "integer",
-                              "description": "Version of the label."
-                            },
-                            "src": {
-                              "type": "string",
-                              "description": "Source of the label."
-                            },
-                            "uri": {
-                              "type": "string",
-                              "description": "URI for the label."
-                            },
-                            "cid": {
-                              "type": "string",
-                              "description": "Content ID for the label."
-                            },
-                            "val": {
-                              "type": "string",
-                              "description": "Value of the label."
-                            },
-                            "neg": {
-                              "type": "boolean",
-                              "description": "Indicates if the label is negative."
-                            },
-                            "cts": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Creation timestamp of the label."
-                            },
-                            "exp": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Expiration timestamp of the label."
-                            },
-                            "sig": {
-                              "type": "string",
-                              "description": "Signature of the label."
-                            }
-                          }
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the block was indexed."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the block was created."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid input parameters.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3074,13 +2833,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3171,13 +2930,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3263,13 +3022,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3280,12 +3039,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get List Details",
-        "description": "Retrieve details and items of a specific user list.",
+        "summary": "Get List View",
+        "x-ms-summary": "Retrieve a view with additional context of a specific list.",
+        "description": "Gets a 'view' (with additional context) of a specified list.",
         "operationId": "GetList",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -3295,288 +3052,52 @@
           {
             "name": "list",
             "in": "query",
-            "description": "URI of the list to retrieve.",
+            "x-ms-summary": "List Reference",
+            "description": "Reference (AT-URI) of the list record to hydrate.",
             "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "List URI"
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Max number of list items to retrieve.",
+            "x-ms-summary": "Limit Results",
+            "description": "The maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Cursor for Pagination",
+            "description": "Cursor to retrieve the next set of results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved list details.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "list",
+                "items"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "description": "Cursor for the next set of results."
                 },
                 "list": {
-                  "type": "object",
-                  "description": "Details of the retrieved list.",
-                  "properties": {
-                    "uri": {
-                      "type": "string",
-                      "description": "URI of the list."
-                    },
-                    "cid": {
-                      "type": "string",
-                      "description": "Content ID of the list."
-                    },
-                    "creator": {
-                      "type": "object",
-                      "description": "Details of the list creator.",
-                      "properties": {
-                        "did": {
-                          "type": "string",
-                          "description": "Decentralized identifier of the creator."
-                        },
-                        "handle": {
-                          "type": "string",
-                          "description": "Handle of the creator."
-                        },
-                        "displayName": {
-                          "type": "string",
-                          "description": "Display name of the creator."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Profile description of the creator."
-                        },
-                        "avatar": {
-                          "type": "string",
-                          "description": "Avatar URL of the creator."
-                        },
-                        "associated": {
-                          "type": "object",
-                          "description": "Metadata about the creator.",
-                          "properties": {
-                            "lists": {
-                              "type": "integer",
-                              "description": "Number of lists created."
-                            },
-                            "feedgens": {
-                              "type": "integer",
-                              "description": "Number of feed generators."
-                            },
-                            "starterPacks": {
-                              "type": "integer",
-                              "description": "Number of starter packs."
-                            },
-                            "labeler": {
-                              "type": "boolean",
-                              "description": "Indicates if labeled."
-                            },
-                            "chat": {
-                              "type": "object",
-                              "description": "Chat permissions.",
-                              "properties": {
-                                "allowIncoming": {
-                                  "type": "string",
-                                  "description": "Incoming chat permissions."
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the list."
-                    },
-                    "purpose": {
-                      "type": "string",
-                      "description": "Purpose of the list."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the list."
-                    },
-                    "avatar": {
-                      "type": "string",
-                      "description": "Avatar image URL of the list."
-                    },
-                    "listItemCount": {
-                      "type": "integer",
-                      "description": "Number of items in the list."
-                    },
-                    "labels": {
-                      "type": "array",
-                      "description": "Labels associated with the list.",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ver": {
-                            "type": "integer",
-                            "description": "Version of the label."
-                          },
-                          "src": {
-                            "type": "string",
-                            "description": "Source of the label."
-                          },
-                          "uri": {
-                            "type": "string",
-                            "description": "URI of the label."
-                          },
-                          "cid": {
-                            "type": "string",
-                            "description": "Content ID of the label."
-                          },
-                          "val": {
-                            "type": "string",
-                            "description": "Value of the label."
-                          },
-                          "neg": {
-                            "type": "boolean",
-                            "description": "Indicates if the label is negative."
-                          },
-                          "cts": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Timestamp when the label was created."
-                          },
-                          "exp": {
-                            "type": "string",
-                            "format": "date-time",
-                            "description": "Expiration timestamp of the label."
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/definitions/listView"
                 },
                 "items": {
                   "type": "array",
-                  "description": "Items in the list.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a list item.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the list item."
-                      },
-                      "subject": {
-                        "type": "object",
-                        "description": "Profile details of the list item.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "Decentralized identifier of the subject."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the subject."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the subject."
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "Profile description of the subject."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "Avatar URL of the subject."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Metadata about the subject.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "description": "Number of lists associated."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "description": "Number of feed generators."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "description": "Number of starter packs."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Indicates if labeled."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat permissions.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Incoming chat permissions."
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "labels": {
-                            "type": "array",
-                            "description": "Labels associated with the subject.",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "ver": {
-                                  "type": "integer",
-                                  "description": "Version of the label."
-                                },
-                                "src": {
-                                  "type": "string",
-                                  "description": "Source of the label."
-                                },
-                                "uri": {
-                                  "type": "string",
-                                  "description": "URI of the label."
-                                },
-                                "cid": {
-                                  "type": "string",
-                                  "description": "Content ID of the label."
-                                },
-                                "val": {
-                                  "type": "string",
-                                  "description": "Value of the label."
-                                },
-                                "neg": {
-                                  "type": "boolean",
-                                  "description": "Indicates if the label is negative."
-                                },
-                                "cts": {
-                                  "type": "string",
-                                  "format": "date-time",
-                                  "description": "Timestamp of label creation."
-                                },
-                                "exp": {
-                                  "type": "string",
-                                  "format": "date-time",
-                                  "description": "Expiration timestamp of the label."
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/listItemView"
                   }
                 }
               }
@@ -3585,13 +3106,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3602,12 +3123,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get List Blocks",
-        "description": "Retrieve users blocked within a specific list.",
+        "summary": "Get Blocked Lists",
+        "x-ms-summary": "Retrieve moderation lists blocked by the requesting account.",
+        "description": "Get mod lists that the requesting account (actor) is blocking.",
         "operationId": "GetListBlocks",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -3615,190 +3134,42 @@
         ],
         "parameters": [
           {
-            "name": "list",
-            "in": "query",
-            "description": "URI of the list to retrieve blocked accounts for.",
-            "required": true,
-            "type": "string",
-            "format": "uri",
-            "x-ms-summary": "List URI"
-          },
-          {
             "name": "limit",
             "in": "query",
-            "description": "Max number of blocked accounts to retrieve.",
+            "x-ms-summary": "Limit Results",
+            "description": "Maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor to retrieve the next set of results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved blocked accounts within the list.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "lists"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "description": "Cursor for the next set of results."
                 },
                 "lists": {
                   "type": "array",
-                  "description": "An array of blocked accounts within the specified list.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of the blocked list.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the blocked list."
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content ID of the list."
-                      },
-                      "creator": {
-                        "type": "object",
-                        "description": "Details about the creator of the blocked list.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "Decentralized identifier of the creator."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the creator."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the creator."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the creator's avatar."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Metadata about the creator.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "description": "Number of lists associated with the creator."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Indicates if the creator is labeled."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat permissions for the creator.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Incoming chat permissions."
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the list."
-                      },
-                      "purpose": {
-                        "type": "string",
-                        "description": "Purpose of the list."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description of the list."
-                      },
-                      "listItemCount": {
-                        "type": "integer",
-                        "description": "Number of items in the list."
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the list.",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ver": {
-                              "type": "integer",
-                              "description": "Label version."
-                            },
-                            "src": {
-                              "type": "string",
-                              "description": "Label source."
-                            },
-                            "uri": {
-                              "type": "string",
-                              "description": "Label URI."
-                            },
-                            "cid": {
-                              "type": "string",
-                              "description": "Content ID of the label."
-                            },
-                            "val": {
-                              "type": "string",
-                              "description": "Value of the label."
-                            },
-                            "neg": {
-                              "type": "boolean",
-                              "description": "Indicates if the label is negative."
-                            },
-                            "cts": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Timestamp when the label was created."
-                            },
-                            "exp": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Timestamp when the label expires."
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Information about the viewer of the list.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the viewer has muted the list."
-                          },
-                          "blocked": {
-                            "type": "string",
-                            "description": "Indicates if the list is blocked."
-                          }
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the list was indexed."
-                      }
-                    }
+                    "$ref": "#/definitions/listView"
                   }
                 }
               }
@@ -3807,13 +3178,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -3824,12 +3195,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get List Mutes",
-        "description": "Retrieve muted lists for the authenticated user.",
+        "summary": "Get Muted Lists",
+        "x-ms-summary": "Retrieve moderation lists muted by the requesting account.",
+        "description": "Get mod lists that the requesting account currently has muted.",
         "operationId": "GetListMutes",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -3839,188 +3208,40 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max number of muted lists to retrieve.",
+            "x-ms-summary": "Limit Results",
+            "description": "Maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor to retrieve the next set of results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved muted lists.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "lists"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "description": "Cursor for the next set of results."
                 },
                 "lists": {
                   "type": "array",
-                  "description": "An array of muted lists.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a muted list.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the muted list.",
-                        "example": "at://did:plc:abcd1234/app.bsky.graph/list123"
-                      },
-                      "cid": {
-                        "type": "string",
-                        "description": "Content ID of the muted list."
-                      },
-                      "creator": {
-                        "type": "object",
-                        "description": "Details of the muted list's creator.",
-                        "properties": {
-                          "did": {
-                            "type": "string",
-                            "description": "Decentralized identifier of the creator."
-                          },
-                          "handle": {
-                            "type": "string",
-                            "description": "Handle of the creator."
-                          },
-                          "displayName": {
-                            "type": "string",
-                            "description": "Display name of the creator."
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "Profile description of the creator."
-                          },
-                          "avatar": {
-                            "type": "string",
-                            "description": "URL of the creator's avatar."
-                          },
-                          "associated": {
-                            "type": "object",
-                            "description": "Metadata about the creator.",
-                            "properties": {
-                              "lists": {
-                                "type": "integer",
-                                "description": "Number of lists associated with the creator."
-                              },
-                              "feedgens": {
-                                "type": "integer",
-                                "description": "Number of feed generators associated."
-                              },
-                              "starterPacks": {
-                                "type": "integer",
-                                "description": "Number of starter packs associated."
-                              },
-                              "labeler": {
-                                "type": "boolean",
-                                "description": "Indicates if the creator is labeled."
-                              },
-                              "chat": {
-                                "type": "object",
-                                "description": "Chat permissions for the creator.",
-                                "properties": {
-                                  "allowIncoming": {
-                                    "type": "string",
-                                    "description": "Incoming chat permissions."
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the muted list."
-                      },
-                      "purpose": {
-                        "type": "string",
-                        "description": "Purpose of the muted list."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Description of the muted list."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "Avatar image URL of the muted list."
-                      },
-                      "listItemCount": {
-                        "type": "integer",
-                        "description": "Number of items in the muted list."
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the muted list.",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ver": {
-                              "type": "integer",
-                              "description": "Version of the label."
-                            },
-                            "src": {
-                              "type": "string",
-                              "description": "Source of the label."
-                            },
-                            "uri": {
-                              "type": "string",
-                              "description": "URI of the label."
-                            },
-                            "cid": {
-                              "type": "string",
-                              "description": "Content ID of the label."
-                            },
-                            "val": {
-                              "type": "string",
-                              "description": "Value of the label."
-                            },
-                            "neg": {
-                              "type": "boolean",
-                              "description": "Indicates if the label is negative."
-                            },
-                            "cts": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Timestamp of label creation."
-                            },
-                            "exp": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Timestamp when the label expires."
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Details about the viewer of the muted list.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the viewer has muted the list."
-                          },
-                          "blocked": {
-                            "type": "string",
-                            "description": "Indicates if the viewer has blocked the list."
-                          }
-                        }
-                      },
-                      "indexedAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Timestamp when the list was indexed."
-                      }
-                    }
+                    "$ref": "#/definitions/listView"
                   }
                 }
               }
@@ -4029,13 +3250,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4046,12 +3267,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get Lists for an Actor",
-        "description": "Retrieve all lists for the authenticated user.\n",
+        "summary": "Get Lists",
+        "x-ms-summary": "Retrieve the lists created by a specified account.",
+        "description": "Enumerates the lists created by a specified account.",
         "operationId": "GetLists",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4061,53 +3280,48 @@
           {
             "name": "actor",
             "in": "query",
-            "description": "Handle or DID of the actor to retrieve lists for.",
+            "x-ms-summary": "Account Identifier",
+            "description": "The account (actor) to enumerate lists from.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Actor Identifier"
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Max num of lists to retrieve.",
+            "x-ms-summary": "Limit Results",
+            "description": "Maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor to retrieve the next set of results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved lists for the actor.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "lists"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                },
                 "lists": {
                   "type": "array",
-                  "description": "An array of lists associated with the actor.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a list.",
-                    "properties": {
-                      "uri": {
-                        "type": "string",
-                        "description": "URI of the list.",
-                        "example": "at://did:plc:abcd1234/app.bsky.graph/list123"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the list.",
-                        "example": "My Favorites"
-                      }
-                    }
+                    "$ref": "#/definitions/listView"
                   }
                 }
               }
@@ -4116,13 +3330,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4133,12 +3347,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Get Muted Accounts",
-        "description": "Retrieve muted users for the authenticated user.",
+        "summary": "Get Mutes",
+        "x-ms-summary": "Retrieve muted accounts for the requesting account.",
+        "description": "Enumerates accounts that the requesting account currently has muted.",
         "operationId": "GetMutes",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4148,182 +3360,40 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Max number of muted accounts to retrieve.",
+            "x-ms-summary": "Limit Results",
+            "description": "Maximum number of results to return.",
             "required": false,
             "type": "integer",
-            "format": "int32",
-            "x-ms-summary": "Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "Pagination cursor for navigating through results.",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Cursor to retrieve the next set of results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved muted accounts.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "mutes"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
-                  "description": "Pagination cursor for the next set of results."
+                  "description": "Cursor for the next set of results."
                 },
-                "mutedAccounts": {
+                "mutes": {
                   "type": "array",
-                  "description": "An array of profiles representing muted accounts.",
                   "items": {
-                    "type": "object",
-                    "description": "Details of a muted account.",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized identifier of the muted account."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Handle of the muted account."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the muted account."
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Profile description of the muted account."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "description": "Avatar URL of the muted account."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Metadata about the muted account.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "description": "Number of lists associated with the account."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "description": "Number of feed generators."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "description": "Number of starter packs."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Indicates if labeled."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "description": "Chat permissions.",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Incoming chat permissions."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the viewer has muted the account."
-                          },
-                          "mutedByList": {
-                            "type": "object",
-                            "description": "Details of the list that muted this account.",
-                            "properties": {
-                              "uri": {
-                                "type": "string",
-                                "description": "URI of the list."
-                              },
-                              "cid": {
-                                "type": "string",
-                                "description": "Content ID of the list."
-                              },
-                              "name": {
-                                "type": "string",
-                                "description": "Name of the list."
-                              },
-                              "purpose": {
-                                "type": "string",
-                                "description": "Purpose of the list."
-                              },
-                              "avatar": {
-                                "type": "string",
-                                "description": "Avatar URL of the list."
-                              },
-                              "listItemCount": {
-                                "type": "integer",
-                                "description": "Number of items in the list."
-                              },
-                              "labels": {
-                                "type": "array",
-                                "description": "Labels associated with the list.",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "ver": {
-                                      "type": "integer",
-                                      "description": "Version of the label."
-                                    },
-                                    "src": {
-                                      "type": "string",
-                                      "description": "Source of the label."
-                                    },
-                                    "uri": {
-                                      "type": "string",
-                                      "description": "URI of the label."
-                                    },
-                                    "cid": {
-                                      "type": "string",
-                                      "description": "Content ID of the label."
-                                    },
-                                    "val": {
-                                      "type": "string",
-                                      "description": "Value of the label."
-                                    },
-                                    "neg": {
-                                      "type": "boolean",
-                                      "description": "Indicates if the label is negative."
-                                    },
-                                    "cts": {
-                                      "type": "string",
-                                      "format": "date-time",
-                                      "description": "Timestamp of label creation."
-                                    },
-                                    "exp": {
-                                      "type": "string",
-                                      "format": "date-time",
-                                      "description": "Expiration timestamp of the label."
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          "blockedBy": {
-                            "type": "boolean",
-                            "description": "Indicates if the account is blocked by the viewer."
-                          },
-                          "blocking": {
-                            "type": "string",
-                            "description": "Details of blocking status."
-                          }
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/profileView"
                   }
                 }
               }
@@ -4332,13 +3402,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4412,13 +3482,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4473,13 +3543,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4539,13 +3609,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4601,13 +3671,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4618,15 +3688,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an Actor",
-        "description": "Mute a specific actor for the authenticated user.",
+        "summary": "Mute Actor",
+        "x-ms-summary": "Create a mute relationship for a specified account.",
+        "description": "Creates a mute relationship for the specified account.",
         "operationId": "MuteActor",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4636,15 +3701,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the actor to mute.",
             "required": true,
+            "description": "Request payload to specify the account to mute.",
             "schema": {
               "type": "object",
+              "required": [
+                "actor"
+              ],
               "properties": {
                 "actor": {
                   "type": "string",
-                  "description": "Handle or DID of the actor to mute.",
-                  "example": "did:plc:abcd1234"
+                  "description": "Identifier of the account to be muted.",
+                  "x-ms-summary": "Account Identifier"
                 }
               }
             }
@@ -4652,14 +3720,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully muted the actor.",
+            "description": "OK - The mute relationship was successfully created.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the actor was successfully muted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4667,13 +3734,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4684,15 +3751,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute an Actor List",
-        "description": "Mute a specific list of actors for the authenticated user.",
+        "summary": "Mute Actor List",
+        "x-ms-summary": "Create a mute relationship for a specified list of accounts.",
+        "description": "Creates a mute relationship for the specified list of accounts.",
         "operationId": "MuteActorList",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4702,15 +3764,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the actor list to mute.",
             "required": true,
+            "description": "Request payload specifying the list of accounts to mute.",
             "schema": {
               "type": "object",
+              "required": [
+                "list"
+              ],
               "properties": {
                 "list": {
                   "type": "string",
-                  "description": "URI of the actor list to mute.",
-                  "example": "at://did:plc:abcd1234/app.bsky.graph/list123"
+                  "description": "URI reference to the list of accounts to be muted.",
+                  "x-ms-summary": "List URI"
                 }
               }
             }
@@ -4718,14 +3783,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully muted the actor list.",
+            "description": "OK - The mute relationship was successfully created for the list.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the actor list was successfully muted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4733,13 +3797,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4750,15 +3814,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Mute a Thread",
-        "description": "Mute an entire thread of posts for the authenticated user.",
+        "summary": "Mute Thread",
+        "x-ms-summary": "Mute a thread to prevent notifications from it and its children.",
+        "description": "Mutes a thread preventing notifications from the thread and any of its children.",
         "operationId": "MuteThread",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4768,15 +3827,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the thread to mute.",
             "required": true,
+            "description": "Request payload specifying the root of the thread to mute.",
             "schema": {
               "type": "object",
+              "required": [
+                "root"
+              ],
               "properties": {
-                "threadUri": {
+                "root": {
                   "type": "string",
-                  "description": "URI of the thread to mute.",
-                  "example": "at://did:plc:abcd1234/app.bsky.feed/thread123"
+                  "description": "URI reference to the root of the thread to mute.",
+                  "x-ms-summary": "Root URI"
                 }
               }
             }
@@ -4784,14 +3846,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully muted the thread.",
+            "description": "OK - The thread was successfully muted.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the thread was successfully muted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4799,13 +3860,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4816,15 +3877,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an Actor",
-        "description": "Unmute a specific actor for the authenticated user.",
+        "summary": "Unmute Actor",
+        "x-ms-summary": "Unmute the specified account.",
+        "description": "Unmutes the specified account.",
         "operationId": "UnmuteActor",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4834,15 +3890,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the actor to unmute.",
             "required": true,
+            "description": "Request payload specifying the actor to unmute.",
             "schema": {
               "type": "object",
+              "required": [
+                "actor"
+              ],
               "properties": {
                 "actor": {
                   "type": "string",
-                  "description": "Handle or DID of the actor to unmute.",
-                  "example": "did:plc:abcd1234"
+                  "description": "The identifier (AT-identifier) of the actor to unmute.",
+                  "x-ms-summary": "Actor ID"
                 }
               }
             }
@@ -4850,14 +3909,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully unmuted the actor.",
+            "description": "OK - The actor was successfully unmuted.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the actor was successfully unmuted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4865,13 +3923,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4882,15 +3940,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute an Actor List",
-        "description": "Unmute a specific list of actors for the authenticated user.",
+        "summary": "Unmute Actor List",
+        "x-ms-summary": "Unmute the specified list of accounts.",
+        "description": "Unmutes the specified list of accounts.",
         "operationId": "UnmuteActorList",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4900,15 +3953,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the actor list to unmute.",
             "required": true,
+            "description": "Request payload specifying the list of accounts to unmute.",
             "schema": {
               "type": "object",
+              "required": [
+                "list"
+              ],
               "properties": {
                 "list": {
                   "type": "string",
-                  "description": "URI of the actor list to unmute.",
-                  "example": "at://did:plc:abcd1234/app.bsky.graph/list123"
+                  "description": "The URI of the list to unmute.",
+                  "x-ms-summary": "List URI"
                 }
               }
             }
@@ -4916,14 +3972,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully unmuted the actor list.",
+            "description": "OK - The list of accounts was successfully unmuted.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the actor list was successfully unmuted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4931,13 +3986,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4948,15 +4003,10 @@
         "tags": [
           "app.bsky.graph"
         ],
-        "summary": "Unmute a Thread",
-        "description": "Unmute an entire thread of posts for the authenticated user.",
+        "summary": "Unmute Thread",
+        "x-ms-summary": "Unmute the specified thread.",
+        "description": "Unmutes the specified thread.",
         "operationId": "UnmuteThread",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4966,15 +4016,18 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Details of the thread to unmute.",
             "required": true,
+            "description": "Request payload specifying the thread to unmute.",
             "schema": {
               "type": "object",
+              "required": [
+                "root"
+              ],
               "properties": {
-                "threadUri": {
+                "root": {
                   "type": "string",
-                  "description": "URI of the thread to unmute.",
-                  "example": "at://did:plc:abcd1234/app.bsky.feed/thread123"
+                  "description": "The URI of the root thread to unmute.",
+                  "x-ms-summary": "Root Thread URI"
                 }
               }
             }
@@ -4982,14 +4035,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully unmuted the thread.",
+            "description": "OK - The thread was successfully unmuted.",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the thread was successfully unmuted.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
                 }
               }
             }
@@ -4997,13 +4049,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5014,56 +4066,64 @@
         "tags": [
           "app.bsky.labeler"
         ],
-        "summary": "Get Labeling Services",
-        "description": "Retrieve the list of labeler services available to the user.",
+        "summary": "Get information about a list of labeler services",
+        "description": "Get information about a list of labeler services.",
+        "x-ms-summary": "Get information about a list of labeler services",
         "operationId": "GetServices",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "dids",
+            "in": "query",
+            "required": true,
+            "x-ms-summary": "DIDs",
+            "description": "DIDs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "detailed",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Detailed",
+            "description": "Detailed"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved labeling services.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "views"
+              ],
               "properties": {
-                "services": {
+                "views": {
                   "type": "array",
-                  "description": "An array of available labeling services.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the labeling service.",
-                        "example": "ContentFilterPro"
-                      },
-                      "endpoint": {
-                        "type": "string",
-                        "description": "The endpoint of the labeling service.",
-                        "example": "https://labeler.example.com/api"
-                      }
-                    }
+                    "$ref": "#/definitions/labelerView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve services.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5074,42 +4134,59 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Get Unread Notification Count",
-        "description": "Retrieve the count of unread notifications for the authenticated user.",
+        "summary": "Count the number of unread notifications for the requesting account",
+        "description": "Count the number of unread notifications for the requesting account.",
         "operationId": "GetUnreadCount",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "priority",
+            "in": "query",
+            "type": "boolean",
+            "required": false,
+            "description": "Specifies if only high-priority notifications should be counted.",
+            "x-ms-summary": "Priority"
+          },
+          {
+            "name": "seenAt",
+            "in": "query",
+            "type": "string",
+            "format": "date-time",
+            "required": false,
+            "description": "Count notifications seen after the provided timestamp.",
+            "x-ms-summary": "Seen at"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved unread notification count.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "count"
+              ],
               "properties": {
-                "unreadCount": {
+                "count": {
                   "type": "integer",
-                  "description": "The number of unread notifications.",
-                  "example": 12
+                  "description": "The number of unread notifications."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve unread count.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5202,32 +4279,27 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
       }
     },
-    "/xrpc/app.bsky.notification.putpreferences": {
+    "/xrpc/app.bsky.notification.putPreferences": {
       "post": {
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Update Notification preferences",
-        "description": "Update notification preferences for the authenticated user.",
-        "operationId": "NotificationPutpreferences",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Set Notification Preferences",
+        "x-ms-summary": "Set Notification Preferences",
+        "description": "Set notification-related preferences for an account.",
+        "operationId": "PutNotificationPreferences",
         "security": [
           {
             "bearerAuth": []
@@ -5235,21 +4307,20 @@
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Notification preferences to be updated.",
+            "name": "body",
+            "x-ms-summary": "Notification Preferences Body",
+            "description": "The notification preferences to set for the account.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "priority"
+              ],
               "properties": {
-                "preferences": {
-                  "type": "object",
-                  "description": "The notification preferences object.",
-                  "example": {
-                    "likes": true,
-                    "mentions": false,
-                    "replies": true
-                  }
+                "priority": {
+                  "type": "boolean",
+                  "description": "Indicates if priority notifications should be enabled."
                 }
               }
             }
@@ -5257,14 +4328,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated notification preferences.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the preferences were successfully updated.",
-                  "example": true
+                  "description": "Indicates whether the operation was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional success message."
                 }
               }
             }
@@ -5272,13 +4346,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5289,38 +4363,49 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Register Push Notifications",
-        "description": "Register the user for push notifications.",
+        "summary": "Register to receive push notifications",
+        "x-ms-summary": "Register to receive push notifications",
+        "description": "Register to receive push notifications.",
         "operationId": "RegisterPush",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the device to register for push notifications.",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "serviceDid",
+                "token",
+                "platform",
+                "appId"
+              ],
               "properties": {
-                "deviceToken": {
+                "serviceDid": {
                   "type": "string",
-                  "description": "The device token for push notifications.",
-                  "example": "device_token_abc123"
+                  "description": "The DID of the push notification service."
+                },
+                "token": {
+                  "type": "string",
+                  "description": "Push notification token."
                 },
                 "platform": {
                   "type": "string",
-                  "description": "The platform of the device (e.g., 'iOS', 'Android').",
-                  "example": "iOS"
+                  "enum": [
+                    "ios",
+                    "android",
+                    "web"
+                  ],
+                  "description": "The platform for the push notification."
+                },
+                "appId": {
+                  "type": "string",
+                  "description": "Identifier for the app requesting push notifications."
                 }
               }
             }
@@ -5328,28 +4413,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully registered the device for push notifications.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the device was successfully registered.",
-                  "example": true
+                  "description": "Indicates if the registration was successful."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5360,34 +4444,29 @@
         "tags": [
           "app.bsky.notification"
         ],
-        "summary": "Update Notifications as Seen",
-        "description": "Mark notifications as seen for the authenticated user.",
+        "summary": "Notify server that the requesting account has seen notifications",
+        "description": "Notify server that the requesting account has seen notifications.",
         "operationId": "UpdateSeen",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the notifications to update as seen.",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "seenAt"
+              ],
               "properties": {
                 "seenAt": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "The timestamp when notifications were marked as seen.",
-                  "example": "2023-11-19T12:34:56Z"
+                  "description": "Timestamp indicating when notifications were seen."
                 }
               }
             }
@@ -5395,54 +4474,51 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated notifications as seen.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
                 "success": {
                   "type": "boolean",
-                  "description": "Indicates if the notifications were successfully updated as seen.",
-                  "example": true
+                  "description": "Indicates if the operation was successful."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
       }
     },
-    "/xrpc/app.bsky.video.getJobStatus": {
+    "/xrpc/app.bsky.video.getjobStatus": {
       "get": {
         "tags": [
           "app.bsky.video"
         ],
-        "summary": "Get Video Job Status",
-        "description": "Retrieve the status of a video upload job.",
-        "operationId": "GetJobStatus",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get status details for a video processing job",
+        "x-ms-summary": "Get status details for a video processing job",
+        "description": "Get status details for a video processing job.",
+        "operationId": "GetjobStatus",
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
         "parameters": [
           {
             "name": "jobId",
             "in": "query",
-            "description": "The ID of the video job to retrieve the status for.",
+            "description": "The ID of the video processing job to retrieve the status for.",
             "required": true,
             "type": "string",
             "x-ms-summary": "Job ID"
@@ -5450,33 +4526,29 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved video job status.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "jobStatus"
+              ],
               "properties": {
-                "status": {
-                  "type": "string",
-                  "description": "The current status of the video job (e.g., 'pending', 'processing', 'completed').",
-                  "example": "processing"
-                },
-                "progress": {
-                  "type": "integer",
-                  "description": "The percentage of progress for the video job.",
-                  "example": 50
+                "jobStatus": {
+                  "$ref": "#/definitions/jobStatus"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5487,72 +4559,57 @@
         "tags": [
           "app.bsky.video"
         ],
-        "summary": "Get Video Upload Limits",
-        "description": "Retrieve the upload limits for videos, such as file size or resolution.",
+        "summary": "Get video upload limits for the authenticated user",
+        "x-ms-summary": "Get video upload limits for the authenticated user.",
+        "description": "Get video upload limits for the authenticated user.",
         "operationId": "GetUploadLimits",
-        "produces": [
-          "application/json"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "Bearer": []
           }
         ],
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "Successfully retrieved video upload limits.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "canUpload"
+              ],
               "properties": {
-                "maxFileSize": {
-                  "type": "integer",
-                  "description": "The maximum file size allowed for video uploads (in bytes).",
-                  "example": 104857600
-                },
-                "maxDuration": {
-                  "type": "integer",
-                  "description": "The maximum duration allowed for video uploads (in seconds).",
-                  "example": 300
-                },
                 "canUpload": {
                   "type": "boolean",
-                  "description": "Indicates whether the user can currently upload videos.",
-                  "example": true
+                  "description": "Indicates if the user can upload videos."
                 },
                 "remainingDailyVideos": {
                   "type": "integer",
-                  "description": "The remaining number of videos the user can upload today.",
-                  "example": 3
+                  "description": "Number of videos the user can still upload today."
                 },
                 "remainingDailyBytes": {
                   "type": "integer",
-                  "description": "The remaining number of bytes the user can upload today.",
-                  "example": 524288000
+                  "description": "Remaining data size in bytes available for uploads today."
                 },
                 "message": {
                   "type": "string",
-                  "description": "Additional information or warnings about upload limits.",
-                  "example": "You have 3 uploads remaining today."
+                  "description": "Additional information regarding the upload limits."
                 },
                 "error": {
                   "type": "string",
-                  "description": "Error message if upload limits cannot be retrieved.",
-                  "example": "User not authorized."
+                  "description": "Error message if applicable."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve upload limits.",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5613,13 +4670,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5700,6 +4757,72 @@
                   "description": "Detailed error message."
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/app.bsky.actor.putPreferences": {
+      "post": {
+        "tags": [
+          "app.bsky.actor"
+        ],
+        "summary": "Set Account Preferences",
+        "x-ms-summary": "Set Account Preferences",
+        "description": "Set the private preferences attached to the account.",
+        "operationId": "PutPreferences",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "x-ms-summary": "Preferences Payload",
+            "description": "The preferences to attach to the account.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "preferences"
+              ],
+              "properties": {
+                "preferences": {
+                  "$ref": "#/definitions/preferences"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates whether the operation was successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Optional success message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6862,13 +5985,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7390,13 +6513,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7915,13 +7038,13 @@
           "400": {
             "description": "Bad Request - Invalid or already disabled invite codes.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -8870,13 +7993,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -8948,13 +8071,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9050,13 +8173,13 @@
           "400": {
             "description": "Bad Request - Unable to retrieve credentials.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9105,13 +8228,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9146,13 +8269,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9200,13 +8323,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9286,13 +8409,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9352,13 +8475,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9422,13 +8545,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9507,13 +8630,13 @@
           "400": {
             "description": "Bad Request - Invalid input or query.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9631,13 +8754,13 @@
           "400": {
             "description": "Bad Request - Invalid account identifier or password.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9710,13 +8833,13 @@
           "400": {
             "description": "Bad Request - Invalid write operations.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9783,13 +8906,13 @@
           "400": {
             "description": "Bad Request - Invalid record details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9854,13 +8977,13 @@
           "400": {
             "description": "Bad Request - Invalid record identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9902,13 +9025,13 @@
           "400": {
             "description": "Bad Request - Unable to retrieve repository details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9982,13 +9105,13 @@
           "400": {
             "description": "Bad Request - Invalid repository details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10040,13 +9163,13 @@
           "400": {
             "description": "Bad Request - Invalid repository identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10113,13 +9236,13 @@
           "400": {
             "description": "Bad Request - Invalid collection name or parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10191,13 +9314,13 @@
           "400": {
             "description": "Bad Request - Invalid record details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10253,13 +9376,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "500": {
             "description": "Internal Server Error - Unexpected failure during blob upload.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10289,13 +9412,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10377,13 +9500,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10441,13 +9564,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10563,13 +9686,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10740,13 +9863,13 @@
           "400": {
             "description": "Bad Request - Invalid or missing parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10837,13 +9960,13 @@
           "400": {
             "description": "Bad Request - Invalid or missing parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10894,13 +10017,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11247,13 +10370,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11329,13 +10452,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11699,13 +10822,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11767,13 +10890,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11831,13 +10954,13 @@
           "400": {
             "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12081,41 +11204,39 @@
           "400": {
             "description": "Bad Request - Invalid blob ID.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "404": {
             "description": "Not Found - The specified blob does not exist.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "500": {
             "description": "Internal Server Error - Unexpected failure during blob retrieval.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
       }
     },
-    "/xrpc/com.atproto.sync.getBlocks": {
+    "/xrpc/app.bsky.graph.getBlocks": {
       "get": {
         "tags": [
-          "com.atproto.sync"
+          "app.bsky.graph"
         ],
-        "summary": "Get Blocks",
-        "description": "Retrieve multiple binary blocks from the specified repository.\n",
-        "operationId": "SyncGetBlocks",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get Blocked Accounts",
+        "x-ms-summary": "Get Blocked Accounts",
+        "description": "Retrieve a list of accounts blocked by the requesting account.",
+        "operationId": "GetBlocks",
         "security": [
           {
             "bearerAuth": []
@@ -12123,62 +11244,57 @@
         ],
         "parameters": [
           {
-            "name": "blockIds",
+            "name": "limit",
             "in": "query",
-            "description": "Comma-separated list of block IDs to retrieve.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Block IDs"
+            "x-ms-summary": "Limit Results",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Cursor for Pagination",
+            "description": "Cursor to retrieve the next set of results.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved binary blocks.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "blocks"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Cursor for the next set of results."
+                },
                 "blocks": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "blockId": {
-                        "type": "string",
-                        "description": "Unique identifier of the block."
-                      },
-                      "data": {
-                        "type": "string",
-                        "format": "byte",
-                        "description": "The base64-encoded binary data of the block."
-                      }
-                    }
+                    "$ref": "#/definitions/profileView"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid block IDs or request parameters.",
+            "description": "Bad Request - Invalid input parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found - One or more specified blocks do not exist.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Unexpected failure during block retrieval.",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12239,13 +11355,13 @@
           "400": {
             "description": "Bad Request - Invalid repository identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12305,13 +11421,13 @@
           "400": {
             "description": "Bad Request - Invalid record identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12365,13 +11481,13 @@
           "400": {
             "description": "Bad Request - Invalid repository ID.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12431,13 +11547,13 @@
           "400": {
             "description": "Bad Request - Invalid repository identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12500,13 +11616,13 @@
           "400": {
             "description": "Bad Request - Invalid repository identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12559,13 +11675,13 @@
           "400": {
             "description": "Bad Request - Unable to retrieve repositories list.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12625,13 +11741,13 @@
           "400": {
             "description": "Bad Request - Invalid update details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12691,13 +11807,13 @@
           "400": {
             "description": "Bad Request - Invalid crawl request details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12762,13 +11878,13 @@
           "400": {
             "description": "Bad Request - Unable to create template.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12828,13 +11944,13 @@
           "400": {
             "description": "Bad Request - Unable to delete template.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12892,13 +12008,13 @@
           "400": {
             "description": "Bad Request - Unable to retrieve templates.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12968,13 +12084,13 @@
           "400": {
             "description": "Bad Request - Unable to update template.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13039,13 +12155,13 @@
           "400": {
             "description": "Bad Request - Unable to emit moderation event.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13105,13 +12221,13 @@
           "400": {
             "description": "Bad Request - Invalid event identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13174,13 +12290,13 @@
           "400": {
             "description": "Bad Request - Invalid record identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13231,13 +12347,13 @@
           "400": {
             "description": "Bad Request - Invalid query parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13297,13 +12413,13 @@
           "400": {
             "description": "Bad Request - Invalid repository identifier.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13356,13 +12472,13 @@
           "400": {
             "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13413,13 +12529,13 @@
           "400": {
             "description": "Bad Request - Invalid query parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13482,13 +12598,13 @@
           "400": {
             "description": "Bad Request - Invalid query parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13551,13 +12667,13 @@
           "400": {
             "description": "Bad Request - Invalid query parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13716,13 +12832,13 @@
           "400": {
             "description": "Bad Request - Unable to add values.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13782,13 +12898,13 @@
           "400": {
             "description": "Bad Request - Unable to delete the set.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13856,13 +12972,13 @@
           "400": {
             "description": "Bad Request - Unable to remove values.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13914,13 +13030,13 @@
           "400": {
             "description": "Bad Request - Invalid set ID.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -13983,13 +13099,13 @@
           "400": {
             "description": "Bad Request - Invalid query parameters.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14062,13 +13178,13 @@
           "400": {
             "description": "Bad Request - Unable to upsert set.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14131,13 +13247,13 @@
           "400": {
             "description": "Bad Request - Invalid signature.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14200,13 +13316,13 @@
           "400": {
             "description": "Bad Request - Invalid signature.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14269,13 +13385,13 @@
           "400": {
             "description": "Bad Request - Invalid search query.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14345,13 +13461,13 @@
           "400": {
             "description": "Bad Request - Unable to add member.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14416,13 +13532,13 @@
           "400": {
             "description": "Bad Request - Unable to remove member.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14490,13 +13606,13 @@
           "400": {
             "description": "Bad Request - Invalid team ID.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -14566,13 +13682,13 @@
           "400": {
             "description": "Bad Request - Unable to update member details.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized - Missing or invalid authentication token.",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -16002,6 +15118,82 @@
         }
       }
     },
+    "listView": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "creator",
+        "name",
+        "purpose",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "creator": {
+          "$ref": "#/definitions/profileView"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "purpose": {
+          "$ref": "#/definitions/listPurpose"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 3000
+        },
+        "descriptionFacets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/richtextFacet"
+          }
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri"
+        },
+        "listItemCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "viewer": {
+          "$ref": "#/definitions/listViewerState"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "listItemView": {
+      "type": "object",
+      "required": [
+        "uri",
+        "subject"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "subject": {
+          "$ref": "#/definitions/profileView"
+        }
+      }
+    },
     "listViewBasic": {
       "type": "object",
       "required": [
@@ -16947,7 +16139,7 @@
       "type": "string",
       "description": "User shared the feed item"
     },
-    "like": {
+    "getLikesLike": {
       "type": "object",
       "required": [
         "indexedAt",
@@ -16968,7 +16160,7 @@
         }
       }
     },
-    "app.bsky.feed.like": {
+    "feedLike": {
       "type": "object",
       "required": [
         "subject",
@@ -17167,7 +16359,300 @@
         }
       }
     },
-    "ErrorResponse": {
+    "labelerView": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "creator",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "creator": {
+          "$ref": "#/definitions/profileView"
+        },
+        "likeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "viewer": {
+          "$ref": "#/definitions/labelerViewerState"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        }
+      }
+    },
+    "labelerViewDetailed": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "creator",
+        "policies",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "creator": {
+          "$ref": "#/definitions/profileView"
+        },
+        "policies": {
+          "$ref": "#/definitions/labelerPolicies"
+        },
+        "likeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "viewer": {
+          "$ref": "#/definitions/labelerViewerState"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        }
+      }
+    },
+    "labelerViewerState": {
+      "type": "object",
+      "properties": {
+        "like": {
+          "type": "string"
+        }
+      }
+    },
+    "labelerPolicies": {
+      "type": "object",
+      "required": [
+        "labelValues"
+      ],
+      "properties": {
+        "labelValues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/labelValue"
+          }
+        },
+        "labelValueDefinitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/labelValueDefinition"
+          }
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "required": [
+        "policies",
+        "createdAt"
+      ],
+      "properties": {
+        "policies": {
+          "$ref": "#/definitions/labelerPolicies"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/selfLabels"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "selfLabels": {
+      "type": "object",
+      "description": "Metadata tags on an atproto record, published by the author within the record.",
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/selfLabel"
+          },
+          "maxItems": 10
+        }
+      }
+    },
+    "selfLabel": {
+      "type": "object",
+      "description": "Metadata tag on an atproto record, published by the author within the record.",
+      "required": [
+        "val"
+      ],
+      "properties": {
+        "val": {
+          "type": "string",
+          "description": "The short string name of the value or type of this label.",
+          "maxLength": 128
+        }
+      }
+    },
+    "labelValueDefinition": {
+      "type": "object",
+      "description": "Declares a label value and its expected interpretations and behaviors.",
+      "required": [
+        "identifier",
+        "severity",
+        "blurs",
+        "locales"
+      ],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "The value of the label being defined. Must only include lowercase ascii and the '-' character ([a-z-]+).",
+          "maxLength": 100
+        },
+        "severity": {
+          "type": "string",
+          "description": "How should a client visually convey this label? inform, alert, warning.",
+          "enum": [
+            "inform",
+            "alert",
+            "none"
+          ]
+        },
+        "blurs": {
+          "type": "string",
+          "description": "What should this label hide in the UI, if applied? content, media, none.",
+          "enum": [
+            "content",
+            "media",
+            "none"
+          ]
+        },
+        "defaultSetting": {
+          "type": "string",
+          "description": "The default setting for this label.",
+          "default": "warn",
+          "enum": [
+            "ignore",
+            "warn",
+            "hide"
+          ]
+        },
+        "adultOnly": {
+          "type": "boolean",
+          "description": "Does the user need to have adult content enabled in order to configure this label?"
+        },
+        "locales": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/labelValueDefinitionStrings"
+          }
+        }
+      }
+    },
+    "labelValueDefinitionStrings": {
+      "type": "object",
+      "description": "Strings which describe the label in the UI, localized into a specific language.",
+      "required": [
+        "lang",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "lang": {
+          "type": "string",
+          "description": "The code of the language these strings are written in."
+        },
+        "name": {
+          "type": "string",
+          "description": "A short human-readable name for the label.",
+          "maxLength": 640
+        },
+        "description": {
+          "type": "string",
+          "description": "A longer description of what the label means and why it might be applied.",
+          "maxLength": 100000
+        }
+      }
+    },
+    "labelValue": {
+      "type": "string",
+      "enum": [
+        "!hide",
+        "!no-promote",
+        "!warn",
+        "!no-unauthenticated",
+        "dmca-violation",
+        "doxxing",
+        "porn",
+        "sexual",
+        "nudity",
+        "nsfl",
+        "gore"
+      ]
+    },
+    "jobStatus": {
+      "type": "object",
+      "required": [
+        "jobId",
+        "did",
+        "state"
+      ],
+      "properties": {
+        "jobId": {
+          "type": "string"
+        },
+        "did": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "description": "The state of the video processing job.",
+          "enum": [
+            "JOB_STATE_COMPLETED",
+            "JOB_STATE_FAILED"
+          ]
+        },
+        "progress": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "blob": {
+          "type": "string",
+          "format": "binary"
+        },
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "errorResponse": {
       "type": "object",
       "description": "Standard error response for failed requests.",
       "required": [
