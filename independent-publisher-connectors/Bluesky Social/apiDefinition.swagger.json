@@ -8719,131 +8719,65 @@
         }
       }
     },
-    "/xrpc/createRecord": {
-      "post": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Create Record",
-        "description": "Create a new record in the repository.\n",
-        "operationId": "CreateRecord",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+    "/xrpc/com.atproto.repo.getRecord": {
+      "get": {
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Get a single record from a repository",
+        "description": "Get a single record from a repository.",
+        "operationId": "GetRecord",
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "description": "The details of the record to create.",
+            "name": "repo",
+            "in": "query",
+            "description": "The handle or DID of the repo.",
             "required": true,
+            "type": "string",
+            "x-ms-summary": "The handle or DID of the repo"
+          },
+          {
+            "name": "collection",
+            "in": "query",
+            "description": "The NSID of the record collection.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The NSID of the record collection"
+          },
+          {
+            "name": "rkey",
+            "in": "query",
+            "description": "The Record Key.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "The Record Key"
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "description": "The CID of the version of the record.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "The CID of the version of the record"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "uri", "value" ],
               "properties": {
-                "collection": {
+                "uri": {
                   "type": "string",
-                  "description": "The name of the collection to create the record in.",
-                  "example": "posts"
+                  "description": "The URI of the record."
                 },
-                "record": {
+                "cid": {
+                  "type": "string",
+                  "description": "The CID of the record."
+                },
+                "value": {
                   "type": "object",
-                  "description": "The content of the record.",
-                  "example": {
-                    "content": "Hello World"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Record successfully created.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "recordId": {
-                  "type": "string",
-                  "description": "Unique identifier of the created record.",
-                  "example": "record123"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid record details.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/deleteRecord": {
-      "post": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Delete Record",
-        "description": "Delete a record from the repository.\n",
-        "operationId": "DeleteRecord",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "The identifier of the record to delete.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "collection": {
-                  "type": "string",
-                  "description": "The name of the collection containing the record.",
-                  "example": "posts"
-                },
-                "recordId": {
-                  "type": "string",
-                  "description": "Unique identifier of the record to delete.",
-                  "example": "record123"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Record successfully deleted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates that the record was successfully deleted.",
-                  "example": true
+                  "description": "The value of the record."
                 }
               }
             }
@@ -8863,41 +8797,208 @@
         }
       }
     },
-    "/xrpc/describeRepo": {
-      "get": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Describe Repository",
-        "description": "Retrieve metadata about the repository.\n",
-        "operationId": "DescribeRepo",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
+    "/xrpc/com.atproto.repo.createRecord": {
+      "post": {
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Create a single new repository record",
+        "description": "Create a single new repository record.",
+        "operationId": "CreateRecord",
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
+        "parameters": [
           {
-            "bearerAuth": []
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [ "repo", "collection", "record" ],
+              "properties": {
+                "repo": {
+                  "type": "string",
+                  "description": "The handle or DID of the repo (aka, current account)."
+                },
+                "collection": {
+                  "type": "string",
+                  "description": "The NSID of the record collection."
+                },
+                "rkey": {
+                  "type": "string",
+                  "description": "The Record Key.",
+                  "maxLength": 512
+                },
+                "validate": {
+                  "type": "boolean",
+                  "description": "True or false value set for skipping Lexicon schema validation."
+                },
+                "record": {
+                  "type": "object",
+                  "description": "The record object."
+                },
+                "swapCommit": {
+                  "type": "string",
+                  "description": "Compare and swap with the previous commit by CID."
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved repository metadata.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "uri", "cid" ],
               "properties": {
-                "collections": {
-                  "type": "array",
-                  "description": "List of collections in the repository.",
-                  "items": {
-                    "type": "string",
-                    "example": "posts"
-                  }
+                "uri": {
+                  "type": "string",
+                  "description": "The URI of the created record."
+                },
+                "cid": {
+                  "type": "string",
+                  "description": "The CID of the created record."
+                },
+                "commit": {
+                  "$ref": "#/definitions/commitMeta"
+                },
+                "validationStatus": {
+                  "type": "string",
+                  "enum": [ "valid", "unknown" ]
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repository details.",
+            "description": "Bad Request - Invalid record identifier.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.deleteRecord": {
+      "post": {
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Delete a repository record or ensure it doesnt exist",
+        "description": "Delete a repository record, or ensure it doesn't exist.",
+        "operationId": "DeleteRecord",
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [ "repo", "collection", "rkey" ],
+              "properties": {
+                "repo": {
+                  "type": "string",
+                  "description": "The handle or DID of the repo (aka, current account)."
+                },
+                "collection": {
+                  "type": "string",
+                  "description": "The NSID of the record collection."
+                },
+                "rkey": {
+                  "type": "string",
+                  "description": "The Record Key."
+                },
+                "swapRecord": {
+                  "type": "string",
+                  "description": "Compare and swap with the previous record by CID."
+                },
+                "swapCommit": {
+                  "type": "string",
+                  "description": "Compare and swap with the previous commit by CID."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commit": {
+                  "$ref": "#/definitions/commitMeta"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid record identifier.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.repo.describeRepo": {
+      "get": {
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Get information about an account and repository",
+        "description": "Get information about an account and repository, including the list of collections.",
+        "operationId": "DescribeRepo",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "repo",
+            "in": "query",
+            "description": "The handle or DID of the repo.",
+            "x-ms-summary": "The handle or DID of the repo.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [ "handle", "did", "didDoc", "collections", "handleIsCorrect" ],
+              "properties": {
+                "handle": {
+                  "type": "string"
+                },
+                "did": {
+                  "type": "string"
+                },
+                "didDoc": {
+                  "type": "object"
+                },
+                "collections": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "handleIsCorrect": {
+                  "type": "boolean",
+                  "description": "Indicates if handle is currently valid."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository details.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12111,168 +12212,171 @@
           }
         }
       }
-      },
-      "/xrpc/tools.ozone.moderation.getRecord": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Get Moderation Record",
-          "description": "Retrieve a moderation record for an entity or user.\n",
-          "operationId": "OzoneGetRecord",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
+    },
+    "/xrpc/tools.ozone.moderation.getRecord": {
+      "get": {
+        "tags": [ "tools.ozone.moderation" ],
+        "summary": "Get details about a record",
+        "description": "Get details about a record.",
+        "operationId": "GetRecordModeration",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "x-ms-summary": "URI of the record to retrieve",
+            "description": "The URI of the record.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cid",
+            "in": "query",
+            "x-ms-summary": "CID of the specific version",
+            "description": "The CID of the version of the record.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/recordViewDetail"
             }
-          ],
-          "parameters": [
-            {
-              "name": "recordId",
-              "in": "query",
-              "description": "Unique identifier of the moderation record.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Record ID"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved moderation record.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "record": {
-                    "type": "object",
-                    "description": "Details of the moderation record.",
-                    "properties": {
-                      "entityId": {
-                        "type": "string",
-                        "description": "The ID of the entity associated with the record.",
-                        "example": "entity123"
-                      },
-                      "actions": {
-                        "type": "array",
-                        "description": "List of actions associated with the moderation record.",
-                        "items": {
-                          "type": "string",
-                          "example": "userBan"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid record identifier.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
-      },
-      "/xrpc/tools.ozone.moderation.getRecords": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Get Moderation Records",
-          "description": "Retrieve moderation records based on provided filters.\n",
-          "operationId": "ModerationGetRecords",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRecords": {
+      "get": {
+        "tags": [ "tools.ozone.moderation" ],
+        "summary": "Get details about some records",
+        "description": "Get details about some records.",
+        "operationId": "GetRecordsModeration",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "uris",
+            "in": "query",
+            "x-ms-summary": "URIs of the records to retrieve",
+            "description": "A list of URIs for the records.",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
             }
-          ],
-          "parameters": [
-            {
-              "name": "query",
-              "in": "query",
-              "description": "Filter criteria for retrieving moderation records.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Filter Query"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved moderation records.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "records": {
-                    "type": "array",
-                    "description": "List of moderation records.",
-                    "items": {
-                      "type": "object"
-                    }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [ "records" ],
+              "properties": {
+                "records": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request - Invalid query parameters.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
-      },
-      "/xrpc/tools.ozone.moderation.getRepo": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Get Moderation Repository",
-          "description": "Retrieve details of a specific moderation repository.\n",
-          "operationId": "OzoneGetRepo",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRepo": {
+      "get": {
+        "tags": [ "tools.ozone.moderation" ],
+        "summary": "Get details about a repository",
+        "description": "Get details about a repository.",
+        "operationId": "GetRepoModeration",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "x-ms-summary": "DID of the repository",
+            "description": "The DID of the repository.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/repoViewDetail"
             }
-          ],
-          "parameters": [
-            {
-              "name": "repoId",
-              "in": "query",
-              "description": "Unique identifier of the repository.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Repository ID"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved moderation repository.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "repository": {
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.getRepos": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "Get Moderation Repositories",
+        "description": "Get a list of all moderation repositories.\n",
+        "operationId": "GetRepos",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved moderation repositories.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "type": "array",
+                  "description": "List of moderation repositories.",
+                  "items": {
                     "type": "object",
-                    "description": "Details of the moderation repository.",
                     "properties": {
                       "id": {
                         "type": "string",
@@ -12288,1554 +12392,1566 @@
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request - Invalid repository identifier.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
             }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.moderation.getRepos": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Get Moderation Repositories",
-          "description": "Get a list of all moderation repositories.\n",
-          "operationId": "GetRepos",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved moderation repositories.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "repositories": {
-                    "type": "array",
-                    "description": "List of moderation repositories.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "Unique identifier of the repository.",
-                          "example": "repo123"
-                        },
-                        "status": {
-                          "type": "string",
-                          "description": "The status of the repository.",
-                          "example": "active"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to retrieve repositories.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.moderation.queryEvents": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "List moderation events related to a subject",
-          "description": "List moderation events related to a subject.",
-          "operationId": "QueryEvents",
-          "x-ms-summary": "List moderation events related to a subject",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "types",
-              "in": "query",
-              "description": "Event type to filter by: defs#modEvent<name>",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Event type for filtering",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "createdBy",
-              "in": "query",
-              "description": "Created by user",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Created by"
-            },
-            {
-              "name": "sortDirection",
-              "in": "query",
-              "description": "Sort direction for the events.",
-              "required": false,
-              "type": "string",
-              "default": "desc",
-              "x-ms-summary": "Sort order"
-            },
-            {
-              "name": "createdAfter",
-              "in": "query",
-              "description": "Retrieve events created after a given timestamp.",
-              "required": false,
-              "type": "string",
-              "format": "date-time",
-              "x-ms-summary": "Events created after a timestamp"
-            },
-            {
-              "name": "createdBefore",
-              "in": "query",
-              "description": "Retrieve events created before a given timestamp.",
-              "required": false,
-              "type": "string",
-              "format": "date-time",
-              "x-ms-summary": "Events created before a timestamp"
-            },
-            {
-              "name": "subject",
-              "in": "query",
-              "description": "Subject",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Subject"
-            },
-            {
-              "name": "collections",
-              "in": "query",
-              "description": "Returns events where the subject belongs to the given collections.",
-              "required": false,
-              "type": "array",
-              "maxItems": 20,
-              "x-ms-summary": "Event collection",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "subjectType",
-              "in": "query",
-              "description": "Returns events where the subject is account or record.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Subject Type",
-              "enum": [
-                "account",
-                "record"
-              ]
-            },
-            {
-              "name": "includeAllUserRecords",
-              "in": "query",
-              "description": "Returns events on all record type from given 'collections' param.",
-              "required": false,
-              "type": "boolean",
-              "x-ms-summary": "Returns events of all types"
-            },
-            {
-              "name": "limit",
-              "in": "query",
-              "description": "Limit",
-              "required": false,
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "default": 50,
-              "x-ms-summary": "Limit"
-            },
-            {
-              "name": "hasComment",
-              "in": "query",
-              "description": "If true, only events with comments are returned.",
-              "required": false,
-              "type": "boolean",
-              "x-ms-summary": "Has comment, yes/no"
-            },
-            {
-              "name": "comment",
-              "in": "query",
-              "description": "Returns events with comments containing the keyword.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Comment"
-            },
-            {
-              "name": "addedLabels",
-              "in": "query",
-              "description": "Returns events where all of these labels were added are returned.",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Addedl labels",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "removedLabels",
-              "in": "query",
-              "description": "Returns events where labels were removed.",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Events with removed labels",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "addedTags",
-              "in": "query",
-              "description": "Returns events where labels were removed.",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Removed labels",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "removedTags",
-              "in": "query",
-              "description": "Returns events where tags were removed.",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Removed tags",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "reportTypes",
-              "in": "query",
-              "description": "Report type for moderation event",
-              "required": false,
-              "type": "array",
-              "x-ms-summary": "Report types",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "cursor",
-              "in": "query",
-              "description": "Pagination cursor",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Pagination cursor"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "events"
-                ],
-                "properties": {
-                  "cursor": {
-                    "type": "string"
-                  },
-                  "events": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/definitions/modEventView"
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "error",
-                  "message"
-                ],
-                "properties": {
-                  "error": {
-                    "type": "string",
-                    "enum": [
-                      "InvalidRequest",
-                      "ExpiredToken",
-                      "InvalidToken"
-                    ]
-                  },
-                  "message": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "error",
-                  "message"
-                ],
-                "properties": {
-                  "error": {
-                    "type": "string",
-                    "enum": [
-                      "AuthMissing"
-                    ]
-                  },
-                  "message": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.moderation.queryStatuses": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Query Moderation Statuses",
-          "description": "Retrieve the statuses of moderated entities.\n",
-          "operationId": "QueryStatuses",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "query",
-              "in": "query",
-              "description": "Query string for filtering moderation statuses.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Status Query"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved moderation statuses.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "statuses": {
-                    "type": "array",
-                    "description": "List of moderation statuses.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "entityId": {
-                          "type": "string",
-                          "description": "Unique identifier of the moderated entity.",
-                          "example": "entity123"
-                        },
-                        "status": {
-                          "type": "string",
-                          "description": "The status of the entity.",
-                          "example": "banned"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid query parameters.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.moderation.searchRepos": {
-        "get": {
-          "tags": [
-            "tools.ozone.moderation"
-          ],
-          "summary": "Find repositories based on a search term",
-          "description": "Find repositories based on a search term.",
-          "operationId": "SearchRepos",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "q",
-              "in": "query",
-              "description": "The search query term.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Search query term"
-            },
-            {
-              "name": "limit",
-              "in": "query",
-              "description": "The maximum number of repositories to return.",
-              "required": false,
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "default": 50,
-              "x-ms-summary": "Limit"
-            },
-            {
-              "name": "cursor",
-              "in": "query",
-              "description": "A cursor for pagination.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Pagination cursor"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "repos"
-                ],
-                "properties": {
-                  "cursor": {
-                    "type": "string",
-                    "description": "Cursor for pagination."
-                  },
-                  "repos": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/definitions/repoView"
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.server.getConfig": {
-        "get": {
-          "tags": [
-            "tools.ozone.server"
-          ],
-          "summary": "Get Server Configuration",
-          "description": "Get details about ozone's server configuration.",
-          "operationId": "serverGetConfig",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Server configuration retrieved successfully.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "appview": {
-                    "$ref": "#/definitions/serviceConfig"
-                  },
-                  "pds": {
-                    "$ref": "#/definitions/serviceConfig"
-                  },
-                  "blobDivert": {
-                    "$ref": "#/definitions/serviceConfig"
-                  },
-                  "chat": {
-                    "$ref": "#/definitions/serviceConfig"
-                  },
-                  "viewer": {
-                    "$ref": "#/definitions/viewerConfig"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid input parameters.",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "error",
-                  "message"
-                ],
-                "properties": {
-                  "error": {
-                    "type": "string",
-                    "enum": [
-                      "InvalidRequest",
-                      "ExpiredToken",
-                      "InvalidToken"
-                    ],
-                    "description": "Error code indicating the type of failure."
-                  },
-                  "message": {
-                    "type": "string",
-                    "description": "Detailed error message."
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "type": "object",
-                "required": [
-                  "error",
-                  "message"
-                ],
-                "properties": {
-                  "error": {
-                    "type": "string",
-                    "enum": [
-                      "AuthMissing"
-                    ],
-                    "description": "Error code indicating missing authentication."
-                  },
-                  "message": {
-                    "type": "string",
-                    "description": "Detailed error message."
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.addValues": {
-        "post": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Add Values to Set",
-          "description": "Add values to an existing set in the system.\n",
-          "operationId": "AddValues",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the values to add.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "setId": {
-                    "type": "string",
-                    "description": "Unique identifier of the set.",
-                    "example": "set123"
-                  },
-                  "values": {
-                    "type": "array",
-                    "description": "Values to add to the set.",
-                    "items": {
-                      "type": "string",
-                      "example": "value1"
-                    }
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Values successfully added to the set.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to add values.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.deleteSet": {
-        "post": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Delete Set",
-          "description": "Delete an existing set by its unique identifier.\n",
-          "operationId": "DeleteSet",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the set to delete.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "setId": {
-                    "type": "string",
-                    "description": "Unique identifier of the set.",
-                    "example": "set123"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Set successfully deleted.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to delete the set.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.deleteValues": {
-        "post": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Delete Values from Set",
-          "description": "Remove specific values from a set by its unique identifier.\n",
-          "operationId": "DeleteValues",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the values to delete.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "setId": {
-                    "type": "string",
-                    "description": "Unique identifier of the set.",
-                    "example": "set123"
-                  },
-                  "values": {
-                    "type": "array",
-                    "description": "Values to remove from the set.",
-                    "items": {
-                      "type": "string",
-                      "example": "value1"
-                    }
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Values successfully removed from the set.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to remove values.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.getValues": {
-        "get": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Get Values from Set",
-          "description": "Retrieve the values stored in a specific set.\n",
-          "operationId": "GetValues",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "setId",
-              "in": "query",
-              "description": "Unique identifier of the set.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Set ID"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved set values.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "values": {
-                    "type": "array",
-                    "description": "List of values in the set.",
-                    "items": {
-                      "type": "string",
-                      "example": "value1"
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid set ID.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.querySets": {
-        "get": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Query Sets",
-          "description": "Get a list of sets matching query criteria.\n",
-          "operationId": "QuerySets",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "query",
-              "in": "query",
-              "description": "Query criteria for filtering sets.",
-              "required": false,
-              "type": "string",
-              "x-ms-summary": "Set Query"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved matching sets.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "sets": {
-                    "type": "array",
-                    "description": "List of matching sets.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "setId": {
-                          "type": "string",
-                          "description": "Unique identifier of the set.",
-                          "example": "set123"
-                        },
-                        "name": {
-                          "type": "string",
-                          "description": "The name of the set.",
-                          "example": "MySet"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid query parameters.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.set.upsertSet": {
-        "post": {
-          "tags": [
-            "tools.ozone.set"
-          ],
-          "summary": "Upsert Set",
-          "description": "Create or update a set with specified values.\n",
-          "operationId": "UpsertSet",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the set to create or update.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "setId": {
-                    "type": "string",
-                    "description": "Unique identifier of the set.",
-                    "example": "set123"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the set.",
-                    "example": "MySet"
-                  },
-                  "values": {
-                    "type": "array",
-                    "description": "The values to include in the set.",
-                    "items": {
-                      "type": "string",
-                      "example": "value1"
-                    }
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Set successfully created or updated.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to upsert set.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.signature.findCorrelation": {
-        "get": {
-          "tags": [
-            "tools.ozone.signature"
-          ],
-          "summary": "Find Correlation",
-          "description": "Search for correlations btw. entities based on their signatures.\n",
-          "operationId": "FindCorrelation",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "signature",
-              "in": "query",
-              "description": "The signature to search for correlations.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Signature"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved correlations.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "correlations": {
-                    "type": "array",
-                    "description": "List of correlations found.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "entityId": {
-                          "type": "string",
-                          "description": "The ID of the correlated entity.",
-                          "example": "entity123"
-                        },
-                        "similarity": {
-                          "type": "number",
-                          "description": "The similarity score.",
-                          "example": 0.85
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid signature.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.signature.findRelatedAccounts": {
-        "get": {
-          "tags": [
-            "tools.ozone.signature"
-          ],
-          "summary": "Find Related Accounts",
-          "description": "Retrieve accounts related to the specified signature.\n",
-          "operationId": "FindRelatedAccounts",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "signature",
-              "in": "query",
-              "description": "The signature to search for related accounts.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Signature"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved related accounts.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "accounts": {
-                    "type": "array",
-                    "description": "List of related accounts.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "accountId": {
-                          "type": "string",
-                          "description": "Unique identifier of the related account.",
-                          "example": "account123"
-                        },
-                        "relationship": {
-                          "type": "string",
-                          "description": "The type of relationship.",
-                          "example": "associated"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid signature.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.signature.searchAccounts": {
-        "get": {
-          "tags": [
-            "tools.ozone.signature"
-          ],
-          "summary": "Search Accounts by Signature",
-          "description": "Search for accounts associated with a specific signature.\n",
-          "operationId": "OzoneSearchAccounts",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "query",
-              "in": "query",
-              "description": "The signature or criteria to search for accounts.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Search Query"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved matching accounts.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "accounts": {
-                    "type": "array",
-                    "description": "List of accounts matching the query.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "accountId": {
-                          "type": "string",
-                          "description": "Unique identifier of the account.",
-                          "example": "account123"
-                        },
-                        "name": {
-                          "type": "string",
-                          "description": "The name of the account.",
-                          "example": "John Doe"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid search query.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.team.addMember": {
-        "post": {
-          "tags": [
-            "tools.ozone.team"
-          ],
-          "summary": "Add Team Member",
-          "description": "Add a new member to a team.\n",
-          "operationId": "AddMember",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the member to add.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "teamId": {
-                    "type": "string",
-                    "description": "Unique identifier of the team.",
-                    "example": "team123"
-                  },
-                  "memberId": {
-                    "type": "string",
-                    "description": "Unique identifier of the member.",
-                    "example": "member456"
-                  },
-                  "role": {
-                    "type": "string",
-                    "description": "The role of the new member.",
-                    "example": "Developer"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Member successfully added to the team.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to add member.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.team.deleteMember": {
-        "post": {
-          "tags": [
-            "tools.ozone.team"
-          ],
-          "summary": "Delete Team Member",
-          "description": "Remove a member from a team.\n",
-          "operationId": "DeleteMember",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the member to remove.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "teamId": {
-                    "type": "string",
-                    "description": "Unique identifier of the team.",
-                    "example": "team123"
-                  },
-                  "memberId": {
-                    "type": "string",
-                    "description": "Unique identifier of the member.",
-                    "example": "member456"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Member successfully removed from the team.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to remove member.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.team.listMembers": {
-        "get": {
-          "tags": [
-            "tools.ozone.team"
-          ],
-          "summary": "List Team Members",
-          "description": "Get a list of members in a specific team.\n",
-          "operationId": "ListMembers",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "teamId",
-              "in": "query",
-              "description": "Unique identifier of the team.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Team ID"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved team members.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "members": {
-                    "type": "array",
-                    "description": "List of team members.",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "memberId": {
-                          "type": "string",
-                          "description": "Unique identifier of the member.",
-                          "example": "member456"
-                        },
-                        "name": {
-                          "type": "string",
-                          "description": "The name of the team member.",
-                          "example": "Jane Doe"
-                        },
-                        "role": {
-                          "type": "string",
-                          "description": "The role of the team member.",
-                          "example": "Developer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Invalid team ID.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/tools.ozone.team.updateMember": {
-        "post": {
-          "tags": [
-            "tools.ozone.team"
-          ],
-          "summary": "Update Team Member",
-          "description": "Update details of a team member.\n",
-          "operationId": "UpdateMember",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Details of the member to update.",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "teamId": {
-                    "type": "string",
-                    "description": "Unique identifier of the team.",
-                    "example": "team123"
-                  },
-                  "memberId": {
-                    "type": "string",
-                    "description": "Unique identifier of the member.",
-                    "example": "member456"
-                  },
-                  "role": {
-                    "type": "string",
-                    "description": "The updated role of the team member.",
-                    "example": "Team Lead"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Member details successfully updated.",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "success": {
-                    "type": "boolean",
-                    "description": "Indicates the operation was successful.",
-                    "example": true
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request - Unable to update member details.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            },
-            "401": {
-              "description": "Unauthorized - Missing or invalid authentication token.",
-              "schema": {
-                "$ref": "#/definitions/errorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/xrpc/embedRecordView": {
-        "get": {
-          "tags": [
-            "embed"
-          ],
-          "summary": "Retrieve record view",
-          "x-ms-summary": "Fetch dynamic schema for the record view.",
-          "description": "Returns dynamic schema information for the record view.",
-          "operationId": "embedRecordView",
-          "produces": [
-            "application/json"
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "recordId",
-              "in": "query",
-              "description": "Identifier for the record.",
-              "required": true,
-              "type": "string",
-              "x-ms-summary": "Record Id"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful operation",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "record": {
-                    "type": "object",
-                    "description": "Details of the record view."
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "401": {
-              "description": "Unauthorized"
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
       }
     },
+    "/xrpc/tools.ozone.moderation.queryEvents": {
+      "get": {
+        "tags": [
+          "tools.ozone.moderation"
+        ],
+        "summary": "List moderation events related to a subject",
+        "description": "List moderation events related to a subject.",
+        "operationId": "QueryEvents",
+        "x-ms-summary": "List moderation events related to a subject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "types",
+            "in": "query",
+            "description": "Event type to filter by: defs#modEvent<name>",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Event type for filtering",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "description": "Created by user",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Created by"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction for the events.",
+            "required": false,
+            "type": "string",
+            "default": "desc",
+            "x-ms-summary": "Sort order"
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "Retrieve events created after a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Events created after a timestamp"
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "Retrieve events created before a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-ms-summary": "Events created before a timestamp"
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "description": "Subject",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Subject"
+          },
+          {
+            "name": "collections",
+            "in": "query",
+            "description": "Returns events where the subject belongs to the given collections.",
+            "required": false,
+            "type": "array",
+            "maxItems": 20,
+            "x-ms-summary": "Event collection",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectType",
+            "in": "query",
+            "description": "Returns events where the subject is account or record.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Subject Type",
+            "enum": [
+              "account",
+              "record"
+            ]
+          },
+          {
+            "name": "includeAllUserRecords",
+            "in": "query",
+            "description": "Returns events on all record type from given 'collections' param.",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Returns events of all types"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "x-ms-summary": "Limit"
+          },
+          {
+            "name": "hasComment",
+            "in": "query",
+            "description": "If true, only events with comments are returned.",
+            "required": false,
+            "type": "boolean",
+            "x-ms-summary": "Has comment, yes/no"
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "description": "Returns events with comments containing the keyword.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Comment"
+          },
+          {
+            "name": "addedLabels",
+            "in": "query",
+            "description": "Returns events where all of these labels were added are returned.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Addedl labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "removedLabels",
+            "in": "query",
+            "description": "Returns events where labels were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Events with removed labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addedTags",
+            "in": "query",
+            "description": "Returns events where labels were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Removed labels",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "removedTags",
+            "in": "query",
+            "description": "Returns events where tags were removed.",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Removed tags",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reportTypes",
+            "in": "query",
+            "description": "Report type for moderation event",
+            "required": false,
+            "type": "array",
+            "x-ms-summary": "Report types",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "Pagination cursor",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Pagination cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "events"
+              ],
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/modEventView"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.queryStatuses": {
+      "get": {
+        "tags": [ "tools.ozone.moderation" ],
+        "summary": "View moderation statuses of subjects",
+        "description": "View moderation statuses of subjects (record or repo).",
+        "operationId": "QueryStatusesModeration",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "includeAllUserRecords",
+            "in": "query",
+            "x-ms-summary": "Include all user records",
+            "description": "Returns subjects, or subjects from 'collections' param, belonging to the account specified.",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "x-ms-summary": "Subject URI",
+            "description": "The subject to get the status for.",
+            "required": false,
+            "type": "string",
+            "format": "uri"
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "x-ms-summary": "Comment keyword",
+            "description": "Search subjects by keyword from comments.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "reportedAfter",
+            "in": "query",
+            "x-ms-summary": "Reported after timestamp",
+            "description": "Search subjects reported after a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "reportedBefore",
+            "in": "query",
+            "x-ms-summary": "Reported before timestamp",
+            "description": "Search subjects reported before a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "reviewedAfter",
+            "in": "query",
+            "x-ms-summary": "Reviewed after timestamp",
+            "description": "Search subjects reviewed after a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "reviewedBefore",
+            "in": "query",
+            "x-ms-summary": "Reviewed before timestamp",
+            "description": "Search subjects reviewed before a given timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "hostingDeletedAfter",
+            "in": "query",
+            "x-ms-summary": "Hosting deleted after timestamp",
+            "description": "Search subjects where the associated record/account was deleted after timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "hostingDeletedBefore",
+            "in": "query",
+            "x-ms-summary": "Hosting deleted before timestamp",
+            "description": "Search subjects where the associated record/account was deleted before timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "hostingUpdatedAfter",
+            "in": "query",
+            "x-ms-summary": "Hosting updated after timestamp",
+            "description": "Search subjects where the associated record/account was updated after timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "hostingUpdatedBefore",
+            "in": "query",
+            "x-ms-summary": "Hosting updated before timestamp",
+            "description": "Search subjects where the associated record/account was updated before timestamp.",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "hostingStatuses",
+            "in": "query",
+            "x-ms-summary": "Hosting statuses",
+            "description": "Search subjects by the status of the associated record/account.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeMuted",
+            "in": "query",
+            "x-ms-summary": "Include muted subjects",
+            "description": "By default, we don't include muted subjects in the results.",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "reviewState",
+            "in": "query",
+            "x-ms-summary": "Review state",
+            "description": "Specify when fetching subjects in a certain state.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Limit results",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [ "subjectStatuses" ],
+              "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                "subjectStatuses": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/subjectStatusView"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.moderation.searchRepos": {
+      "get": {
+        "tags": [ "tools.ozone.moderation" ],
+        "summary": "Find repositories based on a search term",
+        "description": "Find repositories based on a search term.",
+        "operationId": "SearchReposModeration",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "x-ms-summary": "Search term",
+            "description": "The search term to find repositories.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Limit results",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for paginating results.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [ "repos" ],
+              "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                "repos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/repoView"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.server.getConfig": {
+      "get": {
+        "tags": [
+          "tools.ozone.server"
+        ],
+        "summary": "Get Server Configuration",
+        "description": "Get details about ozone's server configuration.",
+        "operationId": "serverGetConfig",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server configuration retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appview": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "pds": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "blobDivert": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "chat": {
+                  "$ref": "#/definitions/serviceConfig"
+                },
+                "viewer": {
+                  "$ref": "#/definitions/viewerConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input parameters.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "InvalidRequest",
+                    "ExpiredToken",
+                    "InvalidToken"
+                  ],
+                  "description": "Error code indicating the type of failure."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "type": "object",
+              "required": [
+                "error",
+                "message"
+              ],
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "AuthMissing"
+                  ],
+                  "description": "Error code indicating missing authentication."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Detailed error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.addValues": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Add Values to Set",
+        "description": "Add values to an existing set in the system.\n",
+        "operationId": "AddValues",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the values to add.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "Unique identifier of the set.",
+                  "example": "set123"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "Values to add to the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Values successfully added to the set.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to add values.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.deleteSet": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Delete Set",
+        "description": "Delete an existing set by its unique identifier.\n",
+        "operationId": "DeleteSet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the set to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "Unique identifier of the set.",
+                  "example": "set123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to delete the set.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.deleteValues": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Delete Values from Set",
+        "description": "Remove specific values from a set by its unique identifier.\n",
+        "operationId": "DeleteValues",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the values to delete.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "Unique identifier of the set.",
+                  "example": "set123"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "Values to remove from the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Values successfully removed from the set.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to remove values.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.getValues": {
+      "get": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Get Values from Set",
+        "description": "Retrieve the values stored in a specific set.\n",
+        "operationId": "GetValues",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "setId",
+            "in": "query",
+            "description": "Unique identifier of the set.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Set ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved set values.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "values": {
+                  "type": "array",
+                  "description": "List of values in the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid set ID.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.querySets": {
+      "get": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Query Sets",
+        "description": "Get a list of sets matching query criteria.\n",
+        "operationId": "QuerySets",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query criteria for filtering sets.",
+            "required": false,
+            "type": "string",
+            "x-ms-summary": "Set Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved matching sets.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sets": {
+                  "type": "array",
+                  "description": "List of matching sets.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "setId": {
+                        "type": "string",
+                        "description": "Unique identifier of the set.",
+                        "example": "set123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the set.",
+                        "example": "MySet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid query parameters.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.set.upsertSet": {
+      "post": {
+        "tags": [
+          "tools.ozone.set"
+        ],
+        "summary": "Upsert Set",
+        "description": "Create or update a set with specified values.\n",
+        "operationId": "UpsertSet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the set to create or update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "setId": {
+                  "type": "string",
+                  "description": "Unique identifier of the set.",
+                  "example": "set123"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the set.",
+                  "example": "MySet"
+                },
+                "values": {
+                  "type": "array",
+                  "description": "The values to include in the set.",
+                  "items": {
+                    "type": "string",
+                    "example": "value1"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set successfully created or updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to upsert set.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.findCorrelation": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Find Correlation",
+        "description": "Search for correlations btw. entities based on their signatures.\n",
+        "operationId": "FindCorrelation",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "The signature to search for correlations.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved correlations.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "correlations": {
+                  "type": "array",
+                  "description": "List of correlations found.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "entityId": {
+                        "type": "string",
+                        "description": "The ID of the correlated entity.",
+                        "example": "entity123"
+                      },
+                      "similarity": {
+                        "type": "number",
+                        "description": "The similarity score.",
+                        "example": 0.85
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid signature.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.findRelatedAccounts": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Find Related Accounts",
+        "description": "Retrieve accounts related to the specified signature.\n",
+        "operationId": "FindRelatedAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "signature",
+            "in": "query",
+            "description": "The signature to search for related accounts.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Signature"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved related accounts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "List of related accounts.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "Unique identifier of the related account.",
+                        "example": "account123"
+                      },
+                      "relationship": {
+                        "type": "string",
+                        "description": "The type of relationship.",
+                        "example": "associated"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid signature.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.signature.searchAccounts": {
+      "get": {
+        "tags": [
+          "tools.ozone.signature"
+        ],
+        "summary": "Search Accounts by Signature",
+        "description": "Search for accounts associated with a specific signature.\n",
+        "operationId": "OzoneSearchAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The signature or criteria to search for accounts.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Search Query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved matching accounts.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "type": "array",
+                  "description": "List of accounts matching the query.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "accountId": {
+                        "type": "string",
+                        "description": "Unique identifier of the account.",
+                        "example": "account123"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the account.",
+                        "example": "John Doe"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid search query.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.addMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Add Team Member",
+        "description": "Add a new member to a team.\n",
+        "operationId": "AddMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to add.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "Unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "Unique identifier of the member.",
+                  "example": "member456"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The role of the new member.",
+                  "example": "Developer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member successfully added to the team.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to add member.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.deleteMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Delete Team Member",
+        "description": "Remove a member from a team.\n",
+        "operationId": "DeleteMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to remove.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "Unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "Unique identifier of the member.",
+                  "example": "member456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member successfully removed from the team.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to remove member.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.listMembers": {
+      "get": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "List Team Members",
+        "description": "Get a list of members in a specific team.\n",
+        "operationId": "ListMembers",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "description": "Unique identifier of the team.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved team members.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "members": {
+                  "type": "array",
+                  "description": "List of team members.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "memberId": {
+                        "type": "string",
+                        "description": "Unique identifier of the member.",
+                        "example": "member456"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the team member.",
+                        "example": "Jane Doe"
+                      },
+                      "role": {
+                        "type": "string",
+                        "description": "The role of the team member.",
+                        "example": "Developer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid team ID.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.updateMember": {
+      "post": {
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Update Team Member",
+        "description": "Update details of a team member.\n",
+        "operationId": "UpdateMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of the member to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "string",
+                  "description": "Unique identifier of the team.",
+                  "example": "team123"
+                },
+                "memberId": {
+                  "type": "string",
+                  "description": "Unique identifier of the member.",
+                  "example": "member456"
+                },
+                "role": {
+                  "type": "string",
+                  "description": "The updated role of the team member.",
+                  "example": "Team Lead"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member details successfully updated.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "Indicates the operation was successful.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to update member details.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Missing or invalid authentication token.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/embedRecordView": {
+      "get": {
+        "tags": [
+          "embed"
+        ],
+        "summary": "Retrieve record view",
+        "x-ms-summary": "Fetch dynamic schema for the record view.",
+        "description": "Returns dynamic schema information for the record view.",
+        "operationId": "embedRecordView",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recordId",
+            "in": "query",
+            "description": "Identifier for the record.",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Record Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "record": {
+                  "type": "object",
+                  "description": "Details of the record view."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
   "definitions": {
     "preferences": {
       "type": "array",
@@ -17517,6 +17633,124 @@
         }
       }
     },
+    "recordViewDetail": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "value",
+        "blobs",
+        "indexedAt",
+        "moderation",
+        "repo"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "value": {},
+        "blobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/blobView"
+          }
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "moderation": {
+          "$ref": "#/definitions/moderationDetail"
+        },
+        "repo": {
+          "$ref": "#/definitions/repoView"
+        }
+      }
+    },
+    "moderationDetail": {
+      "type": "object",
+      "properties": {
+        "subjectStatus": {
+          "$ref": "#/definitions/subjectStatusView"
+        }
+      }
+    },
+    "repoViewDetail": {
+      "type": "object",
+      "required": [
+        "did",
+        "handle",
+        "relatedRecords",
+        "indexedAt",
+        "moderation"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "relatedRecords": {
+          "type": "array",
+          "items": {}
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "moderation": {
+          "$ref": "#/definitions/moderationDetail"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "invitedBy": {
+          "$ref": "#/definitions/inviteCode"
+        },
+        "invites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inviteCode"
+          }
+        },
+        "invitesDisabled": {
+          "type": "boolean"
+        },
+        "inviteNote": {
+          "type": "string"
+        },
+        "emailConfirmedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deactivatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "threatSignatures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/threatSignature"
+          }
+        }
+      }
+    },
     "errorResponse": {
       "type": "object",
       "description": "Standard error response for failed requests.",
@@ -17553,4 +17787,4 @@
       }
     }
   }
-  }
+}
