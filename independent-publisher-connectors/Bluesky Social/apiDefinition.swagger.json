@@ -52,14 +52,14 @@
     "application/json"
   ],
   "paths": {
-    "/xrpc/app.bsky.actor.getpreferences": {
+    "/xrpc/app.bsky.actor.getPreferences": {
       "get": {
         "tags": [
           "app.bsky.actor"
         ],
-        "summary": "Getpreferences",
+        "summary": "Get preferences",
         "description": "Get private preferences attached to the current account.",
-        "operationId": "Getpreferences",
+        "operationId": "GetPreferences",
         "security": [
           {
             "bearerAuth": []
@@ -90,7 +90,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -145,13 +145,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -208,7 +208,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -233,7 +233,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -317,13 +317,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -398,13 +398,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -577,13 +577,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -753,13 +753,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -1003,7 +1003,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1109,13 +1109,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -1177,7 +1177,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1202,7 +1202,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1277,7 +1277,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1302,7 +1302,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1395,7 +1395,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1419,7 +1419,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1525,7 +1525,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1548,7 +1548,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1644,7 +1644,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1670,7 +1670,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -1871,7 +1871,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -1897,7 +1897,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -2012,7 +2012,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -2037,7 +2037,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -2152,7 +2152,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -2177,7 +2177,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -2265,13 +2265,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -2349,13 +2349,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -2516,7 +2516,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -2540,7 +2540,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -2620,7 +2620,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -2643,7 +2643,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -2732,13 +2732,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -2831,13 +2831,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -2928,13 +2928,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3020,13 +3020,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3104,13 +3104,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3176,13 +3176,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3248,13 +3248,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3328,13 +3328,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3400,13 +3400,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3480,13 +3480,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3541,13 +3541,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3607,13 +3607,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3669,13 +3669,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3732,13 +3732,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3795,13 +3795,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3858,13 +3858,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3921,13 +3921,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -3984,13 +3984,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4047,13 +4047,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4115,13 +4115,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4277,13 +4277,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4344,13 +4344,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4668,13 +4668,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4712,7 +4712,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -4737,7 +4737,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -4814,13 +4814,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -4852,7 +4852,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -4877,7 +4877,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -4955,7 +4955,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -4978,7 +4978,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5044,7 +5044,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5067,7 +5067,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5137,7 +5137,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5160,7 +5160,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5249,7 +5249,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5274,7 +5274,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5375,7 +5375,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5398,7 +5398,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5483,7 +5483,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5508,7 +5508,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5624,7 +5624,7 @@
             "x-ms-summary": "Successful response containing a list of conversations."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "properties": {
@@ -5646,7 +5646,7 @@
             "x-ms-summary": "Invalid request parameters."
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "properties": {
@@ -5724,7 +5724,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5747,7 +5747,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5822,7 +5822,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5845,7 +5845,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -5983,13 +5983,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -6202,7 +6202,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6225,7 +6225,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6304,7 +6304,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6327,7 +6327,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6410,7 +6410,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6435,7 +6435,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6511,13 +6511,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -6597,7 +6597,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6622,7 +6622,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6714,7 +6714,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6737,7 +6737,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6827,7 +6827,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6852,7 +6852,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -6935,7 +6935,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -6958,7 +6958,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7042,7 +7042,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -7115,7 +7115,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7138,7 +7138,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7196,7 +7196,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7219,7 +7219,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7291,7 +7291,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7314,7 +7314,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7523,7 +7523,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7548,7 +7548,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7654,7 +7654,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7679,7 +7679,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7768,7 +7768,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -7793,7 +7793,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -7888,7 +7888,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -7966,7 +7966,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8068,7 +8068,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8123,7 +8123,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8164,7 +8164,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8218,7 +8218,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8304,7 +8304,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8370,7 +8370,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8440,7 +8440,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8657,7 +8657,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8724,7 +8724,7 @@
         "tags": [ "com.atproto.repo" ],
         "summary": "Get a single record from a repository",
         "description": "Get a single record from a repository.",
-        "operationId": "GetRecord",
+        "operationId": "RepoGetRecord",
         "produces": [ "application/json" ],
         "parameters": [
           {
@@ -8789,7 +8789,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8875,7 +8875,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8943,7 +8943,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9004,7 +9004,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9012,67 +9012,89 @@
         }
       }
     },
-    "/xrpc/importRepo": {
+    "/xrpc/com.atproto.repo.importRepo": {
       "post": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Import Repository",
-        "description": "Import an existing repository into the current system.\n",
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Import a repo in the form of a CAR file",
+        "description": "Import a repo in the form of a CAR file. Content-Length header required.",
         "operationId": "ImportRepo",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "consumes": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the repository to import.",
+            "name": "body",
+            "x-ms-summary": "CAR file details",
+            "description": "The CAR file to import.",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "repoUrl": {
-                  "type": "string",
-                  "description": "The URL of the repository to import.",
-                  "example": "https://repo.example.com"
-                },
-                "credentials": {
-                  "type": "object",
-                  "description": "Credentials for accessing the repository.",
-                  "properties": {
-                    "username": {
-                      "type": "string",
-                      "description": "Username for repository access."
-                    },
-                    "password": {
-                      "type": "string",
-                      "description": "Password for repository access."
-                    }
-                  }
-                }
-              }
+              "type": "string",
+              "description": "Base64-encoded CAR file."
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Repository successfully imported.",
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request - Invalid repository details.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/listMissingBlobs": {
+      "get": {
+        "tags": [ "com.atproto.repo" ],
+        "summary": "List missing blobs for the requesting account",
+        "description": "Returns a list of missing blobs for the requesting account.",
+        "operationId": "ListMissingBlobs",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Limit results",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 500
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for paginating results.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "blobs" ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful import operation.",
-                  "example": true
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                "blobs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/listMissingBlobs.recordBlob"
+                  }
                 }
               }
             }
@@ -9084,7 +9106,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9092,130 +9114,86 @@
         }
       }
     },
-    "/xrpc/listMissingBlobs": {
+    "/xrpc/com.atproto.repo.listRecords": {
       "get": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "List Missing Blobs",
-        "description": "Get a list of blobs missing from the repository.\n",
-        "operationId": "ListMissingBlobs",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "repoId",
-            "in": "query",
-            "description": "Unique identifier of the repository to check.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Repository ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the list of missing blobs.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "missingBlobs": {
-                  "type": "array",
-                  "description": "A list of missing blob identifiers.",
-                  "items": {
-                    "type": "string",
-                    "example": "blob123"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid repository identifier.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/listRecords": {
-      "get": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "List Records",
-        "description": "Retrieve list records from a collection in a repository.\n",
+        "tags": [ "com.atproto.repo" ],
+        "summary": "List records in a repository",
+        "description": "List a range of records in a repository, matching a specific collection.",
         "operationId": "ListRecords",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
+          {
+            "name": "repo",
+            "in": "query",
+            "x-ms-summary": "Repository identifier",
+            "description": "The handle or DID of the repo.",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "collection",
             "in": "query",
-            "description": "The name of the collection to list records from.",
+            "x-ms-summary": "Collection type",
+            "description": "The NSID of the record type.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Collection Name"
+            "type": "string"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of records to retrieve.",
+            "x-ms-summary": "Limit results",
+            "description": "The number of records to return.",
             "required": false,
             "type": "integer",
-            "x-ms-summary": "Result Limit"
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           },
           {
             "name": "cursor",
             "in": "query",
-            "description": "A pagination cursor for navigating the records.",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for paginating results.",
             "required": false,
-            "type": "string",
-            "x-ms-summary": "Pagination Cursor"
+            "type": "string"
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "x-ms-summary": "Reverse order",
+            "description": "Flag to reverse the order of the returned records.",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the list of records.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "records" ],
               "properties": {
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
                 "records": {
                   "type": "array",
-                  "description": "A list of records from the collection.",
                   "items": {
-                    "type": "object"
+                    "$ref": "#/definitions/listRecords.record"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid collection name or parameters.",
+            "description": "Bad Request - Invalid repository details.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9223,50 +9201,53 @@
         }
       }
     },
-    "/xrpc/putRecord": {
+    "/xrpc/com.atproto.repo.putRecord": {
       "post": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Update or Replace Record",
-        "description": "Update or replace an existing record in the repository.\n",
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Write a repository record",
+        "description": "Write a repository record, creating or updating it as needed.",
         "operationId": "PutRecord",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the record to update or replace.",
+            "name": "body",
+            "x-ms-summary": "Record details",
+            "description": "Details of the record to create or update.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [ "repo", "collection", "rkey", "record" ],
               "properties": {
+                "repo": {
+                  "type": "string",
+                  "description": "The handle or DID of the repo (aka, current account)."
+                },
                 "collection": {
                   "type": "string",
-                  "description": "The name of the collection containing the record.",
-                  "example": "posts"
+                  "description": "The NSID of the record collection."
                 },
-                "recordId": {
+                "rkey": {
                   "type": "string",
-                  "description": "Unique identifier of the record.",
-                  "example": "record123"
+                  "description": "The Record Key.",
+                  "maxLength": 512
+                },
+                "validate": {
+                  "type": "boolean",
+                  "description": "True/false value for skipping Lexicon schema validation."
                 },
                 "record": {
                   "type": "object",
-                  "description": "The new content of the record.",
-                  "example": {
-                    "content": "Updated Content"
-                  }
+                  "description": "The content of the record."
+                },
+                "swapRecord": {
+                  "type": "string",
+                  "description": "Compare and swap with the previous record by CID."
+                },
+                "swapCommit": {
+                  "type": "string",
+                  "description": "Compare and swap with the previous commit by CID."
                 }
               }
             }
@@ -9274,26 +9255,35 @@
         ],
         "responses": {
           "200": {
-            "description": "Record successfully updated or replaced.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "uri", "cid" ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates successful operation.",
-                  "example": true
+                "uri": {
+                  "type": "string"
+                },
+                "cid": {
+                  "type": "string"
+                },
+                "commit": {
+                  "$ref": "#/definitions/commitMeta"
+                },
+                "validationStatus": {
+                  "type": "string",
+                  "enum": [ "valid", "unknown" ]
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid record details.",
+            "description": "Bad Request - Invalid repository details.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9301,61 +9291,46 @@
         }
       }
     },
-    "/xrpc/uploadBlob": {
+    "/xrpc/com.atproto.repo.uploadBlob": {
       "post": {
-        "tags": [
-          "com.atproto.repo"
-        ],
-        "summary": "Upload Blob",
-        "description": "Uploads a binary blob to a repo using multipart/form-data.",
+        "tags": [ "com.atproto.repo" ],
+        "summary": "Upload a new blob",
+        "description": "Upload a new blob.",
         "operationId": "UploadBlob",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "consumes": [ "multipart/form-data" ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "file",
             "in": "formData",
+            "name": "file",
+            "x-ms-summary": "File to upload",
+            "description": "The blob file to upload.",
             "required": true,
-            "type": "file",
-            "description": "The binary blob to upload.",
-            "x-ms-summary": "Blob File"
-          },
-          {
-            "name": "repoId",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The unique repository ID where the blob will be stored.",
-            "x-ms-summary": "Repository ID"
+            "type": "file"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully uploaded the blob.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "blob" ],
               "properties": {
-                "blobId": {
+                "blob": {
                   "type": "string",
-                  "description": "Unique identifier of the uploaded blob."
+                  "description": "The uploaded blob ID."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request - Invalid repository details.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
-          "500": {
-            "description": "Internal Server Error - Unexpected failure during blob upload.",
+          "401": {
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9385,13 +9360,13 @@
             "description": "Account successfully activated. No response body."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9473,13 +9448,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9537,13 +9512,13 @@
             "description": "Email confirmed successfully. No response body."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9659,13 +9634,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9724,7 +9699,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -9750,7 +9725,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -9842,7 +9817,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9939,7 +9914,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9990,13 +9965,13 @@
             "description": "Account successfully deactivated. No response body."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10025,7 +10000,7 @@
             "description": "Session deleted successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10050,7 +10025,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10129,7 +10104,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10154,7 +10129,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10258,7 +10233,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10343,13 +10318,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10425,13 +10400,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10500,7 +10475,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10546,7 +10521,7 @@
             "description": "Account deletion request initiated successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10571,7 +10546,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10617,7 +10592,7 @@
             "description": "Email confirmation request sent successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10642,7 +10617,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10700,7 +10675,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10725,7 +10700,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -10795,13 +10770,13 @@
             "description": "Password reset request initiated successfully. No response body."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10863,13 +10838,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10927,13 +10902,13 @@
             "description": "Password reset successfully. No response body."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10982,7 +10957,7 @@
             "description": "App Password revoked successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -11007,7 +10982,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -11081,52 +11056,15 @@
             "description": "Email updated successfully."
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "TokenRequired"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11134,107 +11072,26 @@
     },
     "/xrpc/com.atproto.sync.getBlob": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Get Blob",
-        "description": "Retrieve a binary blob from a repo using multipart/form-data.",
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Get a blob associated with an account",
+        "description": "Get a blob associated with a given account.",
         "operationId": "GetBlob",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "blobId",
+            "name": "did",
             "in": "query",
+            "x-ms-summary": "Account DID",
+            "description": "The DID of the account.",
             "required": true,
-            "type": "string",
-            "description": "Unique identifier of the blob to retrieve.",
-            "x-ms-summary": "Blob ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved the blob as a JSON response.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "blobId": {
-                  "type": "string",
-                  "description": "Unique identifier of the blob."
-                },
-                "data": {
-                  "type": "string",
-                  "format": "byte",
-                  "description": "The binary content of the blob, base64-encoded."
-                }
-              }
-            }
+            "type": "string"
           },
-          "400": {
-            "description": "Bad Request - Invalid blob ID.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found - The specified blob does not exist.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Unexpected failure during blob retrieval.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/app.bsky.graph.getBlocks": {
-      "get": {
-        "tags": [
-          "app.bsky.graph"
-        ],
-        "summary": "Get Blocked Accounts",
-        "x-ms-summary": "Get Blocked Accounts",
-        "description": "Retrieve a list of accounts blocked by the requesting account.",
-        "operationId": "GetBlocks",
-        "security": [
           {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "limit",
+            "name": "cid",
             "in": "query",
-            "x-ms-summary": "Limit Results",
-            "description": "The maximum number of results to return.",
-            "required": false,
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 100,
-            "default": 50
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "x-ms-summary": "Cursor for Pagination",
-            "description": "Cursor to retrieve the next set of results.",
-            "required": false,
+            "x-ms-summary": "Blob CID",
+            "description": "The CID of the blob to fetch.",
+            "required": true,
             "type": "string"
           }
         ],
@@ -11243,31 +11100,82 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [
-                "blocks"
-              ],
               "properties": {
-                "cursor": {
+                "blob": {
                   "type": "string",
-                  "description": "Cursor for the next set of results."
-                },
+                  "description": "Base64-encoded blob content."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.getBlocks": {
+      "get": {
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Get data blocks from a repo",
+        "description": "Get data blocks from a given repo, by CID.",
+        "operationId": "GetBlocks",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "did",
+            "in": "query",
+            "x-ms-summary": "Repo DID",
+            "description": "The DID of the repo.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cids",
+            "in": "query",
+            "x-ms-summary": "Block CIDs",
+            "description": "The CIDs of the blocks to fetch.",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
                 "blocks": {
                   "type": "array",
+                  "description": "List of blocks fetched.",
                   "items": {
-                    "$ref": "#/definitions/profileView"
+                    "type": "string",
+                    "description": "Base64-encoded block content."
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11277,64 +11185,46 @@
     },
     "/xrpc/com.atproto.sync.getLatestCommit": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Get Latest Commit",
-        "description": "Retrieve the latest commit for the repository.\n",
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Get the current commit of a repo",
+        "description": "Get the current commit CID & revision of the specified repo.",
         "operationId": "GetLatestCommit",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "repoId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier of the repository.",
+            "x-ms-summary": "Repo DID",
+            "description": "The DID of the repo.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Repository ID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Latest commit successfully retrieved.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "cid", "rev" ],
               "properties": {
-                "commit": {
-                  "type": "object",
-                  "description": "Details of the latest commit.",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier of the commit.",
-                      "example": "commit123"
-                    },
-                    "timestamp": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "The timestamp of the commit.",
-                      "example": "2024-11-20T12:00:00Z"
-                    }
-                  }
+                "cid": {
+                  "type": "string"
+                },
+                "rev": {
+                  "type": "string",
+                  "description": "Revision identifier of the repo."
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11344,28 +11234,19 @@
     },
     "/xrpc/com.atproto.sync.getRecord": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Get Record",
-        "description": "Retrieve a record from the repo by its unique identifier.\n",
-        "operationId": "ATProtoGetRecord",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Get a record from the repo",
+        "description": "Retrieve a record from the repo by its unique identifier.",
+        "operationId": "SyncGetRecord",
+        "produces": [ "application/json" ],
         "parameters": [
           {
             "name": "recordId",
             "in": "query",
+            "x-ms-summary": "Record ID",
             "description": "Unique identifier of the record.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Record ID"
+            "type": "string"
           }
         ],
         "responses": {
@@ -11380,13 +11261,11 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "description": "Unique identifier of the record.",
-                      "example": "record123"
+                      "description": "Unique identifier of the record."
                     },
                     "content": {
                       "type": "string",
-                      "description": "The content of the record.",
-                      "example": "Record content here."
+                      "description": "The content of the record."
                     }
                   }
                 }
@@ -11394,13 +11273,13 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid record identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11410,57 +11289,45 @@
     },
     "/xrpc/com.atproto.sync.getRepo": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Get Repository",
-        "description": "Retrieve repository data as base64-encoded binary content.\n",
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Download repository export",
+        "description": "Download a repository export as CAR file.",
         "operationId": "SyncGetRepo",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "repoId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier of the repository to retrieve.",
+            "x-ms-summary": "Repo DID",
+            "description": "The DID of the repo.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Repository ID"
+            "type": "string"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "x-ms-summary": "Revision",
+            "description": "The revision ('rev') of the repo to create a diff from.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the repository data.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "repoId": {
-                  "type": "string",
-                  "description": "Unique identifier of the repository.",
-                  "example": "repo123"
-                },
-                "data": {
-                  "type": "string",
-                  "format": "byte",
-                  "description": "Base64-encoded repository data."
-                }
-              }
+              "type": "string",
+              "format": "binary"
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository ID.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11470,63 +11337,58 @@
     },
     "/xrpc/com.atproto.sync.getRepoStatus": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "Get Repository Status",
-        "description": "Retrieve repo status, incl. synchronization info.\n",
+        "tags": [ "com.atproto.sync" ],
+        "summary": "Get repository hosting status",
+        "description": "Get the hosting status for a repository, on this server.",
         "operationId": "GetRepoStatus",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "repoId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier of the repository.",
+            "x-ms-summary": "Repo DID",
+            "description": "The DID of the repo.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Repository ID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Repository status successfully retrieved.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "did", "active" ],
               "properties": {
+                "did": {
+                  "type": "string"
+                },
+                "active": {
+                  "type": "boolean"
+                },
                 "status": {
-                  "type": "object",
-                  "description": "Details of the repository's status.",
-                  "properties": {
-                    "syncStatus": {
-                      "type": "string",
-                      "description": "The synchronization status of the repository.",
-                      "example": "synchronized"
-                    },
-                    "lastCommit": {
-                      "type": "string",
-                      "description": "The identifier of the last commit.",
-                      "example": "commit123"
-                    }
-                  }
+                  "type": "string",
+                  "description": "True or false value indicating activity status.",
+                  "enum": [
+                    "takendown",
+                    "suspended",
+                    "deactivated"
+                  ]
+                },
+                "rev": {
+                  "type": "string",
+                  "description": "Optional field, the current rev of the repo, if active=true"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11536,112 +11398,62 @@
     },
     "/xrpc/com.atproto.sync.listBlobs": {
       "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "List Blobs",
-        "description": "Get a list of all blobs in the repository.\n",
+        "tags": [ "com.atproto.sync" ],
+        "summary": "List account blob CIDs",
+        "description": "List account blob CIDs since a repo revision.",
         "operationId": "ListBlobs",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "repoId",
+            "name": "did",
             "in": "query",
-            "description": "Unique identifier of the repository.",
+            "x-ms-summary": "Repo DID",
+            "description": "The DID of the repo.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Repository ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Blobs successfully listed.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "blobs": {
-                  "type": "array",
-                  "description": "List of blobs in the repository.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier of the blob.",
-                        "example": "blob123"
-                      },
-                      "size": {
-                        "type": "integer",
-                        "description": "The size of the blob in bytes.",
-                        "example": 1024
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "type": "string"
           },
-          "400": {
-            "description": "Bad Request - Invalid repository identifier.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/com.atproto.sync.listRepos": {
-      "get": {
-        "tags": [
-          "com.atproto.sync"
-        ],
-        "summary": "List Repositories",
-        "description": "Get a list of all repositories available in the system.\n",
-        "operationId": "ListRepos",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
           {
-            "bearerAuth": []
+            "name": "since",
+            "in": "query",
+            "x-ms-summary": "Revision",
+            "description": "Optional revision of the repo to list blobs since.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Result Limit",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 500
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Cursor",
+            "description": "Pagination cursor for the next set of results.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved repositories list.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "cids" ],
               "properties": {
-                "repositories": {
+                "cursor": {
+                  "type": "string"
+                },
+                "cids": {
                   "type": "array",
-                  "description": "List of repositories.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier of the repository.",
-                        "example": "repo123"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the repository.",
-                        "example": "MyRepository"
-                      }
-                    }
+                    "type": "string"
                   }
                 }
               }
@@ -11654,7 +11466,75 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/com.atproto.sync.listRepos": {
+      "get": {
+        "tags": [
+          "com.atproto.sync"
+        ],
+        "summary": "List repositories",
+        "description": "Enumerates all the DID, rev, and commit CID for all repos by this service.",
+        "operationId": "ListRepos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Result Limit",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 500
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Cursor",
+            "description": "Pagination cursor for the next set of results.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "repos"
+              ],
+              "properties": {
+                "cursor": {
+                  "type": "string"
+                },
+                "repos": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/listRepos.repo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Unable to retrieve repositories list.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11668,7 +11548,7 @@
           "com.atproto.sync"
         ],
         "summary": "Notify of Update",
-        "description": "Notify the system about updates to a repo to trigger sync.\n",
+        "description": "Notify a crawling service of a recent update, and that crawling should resume.",
         "operationId": "NotifyOfUpdate",
         "consumes": [
           "application/json"
@@ -11676,24 +11556,22 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the update notification.",
+            "name": "body",
+            "x-ms-summary": "Notification details",
+            "description": "Details of the notification, including the hostname.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "hostname"
+              ],
               "properties": {
-                "repoId": {
+                "hostname": {
                   "type": "string",
-                  "description": "Unique identifier of the repository.",
-                  "example": "repo123"
+                  "description": "Hostname of the current service notifying of update."
                 }
               }
             }
@@ -11701,26 +11579,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Update notification successfully submitted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the update notification was successful.",
-                  "example": true
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Invalid update details.",
+            "description": "Bad Request - Unable to retrieve repositories list.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11734,7 +11602,7 @@
           "com.atproto.sync"
         ],
         "summary": "Request Crawl",
-        "description": "Submit a request to crawl a repository for updates.\n",
+        "description": "Request a service to persistently crawl hosted repos.",
         "operationId": "RequestCrawl",
         "consumes": [
           "application/json"
@@ -11742,24 +11610,22 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the crawl request.",
+            "name": "body",
+            "x-ms-summary": "Crawl request details",
+            "description": "Details of the request, including the hostname.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "hostname"
+              ],
               "properties": {
-                "repoId": {
+                "hostname": {
                   "type": "string",
-                  "description": "Unique identifier of the repository to crawl.",
-                  "example": "repo123"
+                  "description": "Hostname of the current service requesting to be crawled."
                 }
               }
             }
@@ -11767,26 +11633,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Crawl request successfully submitted.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the crawl request was successful.",
-                  "example": true
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Invalid crawl request details.",
+            "description": "Bad Request - Unable to retrieve repositories list.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12401,7 +12257,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12629,7 +12485,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12808,7 +12664,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12879,7 +12735,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12928,7 +12784,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -12953,7 +12809,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "required": [
@@ -13044,7 +12900,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13110,7 +12966,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13184,7 +13040,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13242,7 +13098,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13311,7 +13167,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13390,7 +13246,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13459,7 +13315,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13528,7 +13384,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13597,7 +13453,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13607,46 +13463,35 @@
     },
     "/xrpc/tools.ozone.team.addMember": {
       "post": {
-        "tags": [
-          "tools.ozone.team"
-        ],
-        "summary": "Add Team Member",
-        "description": "Add a new member to a team.\n",
-        "operationId": "AddMember",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "tags": [ "tools.ozone.team" ],
+        "summary": "Add a member to the ozone team",
+        "description": "Add a member to the ozone team.",
+        "operationId": "AddMemberTeam",
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the member to add.",
+            "name": "body",
+            "x-ms-summary": "Member add details",
+            "description": "Details of the member to be added.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [ "did", "role" ],
               "properties": {
-                "teamId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the team.",
-                  "example": "team123"
-                },
-                "memberId": {
-                  "type": "string",
-                  "description": "Unique identifier of the member.",
-                  "example": "member456"
+                  "description": "The DID of the member."
                 },
                 "role": {
                   "type": "string",
-                  "description": "The role of the new member.",
-                  "example": "Developer"
+                  "description": "The role assigned to the member.",
+                  "enum": [
+                    "roleAdmin",
+                    "roleModerator",
+                    "roleTriage"
+                  ]
                 }
               }
             }
@@ -13654,26 +13499,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Member successfully added to the team.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
-                }
-              }
+              "$ref": "#/definitions/member"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to add member.",
+            "description": "Bad Request - Invalid search query.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13683,41 +13521,26 @@
     },
     "/xrpc/tools.ozone.team.deleteMember": {
       "post": {
-        "tags": [
-          "tools.ozone.team"
-        ],
-        "summary": "Delete Team Member",
-        "description": "Remove a member from a team.\n",
-        "operationId": "DeleteMember",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "tags": [ "tools.ozone.team" ],
+        "summary": "Delete a member from ozone team",
+        "description": "Delete a member from ozone team.",
+        "operationId": "DeleteMemberTeam",
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the member to remove.",
+            "name": "body",
+            "x-ms-summary": "Member delete details",
+            "description": "Details of the member to delete.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [ "did" ],
               "properties": {
-                "teamId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the team.",
-                  "example": "team123"
-                },
-                "memberId": {
-                  "type": "string",
-                  "description": "Unique identifier of the member.",
-                  "example": "member456"
+                  "description": "The DID of the member."
                 }
               }
             }
@@ -13725,14 +13548,67 @@
         ],
         "responses": {
           "200": {
-            "description": "Member successfully removed from the team.",
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request - Unable to add member.",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/xrpc/tools.ozone.team.listMembers": {
+      "get": {
+        "tags": [ "tools.ozone.team" ],
+        "summary": "List all members with access to the ozone service",
+        "description": "List all members with access to the ozone service.",
+        "operationId": "ListMembersTeam",
+        "produces": [ "application/json" ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Limit results",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for paginating results.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "members" ],
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
+                "cursor": {
+                  "type": "string",
+                  "description": "Pagination cursor for the next page of results."
+                },
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/member"
+                  }
                 }
               }
             }
@@ -13744,81 +13620,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/tools.ozone.team.listMembers": {
-      "get": {
-        "tags": [
-          "tools.ozone.team"
-        ],
-        "summary": "List Team Members",
-        "description": "Get a list of members in a specific team.\n",
-        "operationId": "ListMembers",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "teamId",
-            "in": "query",
-            "description": "Unique identifier of the team.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Team ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved team members.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "members": {
-                  "type": "array",
-                  "description": "List of team members.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "memberId": {
-                        "type": "string",
-                        "description": "Unique identifier of the member.",
-                        "example": "member456"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the team member.",
-                        "example": "Jane Doe"
-                      },
-                      "role": {
-                        "type": "string",
-                        "description": "The role of the team member.",
-                        "example": "Developer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid team ID.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13828,46 +13630,39 @@
     },
     "/xrpc/tools.ozone.team.updateMember": {
       "post": {
-        "tags": [
-          "tools.ozone.team"
-        ],
-        "summary": "Update Team Member",
-        "description": "Update details of a team member.\n",
-        "operationId": "UpdateMember",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "tags": [ "tools.ozone.team" ],
+        "summary": "Update a member in the ozone service",
+        "description": "Update a member in the ozone service.",
+        "operationId": "UpdateMemberTeam",
+        "consumes": [ "application/json" ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the member to update.",
+            "name": "body",
+            "x-ms-summary": "Member update details",
+            "description": "Details of the member to be updated.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [ "did" ],
               "properties": {
-                "teamId": {
+                "did": {
                   "type": "string",
-                  "description": "Unique identifier of the team.",
-                  "example": "team123"
+                  "description": "The DID of the member."
                 },
-                "memberId": {
-                  "type": "string",
-                  "description": "Unique identifier of the member.",
-                  "example": "member456"
+                "disabled": {
+                  "type": "boolean",
+                  "description": "Indicates if the member is disabled."
                 },
                 "role": {
                   "type": "string",
-                  "description": "The updated role of the team member.",
-                  "example": "Team Lead"
+                  "description": "The role assigned to the member.",
+                  "enum": [
+                    "roleAdmin",
+                    "roleModerator",
+                    "roleTriage"
+                  ]
                 }
               }
             }
@@ -13875,26 +13670,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Member details successfully updated.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
-                }
-              }
+              "$ref": "#/definitions/member"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to update member details.",
+            "description": "Bad Request - Invalid team ID.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
-            "description": "Unauthorized - Missing or invalid authentication token.",
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -17751,6 +17539,107 @@
         }
       }
     },
+    "member": {
+      "type": "object",
+      "required": [
+        "did",
+        "role"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "profile": {
+          "$ref": "#/definitions/profileViewDetailed"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdatedBy": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "#roleAdmin",
+            "#roleModerator",
+            "#roleTriage"
+          ]
+        }
+      }
+    },
+    "listMissingBlobs.recordBlob": {
+      "type": "object",
+      "required": [
+        "cid",
+        "recordUri"
+      ],
+      "properties": {
+        "cid": {
+          "type": "string"
+        },
+        "recordUri": {
+          "type": "string"
+        }
+      }
+    },
+    "listRecords.record": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "value"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "value": {}
+      }
+    },
+    "listRepos.repo": {
+      "type": "object",
+      "required": [
+        "did",
+        "head",
+        "rev"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "head": {
+          "type": "string",
+          "description": "Current repo commit CID"
+        },
+        "rev": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "description": "True or false value indicating why account is inactive..",
+          "enum": [
+            "takendown",
+            "suspended",
+            "deactivated"
+          ]
+        }
+      }
+    },
     "errorResponse": {
       "type": "object",
       "description": "Standard error response for failed requests.",
@@ -17787,4 +17676,4 @@
       }
     }
   }
-}
+  }
