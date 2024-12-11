@@ -12784,51 +12784,15 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12839,41 +12803,40 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Add Values to Set",
-        "description": "Add values to an existing set in the system.\n",
-        "operationId": "AddValues",
+        "summary": "Add values to a set",
+        "description": "Add values to a specific set.",
+        "operationId": "AddValuesToSet",
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the values to add.",
+            "name": "body",
+            "x-ms-summary": "Set details",
+            "description": "Details of the set and values to add.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "values"
+              ],
               "properties": {
-                "setId": {
+                "name": {
                   "type": "string",
-                  "description": "Unique identifier of the set.",
-                  "example": "set123"
+                  "description": "Name of the set to add values to"
                 },
                 "values": {
                   "type": "array",
-                  "description": "Values to add to the set.",
                   "items": {
-                    "type": "string",
-                    "example": "value1"
-                  }
+                    "type": "string"
+                  },
+                  "maxItems": 1000,
+                  "description": "Values to add to the set"
                 }
               }
             }
@@ -12881,20 +12844,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Values successfully added to the set.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to add values.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12913,8 +12866,8 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Delete Set",
-        "description": "Delete an existing set by its unique identifier.\n",
+        "summary": "Delete a set",
+        "description": "Delete an entire set.",
         "operationId": "DeleteSet",
         "consumes": [
           "application/json"
@@ -12922,24 +12875,22 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the set to delete.",
+            "name": "body",
+            "x-ms-summary": "Set to delete",
+            "description": "Name of the set to delete.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name"
+              ],
               "properties": {
-                "setId": {
+                "name": {
                   "type": "string",
-                  "description": "Unique identifier of the set.",
-                  "example": "set123"
+                  "description": "Name of the set to delete"
                 }
               }
             }
@@ -12947,20 +12898,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Set successfully deleted.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
+                "_unknown_": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Unable to delete the set.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12979,8 +12929,8 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Delete Values from Set",
-        "description": "Remove specific values from a set by its unique identifier.\n",
+        "summary": "Delete values from a set",
+        "description": "Delete values from a specific set.",
         "operationId": "DeleteValues",
         "consumes": [
           "application/json"
@@ -12988,31 +12938,28 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
-            "description": "Details of the values to delete.",
+            "name": "body",
+            "x-ms-summary": "Set values to delete",
+            "description": "Details of the set and values to delete.",
             "required": true,
             "schema": {
               "type": "object",
+              "required": [
+                "name",
+                "values"
+              ],
               "properties": {
-                "setId": {
+                "name": {
                   "type": "string",
-                  "description": "Unique identifier of the set.",
-                  "example": "set123"
+                  "description": "Name of the set to delete values from."
                 },
                 "values": {
                   "type": "array",
-                  "description": "Values to remove from the set.",
                   "items": {
-                    "type": "string",
-                    "example": "value1"
+                    "type": "string"
                   }
                 }
               }
@@ -13021,20 +12968,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Values successfully removed from the set.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to remove values.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13053,46 +12990,68 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Get Values from Set",
-        "description": "Retrieve the values stored in a specific set.\n",
+        "summary": "Get set values",
+        "description": "Get a specific set and its values.",
         "operationId": "GetValues",
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "setId",
+            "name": "name",
             "in": "query",
-            "description": "Unique identifier of the set.",
+            "x-ms-summary": "Set name",
+            "description": "The name of the set to retrieve.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Set ID"
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Result limit",
+            "description": "Maximum number of values to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 100
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for pagination.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved set values.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "set",
+                "values"
+              ],
               "properties": {
+                "set": {
+                  "$ref": "#/definitions/setView"
+                },
                 "values": {
                   "type": "array",
-                  "description": "List of values in the set.",
                   "items": {
-                    "type": "string",
-                    "example": "value1"
+                    "type": "string"
                   }
+                },
+                "cursor": {
+                  "type": "string"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid set ID.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13111,57 +13070,82 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Query Sets",
-        "description": "Get a list of sets matching query criteria.\n",
+        "summary": "Query available sets",
+        "description": "Query available sets.",
         "operationId": "QuerySets",
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "query",
+            "name": "limit",
             "in": "query",
-            "description": "Query criteria for filtering sets.",
+            "x-ms-summary": "Result limit",
+            "description": "Maximum number of sets to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination cursor",
+            "description": "Cursor for pagination.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "namePrefix",
+            "in": "query",
+            "x-ms-summary": "Name prefix",
+            "description": "Filter sets by a name prefix.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "x-ms-summary": "Sort by field",
+            "description": "Field to sort results by.",
             "required": false,
             "type": "string",
-            "x-ms-summary": "Set Query"
+            "default": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "x-ms-summary": "Sort direction",
+            "description": "Sort direction, defaults to ascending order of the name field.",
+            "required": false,
+            "type": "string",
+            "default": "asc"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved matching sets.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "sets"
+              ],
               "properties": {
                 "sets": {
                   "type": "array",
-                  "description": "List of matching sets.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "setId": {
-                        "type": "string",
-                        "description": "Unique identifier of the set.",
-                        "example": "set123"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the set.",
-                        "example": "MySet"
-                      }
-                    }
+                    "$ref": "#/definitions/setView"
                   }
+                },
+                "cursor": {
+                  "type": "string"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid query parameters.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13180,8 +13164,8 @@
         "tags": [
           "tools.ozone.set"
         ],
-        "summary": "Upsert Set",
-        "description": "Create or update a set with specified values.\n",
+        "summary": "Create or update set metadata",
+        "description": "Create or update set metadata.",
         "operationId": "UpsertSet",
         "consumes": [
           "application/json"
@@ -13189,58 +13173,27 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
+            "x-ms-summary": "Set metadata",
             "description": "Details of the set to create or update.",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "setId": {
-                  "type": "string",
-                  "description": "Unique identifier of the set.",
-                  "example": "set123"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "The name of the set.",
-                  "example": "MySet"
-                },
-                "values": {
-                  "type": "array",
-                  "description": "The values to include in the set.",
-                  "items": {
-                    "type": "string",
-                    "example": "value1"
-                  }
-                }
-              }
+              "$ref": "#/definitions/set"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Set successfully created or updated.",
+            "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "success": {
-                  "type": "boolean",
-                  "description": "Indicates the operation was successful.",
-                  "example": true
-                }
-              }
+              "$ref": "#/definitions/setView"
             }
           },
           "400": {
-            "description": "Bad Request - Unable to upsert set.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13256,60 +13209,42 @@
     },
     "/xrpc/tools.ozone.signature.findCorrelation": {
       "get": {
-        "tags": [
-          "tools.ozone.signature"
-        ],
-        "summary": "Find Correlation",
-        "description": "Search for correlations btw. entities based on their signatures.\n",
+        "tags": [ "tools.ozone.signature" ],
+        "summary": "Find Correlation of Threat Signatures",
+        "description": "Find all correlated threat signatures between 2 or more accounts.",
         "operationId": "FindCorrelation",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "produces": [ "application/json" ],
         "parameters": [
           {
-            "name": "signature",
+            "name": "dids",
             "in": "query",
-            "description": "The signature to search for correlations.",
+            "x-ms-summary": "Account DIDs",
+            "description": "List of DIDs for accounts to find correlated signatures.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Signature"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved correlations.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "details" ],
               "properties": {
-                "correlations": {
+                "details": {
                   "type": "array",
-                  "description": "List of correlations found.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "entityId": {
-                        "type": "string",
-                        "description": "The ID of the correlated entity.",
-                        "example": "entity123"
-                      },
-                      "similarity": {
-                        "type": "number",
-                        "description": "The similarity score.",
-                        "example": 0.85
-                      }
-                    }
+                    "$ref": "#/definitions/sigDetail"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid signature.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13329,125 +13264,63 @@
           "tools.ozone.signature"
         ],
         "summary": "Find Related Accounts",
-        "description": "Retrieve accounts related to the specified signature.\n",
+        "description": "Get accounts that share some matching threat signatures with the root account.",
         "operationId": "FindRelatedAccounts",
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "parameters": [
           {
-            "name": "signature",
+            "name": "did",
             "in": "query",
-            "description": "The signature to search for related accounts.",
+            "x-ms-summary": "Account DID",
+            "description": "The DID of the root account.",
             "required": true,
-            "type": "string",
-            "x-ms-summary": "Signature"
+            "type": "string"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "x-ms-summary": "Pagination Cursor",
+            "description": "Pagination cursor for the next set of results.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "x-ms-summary": "Result Limit",
+            "description": "The maximum number of results to return.",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved related accounts.",
+            "description": "OK",
             "schema": {
               "type": "object",
+              "required": [
+                "accounts"
+              ],
               "properties": {
+                "cursor": {
+                  "type": "string"
+                },
                 "accounts": {
                   "type": "array",
-                  "description": "List of related accounts.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the related account.",
-                        "example": "account123"
-                      },
-                      "relationship": {
-                        "type": "string",
-                        "description": "The type of relationship.",
-                        "example": "associated"
-                      }
-                    }
+                    "$ref": "#/definitions/findRelatedAccounts.relatedAccount"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request - Invalid signature.",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/xrpc/tools.ozone.signature.searchAccounts": {
-      "get": {
-        "tags": [
-          "tools.ozone.signature"
-        ],
-        "summary": "Search Accounts by Signature",
-        "description": "Search for accounts associated with a specific signature.\n",
-        "operationId": "OzoneSearchAccounts",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "query",
-            "in": "query",
-            "description": "The signature or criteria to search for accounts.",
-            "required": true,
-            "type": "string",
-            "x-ms-summary": "Search Query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved matching accounts.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accounts": {
-                  "type": "array",
-                  "description": "List of accounts matching the query.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "accountId": {
-                        "type": "string",
-                        "description": "Unique identifier of the account.",
-                        "example": "account123"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "The name of the account.",
-                        "example": "John Doe"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid search query.",
+            "description": "Bad Request - Unable to retrieve repositories.",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13463,32 +13336,41 @@
     },
     "/xrpc/tools.ozone.team.addMember": {
       "post": {
-        "tags": [ "tools.ozone.team" ],
-        "summary": "Add a member to the ozone team",
+        "tags": [
+          "tools.ozone.team"
+        ],
+        "summary": "Add a team member",
         "description": "Add a member to the ozone team.",
-        "operationId": "AddMemberTeam",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "operationId": "AddTeamMember",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "x-ms-summary": "Member add details",
+            "x-ms-summary": "Team member details",
             "description": "Details of the member to be added.",
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "did", "role" ],
+              "required": [
+                "did",
+                "role"
+              ],
               "properties": {
                 "did": {
                   "type": "string",
-                  "description": "The DID of the member."
+                  "description": "The DID of the member to add."
                 },
                 "role": {
                   "type": "string",
-                  "description": "The role assigned to the member.",
+                  "description": "Role of the member to add.",
                   "enum": [
-                    "roleAdmin",
+                    "oleAdmin",
                     "roleModerator",
                     "roleTriage"
                   ]
@@ -17637,6 +17519,86 @@
             "suspended",
             "deactivated"
           ]
+        }
+      }
+    },
+    "setView": {
+      "type": "object",
+      "required": [
+        "name",
+        "setSize",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 10240
+        },
+        "setSize": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "set": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 10240
+        }
+      }
+    },
+    "sigDetail": {
+      "type": "object",
+      "required": [
+        "property",
+        "value"
+      ],
+      "properties": {
+        "property": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "findRelatedAccounts.relatedAccount": {
+      "type": "object",
+      "required": [
+        "account"
+      ],
+      "properties": {
+        "account": {
+          "$ref": "#/definitions/accountView"
+        },
+        "similarities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sigDetail"
+          }
         }
       }
     },
