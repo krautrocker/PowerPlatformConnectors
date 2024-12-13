@@ -84,7 +84,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or token.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -978,7 +978,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid input or blocked actor.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -5663,7 +5663,7 @@
                 }
               }
             },
-            "x-ms-summary": "Unauthorized access - missing or invalid token."
+            "x-ms-summary": "Unauthorized"
           }
         }
       }
@@ -5875,7 +5875,7 @@
         ],
         "summary": "Create Authentication Session",
         "x-ms-summary": "Start a user authentication session.",
-        "description": "Create an authentication session for a user by providing their identifier and password.",
+        "description": "Create an authentication session..",
         "operationId": "createSession",
         "consumes": [
           "application/json"
@@ -5903,7 +5903,7 @@
               "properties": {
                 "identifier": {
                   "type": "string",
-                  "description": "Handle or other identifier supported by the server for the authenticating user.",
+                  "description": "Handle or other identifier",
                   "x-ms-summary": "Username",
                   "x-ms-visibility": "important"
                 },
@@ -6031,7 +6031,7 @@
               "properties": {
                 "refreshJwt": {
                   "type": "string",
-                  "description": "The refresh token provided during session creation or previous refresh.",
+                  "description": "The refresh token provided during session creation",
                   "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                 }
               }
@@ -6467,7 +6467,7 @@
         ],
         "summary": "Get Actor Metadata",
         "x-ms-summary": "Retrieve metadata for a specific actor.",
-        "description": "Fetch moderation-related metadata for an actor identified by their DID.",
+        "description": "Fetch moderation-related metadata for an actor via DID",
         "operationId": "getActorMetadata",
         "produces": [
           "application/json"
@@ -6532,7 +6532,7 @@
         ],
         "summary": "Get Message Context",
         "x-ms-summary": "Retrieve the context around a specific message.",
-        "description": "Fetch surrounding messages from a conversation for moderation purposes.",
+        "description": "Fetch surrounding messages from a conversation",
         "operationId": "getMessageContext",
         "produces": [
           "application/json"
@@ -6987,7 +6987,7 @@
           "com.atproto.admin"
         ],
         "summary": "Disable Invite Codes",
-        "description": "Disable specific invite codes to prevent further usage.\n",
+        "description": "Disable specific invite codes to prevent further usage.",
         "operationId": "DisableInviteCodes",
         "consumes": [
           "application/json"
@@ -7036,7 +7036,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or already disabled invite codes.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -7086,7 +7086,7 @@
                 "account": {
                   "type": "string",
                   "x-ms-summary": "Account Identifier",
-                  "description": "The account identifier (DID) for which invites are being enabled."
+                  "description": "The account/DID for which invites are being enabled."
                 },
                 "note": {
                   "type": "string",
@@ -7495,7 +7495,7 @@
             "minimum": 1,
             "maximum": 100,
             "default": 50,
-            "description": "The maximum number of results to retrieve. Defaults to 50.",
+            "description": "The maximum number of results to retrieve",
             "x-ms-summary": "Maximum number of results to retrieve."
           }
         ],
@@ -7882,7 +7882,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -7960,7 +7960,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8062,7 +8062,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve credentials.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8117,7 +8117,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8158,7 +8158,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8212,7 +8212,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8298,7 +8298,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8364,7 +8364,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8434,7 +8434,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8651,7 +8651,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid account identifier or password.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8783,7 +8783,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid record identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8869,7 +8869,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid record identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8937,7 +8937,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid record identifier.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -8998,7 +8998,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9037,7 +9037,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9100,7 +9100,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9187,7 +9187,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9277,7 +9277,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9324,7 +9324,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid repository details.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9811,7 +9811,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or missing parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -9908,7 +9908,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or missing parameters.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -10207,7 +10207,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or missing input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -10287,7 +10287,7 @@
           {
             "name": "exp",
             "in": "query",
-            "description": "The time in Unix Epoch seconds that the JWT expires. Defaults to 60 seconds in the future.",
+            "description": "The time in Unix Epoch seconds that the JWT expires. Defaults = 60 seconds",
             "required": false,
             "type": "integer",
             "x-ms-summary": "Expiration"
@@ -10339,7 +10339,7 @@
         ],
         "summary": "Get Current Session Info",
         "x-ms-summary": "Retrieve session information.",
-        "description": "Get information about the current authentication session.",
+        "description": "Get information about the authenticated session.",
         "operationId": "getSession",
         "produces": [
           "application/json"
@@ -10449,7 +10449,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid or missing input parameters.",
+            "description": "Bad Request",
             "schema": {
               "type": "object",
               "required": [
@@ -11460,7 +11460,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories list.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11480,7 +11480,7 @@
           "com.atproto.sync"
         ],
         "summary": "List repositories",
-        "description": "Enumerates all the DID, rev, and commit CID for all repos by this service.",
+        "description": "Enumerates all the DID, rev, and commit CID for all repos",
         "operationId": "ListRepos",
         "produces": [
           "application/json"
@@ -11528,7 +11528,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories list.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11582,7 +11582,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories list.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11636,7 +11636,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories list.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -11656,7 +11656,7 @@
           "tools.ozone.communication"
         ],
         "summary": "Create a reusable communication template",
-        "description": "Administrative action to create a new, reusable communication template.",
+        "description": "Admin action to create a new, reusable comm. template.",
         "operationId": "CreateTemplate",
         "security": [
           {
@@ -12212,7 +12212,7 @@
           "tools.ozone.moderation"
         ],
         "summary": "Get Moderation Repositories",
-        "description": "Get a list of all moderation repositories.\n",
+        "description": "Get a list of all moderation repositories.",
         "operationId": "GetRepos",
         "produces": [
           "application/json"
@@ -12251,7 +12251,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12479,7 +12479,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12658,7 +12658,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12729,7 +12729,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12784,7 +12784,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12847,7 +12847,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12910,7 +12910,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -12971,7 +12971,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13051,7 +13051,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13145,7 +13145,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13193,7 +13193,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13244,7 +13244,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13320,7 +13320,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to retrieve repositories.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13387,7 +13387,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid search query.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13433,7 +13433,7 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request - Unable to add member.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13496,7 +13496,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Unable to remove member.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -13558,7 +13558,7 @@
             }
           },
           "400": {
-            "description": "Bad Request - Invalid team ID.",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/errorResponse"
             }
@@ -14952,7 +14952,7 @@
     },
     "viewerState": {
       "type": "object",
-      "description": "Metadata about the requesting account's relationship with the subject account. Only has meaningful content for authed requests.",
+      "description": "Metadata about the requesting account's relationship with the subject account.",
       "properties": {
         "muted": {
           "type": "boolean"
@@ -15135,7 +15135,7 @@
         },
         "uri": {
           "type": "string",
-          "description": "AT URI of the record, repository (account), or other resource that this label applies to.",
+          "description": "AT URI of the record, repo (account), or other resource that this label applies to.",
           "format": "uri"
         },
         "cid": {
@@ -16870,7 +16870,7 @@
     },
     "appealed": {
       "type": "boolean",
-      "description": "True indicates that the a previously taken moderator action was appealed against, by the author of the content"
+      "description": "True indicates that the a previously taken moderator action was appealed against by content author"
     },
     "suspendUntil": {
       "type": "string",
