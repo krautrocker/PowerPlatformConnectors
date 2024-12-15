@@ -37,7 +37,7 @@
       "type": "apiKey",
       "in": "header",
       "name": "Authorization",
-      "description": "Enter 'Bearer' followed by a space and your token."
+      "description": "Enter 'Bearer' followed by a space and token."
     }
   },
   "security": [
@@ -127,7 +127,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Detailed profile fetched successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -191,7 +191,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Profiles retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -210,49 +210,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -450,7 +414,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved typeahead suggestions for actors.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -636,45 +600,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -728,7 +660,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Feeds retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -839,47 +771,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "BlockedActor",
-                    "BlockedByActor"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -958,7 +856,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully fetched the author's feed.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -980,47 +878,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "BlockedActor",
-                    "BlockedByActor"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1082,7 +946,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Feed retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -1153,7 +1017,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Feed generator details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -1179,49 +1043,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1260,7 +1088,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Feed generator details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -1279,49 +1107,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1397,46 +1189,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "UnknownFeed"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1527,45 +1286,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1646,50 +1373,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "UnknownList"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1747,45 +1437,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -1843,7 +1501,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Thread details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -1873,50 +1531,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "NotFound"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2014,49 +1635,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2154,49 +1739,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2242,7 +1791,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Suggested feeds retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -2327,7 +1876,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Timeline retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -2493,7 +2042,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Posts retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -2518,46 +2067,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "BadQueryString"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2608,7 +2124,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Interactions sent successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -2622,45 +2138,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -2794,7 +2278,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Followers retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -2893,7 +2377,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Follows retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -2990,7 +2474,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Known followers retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3523,7 +3007,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Starter pack retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3586,7 +3070,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Starter packs retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3720,7 +3204,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The mute relationship was successfully created.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3783,7 +3267,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The mute relationship was successfully created for the list.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3846,7 +3330,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The thread was successfully muted.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3909,7 +3393,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The actor was successfully unmuted.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -3972,7 +3456,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The list of accounts was successfully unmuted.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -4035,7 +3519,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - The thread was successfully unmuted.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -4647,7 +4131,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Video uploaded and processing job created successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -4700,7 +4184,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deleted successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -4714,49 +4198,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4846,7 +4294,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account data exported successfully.",
+            "description": "OK",
             "schema": {
               "type": "file"
             }
@@ -4854,49 +4302,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -4949,7 +4361,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Message deleted successfully for the user.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/deletedMessageView"
             }
@@ -4957,45 +4369,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5030,7 +4410,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Conversation retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5046,45 +4426,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5123,7 +4471,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Conversation retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5139,45 +4487,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5212,7 +4528,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Log retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5251,49 +4567,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5347,7 +4627,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Messages retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5377,45 +4657,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5463,7 +4711,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully left the conversation.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5485,49 +4733,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5573,7 +4785,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Conversations retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -5626,44 +4838,14 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
-            },
-            "x-ms-summary": "Invalid request parameters."
+              "$ref": "#/definitions/errorResponse"
+            }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
-            },
-            "x-ms-summary": "Unauthorized"
+              "$ref": "#/definitions/errorResponse"
+            }
           }
         }
       }
@@ -5710,7 +4892,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Conversation muted successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -5726,45 +4908,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5816,7 +4966,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Message sent successfully.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/messageView"
             }
@@ -5824,45 +4974,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -5924,7 +5042,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session created successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6089,50 +5207,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "AccountTakedown"
-                  ],
-                  "description": "Error type."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error type."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6184,7 +5265,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Messages sent successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6204,45 +5285,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6290,7 +5339,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Conversation unmuted successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6306,45 +5355,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6396,7 +5413,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully marked the item as read.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6412,49 +5429,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6489,7 +5470,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Metadata retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6580,7 +5561,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved the message context.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -6599,49 +5580,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6698,7 +5643,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Actor access updated successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -6716,45 +5661,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6811,7 +5724,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deleted successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -6829,49 +5742,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -6919,7 +5796,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deleted successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -6937,45 +5814,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7023,7 +5868,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully disabled the invite codes.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -7099,7 +5944,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account invites enabled successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -7117,45 +5962,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7190,7 +6003,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/accountView"
             }
@@ -7198,45 +6011,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7274,7 +6055,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -7293,45 +6074,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7410,45 +6159,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7501,7 +6218,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of matching accounts retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -7525,49 +6242,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7656,49 +6337,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7752,7 +6397,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - Email updated successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -7770,49 +6415,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -7866,7 +6475,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - Handle updated successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -7944,7 +6553,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK - Password updated successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -8726,6 +7335,11 @@
         "description": "Get a single record from a repository.",
         "operationId": "RepoGetRecord",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "repo",
@@ -8805,6 +7419,11 @@
         "operationId": "CreateRecord",
         "consumes": [ "application/json" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -8891,6 +7510,11 @@
         "operationId": "DeleteRecord",
         "consumes": [ "application/json" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -8958,6 +7582,11 @@
         "description": "Get information about an account and repository, including the list of collections.",
         "operationId": "DescribeRepo",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "repo",
@@ -9019,6 +7648,11 @@
         "description": "Import a repo in the form of a CAR file. Content-Length header required.",
         "operationId": "ImportRepo",
         "consumes": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -9058,6 +7692,11 @@
         "description": "Returns a list of missing blobs for the requesting account.",
         "operationId": "ListMissingBlobs",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
@@ -9121,6 +7760,11 @@
         "description": "List a range of records in a repository, matching a specific collection.",
         "operationId": "ListRecords",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "repo",
@@ -9209,6 +7853,11 @@
         "operationId": "PutRecord",
         "consumes": [ "application/json" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -9299,6 +7948,11 @@
         "operationId": "UploadBlob",
         "consumes": [ "multipart/form-data" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "formData",
@@ -9357,7 +8011,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account successfully activated. No response body."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -9393,7 +8047,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account status retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -9509,7 +8163,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Email confirmed successfully. No response body."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -9600,7 +8254,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account created successfully. Login session returned.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -9693,7 +8347,7 @@
         ],
         "responses": {
           "200": {
-            "description": "App password created successfully.",
+            "description": "OK",
             "schema": {
               "$ref": "#/definitions/appPassword"
             }
@@ -9701,50 +8355,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "AccountTakedown"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -9796,7 +8413,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Invite code created successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -9880,7 +8497,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Invite codes created successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -9962,7 +8579,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account successfully deactivated. No response body."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -9997,54 +8614,18 @@
         ],
         "responses": {
           "200": {
-            "description": "Session deleted successfully."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10068,7 +8649,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Server description retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10106,49 +8687,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10190,7 +8735,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Invite codes retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10209,50 +8754,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "DuplicateCreate"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10303,7 +8811,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Service authentication token retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10351,7 +8859,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session details retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10432,7 +8940,7 @@
         ],
         "responses": {
           "200": {
-            "description": "App passwords retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10451,50 +8959,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "AccountTakedown"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10518,54 +8989,18 @@
         ],
         "responses": {
           "200": {
-            "description": "Account deletion request initiated successfully."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10589,54 +9024,18 @@
         ],
         "responses": {
           "200": {
-            "description": "Email confirmation request sent successfully."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10660,7 +9059,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Token request for email update successful.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10677,49 +9076,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -10767,7 +9130,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Password reset request initiated successfully. No response body."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -10823,7 +9186,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Signing key reserved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "required": [
@@ -10899,7 +9262,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Password reset successfully. No response body."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -10954,54 +9317,18 @@
         ],
         "responses": {
           "200": {
-            "description": "App Password revoked successfully."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken"
-                  ],
-                  "description": "Error code indicating the type of failure."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ],
-                  "description": "Error code indicating missing authentication."
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Detailed error message."
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -11053,7 +9380,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Email updated successfully."
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
@@ -11077,6 +9404,11 @@
         "description": "Get a blob associated with a given account.",
         "operationId": "GetBlob",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "did",
@@ -11130,6 +9462,11 @@
         "description": "Get data blocks from a given repo, by CID.",
         "operationId": "GetBlocks",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "did",
@@ -11200,6 +9537,11 @@
             "type": "string"
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -11249,9 +9591,14 @@
             "type": "string"
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Record successfully retrieved.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -11294,6 +9641,11 @@
         "description": "Download a repository export as CAR file.",
         "operationId": "SyncGetRepo",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "did",
@@ -11352,6 +9704,11 @@
             "type": "string"
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -11403,6 +9760,11 @@
         "description": "List account blob CIDs since a repo revision.",
         "operationId": "ListBlobs",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "did",
@@ -11485,6 +9847,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
@@ -11556,6 +9923,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -11609,6 +9981,11 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -11978,46 +10355,13 @@
           "400": {
             "description": "Bad Request",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "InvalidRequest",
-                    "ExpiredToken",
-                    "InvalidToken",
-                    "SubjectHasAction"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           },
           "401": {
             "description": "Unauthorized",
             "schema": {
-              "type": "object",
-              "required": [
-                "error",
-                "message"
-              ],
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "enum": [
-                    "AuthMissing"
-                  ]
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/errorResponse"
             }
           }
         }
@@ -12034,7 +10378,7 @@
         "x-ms-summary": "Retrieve moderation event details",
         "security": [
           {
-            "Bearer": []
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -12076,6 +10420,11 @@
         "description": "Get details about a record.",
         "operationId": "GetRecordModeration",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "uri",
@@ -12136,6 +10485,11 @@
             }
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -12184,6 +10538,11 @@
             "type": "string"
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -12224,7 +10583,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved moderation repositories.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -12500,6 +10859,11 @@
         "description": "View moderation statuses of subjects (record or repo).",
         "operationId": "QueryStatusesModeration",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "includeAllUserRecords",
@@ -12679,6 +11043,11 @@
         "description": "Find repositories based on a search term.",
         "operationId": "SearchReposModeration",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "q",
@@ -12761,7 +11130,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Server configuration retrieved successfully.",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -12811,6 +11180,11 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -12875,6 +11249,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -12938,6 +11317,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -12995,6 +11379,11 @@
         "operationId": "GetValues",
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -13075,6 +11464,11 @@
         "operationId": "QuerySets",
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -13173,6 +11567,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -13214,6 +11613,11 @@
         "description": "Find all correlated threat signatures between 2 or more accounts.",
         "operationId": "FindCorrelation",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "dids",
@@ -13268,6 +11672,11 @@
         "operationId": "FindRelatedAccounts",
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -13348,6 +11757,11 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -13409,6 +11823,11 @@
         "operationId": "DeleteMemberTeam",
         "consumes": [ "application/json" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -13454,6 +11873,11 @@
         "description": "List all members with access to the ozone service.",
         "operationId": "ListMembersTeam",
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
@@ -13518,6 +11942,11 @@
         "operationId": "UpdateMemberTeam",
         "consumes": [ "application/json" ],
         "produces": [ "application/json" ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -13601,7 +12030,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "OK",
             "schema": {
               "type": "object",
               "properties": {
@@ -13613,10 +12042,16 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/errorResponse"
+            }
           }
         }
       }
