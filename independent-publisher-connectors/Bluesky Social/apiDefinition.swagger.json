@@ -378,16 +378,11 @@
     },
     "/xrpc/app.bsky.actor.searchActorsTypeahead": {
       "get": {
-        "tags": [
-          "app.bsky.actor"
-        ],
+        "tags": [ "app.bsky.actor" ],
         "summary": "Search Actors for Typeahead",
         "description": "Retrieve account suggestions for typeahead search.",
-        "x-ms-summary": "Retrieve account suggestions for typeahead search.",
         "operationId": "SearchActorsTypeahead",
-        "produces": [
-          "application/json"
-        ],
+        "produces": [ "application/json" ],
         "security": [
           {
             "bearerAuth": []
@@ -398,7 +393,7 @@
             "name": "q",
             "in": "query",
             "description": "The search term used for typeahead results.",
-            "required": true,
+            "required": false,
             "type": "string",
             "x-ms-summary": "Search Term"
           },
@@ -408,7 +403,9 @@
             "description": "Maximum number of results to retrieve.",
             "required": false,
             "type": "integer",
-            "format": "int32",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10,
             "x-ms-summary": "Limit"
           }
         ],
@@ -417,124 +414,13 @@
             "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "actors" ],
               "properties": {
                 "actors": {
                   "type": "array",
                   "description": "An array of minimal actor details matching the typeahead search.",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "did": {
-                        "type": "string",
-                        "description": "Decentralized Identifier (DID) of the actor."
-                      },
-                      "handle": {
-                        "type": "string",
-                        "description": "Unique handle of the actor."
-                      },
-                      "displayName": {
-                        "type": "string",
-                        "description": "Display name of the actor."
-                      },
-                      "avatar": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "URI of the actor's avatar image."
-                      },
-                      "associated": {
-                        "type": "object",
-                        "description": "Associated metadata for the actor.",
-                        "properties": {
-                          "lists": {
-                            "type": "integer",
-                            "description": "Number of lists the actor is part of."
-                          },
-                          "feedgens": {
-                            "type": "integer",
-                            "description": "Number of feed generators associated with the actor."
-                          },
-                          "starterPacks": {
-                            "type": "integer",
-                            "description": "Number of starter packs associated with the actor."
-                          },
-                          "labeler": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is a labeler."
-                          },
-                          "chat": {
-                            "type": "object",
-                            "description": "Chat preferences for the actor.",
-                            "properties": {
-                              "allowIncoming": {
-                                "type": "string",
-                                "description": "Specifies if incoming chats are allowed."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "viewer": {
-                        "type": "object",
-                        "description": "Viewer-specific metadata for the actor.",
-                        "properties": {
-                          "muted": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is muted by the viewer."
-                          },
-                          "mutedByList": {
-                            "$ref": "#/definitions/MutedByList"
-                          },
-                          "blockedBy": {
-                            "type": "boolean",
-                            "description": "Indicates if the actor is blocked by the viewer."
-                          },
-                          "blocking": {
-                            "type": "string",
-                            "description": "Details of the block, if applicable."
-                          },
-                          "blockingByList": {
-                            "$ref": "#/definitions/BlockingByList"
-                          },
-                          "following": {
-                            "type": "string",
-                            "description": "Indicates if the viewer is following the actor."
-                          },
-                          "followedBy": {
-                            "type": "string",
-                            "description": "Indicates if the actor is following the viewer."
-                          },
-                          "knownFollowers": {
-                            "type": "object",
-                            "description": "Known followers of the actor.",
-                            "properties": {
-                              "count": {
-                                "type": "integer",
-                                "description": "Total number of known followers."
-                              },
-                              "followers": {
-                                "type": "array",
-                                "description": "List of known followers.",
-                                "items": {
-                                  "$ref": "#/definitions/profileView"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "labels": {
-                        "type": "array",
-                        "description": "Labels associated with the actor.",
-                        "items": {
-                          "$ref": "#/definitions/Label"
-                        }
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The timestamp of the actor's profile creation."
-                      }
-                    }
+                    "$ref": "#/definitions/appProfileViewBasic"
                   }
                 }
               }
@@ -2496,7 +2382,7 @@
                 "followers": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/profileViewBasic"
+                    "$ref": "#/definitions/appProfileViewBasic"
                   },
                   "description": "List of followers who are also followed by the viewer."
                 }
@@ -2980,16 +2866,11 @@
     },
     "/xrpc/app.bsky.graph.getStarterPack": {
       "get": {
-        "tags": [
-          "graph"
-        ],
+        "tags": [ "app.bsky.graph" ],
         "summary": "Get Starter Pack",
-        "x-ms-summary": "Retrieve a view of a starter pack.",
         "description": "Gets a view of a starter pack based on the provided reference (AT-URI).",
         "operationId": "getStarterPack",
-        "produces": [
-          "application/json"
-        ],
+        "produces": [ "application/json" ],
         "security": [
           {
             "bearerAuth": []
@@ -3000,9 +2881,9 @@
             "name": "starterPack",
             "in": "query",
             "description": "Reference (AT-URI) of the starter pack record.",
-            "x-ms-summary": "Starter Pack Identifier",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "x-ms-summary": "Starter Pack Identifier"
           }
         ],
         "responses": {
@@ -3010,16 +2891,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
+              "required": [ "starterPack" ],
               "properties": {
                 "starterPack": {
-                  "x-ms-dynamic-schema": {
-                    "operationId": "getStarterPack",
-                    "parameters": {
-                      "starterPack": "{starterPack}"
-                    },
-                    "value-path": "starterPack"
-                  },
-                  "description": "View details of the starter pack."
+                  "$ref": "#/definitions/starterPackView"
                 }
               }
             }
@@ -4809,7 +4684,7 @@
                       "members": {
                         "type": "array",
                         "items": {
-                          "$ref": "#/definitions/profileViewBasic"
+                          "$ref": "#/definitions/chatProfileViewBasic"
                         },
                         "description": "List of members in the conversation."
                       },
@@ -8349,7 +8224,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/appPassword"
+              "$ref": "#/definitions/createAppPassword"
             }
           },
           "400": {
@@ -8950,7 +8825,7 @@
                 "passwords": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/appPassword"
+                    "$ref": "#/definitions/listAppPassword"
                   }
                 }
               }
@@ -12382,6 +12257,63 @@
         }
       }
     },
+    "starterPackView": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "record",
+        "creator",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "record": {},
+        "creator": {
+          "$ref": "#/definitions/appProfileViewBasic"
+        },
+        "list": {
+          "$ref": "#/definitions/listViewBasic"
+        },
+        "listItemsSample": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/listItemView"
+          },
+          "maxItems": 12
+        },
+        "feeds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/generatorView"
+          },
+          "maxItems": 3
+        },
+        "joinedWeekCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joinedAllTimeCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
     "starterPackViewBasic": {
       "type": "object",
       "required": [
@@ -12400,7 +12332,7 @@
         },
         "record": {},
         "creator": {
-          "$ref": "#/definitions/profileViewBasic"
+          "$ref": "#/definitions/appProfileViewBasic"
         },
         "listItemCount": {
           "type": "integer",
@@ -12695,7 +12627,7 @@
           "type": "array",
           "description": "Labels associated with the post.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "threadgate": {
@@ -12755,7 +12687,7 @@
           "type": "array",
           "description": "Labels associated with the profile.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "createdAt": {
@@ -12827,50 +12759,6 @@
         }
       }
     },
-    "Label": {
-      "type": "object",
-      "description": "Labels associated with a post or profile.",
-      "properties": {
-        "ver": {
-          "type": "integer",
-          "description": "Version of the label."
-        },
-        "src": {
-          "type": "string",
-          "description": "Source of the label."
-        },
-        "uri": {
-          "type": "string",
-          "description": "URI associated with the label."
-        },
-        "cid": {
-          "type": "string",
-          "description": "CID associated with the label."
-        },
-        "val": {
-          "type": "string",
-          "description": "Value of the label."
-        },
-        "neg": {
-          "type": "boolean",
-          "description": "Indicates if the label is negative."
-        },
-        "cts": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Timestamp of label creation."
-        },
-        "exp": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Expiration timestamp of the label."
-        },
-        "sig": {
-          "type": "string",
-          "description": "Signature of the label."
-        }
-      }
-    },
     "Threadgate": {
       "type": "object",
       "description": "Access restrictions and details for a thread.",
@@ -12928,7 +12816,7 @@
           "type": "array",
           "description": "Labels associated with the list item.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         }
       }
@@ -12967,7 +12855,7 @@
           "type": "array",
           "description": "Labels associated with the list.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "viewer": {
@@ -13014,7 +12902,7 @@
           "type": "array",
           "description": "Labels associated with the list.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "viewer": {
@@ -13134,7 +13022,7 @@
           "type": "array",
           "description": "Labels associated with the list.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "viewer": {
@@ -13191,7 +13079,7 @@
           "type": "array",
           "description": "Labels associated with the list.",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           }
         },
         "createdAt": {
@@ -13303,7 +13191,7 @@
       ],
       "properties": {
         "by": {
-          "$ref": "#/definitions/profileViewBasic"
+          "$ref": "#/definitions/appProfileViewBasic"
         },
         "indexedAt": {
           "type": "string",
@@ -13644,13 +13532,39 @@
         "followers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/profileViewBasic"
+            "$ref": "#/definitions/appProfileViewBasic"
           },
           "maxItems": 5
         }
       }
     },
-    "profileViewBasic": {
+    "appProfileViewBasic": {
+      "type": "object",
+      "properties": {
+        "did": {
+          "type": "string",
+          "description": "Decentralized Identifier (DID) of the actor."
+        },
+        "handle": {
+          "type": "string",
+          "description": "Unique handle of the actor."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the actor."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URI of the actor's avatar image."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of the actor's profile creation."
+        }
+      }
+    },
+    "chatProfileViewBasic": {
       "type": "object",
       "required": [
         "did",
@@ -13671,7 +13585,6 @@
         },
         "avatar": {
           "type": "string",
-          "format": "uri",
           "description": "URI of the actor's avatar."
         },
         "associated": {
@@ -13683,7 +13596,7 @@
         "labels": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Label"
+            "$ref": "#/definitions/label"
           },
           "description": "Array of labels associated with the actor."
         },
@@ -13765,7 +13678,7 @@
         "members": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/profileViewBasic"
+            "$ref": "#/definitions/chatProfileViewBasic"
           },
           "description": "List of members in the conversation.",
           "x-ms-summary": "Conversation Members"
@@ -14161,7 +14074,7 @@
         }
       }
     },
-    "appPassword": {
+    "createAppPassword": {
       "type": "object",
       "required": [
         "name",
@@ -14178,6 +14091,24 @@
         "createdAt": {
           "type": "string",
           "format": "date-time"
+        },
+        "privileged": {
+          "type": "boolean"
+        }
+      }
+    },
+    "listAppPassword": {
+      "type": "object",
+      "required": [
+        "name",
+        "createdAt"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
         },
         "privileged": {
           "type": "boolean"
@@ -16073,4 +16004,4 @@
       }
     }
   }
-  }
+}
