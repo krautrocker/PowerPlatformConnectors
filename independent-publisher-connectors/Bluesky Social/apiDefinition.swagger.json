@@ -12533,7 +12533,7 @@
           "$ref": "#/definitions/Post"
         },
         "reply": {
-          "$ref": "#/definitions/Reply"
+          "$ref": "#/definitions/reply"
         },
         "reason": {
           "type": "object",
@@ -12650,7 +12650,7 @@
               "type": "array",
               "description": "Lists associated with the threadgate.",
               "items": {
-                "$ref": "#/definitions/ListMetadata"
+                "$ref": "#/definitions/listMetadata"
               }
             }
           }
@@ -12678,10 +12678,10 @@
           "description": "Avatar URL of the profile."
         },
         "associated": {
-          "$ref": "#/definitions/AssociatedMetadata"
+          "$ref": "#/definitions/associatedMetadata"
         },
         "viewer": {
-          "$ref": "#/definitions/ViewerMetadata"
+          "$ref": "#/definitions/viewerMetadata"
         },
         "labels": {
           "type": "array",
@@ -12697,7 +12697,7 @@
         }
       }
     },
-    "AssociatedMetadata": {
+    "associatedMetadata": {
       "type": "object",
       "description": "Associated metadata for a profile.",
       "properties": {
@@ -12759,7 +12759,7 @@
         }
       }
     },
-    "Threadgate": {
+    "threadgate": {
       "type": "object",
       "description": "Access restrictions and details for a thread.",
       "properties": {
@@ -12779,12 +12779,12 @@
           "type": "array",
           "description": "Lists associated with the threadgate.",
           "items": {
-            "$ref": "#/definitions/ListItem"
+            "$ref": "#/definitions/listItem"
           }
         }
       }
     },
-    "ListItem": {
+    "listItem": {
       "type": "object",
       "description": "An item in a list.",
       "properties": {
@@ -12821,7 +12821,7 @@
         }
       }
     },
-    "MutedByList": {
+    "mutedByList": {
       "type": "object",
       "description": "Details of a list that muted the actor.",
       "properties": {
@@ -12859,7 +12859,7 @@
           }
         },
         "viewer": {
-          "$ref": "#/definitions/ViewerMetadata"
+          "$ref": "#/definitions/viewerMetadata"
         },
         "indexedAt": {
           "type": "string",
@@ -12868,7 +12868,7 @@
         }
       }
     },
-    "BlockingByList": {
+    "blockingByList": {
       "type": "object",
       "description": "Details of a list that blocks the actor.",
       "properties": {
@@ -12906,7 +12906,7 @@
           }
         },
         "viewer": {
-          "$ref": "#/definitions/ViewerMetadata"
+          "$ref": "#/definitions/viewerMetadata"
         },
         "indexedAt": {
           "type": "string",
@@ -12915,7 +12915,7 @@
         }
       }
     },
-    "ViewerMetadata": {
+    "viewerMetadata": {
       "type": "object",
       "description": "Metadata about the viewer's relationship to the actor.",
       "properties": {
@@ -12940,14 +12940,14 @@
           "description": "Indicates if the actor is following the viewer."
         },
         "mutedByList": {
-          "$ref": "#/definitions/MutedByList"
+          "$ref": "#/definitions/mutedByList"
         },
         "blockingByList": {
-          "$ref": "#/definitions/BlockingByList"
+          "$ref": "#/definitions/blockingByList"
         }
       }
     },
-    "Reply": {
+    "reply": {
       "type": "object",
       "description": "Metadata about a reply in a conversation thread.",
       "properties": {
@@ -12983,13 +12983,13 @@
               "description": "Avatar image URI of the author."
             },
             "associated": {
-              "$ref": "#/definitions/AssociatedMetadata"
+              "$ref": "#/definitions/associatedMetadata"
             }
           }
         }
       }
     },
-    "ListMetadata": {
+    "listMetadata": {
       "type": "object",
       "description": "Metadata for a list.",
       "properties": {
@@ -13046,7 +13046,7 @@
         }
       }
     },
-    "ListDetails": {
+    "listDetails": {
       "type": "object",
       "description": "Details about a specific list.",
       "properties": {
@@ -13155,7 +13155,50 @@
       "type": "object",
       "additionalProperties": true
     },
-    "replyRef": {
+    "feedReplyRef": {
+      "type": "object",
+      "required": [ "root", "parent" ],
+      "properties": {
+        "root": {
+          "description": "Root post reference, which can be a postView, notFoundPost, or blockedPost.",
+          "type": "object",
+          "x-ms-schema": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/postView"
+              },
+              {
+                "$ref": "#/definitions/notFoundPost"
+              },
+              {
+                "$ref": "#/definitions/blockedPost"
+              }
+            ]
+          }
+        },
+        "parent": {
+          "description": "Parent post reference, which can be a postView, notFoundPost, or blockedPost.",
+          "type": "object",
+          "x-ms-schema": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/postView"
+              },
+              {
+                "$ref": "#/definitions/notFoundPost"
+              },
+              {
+                "$ref": "#/definitions/blockedPost"
+              }
+            ]
+          }
+        },
+        "grandparentAuthor": {
+          "$ref": "#/definitions/appProfileViewBasic"
+        }
+      }
+    },
+    "postReplyRef": {
       "type": "object",
       "description": "References the root and parent of a post reply.",
       "required": [ "root", "parent" ],
@@ -14190,7 +14233,7 @@
           "$ref": "#/definitions/postView"
         },
         "reply": {
-          "$ref": "#/definitions/replyRef"
+          "$ref": "#/definitions/feedReplyRef"
         },
         "reason": {
           "type": "object",
