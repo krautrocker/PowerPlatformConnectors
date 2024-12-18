@@ -10754,8 +10754,7 @@
             "x-ms-summary": "Subject URI",
             "description": "The subject to get the status for.",
             "required": false,
-            "type": "string",
-            "format": "uri"
+            "type": "string"
           },
           {
             "name": "comment",
@@ -12481,12 +12480,10 @@
           "maxLength": 2560
         },
         "avatar": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "banner": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "followersCount": {
           "type": "integer"
@@ -12512,7 +12509,7 @@
           "format": "date-time"
         },
         "viewer": {
-          "$ref": "#/definitions/viewerState"
+          "$ref": "#/definitions/appViewerState"
         },
         "labels": {
           "type": "array",
@@ -12827,7 +12824,6 @@
       "properties": {
         "uri": {
           "type": "string",
-          "format": "uri",
           "description": "URI of the list that muted the actor."
         },
         "cid": {
@@ -12844,7 +12840,6 @@
         },
         "avatar": {
           "type": "string",
-          "format": "uri",
           "description": "Avatar image URI for the list."
         },
         "listItemCount": {
@@ -12874,7 +12869,6 @@
       "properties": {
         "uri": {
           "type": "string",
-          "format": "uri",
           "description": "URI of the list that blocks the actor."
         },
         "cid": {
@@ -12891,7 +12885,6 @@
         },
         "avatar": {
           "type": "string",
-          "format": "uri",
           "description": "Avatar image URI for the list."
         },
         "listItemCount": {
@@ -12979,7 +12972,6 @@
             },
             "avatar": {
               "type": "string",
-              "format": "uri",
               "description": "Avatar image URI of the author."
             },
             "associated": {
@@ -13292,7 +13284,7 @@
           "type": "string"
         },
         "viewer": {
-          "$ref": "#/definitions/viewerState"
+          "$ref": "#/definitions/appViewerState"
         }
       }
     },
@@ -13316,7 +13308,7 @@
         }
       }
     },
-    "viewerState": {
+    "appViewerState": {
       "type": "object",
       "description": "Metadata about the requesting account's relationship with the subject account.",
       "properties": {
@@ -13401,8 +13393,7 @@
           }
         },
         "avatar": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "listItemCount": {
           "type": "integer",
@@ -13501,8 +13492,7 @@
         },
         "uri": {
           "type": "string",
-          "description": "AT URI of the record, repo (account), or other resource that this label applies to.",
-          "format": "uri"
+          "description": "AT URI of the record, repo (account), or other resource that this label applies to."
         },
         "cid": {
           "type": "string",
@@ -13634,7 +13624,7 @@
           "$ref": "#/definitions/profileAssociated"
         },
         "viewer": {
-          "$ref": "#/definitions/viewerState"
+          "$ref": "#/definitions/appViewerState"
         },
         "labels": {
           "type": "array",
@@ -13773,7 +13763,7 @@
           }
         },
         "embed": {
-          "$ref": "#/definitions/embed.record"
+          "$ref": "#/definitions/embedRecord"
         }
       }
     },
@@ -14162,12 +14152,10 @@
       "type": "object",
       "properties": {
         "privacyPolicy": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "termsOfService": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         }
       }
     },
@@ -14175,8 +14163,7 @@
       "type": "object",
       "properties": {
         "url": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         }
       }
     },
@@ -14297,8 +14284,7 @@
           }
         },
         "avatar": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "likeCount": {
           "type": "integer",
@@ -16008,6 +15994,421 @@
           "items": {
             "$ref": "#/definitions/sigDetail"
           }
+        }
+      }
+    },
+    "externalView": {
+      "type": "object",
+      "required": [
+        "external"
+      ],
+      "properties": {
+        "external": {
+          "$ref": "#/definitions/viewExternal"
+        }
+      }
+    },
+    "viewExternal": {
+      "type": "object",
+      "required": [
+        "uri",
+        "title",
+        "description"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "thumb": {
+          "type": "string"
+        }
+      }
+    },
+    "imagesView": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/viewImage"
+          },
+          "maxItems": 4
+        }
+      }
+    },
+    "viewImage": {
+      "type": "object",
+      "required": [
+        "thumb",
+        "fullsize",
+        "alt"
+      ],
+      "properties": {
+        "thumb": {
+          "type": "string",
+          "description": "Fully-qualified URL where a thumbnail of the image can be fetched."
+        },
+        "fullsize": {
+          "type": "string",
+          "description": "Fully-qualified URL where a large version of the image can be fetched."
+        },
+        "alt": {
+          "type": "string",
+          "description": "Alt text description of the image, for accessibility."
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/aspectRatio"
+        }
+      }
+    },
+    "aspectRatio": {
+      "type": "object",
+      "description": "width:height represents an aspect ratio. Can be approximate.",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "recordView": {
+      "type": "object",
+      "required": [ "record" ],
+      "properties": {
+        "record": {
+          "description": "The record can be one of several types.",
+          "type": "object",
+          "properties": {
+            "viewRecord": {
+              "$ref": "#/definitions/viewRecord"
+            },
+            "recordViewNotFound": {
+              "$ref": "#/definitions/recordViewNotFound"
+            },
+            "recordViewBlocked": {
+              "$ref": "#/definitions/recordViewBlocked"
+            },
+            "recordViewDetached": {
+              "$ref": "#/definitions/recordViewDetached"
+            },
+            "generatorView": {
+              "$ref": "#/definitions/generatorView"
+            },
+            "listView": {
+              "$ref": "#/definitions/listView"
+            },
+            "labelerView": {
+              "$ref": "#/definitions/labelerView"
+            },
+            "starterPackViewBasic": {
+              "$ref": "#/definitions/starterPackViewBasic"
+            }
+          }
+        }
+      }
+    },
+    "viewRecord": {
+      "type": "object",
+      "required": [
+        "uri",
+        "cid",
+        "author",
+        "value",
+        "indexedAt"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/appProfileViewBasic"
+        },
+        "value": {
+          "type": "object",
+          "description": "The specific record value (structure not detailed in this schema)."
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/label"
+          }
+        },
+        "replyCount": {
+          "type": "integer"
+        },
+        "repostCount": {
+          "type": "integer"
+        },
+        "likeCount": {
+          "type": "integer"
+        },
+        "quoteCount": {
+          "type": "integer"
+        },
+        "embeds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Possible embed types.",
+            "properties": {
+              "oneOf": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/imagesView"
+                }
+              }
+            }
+          }
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "recordViewNotFound": {
+      "type": "object",
+      "required": [
+        "uri",
+        "notFound"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "notFound": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "recordViewBlocked": {
+      "type": "object",
+      "required": [
+        "uri",
+        "blocked",
+        "author"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "blocked": {
+          "type": "boolean",
+          "default": true
+        },
+        "author": {
+          "$ref": "#/definitions/blockedAuthor"
+        }
+      }
+    },
+    "recordViewDetached": {
+      "type": "object",
+      "required": [
+        "uri",
+        "detached"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "detached": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "embedRecordWithMedia": {
+      "type": "object",
+      "required": [
+        "record",
+        "media"
+      ],
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/embedRecord"
+        },
+        "media": {
+          "type": "object",
+          "description": "The media associated with the record.",
+          "properties": {
+            "oneOfItems": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/embedImages"
+              }
+            }
+          }
+        }
+      }
+    },
+    "embedImages": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/embedImagesImage"
+          },
+          "maxItems": 4
+        }
+      }
+    },
+    "embedImagesImage": {
+      "type": "object",
+      "required": [
+        "image",
+        "alt"
+      ],
+      "properties": {
+        "image": {
+          "type": "string",
+          "format": "binary",
+          "maxLength": 1000000
+        },
+        "alt": {
+          "type": "string",
+          "description": "Alt text description of the image, for accessibility."
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/aspectRatio"
+        }
+      }
+    },
+    "embedRecordWithMediaView": {
+      "type": "object",
+      "required": [
+        "record",
+        "media"
+      ],
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/embedRecordView"
+        },
+        "media": {
+          "type": "object",
+          "description": "The media associated with the record view.",
+          "properties": {
+            "mediaType": {
+              "type": "string",
+              "enum": [
+                "imagesView",
+                "videoView",
+                "externalView"
+              ],
+              "description": "The type of media."
+            },
+            "details": {
+              "type": "object",
+              "description": "Details of the media.",
+              "properties": {
+                "imagesView": {
+                  "$ref": "#/definitions/imagesView"
+                },
+                "videoView": {
+                  "$ref": "#/definitions/videoView"
+                },
+                "externalView": {
+                  "$ref": "#/definitions/externalView"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "videoView": {
+      "type": "object",
+      "required": [
+        "cid",
+        "playlist"
+      ],
+      "properties": {
+        "cid": {
+          "type": "string"
+        },
+        "playlist": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/aspectRatio"
+        }
+      }
+    },
+    "images": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/image"
+          },
+          "maxItems": 4
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "required": [
+        "image",
+        "alt"
+      ],
+      "properties": {
+        "image": {
+          "type": "string",
+          "format": "binary",
+          "maxLength": 1000000
+        },
+        "alt": {
+          "type": "string",
+          "description": "Alt text description of the image, for accessibility."
+        },
+        "aspectRatio": {
+          "$ref": "#/definitions/aspectRatio"
+        }
+      }
+    },
+    "embedRecord": {
+      "type": "object",
+      "required": [
+        "record"
+      ],
+      "properties": {
+        "record": {
+          "$ref": "#/definitions/strongRef"
         }
       }
     },
