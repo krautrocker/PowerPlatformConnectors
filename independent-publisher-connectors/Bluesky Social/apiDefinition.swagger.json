@@ -13719,9 +13719,20 @@
         "lastMessage": {
           "type": "object",
           "description": "The last message in the conversation.",
-          "x-ms-dynamic-schema": {
-            "operationId": "listConvos",
-            "value-path": "lastMessage"
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The unique identifier of the message."
+            },
+            "content": {
+              "type": "string",
+              "description": "The content of the last message."
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "The time when the last message was sent."
+            }
           },
           "x-ms-summary": "Last Message in Conversation"
         },
