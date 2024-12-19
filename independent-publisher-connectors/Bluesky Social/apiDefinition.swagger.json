@@ -106,7 +106,7 @@
         "summary": "Get Profile",
         "x-ms-summary": "Fetch a detailed profile of an actor.",
         "description": "Retrieve a detailed profile view of an actor using their handle or DID.",
-        "operationId": "getProfile",
+        "operationId": "GetProfile",
         "produces": [
           "application/json"
         ],
@@ -133,7 +133,7 @@
               "properties": {
                 "profile": {
                   "x-ms-dynamic-schema": {
-                    "operationId": "getProfile",
+                    "operationId": "GetProfile",
                     "value-path": "profile",
                     "parameters": {
                       "actor": "{actor}"
@@ -166,7 +166,7 @@
         ],
         "summary": "Get Profiles",
         "description": "Get detailed profile views of multiple actors.",
-        "operationId": "getProfiles",
+        "operationId": "GetProfiles",
         "produces": [
           "application/json"
         ],
@@ -506,7 +506,7 @@
         "summary": "Get Actor Feeds",
         "x-ms-summary": "Fetch feeds created by an actor.",
         "description": "Get a list of feeds created by the actor.",
-        "operationId": "getActorFeeds",
+        "operationId": "GetActorFeeds",
         "produces": [
           "application/json"
         ],
@@ -558,7 +558,7 @@
                   "type": "array",
                   "items": {
                     "x-ms-dynamic-schema": {
-                      "operationId": "getActorFeeds",
+                      "operationId": "GetActorFeeds",
                       "value-path": "feeds",
                       "parameters": {
                         "actor": "{actor}"
@@ -784,7 +784,7 @@
         "summary": "Get Feed",
         "x-ms-summary": "Retrieve a hydrated feed.",
         "description": "Get a hydrated feed from an actor's selected feed generator.",
-        "operationId": "getFeed",
+        "operationId": "GetFeed",
         "produces": [
           "application/json"
         ],
@@ -845,7 +845,7 @@
                   "items": {
                     "type": "object",
                     "x-ms-dynamic-schema": {
-                      "operationId": "getFeed",
+                      "operationId": "GetFeed",
                       "value-path": "feed",
                       "parameters": {
                         "feed": "{feed}",
@@ -1645,7 +1645,7 @@
         "summary": "Get Suggested Feeds",
         "x-ms-summary": "Fetch suggested feeds for the account.",
         "description": "Retrieve a list of suggested feeds for the requesting account.",
-        "operationId": "getSuggestedFeeds",
+        "operationId": "GetSuggestedFeeds",
         "produces": [
           "application/json"
         ],
@@ -1690,7 +1690,7 @@
                   "items": {
                     "type": "object",
                     "x-ms-dynamic-schema": {
-                      "operationId": "getSuggestedFeeds",
+                      "operationId": "GetSuggestedFeeds",
                       "value-path": "feeds"
                     }
                   },
@@ -1722,7 +1722,7 @@
         "summary": "Get Timeline",
         "x-ms-summary": "Retrieve home timeline.",
         "description": "Get a view of the requesting account's home timeline.",
-        "operationId": "getTimeline",
+        "operationId": "GetTimeline",
         "produces": [
           "application/json"
         ],
@@ -1774,7 +1774,7 @@
                   "type": "array",
                   "items": {
                     "x-ms-dynamic-schema": {
-                      "operationId": "getTimeline",
+                      "operationId": "GetTimeline",
                       "value-path": "feed"
                     }
                   },
@@ -2124,7 +2124,7 @@
         "summary": "Get Followers",
         "x-ms-summary": "Retrieve accounts following a specified actor.",
         "description": "Enumerate accounts that follow a specified actor.",
-        "operationId": "getFollowers",
+        "operationId": "GetFollowers",
         "produces": [
           "application/json"
         ],
@@ -2172,7 +2172,7 @@
                   "type": "object",
                   "description": "Profile details of the actor whose followers are retrieved.",
                   "x-ms-dynamic-schema": {
-                    "operationId": "getFollowers",
+                    "operationId": "GetFollowers",
                     "value-path": "subject",
                     "parameters": {
                       "actor": "{actor}"
@@ -2188,7 +2188,7 @@
                   "items": {
                     "type": "object",
                     "x-ms-dynamic-schema": {
-                      "operationId": "getFollowers",
+                      "operationId": "GetFollowers",
                       "value-path": "followers",
                       "parameters": {
                         "actor": "{actor}"
@@ -2223,7 +2223,7 @@
         "summary": "Get Follows",
         "x-ms-summary": "Retrieve accounts followed by a specified actor.",
         "description": "Enumerates accounts that a specified actor follows.",
-        "operationId": "getFollows",
+        "operationId": "GetFollows",
         "produces": [
           "application/json"
         ],
@@ -2269,7 +2269,7 @@
               "properties": {
                 "subject": {
                   "x-ms-dynamic-schema": {
-                    "operationId": "getFollows",
+                    "operationId": "GetFollows",
                     "parameters": {
                       "actor": "{actor}"
                     },
@@ -2285,7 +2285,7 @@
                   "type": "array",
                   "items": {
                     "x-ms-dynamic-schema": {
-                      "operationId": "getFollows",
+                      "operationId": "GetFollows",
                       "parameters": {
                         "actor": "{actor}"
                       },
@@ -2320,7 +2320,7 @@
         "summary": "Get Known Followers",
         "x-ms-summary": "Retrieve known followers of an account.",
         "description": "Retrieve followers for a specific account that are also followed by the viewer.",
-        "operationId": "getKnownFollowers",
+        "operationId": "GetKnownFollowers",
         "produces": [
           "application/json"
         ],
@@ -2367,7 +2367,7 @@
                 "subject": {
                   "type": "object",
                   "x-ms-dynamic-schema": {
-                    "operationId": "getKnownFollowers",
+                    "operationId": "GetKnownFollowers",
                     "parameters": {
                       "actor": "{actor}"
                     },
@@ -2869,7 +2869,7 @@
         "tags": [ "app.bsky.graph" ],
         "summary": "Get Starter Pack",
         "description": "Gets a view of a starter pack based on the provided reference (AT-URI).",
-        "operationId": "getStarterPack",
+        "operationId": "GetStarterPack",
         "produces": [ "application/json" ],
         "security": [
           {
@@ -2922,7 +2922,7 @@
         "summary": "Get Starter Packs",
         "x-ms-summary": "Retrieve views for a list of starter packs.",
         "description": "Get detailed views for a list of starter packs based on the provided URIs.",
-        "operationId": "getStarterPacks",
+        "operationId": "GetStarterPacks",
         "produces": [
           "application/json"
         ],
@@ -2953,7 +2953,7 @@
                   "type": "array",
                   "items": {
                     "x-ms-dynamic-schema": {
-                      "operationId": "getStarterPacks",
+                      "operationId": "GetStarterPacks",
                       "parameters": {
                         "uris": "{uris}"
                       },
@@ -3982,7 +3982,7 @@
         "summary": "Upload Video",
         "x-ms-summary": "Upload and process a video on the PDS.",
         "description": "Upload a video to be processed and stored on the PDS.",
-        "operationId": "uploadVideo",
+        "operationId": "UploadVideo",
         "consumes": [
           "multipart/form-data"
         ],
@@ -4012,7 +4012,7 @@
               "properties": {
                 "jobStatus": {
                   "x-ms-dynamic-schema": {
-                    "operationId": "uploadVideo",
+                    "operationId": "UploadVideo",
                     "parameters": {
                       "file": {
                         "type": "file",
@@ -4048,7 +4048,7 @@
         ],
         "summary": "Delete Account",
         "description": "Delete an account.",
-        "operationId": "actorDeleteAccount",
+        "operationId": "ActorDeleteAccount",
         "produces": [
           "application/json"
         ],
@@ -4158,7 +4158,7 @@
         ],
         "summary": "Export Account Data",
         "description": "Export account data.",
-        "operationId": "actorExportAccountData",
+        "operationId": "ActorExportAccountData",
         "produces": [
           "application/json"
         ],
@@ -4264,7 +4264,7 @@
         "summary": "Get Conversation",
         "x-ms-summary": "Retrieve a specific conversation.",
         "description": "Get a conversation based on the provided conversation ID.",
-        "operationId": "getConvo",
+        "operationId": "GetConvo",
         "produces": [
           "application/json"
         ],
@@ -4321,7 +4321,7 @@
         "summary": "Get Convo for Members",
         "x-ms-summary": "Retrieve a conversation for specific members.",
         "description": "Get a conversation for one or many members.",
-        "operationId": "getConvoForMembers",
+        "operationId": "GetConvoForMembers",
         "produces": [
           "application/json"
         ],
@@ -4382,7 +4382,7 @@
         "summary": "Get Log",
         "x-ms-summary": "Retrieve a conversation log.",
         "description": "Retrieve the log of actions and messages in a conversation.",
-        "operationId": "getLog",
+        "operationId": "GetLog",
         "produces": [
           "application/json"
         ],
@@ -4429,7 +4429,7 @@
                         "type": "object",
                         "description": "Details about the event.",
                         "x-ms-dynamic-schema": {
-                          "operationId": "getLog",
+                          "operationId": "GetLog",
                           "value-path": "logs"
                         }
                       }
@@ -4462,7 +4462,7 @@
         "summary": "Get Messages",
         "x-ms-summary": "Retrieve messages in a conversation.",
         "description": "Get a list of messages from a specific conversation.",
-        "operationId": "getMessages",
+        "operationId": "GetMessages",
         "produces": [
           "application/json"
         ],
@@ -4517,7 +4517,7 @@
                   "type": "array",
                   "items": {
                     "x-ms-dynamic-schema": {
-                      "operationId": "getMessages",
+                      "operationId": "GetMessages",
                       "value-path": "messages",
                       "parameters": {
                         "convoId": "{convoId}"
@@ -4552,7 +4552,7 @@
         "summary": "Leave Conversation",
         "x-ms-summary": "Leave a conversation.",
         "description": "Leave a conversation by specifying its ID.",
-        "operationId": "leaveConvo",
+        "operationId": "LeaveConvo",
         "consumes": [
           "application/json"
         ],
@@ -4628,7 +4628,7 @@
         "summary": "List Conversations",
         "x-ms-summary": "Retrieve a list of conversations.",
         "description": "List conversations.",
-        "operationId": "listConvos",
+        "operationId": "ListConvos",
         "produces": [
           "application/json"
         ],
@@ -4803,7 +4803,7 @@
         "summary": "Send Message",
         "x-ms-summary": "Send a single message in a conversation.",
         "description": "Send a single message to a specific conversation.",
-        "operationId": "sendMessage",
+        "operationId": "SendMessage",
         "produces": [
           "application/json"
         ],
@@ -5102,7 +5102,7 @@
         "summary": "Send Batch Messages",
         "x-ms-summary": "Send a batch of messages to a conversation.",
         "description": "Send a batch of messages to multiple conversations.",
-        "operationId": "sendMessageBatch",
+        "operationId": "SendMessageBatch",
         "produces": [
           "application/json"
         ],
@@ -5180,7 +5180,7 @@
         "summary": "Unmute Conversation",
         "x-ms-summary": "Unmute a conversation.",
         "description": "Unmute a conversation.",
-        "operationId": "unmuteConvo",
+        "operationId": "UnmuteConvo",
         "consumes": [
           "application/json"
         ],
@@ -5250,7 +5250,7 @@
         "summary": "Update Conversation Read Status",
         "x-ms-summary": "Mark a conversation item as read.",
         "description": "Update an item in a conversation to mark it as read.",
-        "operationId": "updateRead",
+        "operationId": "UpdateRead",
         "consumes": [
           "application/json"
         ],
@@ -5324,7 +5324,7 @@
         "summary": "Get Actor Metadata",
         "x-ms-summary": "Retrieve metadata for a specific actor.",
         "description": "Fetch moderation-related metadata for an actor via DID",
-        "operationId": "getActorMetadata",
+        "operationId": "GetActorMetadata",
         "produces": [
           "application/json"
         ],
@@ -5389,7 +5389,7 @@
         "summary": "Get Message Context",
         "x-ms-summary": "Retrieve the context around a specific message.",
         "description": "Fetch surrounding messages from a conversation",
-        "operationId": "getMessageContext",
+        "operationId": "GetMessageContext",
         "produces": [
           "application/json"
         ],
@@ -5475,7 +5475,7 @@
         "summary": "Update Actor Access",
         "x-ms-summary": "Modify access permissions for an actor.",
         "description": "Update an actor's access permissions.",
-        "operationId": "updateActorAccess",
+        "operationId": "UpdateActorAccess",
         "consumes": [
           "application/json"
         ],
@@ -5555,7 +5555,7 @@
         ],
         "summary": "Delete Account",
         "description": "Delete an actor's account with a token and password.",
-        "operationId": "serverDeleteAccount",
+        "operationId": "ServerDeleteAccount",
         "consumes": [
           "application/json"
         ],
@@ -5637,7 +5637,7 @@
         "summary": "Delete Account",
         "x-ms-summary": "Delete a user account as an administrator.",
         "description": "Delete a user account as an administrator.",
-        "operationId": "adminDeleteAccount",
+        "operationId": "AdminDeleteAccount",
         "consumes": [
           "application/json"
         ],
@@ -5778,7 +5778,7 @@
         "summary": "Enable Account Invites",
         "x-ms-summary": "Re-enable an account's ability to receive invite codes.",
         "description": "Re-enable an account's ability to receive invite codes.",
-        "operationId": "adminEnableAccountInvites",
+        "operationId": "AdminEnableAccountInvites",
         "consumes": [
           "application/json"
         ],
@@ -5857,7 +5857,7 @@
         "summary": "Get Account Info",
         "x-ms-summary": "Retrieve details about an account.",
         "description": "Get details about an account.",
-        "operationId": "adminGetAccountInfo",
+        "operationId": "AdminGetAccountInfo",
         "produces": [
           "application/json"
         ],
@@ -5906,7 +5906,7 @@
         "summary": "Get Account Infos",
         "x-ms-summary": "Retrieve account details.",
         "description": "Get details about some accounts.",
-        "operationId": "adminGetAccountInfos",
+        "operationId": "AdminGetAccountInfos",
         "produces": [
           "application/json"
         ],
@@ -5969,7 +5969,7 @@
         "summary": "Get Invite Codes",
         "x-ms-summary": "Admin view of invite codes.",
         "description": "Get an admin view of invite codes.",
-        "operationId": "adminGetInviteCodes",
+        "operationId": "AdminGetInviteCodes",
         "produces": [
           "application/json"
         ],
@@ -6053,7 +6053,7 @@
         ],
         "summary": "Search Accounts",
         "description": "Get a list of accounts that matches your search query.",
-        "operationId": "adminSearchAccounts",
+        "operationId": "AdminSearchAccounts",
         "produces": [
           "application/json"
         ],
@@ -7875,7 +7875,7 @@
         "summary": "Activate Account",
         "x-ms-summary": "Reactivates a deactivated account.",
         "description": "Activates a currently deactivated account.",
-        "operationId": "activateAccount",
+        "operationId": "ActivateAccount",
         "produces": [
           "application/json"
         ],
@@ -8184,7 +8184,7 @@
         ],
         "summary": "Create App Password",
         "description": "Create an App Password.",
-        "operationId": "serverCreateAppPassword",
+        "operationId": "ServerCreateAppPassword",
         "consumes": [
           "application/json"
         ],
@@ -8478,7 +8478,7 @@
         ],
         "summary": "Delete Session",
         "description": "Delete the current session.",
-        "operationId": "serverDeleteSession",
+        "operationId": "ServerDeleteSession",
         "produces": [
           "application/json"
         ],
@@ -8513,7 +8513,7 @@
         ],
         "summary": "Describe Server",
         "description": "Describes the server's account creation requirements and capabilities.",
-        "operationId": "serverDescribeServer",
+        "operationId": "ServerDescribeServer",
         "produces": [
           "application/json"
         ],
@@ -8581,7 +8581,7 @@
         ],
         "summary": "Get Account Invite Codes",
         "description": "Get all invite codes for the current account.",
-        "operationId": "serverGetAccountInviteCodes",
+        "operationId": "ServerGetAccountInviteCodes",
         "produces": [
           "application/json"
         ],
@@ -8649,7 +8649,7 @@
         "summary": "Get Service Authentication Token",
         "x-ms-summary": "Fetch a signed authentication token.",
         "description": "Get a signed token on behalf of the requesting DID for the requested service.",
-        "operationId": "getServiceAuth",
+        "operationId": "GetServiceAuth",
         "produces": [
           "application/json"
         ],
@@ -8723,7 +8723,7 @@
         "summary": "Get Current Session Info",
         "x-ms-summary": "Retrieve session information.",
         "description": "Get information about the authenticated session.",
-        "operationId": "getSession",
+        "operationId": "GetSession",
         "produces": [
           "application/json"
         ],
@@ -8804,7 +8804,7 @@
         ],
         "summary": "List App Passwords",
         "description": "List all App Passwords.",
-        "operationId": "serverListAppPasswords",
+        "operationId": "ServerListAppPasswords",
         "produces": [
           "application/json"
         ],
@@ -8853,7 +8853,7 @@
         ],
         "summary": "Request Account Deletion",
         "description": "Initiate a user account deletion via email.",
-        "operationId": "serverRequestAccountDelete",
+        "operationId": "ServerRequestAccountDelete",
         "produces": [
           "application/json"
         ],
@@ -8888,7 +8888,7 @@
         ],
         "summary": "Request Email Confirmation",
         "description": "Request an email with a code to confirm ownership of email.",
-        "operationId": "serverRequestEmailConfirmation",
+        "operationId": "ServerRequestEmailConfirmation",
         "produces": [
           "application/json"
         ],
@@ -8923,7 +8923,7 @@
         ],
         "summary": "Request Email Update",
         "description": "Request a token in order to update email.",
-        "operationId": "serverRequestEmailUpdate",
+        "operationId": "ServerRequestEmailUpdate",
         "produces": [
           "application/json"
         ],
@@ -9161,7 +9161,7 @@
         ],
         "summary": "Revoke App Password",
         "description": "Revoke an App Password by name.",
-        "operationId": "serverRevokeAppPassword",
+        "operationId": "ServerRevokeAppPassword",
         "produces": [
           "application/json"
         ],
@@ -9216,7 +9216,7 @@
         ],
         "summary": "Update Email",
         "description": "Update an account's email.",
-        "operationId": "serverUpdateEmail",
+        "operationId": "ServerUpdateEmail",
         "produces": [
           "application/json"
         ],
@@ -10993,7 +10993,7 @@
         ],
         "summary": "Get Server Configuration",
         "description": "Get details about ozone's server configuration.",
-        "operationId": "serverGetConfig",
+        "operationId": "ServerGetConfig",
         "produces": [
           "application/json"
         ],
