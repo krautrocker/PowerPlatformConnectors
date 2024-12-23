@@ -38,8 +38,25 @@
     },
     "policyTemplateInstances": [
       {
+        "templateId": "sethost",
+        "title": "Set Host URL",
+        "parameters": {
+          "x-ms-apimTemplateParameter.host": "{{pdshost}}"
+        }
+      },
+      {
+        "templateId": "acquiretoken",
+        "title": "Acquire Access Token",
+        "parameters": {
+          "x-ms-apimTemplateParameter.tokenEndpoint": "https://{{pdshost}}/xrpc/com.atproto.server.createSession",
+          "x-ms-apimTemplateParameter.tokenMethod": "POST",
+          "x-ms-apimTemplateParameter.tokenBody": "username={{username}}&password={{password}}",
+          "x-ms-apimTemplateParameter.tokenResultPath": "accessJwt"
+        }
+      },
+      {
         "templateId": "setheader",
-        "title": "Add Authorization Header",
+        "title": "Set Authorization Header",
         "parameters": {
           "x-ms-apimTemplateParameter.name": "Authorization",
           "x-ms-apimTemplateParameter.value": "Bearer {{accessJwt}}",

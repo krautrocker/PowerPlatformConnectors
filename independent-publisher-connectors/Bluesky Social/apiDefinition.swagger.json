@@ -7543,7 +7543,20 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Import Successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message indicating the repo was imported."
+                },
+                "repoId": {
+                  "type": "string",
+                  "description": "The unique identifier of the imported repo."
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
