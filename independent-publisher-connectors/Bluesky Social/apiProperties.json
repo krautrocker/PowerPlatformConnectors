@@ -46,13 +46,14 @@
       },
       {
         "templateId": "acquiretoken",
-        "title": "Acquire Access Token",
+        "title": "Acquire or Refresh Access Token",
         "parameters": {
           "x-ms-apimTemplateParameter.tokenEndpoint": "https://{{pdshost}}/xrpc/com.atproto.server.createSession",
           "x-ms-apimTemplateParameter.tokenMethod": "POST",
           "x-ms-apimTemplateParameter.tokenBody": "username={{username}}&password={{password}}",
           "x-ms-apimTemplateParameter.tokenResultPath": "accessJwt"
-        }
+        },
+        "runPolicyOn": "request"
       },
       {
         "templateId": "setheader",
@@ -61,7 +62,8 @@
           "x-ms-apimTemplateParameter.name": "Authorization",
           "x-ms-apimTemplateParameter.value": "Bearer {{accessJwt}}",
           "x-ms-apimTemplateParameter.existsAction": "override"
-        }
+        },
+        "runPolicyOn": "request"
       }
     ],
     "iconBrandColor": "#da3b01",
