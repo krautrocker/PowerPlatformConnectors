@@ -1,13 +1,14 @@
 {
+
   "properties": {
     "connectionParameters": {
       "host": {
         "type": "string",
         "uiDefinition": {
           "displayName": "Host URL",
-          "description": "The base host for the Bluesky API (e.g., bsky.social or chat.bsky.social)",
-          "tooltip": "Enter the host URL for the Bluesky API",
-          "default": "bsky.social",
+          "description": "The base host for the selected service (e.g., bsky.social or api.bsky.chat).",
+          "tooltip": "Enter the base host URL for the API.",
+          "default": "api.bsky.social",
           "constraints": {
             "required": true
           }
@@ -18,7 +19,7 @@
         "uiDefinition": {
           "displayName": "Bluesky Handle",
           "description": "The Bluesky Handle used for authentication.",
-          "tooltip": "Enter the Bluesky handle (username).",
+          "tooltip": "Enter your Bluesky handle (username).",
           "constraints": {
             "required": true
           }
@@ -29,7 +30,7 @@
         "uiDefinition": {
           "displayName": "Bluesky Password",
           "description": "The Bluesky Password used for authentication.",
-          "tooltip": "Enter the Bluesky password.",
+          "tooltip": "Enter your Bluesky password.",
           "constraints": {
             "required": true
           }
@@ -41,12 +42,12 @@
         "templateId": "sethost",
         "title": "Set Host URL",
         "parameters": {
-          "x-ms-apimTemplateParameter.host": "{{host}}"
+          "x-ms-apimTemplateParameter.host": "if(contains({{host}}, 'chat'), 'api.bsky.chat', if(contains({{host}}, 'mod'), 'mod.bsky.app', 'api.bsky.social'))"
         }
       },
       {
         "templateId": "acquiretoken",
-        "title": "Acquire or Refresh Access Token",
+        "title": "Acquire Access Token",
         "parameters": {
           "x-ms-apimTemplateParameter.tokenEndpoint": "https://{{host}}/xrpc/com.atproto.server.createSession",
           "x-ms-apimTemplateParameter.tokenMethod": "POST",
@@ -68,7 +69,7 @@
     ],
     "iconBrandColor": "#da3b01",
     "capabilities": [],
-    "publisher": "Dan Romano",
+    "publisher": "Your Name",
     "stackOwner": "Bluesky PBC"
   }
 }
