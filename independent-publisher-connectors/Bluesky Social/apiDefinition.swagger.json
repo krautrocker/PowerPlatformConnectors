@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bluesky Social",
-    "description": "Specification for the Bluesky Social endpoints. Includes endpoints for social interaction, admin, chat, ATProto, and ozone.",
+    "description": "Specification for the Bluesky Social endpoints. Includes endpoints for soprocial interaction, admin, chat, ATProto, and ozone.",
     "contact": {
       "name": "Dan Romano",
       "email": "dan.romano@swolcat.com"
@@ -28,7 +28,7 @@
     }
   ],
   "host": "bsky.social",
-  "basePath": "/xrpc",
+  "basePath": "/",
   "schemes": [
     "https"
   ],
@@ -36,8 +36,7 @@
     "api_key": {
       "type": "apiKey",
       "in": "header",
-      "name": "Authorization",
-      "description": "Enter 'Bearer' followed by a space and token."
+      "name": "Authorization"
     }
   },
   "security": [
@@ -378,11 +377,15 @@
     },
     "/xrpc/app.bsky.actor.searchActorsTypeahead": {
       "get": {
-        "tags": [ "app.bsky.actor" ],
+        "tags": [
+          "app.bsky.actor"
+        ],
         "summary": "Search Actors for Typeahead",
         "description": "Retrieve account suggestions for typeahead search.",
         "operationId": "SearchActorsTypeahead",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -414,7 +417,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "actors" ],
+              "required": [
+                "actors"
+              ],
               "properties": {
                 "actors": {
                   "type": "array",
@@ -2866,11 +2871,15 @@
     },
     "/xrpc/app.bsky.graph.getStarterPack": {
       "get": {
-        "tags": [ "app.bsky.graph" ],
+        "tags": [
+          "app.bsky.graph"
+        ],
         "summary": "Get Starter Pack",
         "description": "Gets a view of a starter pack based on the provided reference (AT-URI).",
         "operationId": "GetStarterPack",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -2891,7 +2900,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "starterPack" ],
+              "required": [
+                "starterPack"
+              ],
               "properties": {
                 "starterPack": {
                   "$ref": "#/definitions/starterPackView"
@@ -2914,7 +2925,7 @@
         }
       }
     },
-    "/xrpc/app.bsky.graph.getStarterPacks": {
+    "/app.bsky.graph.getStarterPacks": {
       "get": {
         "tags": [
           "graph"
@@ -3717,7 +3728,7 @@
         }
       }
     },
-    "/xrpc/app.bsky.notification.registerPush": {
+    "/app.bsky.notification.registerPush": {
       "post": {
         "tags": [
           "app.bsky.notification"
@@ -4197,7 +4208,7 @@
         "summary": "Delete Message for Self",
         "x-ms-summary": "Delete message for self.",
         "description": "Delete a message for the user who sent it.",
-        "operationId": "deleteMessageForSelf",
+        "operationId": "DeleteMessageForSelf",
         "consumes": [
           "application/json"
         ],
@@ -4256,7 +4267,7 @@
         }
       }
     },
-    "/xrpc/chat.bsky.convo.getConvo": {
+    "/chat.bsky.convo.getConvo": {
       "get": {
         "tags": [
           "chat.bsky.convo"
@@ -4313,7 +4324,7 @@
         }
       }
     },
-    "/xrpc/chat.bsky.convo.getConvoForMembers": {
+    "/chat.bsky.convo.getConvoForMembers": {
       "get": {
         "tags": [
           "chat.bsky.convo"
@@ -4374,7 +4385,7 @@
         }
       }
     },
-    "/xrpc/chat.bsky.convo.getLog": {
+    "/chat.bsky.convo.getLog": {
       "get": {
         "tags": [
           "chat.bsky.convo"
@@ -4620,7 +4631,7 @@
         }
       }
     },
-    "/xrpc/chat.bsky.convo.listConvos": {
+    "/chat.bsky.convo.listConvos": {
       "get": {
         "tags": [
           "chat.bsky.convo"
@@ -4733,7 +4744,7 @@
         "summary": "Mute Conversation",
         "x-ms-summary": "Mute a conversation.",
         "description": "Mute a conversation.",
-        "operationId": "muteConvo",
+        "operationId": "MuteConvo",
         "consumes": [
           "application/json"
         ],
@@ -4869,7 +4880,7 @@
         "summary": "Create Authentication Session",
         "x-ms-summary": "Start a user authentication session.",
         "description": "Create an authentication session..",
-        "operationId": "createSession",
+        "operationId": "CreateSession",
         "consumes": [
           "application/json"
         ],
@@ -4911,8 +4922,10 @@
                   "description": "Optional token for multi-factor authentication.",
                   "x-ms-summary": "Auth Factor Token"
                 }
-              }
-            }
+              },
+              "x-ms-visibility": "advanced"
+            },
+            "x-ms-visibility": "advanced"
           }
         ],
         "responses": {
@@ -4998,7 +5011,7 @@
         "summary": "Refresh Authentication Session",
         "x-ms-summary": "Refresh a session and renew tokens.",
         "description": "Refresh an authentication session to obtain a new access token and refresh token.",
-        "operationId": "refreshSession",
+        "operationId": "RefreshSession",
         "consumes": [
           "application/json"
         ],
@@ -5849,7 +5862,7 @@
         }
       }
     },
-    "/xrpc/com.atproto.admin.getAccountInfo": {
+    "/com.atproto.admin.getAccountInfo": {
       "get": {
         "tags": [
           "com.atproto.admin"
@@ -5961,7 +5974,7 @@
         }
       }
     },
-    "/xrpc/com.atproto.admin.getInviteCodes": {
+    "/com.atproto.admin.getInviteCodes": {
       "get": {
         "tags": [
           "com.atproto.admin"
@@ -7203,13 +7216,17 @@
         }
       }
     },
-    "/xrpc/com.atproto.repo.getRecord": {
+    "/com.atproto.repo.getRecord": {
       "get": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Get a single record from a repository",
         "description": "Get a single record from a repository.",
         "operationId": "RepoGetRecord",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7254,7 +7271,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "uri", "value" ],
+              "required": [
+                "uri",
+                "value"
+              ],
               "properties": {
                 "uri": {
                   "type": "string",
@@ -7288,12 +7308,18 @@
     },
     "/xrpc/com.atproto.repo.createRecord": {
       "post": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Create a single new repository record",
         "description": "Create a single new repository record.",
         "operationId": "CreateRecord",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7306,7 +7332,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "repo", "collection", "record" ],
+              "required": [
+                "repo",
+                "collection",
+                "record"
+              ],
               "properties": {
                 "repo": {
                   "type": "string",
@@ -7342,7 +7372,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "uri", "cid" ],
+              "required": [
+                "uri",
+                "cid"
+              ],
               "properties": {
                 "uri": {
                   "type": "string",
@@ -7357,7 +7390,10 @@
                 },
                 "validationStatus": {
                   "type": "string",
-                  "enum": [ "valid", "unknown" ]
+                  "enum": [
+                    "valid",
+                    "unknown"
+                  ]
                 }
               }
             }
@@ -7379,12 +7415,18 @@
     },
     "/xrpc/com.atproto.repo.deleteRecord": {
       "post": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Delete a repository record or ensure it doesnt exist",
         "description": "Delete a repository record, or ensure it doesn't exist.",
         "operationId": "DeleteRecord",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7397,7 +7439,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "repo", "collection", "rkey" ],
+              "required": [
+                "repo",
+                "collection",
+                "rkey"
+              ],
               "properties": {
                 "repo": {
                   "type": "string",
@@ -7452,11 +7498,15 @@
     },
     "/xrpc/com.atproto.repo.describeRepo": {
       "get": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Get information about an account and repository",
         "description": "Get information about an account and repository, including the list of collections.",
         "operationId": "DescribeRepo",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7477,7 +7527,13 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "handle", "did", "didDoc", "collections", "handleIsCorrect" ],
+              "required": [
+                "handle",
+                "did",
+                "didDoc",
+                "collections",
+                "handleIsCorrect"
+              ],
               "properties": {
                 "handle": {
                   "type": "string"
@@ -7518,11 +7574,15 @@
     },
     "/xrpc/com.atproto.repo.importRepo": {
       "post": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Import a repo in the form of a CAR file",
         "description": "Import a repo in the form of a CAR file. Content-Length header required.",
         "operationId": "ImportRepo",
-        "consumes": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7575,11 +7635,15 @@
     },
     "/xrpc/listMissingBlobs": {
       "get": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "List missing blobs for the requesting account",
         "description": "Returns a list of missing blobs for the requesting account.",
         "operationId": "ListMissingBlobs",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7611,7 +7675,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "blobs" ],
+              "required": [
+                "blobs"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -7643,11 +7709,15 @@
     },
     "/xrpc/com.atproto.repo.listRecords": {
       "get": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "List records in a repository",
         "description": "List a range of records in a repository, matching a specific collection.",
         "operationId": "ListRecords",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7703,7 +7773,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "records" ],
+              "required": [
+                "records"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -7735,12 +7807,18 @@
     },
     "/xrpc/com.atproto.repo.putRecord": {
       "post": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Write a repository record",
         "description": "Write a repository record, creating or updating it as needed.",
         "operationId": "PutRecord",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7755,7 +7833,12 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "repo", "collection", "rkey", "record" ],
+              "required": [
+                "repo",
+                "collection",
+                "rkey",
+                "record"
+              ],
               "properties": {
                 "repo": {
                   "type": "string",
@@ -7795,7 +7878,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "uri", "cid" ],
+              "required": [
+                "uri",
+                "cid"
+              ],
               "properties": {
                 "uri": {
                   "type": "string"
@@ -7808,7 +7894,10 @@
                 },
                 "validationStatus": {
                   "type": "string",
-                  "enum": [ "valid", "unknown" ]
+                  "enum": [
+                    "valid",
+                    "unknown"
+                  ]
                 }
               }
             }
@@ -7830,12 +7919,18 @@
     },
     "/xrpc/com.atproto.repo.uploadBlob": {
       "post": {
-        "tags": [ "com.atproto.repo" ],
+        "tags": [
+          "com.atproto.repo"
+        ],
         "summary": "Upload a new blob",
         "description": "Upload a new blob.",
         "operationId": "UploadBlob",
-        "consumes": [ "multipart/form-data" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -7856,7 +7951,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "blob" ],
+              "required": [
+                "blob"
+              ],
               "properties": {
                 "blob": {
                   "type": "string",
@@ -7924,7 +8021,7 @@
         "summary": "Check Account Status",
         "x-ms-summary": "Retrieve the status of an account.",
         "description": "Returns the status of an account, especially as pertaining to import or recovery.",
-        "operationId": "checkAccountStatus",
+        "operationId": "CheckAccountStatus",
         "produces": [
           "application/json"
         ],
@@ -8012,7 +8109,7 @@
         "summary": "Confirm Email",
         "x-ms-summary": "Confirm a user's email address.",
         "description": "Confirm an email using a token generated by the requestEmailConfirmation process.",
-        "operationId": "confirmEmail",
+        "operationId": "ConfirmEmail",
         "consumes": [
           "application/json"
         ],
@@ -8076,7 +8173,7 @@
         "summary": "Create Account",
         "x-ms-summary": "Create a new account.",
         "description": "Create an account with the provided details.",
-        "operationId": "createAccount",
+        "operationId": "CreateAccount",
         "consumes": [
           "application/json"
         ],
@@ -8263,7 +8360,7 @@
         "summary": "Create Invite Code",
         "x-ms-summary": "Generate a new invite code.",
         "description": "Create an invite code for specified use cases.",
-        "operationId": "createInviteCode",
+        "operationId": "CreateInviteCode",
         "consumes": [
           "application/json"
         ],
@@ -8338,7 +8435,7 @@
         "summary": "Create Invite Codes",
         "x-ms-summary": "Generate multiple invite codes.",
         "description": "Create multiple invite codes with specified usage limits.",
-        "operationId": "createInviteCodes",
+        "operationId": "CreateInviteCodes",
         "consumes": [
           "application/json"
         ],
@@ -8435,7 +8532,7 @@
         "summary": "Deactivate Account",
         "x-ms-summary": "Deactivate an account post-migration.",
         "description": "Deactivates a currently active account after migration is finalized.",
-        "operationId": "deactivateAccount",
+        "operationId": "DeactivateAccount",
         "consumes": [
           "application/json"
         ],
@@ -8984,7 +9081,7 @@
         "summary": "Request Password Reset",
         "x-ms-summary": "Initiate a password reset request.",
         "description": "Initiate a user account password reset via email.",
-        "operationId": "requestPasswordReset",
+        "operationId": "RequestPasswordReset",
         "consumes": [
           "application/json"
         ],
@@ -9043,7 +9140,7 @@
         "summary": "Reserve Signing Key",
         "x-ms-summary": "Reserve a repo signing key.",
         "description": "Reserve a repo signing key for use with account creation.",
-        "operationId": "reserveSigningKey",
+        "operationId": "ReserveSigningKey",
         "consumes": [
           "application/json"
         ],
@@ -9111,7 +9208,7 @@
         "summary": "Reset Password",
         "x-ms-summary": "Reset a user account password.",
         "description": "Reset a user account password using a token.",
-        "operationId": "resetPassword",
+        "operationId": "ResetPassword",
         "consumes": [
           "application/json"
         ],
@@ -9287,11 +9384,15 @@
     },
     "/xrpc/com.atproto.sync.getBlob": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Get a blob associated with an account",
         "description": "Get a blob associated with a given account.",
         "operationId": "GetBlob",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -9345,11 +9446,15 @@
     },
     "/xrpc/com.atproto.sync.getBlocks": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Get data blocks from a repo",
         "description": "Get data blocks from a given repo, by CID.",
         "operationId": "GetBlocks",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -9410,11 +9515,15 @@
     },
     "/xrpc/com.atproto.sync.getLatestCommit": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Get the current commit of a repo",
         "description": "Get the current commit CID & revision of the specified repo.",
         "operationId": "GetLatestCommit",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "did",
@@ -9435,7 +9544,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "cid", "rev" ],
+              "required": [
+                "cid",
+                "rev"
+              ],
               "properties": {
                 "cid": {
                   "type": "string"
@@ -9462,16 +9574,20 @@
         }
       }
     },
-    "/xrpc/com.atproto.sync.getRecord": {
+    "/com.atproto.sync.getRecord": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Get a record from the repo",
         "description": "Retrieve a record from the repo by its unique identifier.",
         "operationId": "SyncGetRecord",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "recordId",
+            "name": "did",
             "in": "query",
             "x-ms-summary": "Record ID",
             "description": "Unique identifier of the record.",
@@ -9524,11 +9640,15 @@
     },
     "/xrpc/com.atproto.sync.getRepo": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Download repository export",
         "description": "Download a repository export as CAR file.",
         "operationId": "SyncGetRepo",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -9577,11 +9697,15 @@
     },
     "/xrpc/com.atproto.sync.getRepoStatus": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "Get repository hosting status",
         "description": "Get the hosting status for a repository, on this server.",
         "operationId": "GetRepoStatus",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "did",
@@ -9602,7 +9726,10 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "did", "active" ],
+              "required": [
+                "did",
+                "active"
+              ],
               "properties": {
                 "did": {
                   "type": "string"
@@ -9643,11 +9770,15 @@
     },
     "/xrpc/com.atproto.sync.listBlobs": {
       "get": {
-        "tags": [ "com.atproto.sync" ],
+        "tags": [
+          "com.atproto.sync"
+        ],
         "summary": "List account blob CIDs",
         "description": "List account blob CIDs since a repo revision.",
         "operationId": "ListBlobs",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -9695,7 +9826,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "cids" ],
+              "required": [
+                "cids"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string"
@@ -10303,11 +10436,15 @@
     },
     "/xrpc/tools.ozone.moderation.getRecord": {
       "get": {
-        "tags": [ "tools.ozone.moderation" ],
+        "tags": [
+          "tools.ozone.moderation"
+        ],
         "summary": "Get details about a record",
         "description": "Get details about a record.",
         "operationId": "GetRecordModeration",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -10355,11 +10492,15 @@
     },
     "/xrpc/tools.ozone.moderation.getRecords": {
       "get": {
-        "tags": [ "tools.ozone.moderation" ],
+        "tags": [
+          "tools.ozone.moderation"
+        ],
         "summary": "Get details about some records",
         "description": "Get details about some records.",
         "operationId": "GetRecordsModeration",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "uris",
@@ -10383,7 +10524,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "records" ],
+              "required": [
+                "records"
+              ],
               "properties": {
                 "records": {
                   "type": "array",
@@ -10411,11 +10554,15 @@
     },
     "/xrpc/tools.ozone.moderation.getRepo": {
       "get": {
-        "tags": [ "tools.ozone.moderation" ],
+        "tags": [
+          "tools.ozone.moderation"
+        ],
         "summary": "Get details about a repository",
         "description": "Get details about a repository.",
         "operationId": "GetRepoModeration",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "did",
@@ -10742,11 +10889,15 @@
     },
     "/xrpc/tools.ozone.moderation.queryStatuses": {
       "get": {
-        "tags": [ "tools.ozone.moderation" ],
+        "tags": [
+          "tools.ozone.moderation"
+        ],
         "summary": "View moderation statuses of subjects",
         "description": "View moderation statuses of subjects (record or repo).",
         "operationId": "QueryStatusesModeration",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -10893,7 +11044,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "subjectStatuses" ],
+              "required": [
+                "subjectStatuses"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -10925,11 +11078,15 @@
     },
     "/xrpc/tools.ozone.moderation.searchRepos": {
       "get": {
-        "tags": [ "tools.ozone.moderation" ],
+        "tags": [
+          "tools.ozone.moderation"
+        ],
         "summary": "Find repositories based on a search term",
         "description": "Find repositories based on a search term.",
         "operationId": "SearchReposModeration",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -10969,7 +11126,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "repos" ],
+              "required": [
+                "repos"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -11495,11 +11654,15 @@
     },
     "/xrpc/tools.ozone.signature.findCorrelation": {
       "get": {
-        "tags": [ "tools.ozone.signature" ],
+        "tags": [
+          "tools.ozone.signature"
+        ],
         "summary": "Find Correlation of Threat Signatures",
         "description": "Find all correlated threat signatures between 2 or more accounts.",
         "operationId": "FindCorrelation",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -11523,7 +11686,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "details" ],
+              "required": [
+                "details"
+              ],
               "properties": {
                 "details": {
                   "type": "array",
@@ -11704,12 +11869,18 @@
     },
     "/xrpc/tools.ozone.team.deleteMember": {
       "post": {
-        "tags": [ "tools.ozone.team" ],
+        "tags": [
+          "tools.ozone.team"
+        ],
         "summary": "Delete a member from ozone team",
         "description": "Delete a member from ozone team.",
         "operationId": "DeleteMemberTeam",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -11724,7 +11895,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "did" ],
+              "required": [
+                "did"
+              ],
               "properties": {
                 "did": {
                   "type": "string",
@@ -11755,11 +11928,15 @@
     },
     "/xrpc/tools.ozone.team.listMembers": {
       "get": {
-        "tags": [ "tools.ozone.team" ],
+        "tags": [
+          "tools.ozone.team"
+        ],
         "summary": "List all members with access to the ozone service",
         "description": "List all members with access to the ozone service.",
         "operationId": "ListMembersTeam",
-        "produces": [ "application/json" ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -11791,7 +11968,9 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "required": [ "members" ],
+              "required": [
+                "members"
+              ],
               "properties": {
                 "cursor": {
                   "type": "string",
@@ -11823,12 +12002,18 @@
     },
     "/xrpc/tools.ozone.team.updateMember": {
       "post": {
-        "tags": [ "tools.ozone.team" ],
+        "tags": [
+          "tools.ozone.team"
+        ],
         "summary": "Update a member in the ozone service",
         "description": "Update a member in the ozone service.",
         "operationId": "UpdateMemberTeam",
-        "consumes": [ "application/json" ],
-        "produces": [ "application/json" ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api_key": []
@@ -11843,7 +12028,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": [ "did" ],
+              "required": [
+                "did"
+              ],
               "properties": {
                 "did": {
                   "type": "string",
@@ -11888,7 +12075,7 @@
         }
       }
     },
-    "/xrpc/embedRecordView": {
+    "/xrpc/EmbedRecordView": {
       "get": {
         "tags": [
           "embed"
@@ -11896,7 +12083,7 @@
         "summary": "Retrieve record view",
         "x-ms-summary": "Fetch dynamic schema for the record view.",
         "description": "Returns dynamic schema information for the record view.",
-        "operationId": "embedRecordView",
+        "operationId": "EmbedRecordView",
         "produces": [
           "application/json"
         ],
@@ -13162,7 +13349,10 @@
     },
     "feedReplyRef": {
       "type": "object",
-      "required": [ "root", "parent" ],
+      "required": [
+        "root",
+        "parent"
+      ],
       "properties": {
         "root": {
           "description": "Root post reference, which can be a postView, notFoundPost, or blockedPost.",
@@ -13206,7 +13396,10 @@
     "postReplyRef": {
       "type": "object",
       "description": "References the root and parent of a post reply.",
-      "required": [ "root", "parent" ],
+      "required": [
+        "root",
+        "parent"
+      ],
       "properties": {
         "root": {
           "$ref": "#/definitions/strongRef"
@@ -13219,7 +13412,10 @@
     "strongRef": {
       "type": "object",
       "description": "Defines a strong reference with a URI and CID.",
-      "required": [ "uri", "cid" ],
+      "required": [
+        "uri",
+        "cid"
+      ],
       "properties": {
         "uri": {
           "type": "string",
@@ -13659,7 +13855,11 @@
         "type": {
           "type": "string",
           "description": "The type of the list purpose.",
-          "enum": [ "modlist", "curatelist", "referencelist" ]
+          "enum": [
+            "modlist",
+            "curatelist",
+            "referencelist"
+          ]
         },
         "modlistProperty": {
           "type": "string",
@@ -13677,7 +13877,9 @@
           "x-ms-summary": "Referencelist Property"
         }
       },
-      "required": [ "type" ]
+      "required": [
+        "type"
+      ]
     },
     "modlist": {
       "type": "string",
@@ -13687,7 +13889,6 @@
       "type": "string",
       "description": "A list of actors used for curation purposes."
     },
-
     "listViewerState": {
       "type": "object",
       "properties": {
@@ -13834,7 +14035,7 @@
           }
         },
         "embed": {
-          "$ref": "#/definitions/embedRecordView"
+          "$ref": "#/definitions/EmbedRecordView"
         },
         "sender": {
           "$ref": "#/definitions/messageViewSender"
@@ -13857,7 +14058,7 @@
         }
       }
     },
-    "embedRecordView": {
+    "EmbedRecordView": {
       "type": "object",
       "required": [
         "record"
@@ -13867,7 +14068,7 @@
           "type": "object",
           "description": "Dynamic schema for the record view.",
           "x-ms-dynamic-schema": {
-            "operationId": "embedRecordView",
+            "operationId": "EmbedRecordView",
             "value-path": "record",
             "parameters": {
               "recordId": "{recordId}"
@@ -14545,7 +14746,6 @@
         }
       }
     },
-
     "reasonSpam": {
       "type": "string",
       "description": "Spam: frequent unwanted promotion, replies, mentions"
@@ -16114,7 +16314,9 @@
     },
     "recordView": {
       "type": "object",
-      "required": [ "record" ],
+      "required": [
+        "record"
+      ],
       "properties": {
         "record": {
           "description": "The record can be one of several types.",
@@ -16330,7 +16532,7 @@
       ],
       "properties": {
         "record": {
-          "$ref": "#/definitions/embedRecordView"
+          "$ref": "#/definitions/EmbedRecordView"
         },
         "media": {
           "type": "object",
