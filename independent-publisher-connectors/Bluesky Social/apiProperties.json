@@ -1,5 +1,4 @@
 {
-
   "properties": {
     "connectionParameters": {
       "host": {
@@ -35,26 +34,26 @@
             "required": true
           }
         }
+      },
+      "accessJwt": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "Access Token",
+          "description": "The access token returned by the Bluesky API.",
+          "tooltip": "This token is used for authentication in API requests.",
+          "constraints": {
+            "required": true
+          }
+        }
       }
     },
     "policyTemplateInstances": [
       {
-        "templateId": "sethost",
+        "templateId": "dynamichosturl",
         "title": "Set Host URL",
         "parameters": {
-          "x-ms-apimTemplateParameter.host": "if(contains({{host}}, 'chat'), 'api.bsky.chat', if(contains({{host}}, 'mod'), 'mod.bsky.app', 'api.bsky.social'))"
+          "x-ms-apimTemplateParameter.urlTemplate": "{host}"
         }
-      },
-      {
-        "templateId": "acquiretoken",
-        "title": "Acquire Access Token",
-        "parameters": {
-          "x-ms-apimTemplateParameter.tokenEndpoint": "https://{{host}}/xrpc/com.atproto.server.createSession",
-          "x-ms-apimTemplateParameter.tokenMethod": "POST",
-          "x-ms-apimTemplateParameter.tokenBody": "username={{username}}&password={{password}}",
-          "x-ms-apimTemplateParameter.tokenResultPath": "accessJwt"
-        },
-        "runPolicyOn": "request"
       },
       {
         "templateId": "setheader",
@@ -63,13 +62,12 @@
           "x-ms-apimTemplateParameter.name": "Authorization",
           "x-ms-apimTemplateParameter.value": "Bearer {{accessJwt}}",
           "x-ms-apimTemplateParameter.existsAction": "override"
-        },
-        "runPolicyOn": "request"
+        }
       }
     ],
     "iconBrandColor": "#da3b01",
     "capabilities": [],
-    "publisher": "Your Name",
+    "publisher": "Dan Romano",
     "stackOwner": "Bluesky PBC"
   }
 }
