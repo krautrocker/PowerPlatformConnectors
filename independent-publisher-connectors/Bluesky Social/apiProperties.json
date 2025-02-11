@@ -13,12 +13,12 @@
           }
         }
       },
-      "username": {
+      "identifier": {
         "type": "string",
         "uiDefinition": {
-          "displayName": "Bluesky Handle",
-          "description": "The Bluesky Handle used for authentication.",
-          "tooltip": "Enter your Bluesky handle (username).",
+          "displayName": "Bluesky Identifier",
+          "description": "The Bluesky handle used for authentication.",
+          "tooltip": "Enter your Bluesky identifier.",
           "constraints": {
             "required": true
           }
@@ -34,39 +34,30 @@
             "required": true
           }
         }
-      },
-      "accessJwt": {
-        "type": "securestring",
-        "uiDefinition": {
-          "displayName": "Access Token",
-          "description": "The access token returned by the Bluesky API.",
-          "tooltip": "This token is used for authentication in API requests.",
-          "constraints": {
-            "required": true
-          }
-        }
       }
     },
     "policyTemplateInstances": [
       {
-        "templateId": "dynamichosturl",
-        "title": "Set Host URL",
+        "templateId": "setqueryparameter",
+        "title": "Set query identifier",
         "parameters": {
-          "x-ms-apimTemplateParameter.urlTemplate": "{host}"
+          "x-ms-apimTemplateParameter.name": "identifier",
+          "x-ms-apimTemplateParameter.value": "@connectionParameters('identifier')",
+          "x-ms-apimTemplateParameter.existsAction": "override"
         }
       },
       {
-        "templateId": "setheader",
-        "title": "Set Authorization Header",
+        "templateId": "setqueryparameter",
+        "title": "Set query pdshost",
         "parameters": {
-          "x-ms-apimTemplateParameter.name": "Authorization",
-          "x-ms-apimTemplateParameter.value": "Bearer {{accessJwt}}",
+          "x-ms-apimTemplateParameter.name": "pdshost",
+          "x-ms-apimTemplateParameter.value": "@connectionParameters('pdshost')",
           "x-ms-apimTemplateParameter.existsAction": "override"
         }
       }
     ],
-    "iconBrandColor": "#da3b01",
     "capabilities": [],
+    "iconBrandColor": "#da3b01",
     "publisher": "Dan Romano",
     "stackOwner": "Bluesky PBC"
   }
