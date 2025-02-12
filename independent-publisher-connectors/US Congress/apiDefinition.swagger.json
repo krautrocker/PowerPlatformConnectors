@@ -33,7 +33,7 @@
         "parameters": [
           {
             "name": "format",
-            "x-ms-summary": "The data format. Value can be xml or json",
+            "x-ms-summary": "Data format (XML/JSON)",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -41,7 +41,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "The starting record returned. 0 is the first record",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -49,7 +49,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "The number of records returned. The maximum limit is 250",
+            "x-ms-summary": "Records returned limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -57,7 +57,7 @@
           },
           {
             "name": "fromDateTime",
-            "x-ms-summary": "Startin timestamp for updated date YYYY-MM-DDT00:00:00Z",
+            "x-ms-summary": "Starting timestamp",
             "in": "query",
             "description": "Starting timestamp for updated date YYYY-MM-DDT00:00:00Z",
             "required": false,
@@ -65,7 +65,7 @@
           },
           {
             "name": "toDateTime",
-            "x-ms-summary": "Ending timestamp for updated date YYYY-MM-DDT00:00:00Z",
+            "x-ms-summary": "Ending timestamp",
             "in": "query",
             "description": "Ending timestamp for updated date YYYY-MM-DDT00:00:00Z",
             "required": false,
@@ -102,7 +102,7 @@
         "parameters": [
           {
             "name": "congress",
-            "x-ms-summary": "The congress number. For example, the value can be 117",
+            "x-ms-summary": "Congress number",
             "in": "path",
             "description": "The congress number. For example, the value can be 117",
             "required": true,
@@ -111,7 +111,7 @@
           },
           {
             "name": "format",
-            "x-ms-summary": "The data format. Value can be xml or json",
+            "x-ms-summary": "Data format (XML/JSON)",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -119,7 +119,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "The starting record returned. 0 is the first record",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -127,7 +127,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "The number of records returned. The maximum limit is 250",
+            "x-ms-summary": "Records returned limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -135,7 +135,7 @@
           },
           {
             "name": "fromDateTime",
-            "x-ms-summary": "Start timestamp by updated date. Use format: YYYY-MM-DDT00:00:00Z",
+            "x-ms-summary": "Starting timestamp",
             "in": "query",
             "description": "Start timestamp by updated date. Use format: YYYY-MM-DDT00:00:00Z",
             "required": false,
@@ -143,7 +143,7 @@
           },
           {
             "name": "toDateTime",
-            "x-ms-summary": "The ending timestamp to filter by update date. Use format: YYYY-MM-DDT00:00:00Z",
+            "x-ms-summary": "Ending timestamp",
             "in": "query",
             "description": "The ending timestamp to filter by update date. Use format: YYYY-MM-DDT00:00:00Z",
             "required": false,
@@ -180,7 +180,7 @@
         "parameters": [
           {
             "name": "congress",
-            "x-ms-summary": "The congress number. For example, the value can be 117",
+            "x-ms-summary": "The congress number",
             "in": "path",
             "description": "The congress number. For example, the value can be 117",
             "required": true,
@@ -189,7 +189,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "The type of amendment. Value can be hamdt, samdt, or suamdt",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt, samdt, or suamdt",
             "required": true,
@@ -198,7 +198,7 @@
           },
           {
             "name": "format",
-            "x-ms-summary": "The data format. Value can be xml or json",
+            "x-ms-summary": "Data format (XML/JSON)",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -206,7 +206,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "The starting record returned. 0 is the first record",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -214,7 +214,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "The number of records returned. The maximum limit is 250",
+            "x-ms-summary": "Records returned limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -276,7 +276,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt, samdt, or suamdt",
             "required": true,
@@ -294,7 +294,7 @@
           },
           {
             "name": "format",
-            "x-ms-summary": "The data format. Value can be xml or json",
+            "x-ms-summary": "Data format (XML/JSON)",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -340,7 +340,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "The type of amendment. Value can be hamdt, samdt, or suamdt",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt, samdt, or suamdt",
             "required": true,
@@ -366,7 +366,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "The starting record returned. 0 is the first record",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -374,7 +374,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "The number of records returned. The maximum limit is 250",
+            "x-ms-summary": "Records returned limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -420,7 +420,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt, samdt, or suamdt",
             "required": true,
@@ -491,7 +491,7 @@
         "parameters": [
           {
             "name": "congress",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Congress Number",
             "in": "path",
             "description": "The congress number. For example, the value can be 117",
             "required": true,
@@ -500,7 +500,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt, samdt, or suamdt",
             "required": true,
@@ -509,7 +509,7 @@
           },
           {
             "name": "amendmentNumber",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Number",
             "in": "path",
             "description": "The amendment's assigned number. For example, the value can be 2137",
             "required": true,
@@ -518,7 +518,7 @@
           },
           {
             "name": "format",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Format",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -526,7 +526,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -534,7 +534,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -571,7 +571,7 @@
         "parameters": [
           {
             "name": "congress",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Congress Number",
             "in": "path",
             "description": "The congress number. This is endpoint is for the 117th Congress and onwards. Example: 117",
             "required": true,
@@ -580,7 +580,7 @@
           },
           {
             "name": "amendmentType",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Type",
             "in": "path",
             "description": "The type of amendment. Value can be hamdt or samdt",
             "required": true,
@@ -589,7 +589,7 @@
           },
           {
             "name": "amendmentNumber",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Amendment Number",
             "in": "path",
             "description": "The bill's assigned number. For example, the value can be 287",
             "required": true,
@@ -598,7 +598,7 @@
           },
           {
             "name": "format",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Format",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
@@ -606,7 +606,7 @@
           },
           {
             "name": "offset",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Offset",
             "in": "query",
             "description": "The starting record returned. 0 is the first record",
             "required": false,
@@ -614,7 +614,7 @@
           },
           {
             "name": "limit",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Limit",
             "in": "query",
             "description": "The number of records returned. The maximum limit is 250",
             "required": false,
@@ -651,7 +651,7 @@
         "parameters": [
           {
             "name": "format",
-            "x-ms-summary": "See description",
+            "x-ms-summary": "Format",
             "in": "query",
             "description": "The data format. Value can be xml or json",
             "required": false,
