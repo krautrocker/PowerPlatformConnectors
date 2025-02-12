@@ -27,7 +27,6 @@
         "description": "Example - https://api.congress.gov/v3/amendment?api_key=[INSERT_KEY]",
         "operationId": "Amendment",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -61,7 +60,8 @@
             "in": "query",
             "description": "Starting timestamp for updated date YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           },
           {
             "name": "toDateTime",
@@ -69,15 +69,49 @@
             "in": "query",
             "description": "Ending timestamp for updated date YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amendments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "congress": { "type": "integer" },
+                      "number": { "type": "string" },
+                      "type": { "type": "string" },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    },
+                    "required": [ "congress", "number", "type", "url" ]
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
@@ -96,7 +130,6 @@
         "description": "Gets a list of amendments filtered by congress, sorted by date of latest action",
         "operationId": "AmendmentCongress",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -139,7 +172,8 @@
             "in": "query",
             "description": "Start timestamp by updated date. Use format: YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           },
           {
             "name": "toDateTime",
@@ -147,15 +181,49 @@
             "in": "query",
             "description": "The ending timestamp to filter by update date. Use format: YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amendments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "congress": { "type": "integer" },
+                      "number": { "type": "string" },
+                      "type": { "type": "string" },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    },
+                    "required": [ "congress", "number", "type", "url" ]
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
@@ -174,7 +242,6 @@
         "description": "Example: https://api.congress.gov/v3/amendment/117/samdt?api_key=[INSERT_KEY]",
         "operationId": "AmendmentList",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -226,7 +293,8 @@
             "in": "query",
             "description": "Starting timestamp for update date. YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           },
           {
             "name": "toDateTime",
@@ -234,15 +302,49 @@
             "in": "query",
             "description": "The ending timestamp to filter by update date. Use format: YYYY-MM-DDT00:00:00Z",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amendments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "congress": { "type": "integer" },
+                      "number": { "type": "string" },
+                      "type": { "type": "string" },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    },
+                    "required": [ "congress", "number", "type", "url" ]
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
@@ -261,7 +363,6 @@
         "description": "https://api.congress.gov/v3/amendment/117/samdt/2137?api_key=[INSERT_KEY]",
         "operationId": "AmendmentDetails",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -303,10 +404,81 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "congress": { "type": "integer" },
+                "number": { "type": "string" },
+                "type": { "type": "string" },
+                "proposedDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "submittedDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updateDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "purpose": { "type": "string" },
+                "chamber": { "type": "string" },
+                "latestAction": {
+                  "type": "object",
+                  "properties": {
+                    "actionDate": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "text": { "type": "string" }
+                  }
+                },
+                "sponsors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "bioguideId": { "type": "string" },
+                      "firstName": { "type": "string" },
+                      "fullName": { "type": "string" },
+                      "lastName": { "type": "string" },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                },
+                "cosponsors": {
+                  "type": "object",
+                  "properties": {
+                    "count": { "type": "integer" },
+                    "countIncludingWithdrawnCosponsors": { "type": "integer" },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
@@ -325,7 +497,6 @@
         "description": "https://api.congress.gov/v3/amendment/117/samdt/2137/actions?api_key=[INSERT_KEY]",
         "operationId": "AmendmentActions",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -383,10 +554,64 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "actionDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "text": { "type": "string" },
+                      "type": { "type": "string" },
+                      "recordedVotes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "chamber": { "type": "string" },
+                            "congress": { "type": "integer" },
+                            "date": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "rollNumber": { "type": "integer" },
+                            "sessionNumber": { "type": "integer" },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          }
+                        }
+                      },
+                      "sourceSystem": {
+                        "type": "object",
+                        "properties": {
+                          "code": { "type": "integer" },
+                          "name": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
@@ -562,10 +787,9 @@
           "amendments"
         ],
         "summary": "Returns the list of text versions for a specified amendment",
-        "description": "https://api.congress.gov/v3/amendment/117/hamdt/287/text?api_key=[INSERT_KEY]\n",
+        "description": "https://api.congress.gov/v3/amendment/117/hamdt/287/text?api_key=[INSERT_KEY]",
         "operationId": "AmendmentsText",
         "produces": [
-
           "application/json"
         ],
         "parameters": [
@@ -573,7 +797,7 @@
             "name": "congress",
             "x-ms-summary": "Congress Number",
             "in": "path",
-            "description": "The congress number. This is endpoint is for the 117th Congress and onwards. Example: 117",
+            "description": "The congress number. This endpoint is for the 117th Congress and onwards. Example: 117",
             "required": true,
             "type": "integer",
             "x-ms-url-encoding": "single"
@@ -591,7 +815,7 @@
             "name": "amendmentNumber",
             "x-ms-summary": "Amendment Number",
             "in": "path",
-            "description": "The bill's assigned number. For example, the value can be 287",
+            "description": "The amendment's assigned number. For example, the value can be 287",
             "required": true,
             "type": "integer",
             "x-ms-url-encoding": "single"
@@ -623,10 +847,49 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "textVersions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "type": { "type": "string" },
+                      "formats": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": { "type": "string" },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "message": { "type": "string" },
+                "statusCode": { "type": "integer" }
+              }
+            }
           }
         },
         "security": [
