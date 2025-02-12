@@ -700,10 +700,79 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bills": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "congress": {
+                        "type": "integer"
+                      },
+                      "latestAction": {
+                        "type": "object",
+                        "properties": {
+                          "actionDate": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "number": {
+                        "type": "string"
+                      },
+                      "originChamber": {
+                        "type": "string"
+                      },
+                      "originChamberCode": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "updateDateIncludingText": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "statusCode": {
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -786,10 +855,79 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bills": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "congress": {
+                        "type": "integer"
+                      },
+                      "latestAction": {
+                        "type": "object",
+                        "properties": {
+                          "actionDate": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "number": {
+                        "type": "string"
+                      },
+                      "originChamber": {
+                        "type": "string"
+                      },
+                      "originChamberCode": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "updateDateIncludingText": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid status value"
+            "description": "Invalid request. The input parameters are incorrect.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "statusCode": {
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -6000,7 +6138,67 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nominations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "citation": {
+                        "type": "string"
+                      },
+                      "congress": {
+                        "type": "integer"
+                      },
+                      "latestAction": {
+                        "type": "object",
+                        "properties": {
+                          "actionDate": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "nominationType": {
+                        "type": "object",
+                        "properties": {
+                          "isMilitary": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "number": {
+                        "type": "integer"
+                      },
+                      "organization": {
+                        "type": "string"
+                      },
+                      "partNumber": {
+                        "type": "string"
+                      },
+                      "receivedDate": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "updateDate": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid status value"
