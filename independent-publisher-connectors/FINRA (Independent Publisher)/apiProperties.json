@@ -54,12 +54,10 @@
       }
     },
     "iconBrandColor": "#da3b01",
-    "scriptOperations": [
-      "ClaudePost"
-    ],
+    "scriptOperations": [],
     "capabilities": [],
     "policyTemplateInstances": [],
     "publisher": "Dan Romano",
-    "stackOwner": "Dan Romano"
+    "stackOwner": "FINRA"
   }
 }
