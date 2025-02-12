@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "connectionParameters": {
+      "api_key": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "API Key",
+          "description": "Your API key for accessing the Congress.gov API.",
+          "tooltip": "Enter your Congress.gov API key.",
+          "constraints": {
+            "required": true
+          }
+        }
+      }
+    },
+    "policyTemplateInstances": [
+      {
+        "templateId": "setqueryparameter",
+        "title": "Set API Key as Query Parameter",
+        "parameters": {
+          "x-ms-apimTemplateParameter.name": "api_key",
+          "x-ms-apimTemplateParameter.value": "{{api_key}}",
+          "x-ms-apimTemplateParameter.existsAction": "override"
+        }
+      }
+    ],
+    "iconBrandColor": "#da3b01",
+    "capabilities": [],
+    "publisher": "Dan Romano",
+    "stackOwner": "Library of Congress"
+  }
+}
